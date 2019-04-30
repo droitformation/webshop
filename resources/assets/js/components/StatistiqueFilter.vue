@@ -28,7 +28,21 @@
       </div>
 
       <div>
+         <h4 style="margin-top: 20px;">Comparer périodes</h4>
+
+         <div class="row">
+            <div class="col-lg-2 col-md-3 col-xs-12">
+               <div v-for="line in dates" class="dates_wrapper">
+                  <input type="text" name="dates[]" v-bind:value="line.date" class="form-control dateIntervalle">
+                  <button @click="addDates" type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+      <div>
          <h4 style="margin-top: 20px;">Période</h4>
+
          <div class="row">
             <div class="col-lg-2 col-md-2 col-xs-12">
                <div class="input-group">
@@ -86,6 +100,15 @@
       border-radius: 0;
       line-height: 30px;
    }
+   .dates_wrapper{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+   }
+
+   .dates_wrapper button{
+      margin-left: 3px;
+   }
 </style>
 <script>
 export default {
@@ -105,6 +128,7 @@ export default {
             dataauthors : this.search.filters && this.search.filters.authors ? this.search.filters.authors : [],
             datadomains : this.search.filters && this.search.filters.domains ? this.search.filters.domains : [],
             datacategories : this.search.filters && this.search.filters.categories ? this.search.filters.categories : [],
+            dates:[{'date' : null}]
         }
     },
     computed: {
@@ -137,6 +161,22 @@ export default {
 
              self.setPeriod(period,value);
           });
+
+
+          $('.dateIntervalle').daterangepicker({
+             "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Appliquer",
+                "cancelLabel": "Annuler",
+                "fromLabel": "De",
+                "toLabel": "A",
+                "weekLabel": "W",
+                "daysOfWeek": ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+                "monthNames": ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                "firstDay": 1
+             },
+          });
        });
     },
     methods: {
@@ -150,6 +190,25 @@ export default {
           if(period == 'end'){
              this.end = value;
           }
+       },
+       addDates(){
+          this.dates.push({'date' : null});
+          this.$nextTick(function(){
+             $('.dateIntervalle').daterangepicker({
+                "locale": {
+                   "format": "MM/DD/YYYY",
+                   "separator": " - ",
+                   "applyLabel": "Appliquer",
+                   "cancelLabel": "Annuler",
+                   "fromLabel": "De",
+                   "toLabel": "A",
+                   "weekLabel": "W",
+                   "daysOfWeek": ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+                   "monthNames": ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+                   "firstDay": 1
+                },
+             });
+          });
        },
        getModels: function() {
           let self = this;

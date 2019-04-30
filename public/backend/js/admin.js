@@ -9,6 +9,21 @@ $( function() {
         trigger : 'hover'
     });
 
+    $('input[name="dates"]').daterangepicker({
+        "locale": {
+            "format": "MM/DD/YYYY",
+            "separator": " - ",
+            "applyLabel": "Appliquer",
+            "cancelLabel": "Annuler",
+            "fromLabel": "De",
+            "toLabel": "A",
+            "weekLabel": "W",
+            "daysOfWeek": ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+            "monthNames": ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            "firstDay": 1
+        },
+    });
+
     $('.iframe-btn').fancybox({
         'width'		: 900,
         'height'	: 600,

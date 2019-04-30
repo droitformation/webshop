@@ -39,6 +39,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif

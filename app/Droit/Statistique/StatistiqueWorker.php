@@ -95,21 +95,10 @@ class StatistiqueWorker
         if($when){
             $this->isGrouped = $when;
 
-            $year = function ($item) {
-                return $item->created_at->format('Y');
-            };
-
-            $month = function ($item) {
-                return $item->created_at->format('m');
-            };
-
-            $week = function ($item) {
-                return $item->created_at->format('W');
-            };
-
-            $day = function ($item) {
-                return $item->created_at->format('md');
-            };
+            $year  = function ($item) {return $item->created_at->format('Y');};
+            $month = function ($item) {return $item->created_at->format('m');};
+            $week  = function ($item) {return $item->created_at->format('W');};
+            $day   = function ($item) {return $item->created_at->format('md');};
 
             $grouping = ['month' => [$year,$month], 'year' => [$year], 'day' => [$year,$day], 'week' => [$year,$week]];
             $group    = isset($grouping[$when]) ? $grouping[$when] : [$year,$month];
@@ -131,23 +120,21 @@ class StatistiqueWorker
             }
 
             // by price => orders, by products, by title, sum
-            if($this->isGrouped){
-                // first collection is year wee keep it
-                return $this->results->map(function ($collection, $year) {
+            if(!$this->isGrouped){ return $this->aggregateCollection($this->results); }
 
-                    // there is a other depth
-                    if($collection->first() instanceof Collection) {
-                        $this->isNested = true;
-                        return $collection->map(function ($coll, $year) {
-                            return $this->makeAggregate($coll);
-                        });
-                    }
+            // first collection is year wee keep it
+            return $this->results->map(function ($collection, $year) {
 
-                    return $this->makeAggregate($collection);
-                });
-            }
+                if($collection->first() instanceof Collection) { // there is a other depth
+                    $this->isNested = true;
+                    return $collection->map(function ($coll, $year) {
+                        return $this->makeAggregate($coll);
+                    });
+                }
 
-            return $this->aggregateCollection($this->results);
+                return $this->makeAggregate($collection);
+            });
+
         }
 
         return $this->results;
@@ -195,6 +182,5 @@ class StatistiqueWorker
 
             return $chart->chart();
         }
-
     }
 }

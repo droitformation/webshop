@@ -69,6 +69,7 @@ class StatistiqueController extends Controller
 
           /*  echo '<pre>';
             print_r(collect($datapoints['datasets'])->pluck('label'));
+            [dates] => 04/04/2019 - 04/28/2019
             echo '</pre>';
             exit();*/
         }
