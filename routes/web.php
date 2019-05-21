@@ -53,6 +53,10 @@ Route::post('reponse', 'ReponseController@store');
 Route::post('sendMessage','ContactController@sendMessage');
 Route::get('/','HomeController@index');
 
+Route::group(['prefix' => 'test2019'], function () {
+    Route::get('/', 'Frontend\PubdroitController@index');
+});
+
 Route::group(['middleware' => ['site','impostor']], function () {
     
     Route::group(['prefix' => 'pubdroit'], function () {

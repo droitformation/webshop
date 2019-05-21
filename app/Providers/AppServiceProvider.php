@@ -61,6 +61,7 @@ class AppServiceProvider extends ServiceProvider {
         ], 'App\Http\ViewComposers\LabelComposer');
 
         view()->composer([
+            'frontend.pubdroit.layouts.master2019',
             'frontend.pubdroit.partials.menu',
             'frontend.pubdroit.layouts.master',
             'frontend.pubdroit.subscribe',
