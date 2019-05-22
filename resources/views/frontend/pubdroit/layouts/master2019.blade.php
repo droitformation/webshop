@@ -55,61 +55,63 @@
 		<div id="wrapper" class="d-flex flex-column">
 			<!-- Start Main Header -->
 
-			<section class="container">
+			<section id="wrapper-header">
+				<div class="container">
+					<nav id="preheader">
 
-				<nav id="preheader">
-					<div><a id="logo" href="{{ url('/') }}">publications<span>-droit</span></a></div>
+						<div><a id="logo" href="{{ url('/') }}">publications<span>-droit</span></a></div>
 
-					<div id="mainnav">
-						<a href="{{ url('/') }}" class="active">Accueil</a>
-						@if(!$menus->isEmpty())
-							<?php $menu = $menus->where('position','main'); ?>
-							@if(!$menu->isEmpty())
-								<?php $menu = $menu[1]->load('active'); ?>
-								@if(!$menu->active->isEmpty())
-									@foreach($menu->active as $page)
-										{!! $page->page_url !!}
-									@endforeach
+						<div id="mainnav">
+							<a href="{{ url('/') }}" class="active">Accueil</a>
+							@if(!$menus->isEmpty())
+								<?php $menu = $menus->where('position','main'); ?>
+								@if(!$menu->isEmpty())
+									<?php $menu = $menu[1]->load('active'); ?>
+									@if(!$menu->active->isEmpty())
+										@foreach($menu->active as $page)
+											{!! $page->page_url !!}
+										@endforeach
+									@endif
 								@endif
 							@endif
-						@endif
-					</div>
+						</div>
 
-					@inject('cart_worker', 'App\Droit\Shop\Cart\Worker\CartWorker')
+						@inject('cart_worker', 'App\Droit\Shop\Cart\Worker\CartWorker')
 
-					<div id="nav_btn" class="text-right">
-						@if (!Auth::check())
-							<div class="btn-group">
-								<a href="{{ url('login')}}" class="btn btn-default navbar-login "><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
-								<a href="{{ url('register')}}" class="btn navbar-register btn-primary navbar-login "><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
-							</div>
-						@endif
-						@if (Auth::check())
-
-							@if(Auth::user()->role_admin)
-								<a class="btn btn-admin " href="{{ url('admin') }}">Admin</a>
-							@endif
-
-
-							<div class="dropdown">
-								<button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} |
-									{{ $cart_worker->countCart() > 0 ? $cart_worker->totalCart() : '0.00' }} CHF
-								</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="{{ url('pubdroit/checkout/cart') }}"><i class="fa fa-shopping-cart"></i> Panier</a></a>
-									<a class="dropdown-item" href="{{ url('pubdroit/profil') }}"><i class="fa fa-user"></i>  Mon compte</a>
+						<div id="nav_btn" class="text-right">
+							@if (!Auth::check())
+								<div class="btn-group">
+									<a href="{{ url('login')}}" class="btn btn-default navbar-login "><i class="fa fa-lock"></i>&nbsp; {{ trans('message.login') }}</a>
+									<a href="{{ url('register')}}" class="btn navbar-register btn-primary navbar-login "><i class="fa fa-edit"></i>&nbsp; {{ trans('message.register') }}</a>
 								</div>
-							</div>
+							@endif
+							@if (Auth::check())
 
-						{{--	<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
-								<button class="btn btn-default btn-xs" type="submit"><i class="fa fa-power-off" aria-hidden="true"></i></button>
-							</form>--}}
+								@if(Auth::user()->role_admin)
+									<a class="btn btn-admin " href="{{ url('admin') }}">Admin</a>
+								@endif
 
-						@endif
-					</div>
-					<div class="text-right"><img width="105" height="65" src="{{ secure_asset('frontend/2019/images/unine.svg') }}" alt="homepage"></div>
-				</nav>
+
+								<div class="dropdown">
+									<button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} |
+										{{ $cart_worker->countCart() > 0 ? $cart_worker->totalCart() : '0.00' }} CHF
+									</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item" href="{{ url('pubdroit/checkout/cart') }}"><i class="fa fa-shopping-cart"></i> Panier</a></a>
+										<a class="dropdown-item" href="{{ url('pubdroit/profil') }}"><i class="fa fa-user"></i>  Mon compte</a>
+									</div>
+								</div>
+
+							{{--	<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
+									<button class="btn btn-default btn-xs" type="submit"><i class="fa fa-power-off" aria-hidden="true"></i></button>
+								</form>--}}
+
+							@endif
+						</div>
+						<div class="text-right"><img width="105" height="65" src="{{ secure_asset('frontend/2019/images/unine.svg') }}" alt="homepage"></div>
+					</nav>
+				</div>
 			</section>
 
 
@@ -120,7 +122,7 @@
 							<div class="input-group">
 								<input type="text" class="form-control" name="term"  placeholder="Rechercher sur le site...">
 								<div class="input-group-append">
-									<button class="btn btn-outline-secondary" type="submit" id="button-addon2">OK</button>
+									<button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
 								</div>
 							</div>
 						</form>
@@ -129,7 +131,7 @@
 				</div>
 				<div id="filters">
 					<div class="container">
-						<div class="col">
+
 							<div class="dropdown">
 								<button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Dropdown button
@@ -150,11 +152,10 @@
 								</div>
 							</div>
 						</div>
-					</div>
+
 				</div>
 			</header>
 			<!-- End Main Header -->
-
 
 			@include('alert::bootstrap')
 

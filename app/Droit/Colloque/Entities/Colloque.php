@@ -137,6 +137,11 @@ class Colloque extends Model implements HasMedia
         return $this->full ? '' : false;
     }
 
+    public function getRegisterUrlAttribute()
+    {
+        return $this->url ? $this->url : url('pubdroit/colloque/'.$this->id);
+    }
+
     public function getDescriptionAttribute()
     {
         $html  = $this->titre.', ';

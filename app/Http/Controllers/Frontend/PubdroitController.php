@@ -67,7 +67,7 @@ class PubdroitController extends Controller {
         $nouveautes = $this->product->getByCategorie('Nouveautés');
 
         $page       = $this->page->getBySlug($this->site_id,'accueil');
-        $colloques  = $this->colloque->getCurrent();
+        $colloques  = $this->colloque->getCurrent()->take(3);
         $abos       = $this->abo->getAllFrontend();
 
         $abos = $abos->map(function($abo, $key) {

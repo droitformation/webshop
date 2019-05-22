@@ -47,11 +47,11 @@ class OptionController extends Controller {
     {
         $data = $request->input('option');
 
-        collect($data['groupe'])->reject(function ($item, $key) {
+        $data['groupe'] = isset($data['groupe']) && !empty($data['groupe']) ? collect($data['groupe'])->reject(function ($item, $key) {
             return empty($item['text']);
         })->each(function ($group, $key) {
             $this->group->update(['id' => $group['id'], 'text' => $group['text']]);
-        });
+        }) : [];
 
         $item     = $this->option->update($data);
         $colloque = $this->colloque->find($data['colloque_id']);
