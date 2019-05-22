@@ -75,6 +75,7 @@
 						@endif
 					</div>
 
+					@inject('cart_worker', 'App\Droit\Shop\Cart\Worker\CartWorker')
 
 					<div id="nav_btn" class="text-right">
 						@if (!Auth::check())
@@ -89,9 +90,17 @@
 								<a class="btn btn-admin " href="{{ url('admin') }}">Admin</a>
 							@endif
 
-							<a class="btn btn-default btn-profile" href="{{ url('pubdroit/profil') }}">
-								{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} | Mon compte
-							</a>
+
+							<div class="dropdown">
+								<button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} |
+									{{ $cart_worker->countCart() > 0 ? $cart_worker->totalCart() : '0.00' }} CHF
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="{{ url('pubdroit/checkout/cart') }}"><i class="fa fa-shopping-cart"></i> Panier</a></a>
+									<a class="dropdown-item" href="{{ url('pubdroit/profil') }}"><i class="fa fa-user"></i>  Mon compte</a>
+								</div>
+							</div>
 
 						{{--	<form class="logout" action="{{ url('logout') }}" method="POST">{{ csrf_field() }}
 								<button class="btn btn-default btn-xs" type="submit"><i class="fa fa-power-off" aria-hidden="true"></i></button>
@@ -104,13 +113,45 @@
 			</section>
 
 
-            <header id="main-header">
-				<img src="{{ secure_asset('images/pubdroit/book_shelf.jpg') }}" alt="homepage" class="bg_header">
-				<section class="container">
-					<section class="col">
+            <header id="main-header-banner">
+				<div id="illu">
+					<div class="search-bar">
+						<form action="{{ url('pubdroit/search') }}" method="post">{!! csrf_field() !!}
+							<div class="input-group">
+								<input type="text" class="form-control" name="term"  placeholder="Rechercher sur le site...">
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="submit" id="button-addon2">OK</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<span><img src="{{ secure_asset('frontend/2019/images/books.jpg') }}" alt="homepage"></span>
+				</div>
+				<div id="filters">
+					<div class="container">
+						<div class="col">
+							<div class="dropdown">
+								<button class="btn btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Dropdown button
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">Action</a>
+									<a class="dropdown-item" href="#">Another action</a>
+									<a class="dropdown-item" href="#">Something else here</a>
+								</div>
+							</div>
 
-					</section>
-				</section>
+							<div class="navbar">
+								<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#labels">
+									<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+								</button>
+								<div class="nav-collapse collapse in" id="labels">
+									@include('frontend.pubdroit.partials.label')
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</header>
 			<!-- End Main Header -->
 
@@ -122,38 +163,13 @@
 				@include('partials.confirmation')
 			</div>
 
-			<!-- Start Main Nav Bar -->
-
-            <nav id="nav">
-                <section class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="navbar">
-                                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#labels">
-                                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                                </button>
-                                <div class="nav-collapse collapse in" id="labels">
-                                    @include('frontend.pubdroit.partials.label')
-                                </div>
-                                <div class="search-bar">
-                                    <form action="{{ url('pubdroit/search') }}" method="post">{!! csrf_field() !!}
-                                        <input name="term" type="text" placeholder="Rechercher sur le site..." />
-                                        <button type="submit" class="button-default">ok</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </nav><!-- /.navbar -->
-
-            <!-- End Main Nav Bar -->
-
 			<!-- Start Main Content Holder -->
-			<section id="content-holder" class="container">
-				<!-- Contenu -->
-				@yield('content')
-				<!-- Fin contenu -->
+			<section id="content-wrapper">
+				<div class="container">
+					<!-- Contenu -->
+					@yield('content')
+					<!-- Fin contenu -->
+				</div>
 			</section>
 			<!-- End Main Content Holder -->
 
