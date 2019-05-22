@@ -57,23 +57,8 @@ class OptionEloquent implements OptionInterface{
 
         $option = $this->option->findOrFail($data['id']);
 
-        if(!$option)
-        {
+        if(!$option) {
             return false;
-        }
-
-        if(isset($data['groupe']))
-        {
-            $option->groupe()->delete();
-
-            foreach($data['groupe'] as $choice)
-            {
-                $option->groupe()->create([
-                    'text'        => $choice['text'],
-                    'colloque_id' => $data['colloque_id'],
-                    'option_id'   => $option->id
-                ]);
-            }
         }
 
         $option->fill($data);
