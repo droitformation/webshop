@@ -1,9 +1,10 @@
 @extends('frontend.pubdroit.layouts.master2019')
 @section('content')
 
-    <section class="list-cards colloque-cards">
-
-    </section>
+    <h1 class="main-title main-title-border maint-title-link">
+        <span><i class="fa fa-calendar"></i>&nbsp; Prochains évenements</span>
+        <a href="{{ url('') }}">Voir plus &nbsp;<i class="fas fa-caret-right"></i></a>
+    </h1>
 
     <section class="list-cards">
         @if(!$colloques->isEmpty())
@@ -14,7 +15,9 @@
                     </a>
                     <div class="colloque-card-infos">
                         <h3><a href="{{ $colloque->register_url }}"><strong>{{ $colloque->titre }}</strong></a></h3>
-                        <span class="comments-num">{{ $colloque->soustitre }}</span>
+                        <div class="colloque-card-content">
+                            <p>{{ $colloque->sujet }}</p>
+                        </div>
                         <p><i class="fa fa-calendar"></i>&nbsp; {{ $colloque->event_date }}</p>
                     </div>
                 </article>
@@ -22,19 +25,32 @@
         @endif
     </section>
 
-    <h3><a href="{{ $colloque->register_url }}"><strong>{{ $colloque->titre }}</strong></a></h3>
-    <span class="comments-num">{{ $colloque->soustitre }}</span>
-    <p><i class="fa fa-calendar"></i>&nbsp; {{ $colloque->event_date }}</p>
-    <p><strong>Lieu: </strong>
-        {{ $colloque->location ? $colloque->location->name : '' }}, {!! $colloque->location ? strip_tags($colloque->location->adresse) : '' !!}</p>
-    {!! $colloque->remarque !!}
+    <h1 class="main-title main-title-border maint-title-link">
+        <span><i class="fa fa-book"></i>&nbsp; Dernières publications</span>
+        <a href="{{ url('') }}">Voir plus &nbsp;<i class="fas fa-caret-right"></i></a>
+    </h1>
 
-    <div class="btn-group pull-right">
-        @if($colloque->is_open)
-            <a class="more-btn btn-sm" href="{{ $colloque->register_url }}">Inscription</a>
-        @else
-            <p class="text-danger">COMPLET</p>
+    <section class="list-cards list-cards-books">
+        @if(isset($products) && !$products->isEmpty())
+            @foreach($products as $product)
+                <article class="book-card">
+                    <a class="book-card-thumb" href="{{ url('pubdroit/product/'.$product->id) }}">
+                        <img src="{{ secure_asset('files/products/'.$product->image) }}" alt="{{ $product->title }}" />
+                    </a>
+                    <div class="book-card-infos">
+                        <h3><a href="{{ url('pubdroit/product/'.$product->id) }}">{{ $product->title }}</a></h3>
+                        <div class="book-card-content">
+                            @if(!$product->authors->isEmpty())
+                                @foreach($product->authors as $author)
+                                    <p>{{ $author->name }}</p>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </article>
+            @endforeach
         @endif
-    </div>
+    </section>
+
 
 @stop

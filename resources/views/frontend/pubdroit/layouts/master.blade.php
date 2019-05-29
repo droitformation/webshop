@@ -124,7 +124,6 @@
             <header id="main-header">
 				<img src="{{ secure_asset('images/pubdroit/book_shelf.jpg') }}" alt="homepage" class="bg_header">
 				<section class="container">
-
 					<section class="row" id="header">
 						<section class="col-md-6 col-xs-12">
 							<h1 id="logo">

@@ -63,7 +63,7 @@ class PubdroitController extends Controller {
 	 */
 	public function index()
 	{
-		$products   = $this->product->getNbr(5);// nbr and hidden
+		$products   = $this->product->getNbr(4);// nbr and hidden
         $nouveautes = $this->product->getByCategorie('Nouveautés');
 
         $page       = $this->page->getBySlug($this->site_id,'accueil');
