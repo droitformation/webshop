@@ -77,6 +77,20 @@ class Abo_users extends Model{
         return isset($this->user) ? $this->user : null;
     }
 
+    public function getMainAdresseAttribute()
+    {
+        // Change to user
+        if(isset($this->realuser)) {
+            return !$this->realuser->primary_adresse->isEmpty() ? $this->realuser->primary_adresse->first() : null;
+        }
+
+        if(isset($this->user)) {
+            return !$this->user->primary_adresse->isEmpty() ? $this->user->primary_adresse->first() : null;
+        }
+
+        return null;
+    }
+
     public function getUserFacturationAttribute()
     {
         // Change to user

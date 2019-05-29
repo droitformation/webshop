@@ -88,6 +88,24 @@ class AboGenerateTest extends TestCase
         $this->assertSame($response->name, $abo_user->user_facturation->name);
     }
 
+    public function testGetAboAdresseName()
+    {
+        $make  = new \tests\factories\ObjectFactory();
+
+        $user    = $make->makeUser();
+        $adresse = $make->adresse($user);
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeUserAbonnement($abo, $user, true);
+
+        $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->create(['abo_user_id' => $abo_user->id ,'product_id' => $abo->current_product->id]);
+
+        $generate = new \App\Droit\Generate\Entities\AboGenerate($abo_facture);
+        $response = $generate->getDetenteurAdresse();
+
+        $this->assertSame($response->main_name, $adresse->main_name);
+    }
+
     public function testGetAboFilename()
     {
         $make  = new \tests\factories\ObjectFactory();

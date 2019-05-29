@@ -163,9 +163,10 @@ Route::get('testing', function() {
     $author = $model->find(75);
 
     $tests = File::allfiles(base_path('tests'));
+    $cindy = $adresses->find(5522);
 
     echo '<pre>';
-    print_r(count($tests));
+    print_r($cindy->main_adresse);
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {

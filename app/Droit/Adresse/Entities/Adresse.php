@@ -93,6 +93,11 @@ class Adresse extends Model {
         return str_slug($this->last_name);
     }
 
+    public function getMainAdresseAttribute()
+    {
+        return $this->name.', '.$this->adresse.', '.$this->npa.' '.$this->ville;
+    }
+
     public function getInvoiceNameAttribute()
     {
         $name = [];

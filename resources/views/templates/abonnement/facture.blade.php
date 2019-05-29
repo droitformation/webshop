@@ -89,8 +89,7 @@
                 <tr>
                     <td colspan="3" style="padding-top: 4px;">
                         <p><cite>
-                            Destinataire : {{ $generate->getDetenteur()->name }},
-                                {{ $generate->getDetenteur()->company }} n/réf.
+                            Destinataire : {{ $generate->getDetenteurAdresse()->main_adresse }}, n/réf.
                                 {{ isset($abo->reference) && !empty($abo->reference) ? $abo->reference : $abo->numero }}
                         </cite></p>
                     </td>

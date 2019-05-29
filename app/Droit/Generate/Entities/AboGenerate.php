@@ -26,6 +26,13 @@ class AboGenerate{
         return $abonnement->user_adresse; // if tiers
     }
 
+    public function getDetenteurAdresse()
+    {
+        $abonnement = $this->model->abonnement->load('user','tiers','realuser','tiers_user');
+
+        return $abonnement->main_adresse;
+    }
+
     public function getAdresse()
     {
         $abonnement = $this->model->abonnement->load('user','tiers','realuser','tiers_user');
