@@ -3,5 +3,5 @@
     @if(!empty($bloc->titre))
         <h2>{{ $bloc->titre }}</h2>
     @endif
-    {!! $bloc->contenu !!}
+    {!! $bloc->clean_content !!}
 </div><hr>

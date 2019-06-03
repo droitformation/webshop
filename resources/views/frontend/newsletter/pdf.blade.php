@@ -11,7 +11,7 @@
 
     @if(!$campagne->content->isEmpty())
         @foreach($campagne->content as $bloc)
-            {!! view('frontend.newsletter.print.'.$bloc->type->partial)->with(['bloc' => $bloc , 'campagne' => $campagne])->__toString() !!}
+             @include('frontend.newsletter.print.'.$bloc->type->partial, ['bloc' => $bloc , 'campagne' => $campagne])
         @endforeach
     @endif
 

@@ -167,3 +167,8 @@ function setEnv($key, $value)
         file_get_contents(app()->environmentFilePath())
     ));
 }
+
+
+function removeTag($str) {
+    return strip_tags($str,'<p><b><strong><ul><li><i><h1><h2><h3><h4><h5>');
+}

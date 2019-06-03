@@ -165,8 +165,11 @@ Route::get('testing', function() {
     $tests = File::allfiles(base_path('tests'));
     $cindy = $adresses->find(5522);
 
+    $strings = 'Aptente odio neque étiam grâvida suscipit <b>séllicitudén potenti</b> taciti tristique, venenatis tortor sempér quisquées aliquet 
+    rûtrum aliquét sém commodoé, <a href="http://asdad.ch">variûs vivamùs</a> du grâvida liçlà.<p> Habitant augueé métus pharetra urna</p> l\'magna pésuéré pérès iaculisé fames.';
+
     echo '<pre>';
-    print_r($cindy->main_adresse);
+    print_r(removeTag($strings, 'a'));
     echo '</pre>';exit();
 
 /*    foreach (range(0, 9900, 500) as $i) {
