@@ -7,15 +7,34 @@
         <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit/checkout/billing') }}"><span aria-hidden="true">&larr;</span> Retour à l'adresse</a></p>
 
         <div class="heading-bar">
-            <h2>3. Résumé de votre commande</h2>
+            <h2>4. Résumé de votre commande</h2>
             <span class="h-line"></span>
         </div>
 
-        <h4>Adresse de livraison</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Adresse de livraison</h4>
 
-        <address id="userAdresse">
-            @include('frontend.pubdroit.partials.user-livraison')
-        </address>
+                <address id="userAdresse">
+                    @include('frontend.pubdroit.partials.user-livraison')
+                </address>
+            </div>
+            <div class="col-md-3">
+                <h4>Adresse de facturation</h4>
+
+                <address id="userAdresse">
+                    @include('frontend.pubdroit.partials.user-facturation')
+                </address>
+
+            </div>
+            <div class="col-md-3">
+                <h4>&nbsp;</h4>
+                {!! session()->has('reference_no') ? '<p><strong>Votre référence:</strong><br><i>'.session()->get('reference_no').'</i></p>' : '' !!}
+                {!! session()->has('transaction_no') ? '<p><strong>N° commande:</strong><br><i>'.session()->get('transaction_no').'</i></p>' : '' !!}
+
+            </div>
+        </div>
+
 
         @if(!Cart::instance('shop')->content()->isEmpty() || !Cart::instance('abonnement')->content()->isEmpty())
 
@@ -90,6 +109,6 @@
         @endif
 
     </div>
-</section>
+</div>
 
 @stop

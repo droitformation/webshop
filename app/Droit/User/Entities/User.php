@@ -114,14 +114,7 @@ class User extends Authenticatable {
 
     public function getAdresseFacturationAttribute()
     {
-        if(isset($this->adresses))
-        {
-            return $this->adresses->first(function ($adresse, $key) {
-                return $adresse->type == 1;
-            });
-        }
-
-        return false;
+        return !$this->facturation_adresse->isEmpty() ? $this->facturation_adresse->first() : $this->adresse_contact;
     }
 
     public function getAdresseSpecialisationsAttribute()
@@ -245,7 +238,14 @@ class User extends Authenticatable {
 
     public function primary_adresse()
     {
-        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')->where('type', '=', 1);
+        return $this->hasOne('App\Droit\Adresse\Entities\Adresse','user_id', 'id')
+            ->where('type', '=', 1);
+    }
+
+    public function facturation_adresse()
+    {
+        return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')
+            ->where('type', '=', 4);
     }
 
     public function adresses_and_trashed()

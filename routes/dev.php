@@ -163,7 +163,18 @@ Route::get('testing', function() {
     $author = $model->find(75);
 
     $tests = File::allfiles(base_path('tests'));
+
+    $user         = \App::make('App\Droit\User\Repo\UserInterface');
     $cindy = $adresses->find(5522);
+    $cindy = $user->find(710);
+
+    $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order = $model->find(4395);
+
+    echo '<pre>';
+    print_r($order->reference);
+    echo '</pre>';
+    exit();
 
     $strings = 'Aptente odio neque étiam grâvida suscipit <b>séllicitudén potenti</b> taciti tristique, venenatis tortor sempér quisquées aliquet 
     rûtrum aliquét sém commodoé, <a href="http://asdad.ch">variûs vivamùs</a> du grâvida liçlà.<p> Habitant augueé métus pharetra urna</p> l\'magna pésuéré pérès iaculisé fames.';
@@ -315,7 +326,7 @@ exit();
 
     /*    $rappel_model    = \App::make('App\Droit\Shop\Rappel\Repo\RappelInterface');
         $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-        $orders = $model->getLast(1);
+        $orders = $model->find(4395);
         $rappel = $rappel_model->find(27);
         $order  = $orders->find(3263);
 

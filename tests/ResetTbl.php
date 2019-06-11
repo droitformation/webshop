@@ -74,6 +74,7 @@ trait ResetTbl
         \DB::table('subject_authors')->truncate();
         \DB::table('subject_categories')->truncate();
         \DB::table('subjects')->truncate();
+        \DB::table('transaction_references')->truncate();
         \DB::table('users')->truncate();
 
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');

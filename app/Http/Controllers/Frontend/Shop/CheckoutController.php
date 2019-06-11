@@ -48,12 +48,26 @@ class CheckoutController extends Controller {
     }
 
     /**
+     * Display contact form
+     *
+     * @return Response
+     */
+    public function contact()
+    {
+        return view('frontend.pubdroit.checkout.contact')->with(['user' => \Auth::user()]);
+    }
+
+    /**
      * Display billing form
      *
      * @return Response
      */
-    public function billing()
+    public function billing(Request $request)
     {
+        if(!empty($request->except('_token'))){
+            $this->adresse->contact($request->except('_token'));
+        }
+
         return view('frontend.pubdroit.checkout.billing')->with(['user' => \Auth::user()]);
     }
 
@@ -64,13 +78,11 @@ class CheckoutController extends Controller {
      */
     public function resume(Request $request)
     {
-        $data = $request->all();
+        if(!empty($request->except('_token'))){
+            $this->adresse->facturation($request->except('_token'));
 
-        if(!empty($data))
-        {
-            $action = isset($data['id']) ? 'update' : 'create';
-            
-            $this->adresse->$action($data);
+            session()->put('reference_no', $request->input('reference_no',null));
+            session()->put('transaction_no', $request->input('transaction_no',null));
         }
 
         $shipping  = $this->checkout->totalShipping();

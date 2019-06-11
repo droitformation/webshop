@@ -72,4 +72,9 @@ class OrderGenerate
 
         return public_path('files/shop/factures/facture_'.$this->order->order_no.'.pdf');
     }
+
+    public function getReferences()
+    {
+        return $this->order->reference;
+    }
 }

@@ -70,6 +70,7 @@ h3{
 
 #user li,#tva li{
     font-size: 12px;
+    line-height: 13px;
 }
 
 #facdroit li{
@@ -297,4 +298,17 @@ td.pad-b{
     background: #f0f0f0;
     border-top:1px solid #e1e1e1;
     padding-top: 3px;
+}
+
+#user_adresse{
+
+}
+
+#user_reference{
+    margin-top: 5px;
+}
+
+#user_reference p,
+#user_reference p i{
+    font-size: 10px;
 }

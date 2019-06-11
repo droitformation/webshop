@@ -118,7 +118,28 @@ class OrderMaker implements OrderMakerInterface{
             throw new \App\Exceptions\OrderCreationException('Problème lors de la commande');
         }
 
+        $this->setReferences($order);
+
         return $order;
+    }
+
+    public function setReferences($order)
+    {
+        $references = [];
+        // if we have references
+        $references['reference_no']   = session()->pull('reference_no');
+        $references['transaction_no'] = session()->pull('transaction_no');
+
+        if(!empty(array_filter($references))){
+            $reference = \App\Droit\Transaction\Entities\Transaction_reference::create(array_filter($references));
+
+            $order->reference_id = $reference->id;
+            $order->save();
+
+            return $reference;
+        }
+
+        return null;
     }
 
     /*

@@ -164,6 +164,57 @@ class FeatureProfileTest extends TestCase
         ]);
     }
 
+    public function testCreateOrUpdateFacturationAdresse()
+    {
+        $model = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = $make->makeUser();
+
+        // Create
+        $data = [
+            'civilite_id'   => 4,
+            'first_name'    => 'Marc',
+            'last_name'     => 'Leschaud',
+            'email'         => 'marc.leschaud@romandie.com',
+            'company'       => null,
+            'adresse'       => 'La Voirde 19',
+            'npa'           => '2735',
+            'ville'         => 'Bévilard',
+            'canton_id'     => 8,
+            'pays_id'       => 208,
+            'type'          => 4,
+            'user_id'       => $person->id,
+        ];
+
+        $this->assertDatabaseMissing('adresses', $data);
+
+        $created = $model->facturation($data);
+
+        $this->assertDatabaseHas('adresses', $data);
+
+        // Update
+        $data_updated = [
+            'id'            => $created->id,
+            'civilite_id'   => 4,
+            'first_name'    => 'Marc Yvon Jules',
+            'last_name'     => 'Leschaud',
+            'email'         => 'marc1958@romandie.com',
+            'company'       => 'Papa',
+            'adresse'       => 'La Voirde 19',
+            'npa'           => '2735',
+            'ville'         => 'Bévilard',
+            'canton_id'     => 9,
+            'pays_id'       => 208,
+            'type'          => 4,
+            'user_id'       => $person->id,
+        ];
+
+        $updated = $model->facturation($data_updated);
+
+        $this->assertDatabaseHas('adresses', $data_updated);
+    }
+
     public function testProfilInscriptionsUser()
     {
         $user = factory(\App\Droit\User\Entities\User::class)->create();
@@ -174,7 +225,6 @@ class FeatureProfileTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewHas('user');
     }
-
 
     public function testAboUser()
     {

@@ -109,7 +109,8 @@ Route::group(['middleware' => ['site','impostor']], function () {
 
             /* Checkout routes for frontend shop  */
             Route::get('checkout/cart',  'Frontend\Shop\CheckoutController@cart');
-            Route::get('checkout/billing',  'Frontend\Shop\CheckoutController@billing');
+            Route::get('checkout/contact',  'Frontend\Shop\CheckoutController@contact');
+            Route::match(['get', 'post'], 'checkout/billing', 'Frontend\Shop\CheckoutController@billing');
             Route::match(['get', 'post'],'checkout/resume', 'Frontend\Shop\CheckoutController@resume');
             Route::get('checkout/confirm',  'Frontend\Shop\CheckoutController@confirm');
             Route::match(['get', 'post'],'checkout/send', 'Frontend\Shop\CheckoutController@send');

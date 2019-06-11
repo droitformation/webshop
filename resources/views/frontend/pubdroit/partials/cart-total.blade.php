@@ -45,7 +45,7 @@
                     </tr>
                 </table>
                 <p class="text-right">
-                    <a href="{{ url('pubdroit/checkout/billing') }}" id="btn-next-checkout" class="more-btn">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{ url('pubdroit/checkout/contact') }}" id="btn-next-checkout" class="more-btn">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></a>
                 </p>
             </div>
         </figure>

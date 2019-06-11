@@ -542,4 +542,40 @@ class OrderMakerTest extends TestCase
 
         $this->assertEquals(['user_id' => $user->id], $response);
     }
+
+    public function testMakeOrderWithReferences()
+    {
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $factory = new \tests\factories\ObjectFactory();
+        $user = $factory->makeUser([]);
+
+        $order = factory(\App\Droit\Shop\Order\Entities\Order::class)->create([
+            'user_id'     => $user->id,
+            'order_no'    => '2016-00020003',
+            'amount'      => '1500',
+            'coupon_id'   => null,
+            'shipping_id' => 6,
+            'payement_id' => 1,
+        ]);
+
+        $prod1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['weight' => 1000, 'price' => 1000,]);
+
+        $order->products()->attach([$prod1->id]);
+
+        session()->put('reference_no', 'Ref_2019_designpond');
+        session()->put('transaction_no', '2109_10_19824');
+
+        $references = $make->setReferences($order);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no' => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824'
+        ]);
+
+        $this->assertDatabaseHas('shop_orders', [
+            'id' => $order->id,
+            'reference_id' => $references->id
+        ]);
+    }
 }

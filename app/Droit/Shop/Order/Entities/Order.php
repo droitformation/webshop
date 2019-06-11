@@ -11,7 +11,7 @@ class Order extends Model{
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'status','payement_id', 'order_no', 'amount', 'shipping_id', 'paquet','onetimeurl', 'comment','admin','send_at','payed_at'];
+    protected $fillable = ['user_id', 'adresse_id', 'coupon_id', 'status','payement_id', 'reference_id', 'order_no', 'amount', 'shipping_id', 'paquet','onetimeurl', 'comment','admin','send_at','payed_at'];
 
     public function getPriceCentsAttribute()
     {
@@ -293,5 +293,10 @@ class Order extends Model{
     public function rappels()
     {
         return $this->hasMany('App\Droit\Shop\Rappel\Entities\Rappel');
+    }
+
+    public function reference()
+    {
+        return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference');
     }
 }

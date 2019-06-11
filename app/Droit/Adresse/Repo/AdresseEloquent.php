@@ -291,6 +291,50 @@ class AdresseEloquent implements AdresseInterface{
 		return $adresse;
 	}
 
+    public function contact(array $data)
+    {
+        return $this->adresse->updateOrCreate(['user_id' => $data['user_id'], 'type' => 1], [
+            'civilite_id'   => (isset($data['civilite_id']) ? $data['civilite_id'] : 4),
+            'first_name'    => $this->format->formatingName($data['first_name']),
+            'last_name'     => $this->format->formatingName($data['last_name']),
+            'email'         => (isset($data['email']) ? $data['email'] : ''),
+            'company'       => (isset($data['company']) ? $data['company'] : null),
+            'profession_id' => (isset($data['profession_id']) ? $data['profession_id'] : null),
+            'adresse'       => $data['adresse'],
+            'cp'            => (isset($data['cp']) ? $data['cp'] : null),
+            'complement'    => (isset($data['complement']) ? $data['complement'] : null),
+            'npa'           => $data['npa'],
+            'ville'         => $data['ville'],
+            'canton_id'     => (isset($data['canton_id']) ? $data['canton_id'] : null),
+            'pays_id'       => (isset($data['pays_id']) ? $data['pays_id'] : 208),
+            'type'          => 1,
+            'user_id'       => $data['user_id'],
+            'livraison'     => 1,
+        ]);
+    }
+
+    public function facturation(array $data)
+    {
+        return $this->adresse->updateOrCreate(['user_id' => $data['user_id'], 'type' => 4], [
+            'civilite_id'   => (isset($data['civilite_id']) ? $data['civilite_id'] : 4),
+            'first_name'    => $this->format->formatingName($data['first_name']),
+            'last_name'     => $this->format->formatingName($data['last_name']),
+            'email'         => (isset($data['email']) ? $data['email'] : ''),
+            'profession_id' => (isset($data['profession_id']) ? $data['profession_id'] : null),
+            'company'       => (isset($data['company']) ? $data['company'] : null),
+            'adresse'       => $data['adresse'],
+            'cp'            => (isset($data['cp']) ? $data['cp'] : null),
+            'complement'    => (isset($data['complement']) ? $data['complement'] : null),
+            'npa'           => $data['npa'],
+            'ville'         => $data['ville'],
+            'canton_id'     => (isset($data['canton_id']) ? $data['canton_id'] : null),
+            'pays_id'       => (isset($data['pays_id']) ? $data['pays_id'] : 208),
+            'type'          => 4,
+            'user_id'       => $data['user_id'],
+            'livraison'     => null,
+        ]);
+	}
+
     public function changeType($adresse,$type)
     {
         // If there is a user for thei adresse and we change the type
