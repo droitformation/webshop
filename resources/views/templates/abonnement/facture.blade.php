@@ -32,7 +32,15 @@
                     </div>
                 </td>
                 <td align="top" width="40%" valign="top">
-                    @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
+                    @if($generate->getAdresse())
+                        @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
+                    @endif
+                    @if($generate->getReferences())
+                        <div id="user_reference">
+                            {!! !empty($generate->getReferences()->reference_no) ? '<p>Votre référence: <i>'.$generate->getReferences()->reference_no.'</i></p>' : '' !!}
+                            {!! !empty($generate->getReferences()->transaction_no) ? '<p>N° commande: <i>'.$generate->getReferences()->transaction_no.'</i></p>' : '' !!}
+                        </div>
+                    @endif
                 </td>
             </tr>
         </table>

@@ -15,7 +15,7 @@ class AboFactureEloquent implements AboFactureInterface{
     public function getAll($product_id)
     {
         return $this->facture
-            ->with(['abonnement','abonnement.user','abonnement.realuser','abonnement.realuser.primary_adresse','product','product.attributs','abonnement.abo','rappels'])
+            ->with(['abonnement','abonnement.user','abonnement.user.primary_adresse','product','product.attributs','abonnement.abo','rappels'])
             ->has('abonnement')
             ->where('product_id','=',$product_id)
             ->groupBy('abo_user_id')
@@ -25,14 +25,14 @@ class AboFactureEloquent implements AboFactureInterface{
     public function getMultiple($ids)
     {
         return $this->facture
-            ->with(['abonnement','abonnement.user','abonnement.realuser','product','product.attributs','abonnement.abo','rappels'])
+            ->with(['abonnement','abonnement.user','product','product.attributs','abonnement.abo','rappels'])
             ->whereIn('id',$ids)->get();
     }
 
     public function find($id)
     {
         return $this->facture
-            ->with(['abonnement','abonnement.user','abonnement.realuser','abonnement.realuser.primary_adresse','product','product.attributs','abonnement.abo','rappels'])
+            ->with(['abonnement','abonnement.user','abonnement.user.primary_adresse','product','product.attributs','abonnement.abo','rappels'])
             ->find($id);
     }
 

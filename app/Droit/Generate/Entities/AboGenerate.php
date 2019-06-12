@@ -17,32 +17,28 @@ class AboGenerate{
     public function __construct($model)
     {
         $this->model = $model;
+        $this->model->load('abonnement','abonnement.user','abonnement.tiers_user');
     }
 
     public function getDetenteur()
     {
-        $abonnement = $this->model->abonnement->load('user','tiers','realuser','tiers_user');
-
-        return $abonnement->user_adresse; // if tiers
+        return $this->model->abonnement->user_adresse; // if tiers
     }
 
     public function getDetenteurAdresse()
     {
-        $abonnement = $this->model->abonnement->load('user','tiers','realuser','tiers_user');
-
-        return $abonnement->main_adresse;
+        return $this->model->abonnement->user_adresse;
     }
 
     public function getAdresse()
     {
-        $abonnement = $this->model->abonnement->load('user','tiers','realuser','tiers_user');
+        $abonnement = $this->model->abonnement->load('user','tiers_user');
 
-        return ( ($abonnement->tiers_id > 0 || $abonnement->tiers_user_id > 0) && isset($abonnement->user_facturation)) ? $abonnement->user_facturation : $abonnement->user_adresse ; // if tiers
+        return $abonnement->user_facturation;
     }
 
     public function getAbo()
     {
-        $this->model->load('abonnement');
         return $this->model->abonnement;
     }
 
@@ -53,7 +49,7 @@ class AboGenerate{
 
     public function isTiers()
     {
-        return ($this->model->abonnement->tiers_id > 0 || $this->model->abonnement->tiers_user_id > 0) ? true : false;
+        return isset($this->model->abonnement->tiers_user) ? true : false;
     }
 
     public function getFilename($annexe,$name)
@@ -73,5 +69,10 @@ class AboGenerate{
         $file = $path.'/'.$annexe.'_'.$this->model->product->reference.'-'.$this->model->abo_user_id.'_'.$this->model->product_id.'.pdf';
 
         return public_path($file);
+    }
+
+    public function getReferences()
+    {
+        return $this->model->abonnement->references;
     }
 }

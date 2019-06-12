@@ -22,6 +22,7 @@ class AddUserIdToNewsletterAboUsers extends Migration
         Schema::table('abo_users', function (Blueprint $table) {
             $table->integer('user_id')->after('adresse_id')->nullable();
             $table->integer('tiers_user_id')->after('user_id')->nullable();
+            $table->integer('reference_id')->after('tiers_user_id')->nullable();
             $table->integer('adresse_id')->nullable()->change();
         });
     }

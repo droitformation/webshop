@@ -14,7 +14,7 @@ class AboEloquent implements AboInterface{
 
     public function getAll(){
 
-        return $this->abo->with(['products','abonnements','abonnements.realuser','abonnements.realuser.primary_adresse','abonnements.tiers_user'])->get();
+        return $this->abo->with(['products','abonnements','abonnements.user','abonnements.user.primary_adresse','abonnements.tiers_user'])->get();
     }
 
     public function getAllFrontend()
@@ -32,7 +32,7 @@ class AboEloquent implements AboInterface{
     }
 
     public function find($id){
-        return $this->abo->with(['abonnements','abonnements.user','abonnements.realuser.primary_adresse','abonnements.tiers_user.primary_adresse'])->find($id);
+        return $this->abo->with(['abonnements','abonnements.user','abonnements.user.primary_adresse','abonnements.tiers_user.primary_adresse'])->find($id);
     }
 
     public function findAboByProduct($id)

@@ -31,10 +31,8 @@
                 <h4>&nbsp;</h4>
                 {!! session()->has('reference_no') ? '<p><strong>Votre référence:</strong><br><i>'.session()->get('reference_no').'</i></p>' : '' !!}
                 {!! session()->has('transaction_no') ? '<p><strong>N° commande:</strong><br><i>'.session()->get('transaction_no').'</i></p>' : '' !!}
-
             </div>
         </div>
-
 
         @if(!Cart::instance('shop')->content()->isEmpty() || !Cart::instance('abonnement')->content()->isEmpty())
 

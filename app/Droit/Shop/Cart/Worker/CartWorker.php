@@ -405,14 +405,11 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
          $order = \Cart::instance('abonnement')->content();
          $user  = \Auth::user()->load('adresses');
 
-         $adresse_id = $user->adresse_livraison->id;
-
-         return $order->map(function ($item, $key) use ($adresse_id,$user) {
+         return $order->map(function ($item, $key) use ($user) {
              return [
                  'abo_id'         => $item->id,
                  'product_id'     => $item->options->product_id,
                  'exemplaires'    => 1,
-                 'adresse_id'     => null,
                  'user_id'        => $user->id,
                  'status'         => 'abonne',
                  'renouvellement' => 'auto'

@@ -141,4 +141,27 @@ class AboGenerateTest extends TestCase
 
         $this->assertEquals($response, public_path($file));
     }
+
+    public function testMakeOrderWithReferences()
+    {
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeAbonnement($abo);
+
+        session()->put('reference_no', 'Ref_2019_DesignPond');
+        session()->put('transaction_no', '2109_10_1982');
+
+        $reference = \App\Droit\Transaction\Reference::make($abo_user);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no' => 'Ref_2019_DesignPond',
+            'transaction_no' => '2109_10_1982'
+        ]);
+
+        $this->assertDatabaseHas('abo_users', [
+            'id' => $abo_user->id,
+            'reference_id' => $reference->id
+        ]);
+    }
 }

@@ -95,4 +95,34 @@ class AboFrontend extends TestCase
         ]);
 
     }
+
+    public function testAboOrderWithReference()
+    {
+        session()->put('reference_no', 'Ref_2019_1_DesignPond');
+        session()->put('transaction_no', '2109_1_10_1982');
+
+        \Mail::fake();
+        \Queue::fake();
+        \Event::fake();
+
+        $make     = new \tests\factories\ObjectFactory();
+        $abo      = $make->makeAbo();
+
+        // Add abo in cart
+        $reponse = $this->post('pubdroit/cart/addAbo', ['abo_id' => $abo->id]);
+
+        // Send order
+        $response = $this->get('pubdroit/checkout/send', []);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no' => 'Ref_2019_1_DesignPond',
+            'transaction_no' => '2109_1_10_1982'
+        ]);
+
+        $this->assertDatabaseHas('abo_users', [
+            'abo_id' => $abo->id,
+            'user_id' => $this->person->id,
+        ]);
+
+    }
 }

@@ -145,6 +145,7 @@ Route::get('testing', function() {
     $users        = \App::make('App\Droit\User\Repo\UserInterface');
     $adresses    = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
+    $abo_users       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
@@ -168,11 +169,13 @@ Route::get('testing', function() {
     $cindy = $adresses->find(5522);
     $cindy = $user->find(710);
 
+    $abo_cindy = $abo_users->find(1049);
+
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $order = $model->find(4395);
 
     echo '<pre>';
-    print_r($order->reference);
+    print_r($abo_cindy->load('references'));
     echo '</pre>';
     exit();
 

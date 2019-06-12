@@ -67,8 +67,7 @@ class AboWorker implements AboWorkerInterface{
     {
         $collection = new \Illuminate\Support\Collection();
 
-        foreach($data as $item)
-        {
+        foreach($data as $item) {
             // find abo and max number
             $max = $this->abonnement->max($item['abo_id']) + 1;
 
@@ -82,9 +81,13 @@ class AboWorker implements AboWorkerInterface{
             $this->generator->setPrint(true);
             $this->generator->makeAbo('facture', $facture);
 
+            // Mark reference if any
+            $reference = \App\Droit\Transaction\Reference::make($abonnement);
+
             $collection->push($abonnement);
         }
 
         return $collection;
     }
+
 }

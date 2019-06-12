@@ -566,7 +566,7 @@ class OrderMakerTest extends TestCase
         session()->put('reference_no', 'Ref_2019_designpond');
         session()->put('transaction_no', '2109_10_19824');
 
-        $references = $make->setReferences($order);
+        $reference = \App\Droit\Transaction\Reference::make($order);
 
         $this->assertDatabaseHas('transaction_references', [
             'reference_no' => 'Ref_2019_designpond',
@@ -575,7 +575,7 @@ class OrderMakerTest extends TestCase
 
         $this->assertDatabaseHas('shop_orders', [
             'id' => $order->id,
-            'reference_id' => $references->id
+            'reference_id' => $reference->id
         ]);
     }
 }

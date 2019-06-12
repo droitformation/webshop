@@ -10,7 +10,7 @@ class Abo_users extends Model{
     protected $table = 'abo_users';
     protected $dates = ['deleted_at'];
     protected $fillable = ['abo_id','numero','exemplaires','adresse_id','tiers_id','user_id','raison',
-        'tiers_user_id','price','reference','remarque','status','renouvellement','deleted_at'];
+        'tiers_user_id','price','reference', 'reference_id', 'remarque','status','renouvellement','deleted_at'];
 
     public function getAboNoAttribute()
     {
@@ -64,28 +64,14 @@ class Abo_users extends Model{
 
     public function getAboUserAttribute()
     {
-       return isset($this->realuser) ? $this->realuser : false;
+       return $this->user;
     }
 
     public function getUserAdresseAttribute()
     {
         // Change to user
-        if(isset($this->realuser)) {
-            return !$this->realuser->primary_adresse->isEmpty() ? $this->realuser->primary_adresse->first() : $this->user;
-        }
-
-        return isset($this->user) ? $this->user : null;
-    }
-
-    public function getMainAdresseAttribute()
-    {
-        // Change to user
-        if(isset($this->realuser)) {
-            return !$this->realuser->primary_adresse->isEmpty() ? $this->realuser->primary_adresse->first() : null;
-        }
-
-        if(isset($this->user)) {
-            return !$this->user->primary_adresse->isEmpty() ? $this->user->primary_adresse->first() : null;
+        if(isset($this->user) && isset($this->user->primary_adresse)) {
+            return $this->user->primary_adresse;
         }
 
         return null;
@@ -94,12 +80,9 @@ class Abo_users extends Model{
     public function getUserFacturationAttribute()
     {
         // Change to user
-        if(isset($this->tiers_user) && isset($this->tiers_user->adresse_contact)){
-            return $this->tiers_user->adresse_contact;
-        }
+        $user = isset($this->tiers_user) ? $this->tiers_user : $this->user;
 
-        // Fallback to adresse
-        return isset($this->tiers) ? $this->tiers : $this->user_adresse;
+        return isset($user->facturation_adresse) ? $user->facturation_adresse : $user->adresse_contact;
     }
 
     public function getSubstituteEmailAttribute()
@@ -176,12 +159,12 @@ class Abo_users extends Model{
         return $this->belongsTo('App\Droit\Abo\Entities\Abo','abo_id');
     }
 
-    public function user()
+/*    public function user()
     {
         return $this->belongsTo('App\Droit\Adresse\Entities\Adresse','adresse_id')->withTrashed();
-    }
+    }*/
 
-    public function realuser()
+    public function user()
     {
         return $this->belongsTo('App\Droit\User\Entities\User','user_id')->withTrashed();
     }
@@ -201,4 +184,8 @@ class Abo_users extends Model{
         return $this->hasMany('App\Droit\Abo\Entities\Abo_factures','abo_user_id','id');
     }
 
+    public function references()
+    {
+        return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference','reference_id');
+    }
 }

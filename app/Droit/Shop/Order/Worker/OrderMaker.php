@@ -118,17 +118,18 @@ class OrderMaker implements OrderMakerInterface{
             throw new \App\Exceptions\OrderCreationException('Problème lors de la commande');
         }
 
-        $this->setReferences($order);
+        // Mark reference if any
+        $reference = \App\Droit\Transaction\Reference::make($order);
 
         return $order;
     }
 
-    public function setReferences($order)
+ /*   public function setReferences($order)
     {
         $references = [];
         // if we have references
-        $references['reference_no']   = session()->pull('reference_no');
-        $references['transaction_no'] = session()->pull('transaction_no');
+        $references['reference_no']   = session()->get('reference_no');
+        $references['transaction_no'] = session()->get('transaction_no');
 
         if(!empty(array_filter($references))){
             $reference = \App\Droit\Transaction\Entities\Transaction_reference::create(array_filter($references));
@@ -140,7 +141,7 @@ class OrderMaker implements OrderMakerInterface{
         }
 
         return null;
-    }
+    }*/
 
     /*
      *  Get the user or make new adresse from backend

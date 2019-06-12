@@ -412,8 +412,8 @@ class ObjectFactory
         }
 
         return factory(\App\Droit\Abo\Entities\Abo_users::class)->create([
-         'abo_id'         => $abo->id,
-         'adresse_id'     => $user->adresses->first()->id,
+             'abo_id'   => $abo->id,
+             'user_id'  => $user->id,
         ]);
     }
 
