@@ -106,6 +106,8 @@ class OrderUpdate
     {
         $order = $this->repo_order->update($this->data);
 
+        $reference = \App\Droit\Transaction\Reference::update($order, \Arr::only($this->data,['reference_no','transaction_no']));
+
         if(isset($this->data['tva']) && !empty(array_filter($this->data['tva'])))
             $this->pdfgenerator->setTva($this->data['tva']);
 

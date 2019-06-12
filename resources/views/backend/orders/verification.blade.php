@@ -33,6 +33,8 @@
                                         </dd>
                                     @endif
 
+                                    {!! $preview->references() !!}
+
                                 </dl>
 
                             </div>

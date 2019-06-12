@@ -62,57 +62,80 @@
 
                         <fieldset class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label>
-                                            <i class="fa fa-truck"></i>&nbsp;&nbsp;Frais de port gratuit&nbsp;<input type="checkbox" {{ Session::has('free') && Session::get('free') == 1 ? 'checked' : '' }} name="free" value="1">
-                                        </label>
-                                    </div>
-                                    @if(!$shippings->isEmpty())
-                                        <p>-- ou --</p>
+
+                                <div class="well well-sm well-bloc">
+                                    <h4>Frais de port</h4>
+
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <i class="fa fa-truck"></i>&nbsp;&nbsp;Frais de port gratuit&nbsp;<input type="checkbox" {{ Session::has('free') && Session::get('free') == 1 ? 'checked' : '' }} name="free" value="1">
+                                            </label>
+                                        </div>
+                                        @if(!$shippings->isEmpty())
+                                            <p>-- ou --</p>
+                                            <div class="form-group">
+                                                <select name="shipping_id" class="form-control">
+                                                    <option value="" selected>Choix</option>
+                                                    @foreach($shippings as $shipping)
+                                                        <option {{ (Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id) }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
                                         <div class="form-group">
-                                            <select name="shipping_id" class="form-control">
+                                            <label>Nombre de paquets</label>
+                                            <select name="paquet" class="form-control">
                                                 <option value="" selected>Choix</option>
-                                                @foreach($shippings as $shipping)
-                                                    <option {{ (Session::has('shipping_id') && Session::get('shipping_id') == $shipping->id) }} value="{{ $shipping->id }}">{{ $shipping->title }} | {{ $shipping->price_cents }}</option>
+                                                @foreach(range(1,50) as $paquet)
+                                                    <option {{ Session::has('paquet') && Session::get('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">
+                                                        {{ $paquet }} paquet{{ $paquet > 1 ? 's' : '' }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                    @endif
-                                    <div class="form-group">
-                                        <label>Nombre de paquets</label>
-                                        <select name="paquet" class="form-control">
-                                            <option value="" selected>Choix</option>
-                                            @foreach(range(1,50) as $paquet)
-                                                <option {{ Session::has('paquet') && Session::get('paquet') == $paquet ? 'selected' : '' }} value="{{ $paquet }}">
-                                                    {{ $paquet }} paquet{{ $paquet > 1 ? 's' : '' }}
-                                                </option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="col-md-3">
-                                <label><i class="fa fa-dollar"></i>&nbsp; Modifier les taux de tva</label><br/>
 
-                                <div class="form-group input-group">
-                                    <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ Session::has('tva.taux_reduit') && Session::get('tva.taux_reduit') }}" placeholder="Réduit">
-                                    <span class="input-group-addon">%</span>
-                                </div><!-- /input-group -->
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="tva[taux_normal]" value="{{ Session::has('tva.taux_normal') && Session::get('tva.taux_normal') }}" placeholder="Normal">
-                                    <span class="input-group-addon">%</span>
-                                </div><!-- /input-group -->
+                                <div class="well well-sm well-bloc">
+                                    <h4>Ajouter des références</h4>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">N° référence</span>
+                                        <input class="form-control" type="text" name="reference_no" value="{{ old('reference_no', Session::get('reference_no')) }}" placeholder="">
+                                    </div><!-- /input-group -->
+                                    <div class="input-group">
+                                        <span class="input-group-addon">N° commande</span>
+                                        <input class="form-control" type="text" name="transaction_no" value="{{ old('transaction_no', Session::get('transaction_no')) }}" placeholder="">
+                                    </div><!-- /input-group -->
+                                </div>
+
+                                <div class="well well-sm well-bloc">
+                                    <h4>Modifier les taux de tva</h4>
+                                    <div class="form-group input-group">
+                                        <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ Session::has('tva.taux_reduit') && Session::get('tva.taux_reduit') }}" placeholder="Réduit">
+                                        <span class="input-group-addon">%</span>
+                                    </div><!-- /input-group -->
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="tva[taux_normal]" value="{{ Session::has('tva.taux_normal') && Session::get('tva.taux_normal') }}" placeholder="Normal">
+                                        <span class="input-group-addon">%</span>
+                                    </div><!-- /input-group -->
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label><i class="fa fa-info-circle"></i>&nbsp; Phrases d'informations</label><br/>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="comment[warning]" value="{{ Session::has('comment.warning') ? Session::get('comment.warning') : old('comment.warning') }}" placeholder="Ajouter une phrase d'information">
-                                </div>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
-                                    <input class="form-control" type="text" name="comment[special]" value="{{ Session::has('comment.special') ? Session::get('comment.special') : old('comment.special') }}" placeholder="Information pour librairies">
+                                <div class="well well-sm well-bloc">
+                                    <h4>Communications</h4>
+                                    <label><i class="fa fa-info-circle"></i>&nbsp; Phrases d'informations</label><br/>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon" style="background: #f1c40f; padding: 2px;min-width: 15px;"></span>
+                                        <input class="form-control" type="text" name="comment[warning]" value="{{ Session::has('comment.warning') ? Session::get('comment.warning') : old('comment.warning') }}" placeholder="Ajouter une phrase d'information">
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon" style="background: #85c744;padding: 2px;min-width: 15px;"></span>
+                                        <input class="form-control" type="text" name="comment[special]" value="{{ Session::has('comment.special') ? Session::get('comment.special') : old('comment.special') }}" placeholder="Information pour librairies">
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>

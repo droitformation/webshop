@@ -140,4 +140,17 @@ class OrderPreview
 
         return $money->format($total);
     }
+
+    public function references()
+    {
+        $html = '';
+
+        if(!empty($this->data['reference_no']) || $this->data['transaction_no']){
+            $html .= '<dt>Références</dt>';
+            $html .= isset($this->data['reference_no']) && !empty($this->data['reference_no']) ? '<dd>N° référence: <i> '.$this->data['reference_no'].'</i></dd>' : '';
+            $html .= isset($this->data['transaction_no']) && !empty($this->data['transaction_no']) ?'<dd>N° commande: <i> '.$this->data['transaction_no'].'</i></dd>' : '';
+        }
+
+        return $html;
+    }
 }

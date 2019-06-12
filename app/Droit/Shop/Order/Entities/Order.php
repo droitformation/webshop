@@ -297,6 +297,6 @@ class Order extends Model{
 
     public function references()
     {
-        return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference');
+        return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference','reference_id');
     }
 }

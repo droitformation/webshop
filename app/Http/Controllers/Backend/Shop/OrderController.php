@@ -149,6 +149,9 @@ class OrderController extends Controller {
     {
         $preview = new \App\Droit\Shop\Order\Entities\OrderPreview($request->all());
 
+        session()->put('reference_no', $request->input('reference_no',null));
+        session()->put('transaction_no', $request->input('transaction_no',null));
+
         return view('backend.orders.verification')->with(['data' => $request->all(), 'preview' => $preview]);
     }
 
@@ -194,6 +197,9 @@ class OrderController extends Controller {
 
         $order = $this->ordermaker->make($data,$shipping);
         $order = $this->order->update(['id' => $order->id, 'admin' => 1]);  // via admin
+
+        session()->forget('reference_no');
+        session()->forget('transaction_no');
 
         alert()->success('La commande a été crée');
 
