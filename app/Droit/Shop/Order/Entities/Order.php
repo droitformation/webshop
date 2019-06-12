@@ -295,7 +295,7 @@ class Order extends Model{
         return $this->hasMany('App\Droit\Shop\Rappel\Entities\Rappel');
     }
 
-    public function reference()
+    public function references()
     {
         return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference');
     }

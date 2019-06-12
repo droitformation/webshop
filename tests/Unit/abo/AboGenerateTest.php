@@ -164,4 +164,67 @@ class AboGenerateTest extends TestCase
             'reference_id' => $reference->id
         ]);
     }
+
+    public function testUpdateAboWithReferences()
+    {
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeAbonnement($abo);
+
+        $reference = \App\Droit\Transaction\Entities\Transaction_reference::create([
+            'reference_no'   => 'Ref_2019_DesignPond',
+            'transaction_no' => '2109_10_1982',
+        ]);
+
+        $abo_user->reference_id = $reference->id;
+        $abo_user->save();
+
+        $this->assertDatabaseHas('abo_users', [
+            'id' => $abo_user->id,
+            'reference_id' => $reference->id
+        ]);
+
+        $data = [
+            'reference_no'   => 'NEW_Ref_2019_DesignPond',
+            'transaction_no' => 'NEW_2109_10_1982',
+        ];
+
+        $reference = \App\Droit\Transaction\Reference::update($abo_user,$data);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'NEW_Ref_2019_DesignPond',
+            'transaction_no' => 'NEW_2109_10_1982'
+        ]);
+    }
+
+    public function testUpdateNonExistantReferencesForAbo()
+    {
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeAbonnement($abo);
+
+        $this->assertDatabaseHas('abo_users', [
+            'id' => $abo_user->id,
+            'reference_id' => null
+        ]);
+
+        $data = [
+            'reference_no'   => 'NEW_Ref_2019_DesignPond',
+            'transaction_no' => 'NEW_2109_10_1982',
+        ];
+
+        $reference = \App\Droit\Transaction\Reference::update($abo_user,$data);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'NEW_Ref_2019_DesignPond',
+            'transaction_no' => 'NEW_2109_10_1982'
+        ]);
+
+        $this->assertDatabaseHas('abo_users', [
+            'id' => $abo_user->id,
+            'reference_id' => $reference->id
+        ]);
+    }
 }

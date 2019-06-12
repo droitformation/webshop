@@ -75,6 +75,6 @@ class OrderGenerate
 
     public function getReferences()
     {
-        return $this->order->reference;
+        return $this->order->references;
     }
 }

@@ -154,6 +154,8 @@ class CheckoutController extends Controller {
         
         session()->forget('noShipping');
         session()->forget('coupon');
+        session()->forget('reference_no');
+        session()->forget('transaction_no');
     }
 
 }

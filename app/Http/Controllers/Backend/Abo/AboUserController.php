@@ -79,9 +79,8 @@ class AboUserController extends Controller {
 
     public function update(Request $request, $id)
     {
-        $abonnement = $this->abonnement->update($request->all());
-
-        //$this->worker->update($abonnement);
+        $abonnement = $this->abonnement->update($request->except(['reference_no','transaction_no']));
+        $reference  = \App\Droit\Transaction\Reference::update($abonnement, $request->only(['reference_no','transaction_no']));
 
         alert()->success('L\'abonné a été mis à jour');
 

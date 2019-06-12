@@ -127,6 +127,22 @@
                             </div>
                         </div>
 
+                        <!-- New version -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Réferences</label>
+                            <div class="col-sm-8 col-xs-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">N° référence</span>
+                                    <input type="text" class="form-control" value="{{ $abonnement->references->reference_no }}" name="reference_no">
+                                </div><br>
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">N° commande</span>
+                                    <input type="text" class="form-control" value="{{ $abonnement->references->transaction_no }}" name="transaction_no">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Remarque</label>
                             <div class="col-sm-8 col-xs-12">

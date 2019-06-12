@@ -76,8 +76,7 @@ class AboUserEloquent implements AboUserInterface{
             'renouvellement' => $data['renouvellement'],
         ));
 
-        if( ! $abo_user )
-        {
+        if( ! $abo_user ) {
             return false;
         }
 
