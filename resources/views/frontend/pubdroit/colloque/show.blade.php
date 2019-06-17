@@ -11,7 +11,7 @@
                 <span class="h-line"></span>
             </div>
 
-            <!-- Strat Book Detail Section -->
+            <!-- Start Book Detail Section -->
             <section class="b-detail-holder">
                 <div class="book-i-caption">
                     <!-- Strat Book Image Section -->
@@ -73,7 +73,7 @@
                                     @include('frontend.pubdroit.colloque.partials.register')
                                 @else
                                     <?php $message = ($registered ? Registry::get('inscription.messages.registered') : Registry::get('inscription.messages.pending')); ?>
-                                
+
                                     <div class="text-danger text-center">
                                         <img style="height: 90px;width: 80px; margin-bottom: 20px; margin-top: 30px;" src="{{ secure_asset('frontend/pubdroit/images/notification.svg') }}" alt="{{ strip_tags($message) }}">
                                         <h4>{{ strip_tags($message) }}</h4>
@@ -87,7 +87,7 @@
                                     <p class="line-delimiter">Ou</p>
                                     <p><a href="{{ url('register') }}" class="btn btn-block btn-primary">Je n'ai pas encore de compte</a></p>
                                 </div>
-                             @endif
+                            @endif
 
                         @else
                             <p>Les inscriptions sont terminées</p>

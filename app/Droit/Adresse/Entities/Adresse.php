@@ -98,6 +98,19 @@ class Adresse extends Model {
         return $this->name.', '.$this->adresse.', '.$this->npa.' '.$this->ville;
     }
 
+    public function getDetailAdresseAttribute()
+    {
+        $html  = '<strong>'.$this->civilite_title.' '.$this->name.'</strong><br>';
+        $html .= !empty($this->company) ? $this->company.'<br>' : '';
+        $html .= !empty($this->adresse) ? $this->adresse.'<br>' : '';
+        $html .= !empty($this->complement) ? $this->complement.'<br>' : '';
+        $html .= !empty($this->cp) ? $this->cp.'<br>' : '';
+        $html .= $this->npa.' '.$this->ville.'<br>';
+        $html .= $this->pays->title;
+
+        return $html;
+    }
+
     public function getInvoiceNameAttribute()
     {
         $name = [];

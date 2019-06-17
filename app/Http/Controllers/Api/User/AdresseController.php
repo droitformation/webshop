@@ -127,4 +127,14 @@ class AdresseController extends Controller {
 
         die();
     }
+
+    public function getAdresseDetail($id)
+    {
+        $adresse = $this->adresse->find($id);
+
+        echo view('frontend.pubdroit.partials.adresse-details')->with(['adresse' => $adresse])->render();
+
+        die();
+    }
+
 }

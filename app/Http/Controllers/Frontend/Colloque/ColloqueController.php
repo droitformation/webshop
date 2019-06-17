@@ -60,20 +60,18 @@ class ColloqueController extends Controller
     {
         $colloque = $this->colloque->find($id);
 
-        if(!$colloque->visible)
-        {
+        if(!$colloque->visible) {
             return redirect('pubdroit/colloque');
         }
 
         $pending    = \Auth::check() && \Auth::user()->cant_register ? 'pending' : false;
         $registered = \Auth::check() && \Auth::user()->inscriptions->contains('colloque_id',$id) ? 'registered' : false;
 
-        if ($request->ajax())
-        {
+        if ($request->ajax()) {
             return view('colloques.partials.details')->with(['colloque' => $colloque]);
         }
 
-        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque, 'registered' => $registered, 'pending' => $pending]);
+        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque, 'registered' => $registered, 'pending' => $pending, 'user' => \Auth::user()]);
     }
 
     /**

@@ -18,6 +18,15 @@
 	@endif
 	<!-- Fin Meta -->
 
+	<script>
+		window.Laravel = <?php echo json_encode([
+				'csrfToken' => csrf_token(),
+				'url'   => url('/'),
+				'ajaxUrl' => url('admin/ajax/'),
+				'adminUrl' => url('admin/')
+		]); ?>
+	</script>
+
     <!-- CSS Files
     ================================================== -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -60,6 +69,7 @@
     <script src="<?php echo secure_asset('common/js/validation.js');?>"></script>
 	<script src="<?php echo secure_asset('common/js/jquery.fancybox.min.js');?>"></script>
 	<script src="<?php echo secure_asset('common/js/common.js');?>"></script>
+	<script src="<?php echo secure_asset('frontend/pubdroit/js/wizard.js');?>"></script>
 
 	<script src="//platform-api.sharethis.com/js/sharethis.js#property=5beaaa2158e49d001b369ef0&product=inline-share-buttons"></script>
 </head>
@@ -246,6 +256,7 @@
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
         <script src="<?php echo secure_asset('frontend/pubdroit/js/interaction.js');?>"></script>
         <script src="<?php echo secure_asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
+		<script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114403548-1"></script>
 		<script>

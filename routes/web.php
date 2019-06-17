@@ -211,6 +211,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::get('user/getAdresse/{id}', 'Api\User\UserController@getAdresse');
         Route::get('user/getUser/{id}', 'Api\User\UserController@getUser');
         Route::get('adresse/getAdresse/{id}', 'Api\User\AdresseController@getAdresse');
+        Route::get('adresse/getAdresseDetail/{id}', 'Api\User\AdresseController@getAdresseDetail');
 
         Route::resource('faq', 'Backend\Bail\FaqController');
         Route::get('faqs/{site_id}', 'Backend\Bail\FaqController@index');
