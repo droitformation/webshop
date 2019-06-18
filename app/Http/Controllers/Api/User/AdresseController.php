@@ -128,13 +128,22 @@ class AdresseController extends Controller {
         die();
     }
 
+    /*
+     * Vue FactureAdresse methods
+     * */
     public function getAdresseDetail($id)
     {
         $adresse = $this->adresse->find($id);
 
         echo view('frontend.pubdroit.partials.adresse-details')->with(['adresse' => $adresse])->render();
-
         die();
     }
 
+    public function createOrUpdateFacturation(Request $request)
+    {
+        $adresse = $this->adresse->facturation($request->all());
+
+        return response()->json($adresse);
+        die();
+    }
 }

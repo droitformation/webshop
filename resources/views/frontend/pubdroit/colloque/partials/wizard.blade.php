@@ -1,4 +1,5 @@
-<div id="appComponent">
+
+
     <div class="wizard">
         <div class="wizard-inner">
             <ul class="nav nav-tabs" role="tablist">
@@ -156,18 +157,8 @@
                     <?php $adresse_livraison   = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
                     <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
 
-                  {{--  <div class="adresse-verify">
-                        <address id="userAdresse">
-                            <h5>Adresse indiqué sur bon</h5>
-                            @include('frontend.pubdroit.partials.user-livraison')
-                        </address>
-                        <address id="userFacturation">
-                            <h5>Adresse indiqué sur facture</h5>
-                            @include('frontend.pubdroit.partials.user-facturation')
-                        </address>
-                    </div>--}}
-
                     <facturation-adresse
+                            :main="{{ $adresse_livraison->id }}"
                             :livraison="{{ json_encode($adresse_livraison) }}"
                             :facturation="{{ json_encode($adresse_facturation) }}">
                     </facturation-adresse>
@@ -189,6 +180,8 @@
                     <ul class="list-inline">
                         <li><button type="button" class="btn btn-lg btn-default prev-step"><i class="fa fa-arrow-left"></i>&nbsp; Précédent</button></li>
                         <li><button type="submit" class="btn btn-lg btn-danger">Envoyer &nbsp;<i class="fa fa-check"></i></button></li>
+
+                        <input id="submit-hidden" type="submit" style="display: none" />
                     </ul>
 
                 </div>
@@ -196,4 +189,3 @@
             </div>
         </div>
     </div>
-</div>

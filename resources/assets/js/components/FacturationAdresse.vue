@@ -8,7 +8,18 @@
            <address id="userFacturation">
                <h5>Adresse indiqué sur facture</h5>
                <div v-html="facturation_detail"></div>
+               {{ livraison_detail }}
            </address>
+           <div>
+              <div class="form-group">
+                  <label class="control-label" for="reference_no">N° référence</label>
+                  <input class="form-control" name="reference_no" id="reference_no" type="text" placeholder="Optionnel">
+              </div>
+               <div class="form-group">
+                   <label class="control-label" for="transaction_no">N° commande</label>
+                   <input class="form-control" name="reference_no" id="transaction_no" type="text" placeholder="Optionnel">
+               </div>
+           </div>
        </div>
        <address>
            <p><button @click="open" type="button" class="text-danger">Changer l'adresse de facturation <i class="fa fa-caret-down"></i></button></p>
@@ -17,7 +28,7 @@
                <li class="form-group">
                    <div class="col-md-6">
                        <label class="control-label" for="">Titre</label>
-                       <select name="civilite_id" v-model="facturation.civilite_id" class="form-control">
+                       <select name="civilite_id" required v-model="facturation.civilite_id" class="form-control">
                            <option value="4"></option>
                            <option value="1">Monsieur</option>
                            <option value="2">Madame</option>
@@ -28,11 +39,11 @@
                <li class="form-group">
                    <div class="col-md-6">
                        <label class="control-label" for="">Prénom <sup>*</sup></label>
-                       <input class="form-control" v-model="facturation.first_name" name="first_name" id="first_name" type="text">
+                       <input class="form-control" required v-model="facturation.first_name" name="first_name" id="first_name" type="text">
                    </div>
                    <div class="col-md-6">
                        <label class="control-label" for="">Nom <sup>*</sup></label>
-                       <input class="form-control" v-model="facturation.last_name" name="last_name" id="last_name" type="text">
+                       <input class="form-control" required v-model="facturation.last_name" name="last_name" id="last_name" type="text">
                    </div>
                </li>
                <li class="form-group">
@@ -45,7 +56,7 @@
                <li class="form-group">
                    <div class="col-md-12">
                        <label class="control-label" for="">Adresse <sup>*</sup></label>
-                       <input class="form-control" v-model="facturation.adresse" id="adresse" name="adresse" type="text">
+                       <input class="form-control"required v-model="facturation.adresse" id="adresse" name="adresse" type="text">
                    </div>
                </li>
                <li class="form-group">
@@ -76,28 +87,17 @@
                        </select>
                    </div>
                </li>
-               <li class="form-group"><div class="col-md-12"><hr/></div></li>
-               <li class="form-group">
-                   <div class="col-md-6">
-                       <label class="control-label" for="">Votre référence</label>
-                       <input class="form-control" v-model="reference_no" id="reference_no" name="reference_no" type="text">
-                   </div>
-                   <div class="col-md-6">
-                       <label class="control-label" for="">N° de commande</label>
-                       <input class="form-control" v-model="transaction_no" id="transaction_no" name="transaction_no" type="text">
-                   </div>
-               </li>
 
                <li>
                    <div class="form-group">
                        <div class="col-md-12">
                            <hr/>
                            <input name="type" value="4" type="hidden">
-                           <input name="user_id" value="facturation.user_id" type="hidden">
-                           <input v-if="facturation" name="id" value="facturation.id" type="hidden">
+                           <input name="user_id" :value="livraison.user_id" type="hidden">
+                           <input v-if="(id != main)" name="id" :value="id" type="hidden">
 
                            <cite class="text-danger"><small>* Champs requis</small></cite>
-                           <button @click="update" type="button" class="btn btn-info">Envoyer</button>
+                           <button v-on:click.prevent="update" type="button" class="btn btn-info">Envoyer</button>
                        </div>
                    </div>
                </li>
@@ -109,21 +109,21 @@
 
 <script>
     export default {
-        props: ['livraison','facturation'],
+        props: ['livraison','facturation','main'],
         data () {
             return {
                 url: location.protocol + "//" + location.host+"/",
                 change:false,
-                reference_no:null,
-                transaction_no:null,
-                livraison_detail:'',
-                facturation_detail:'',
+                livraison_detail:'asdfg',
+                facturation_detail:'sdfg',
+                id : this.facturation ? this.facturation.id : null,
                 adresse_livraison : this.livraison ? this.livraison : null,
                 adresse_facturation : this.facturation ? this.facturation : null,
             }
         },
         mounted() {
             console.log('Component mounted.');
+            this.$forceUpdate();
             this.fetchLivraison(this.adresse_livraison.id);
             this.fetchFacturation(this.adresse_facturation.id);
         },
@@ -132,23 +132,30 @@
                 this.change = this.change ? false :true;
             },
             fetchLivraison (id) {
-                var self = this;
+                let self = this;
                 axios.get(self.url+ 'admin/adresse/getAdresseDetail/' + id, {}).then(function (response) {
-                   // console.log(response.data);
+                    //console.log(response.data);
                     self.livraison_detail = response.data;
                 }).catch(function (error) { console.log(error);});
             },
             fetchFacturation (id) {
-                var self = this;
-                console.log(this.adresse_facturation);
+                let self = this;
+
                 axios.get(self.url+'admin/adresse/getAdresseDetail/' + id, {}).then(function (response) {
-                    console.log(response.data);
+                   // console.log(response.data);
                     self.facturation_detail = response.data;
+                    console.log(self.facturation_detail);
                 }).catch(function (error) { console.log(error);});
             },
             update(){
-                console.log(this.adresse_facturation);
+                console.log('update');
+                let self = this;
+                axios.post(self.url+'admin/adresse/createOrUpdateFacturation', this.adresse_facturation).then(function (response) {
 
+                    self.adresse_facturation = response.data;
+                    self.fetchFacturation(self.adresse_facturation.id);
+                    self.change = false;
+                }).catch(function (error) { console.log(error);});
             }
         }
     }

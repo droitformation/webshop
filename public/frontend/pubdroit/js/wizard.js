@@ -1,39 +1,93 @@
 $(document).ready(function () {
-    //Initialize tooltips
-    $('.nav-tabs > li a[title]').tooltip();
+    $("#wizard").steps({
+        bodyTag: "fieldset",
+        onStepChanging: function(event, currentIndex, newIndex) {
+            // Always allow going backward even if the current step contains invalid fields!
+            if (currentIndex > newIndex) {
+                return true;
+            }
 
-    //Wizard
-    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+            let form = $(this);
 
-        let $target = $(e.target);
+            // Clean up if user went backward before
+            if (currentIndex < newIndex) {
+                // To remove error styles
+                $(".body:eq(" + newIndex + ") label.error", form).remove();
+                $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+            }
 
-        if ($target.parent().hasClass('disabled')) {
-            return false;
+            // Disable validation on fields that are disabled or hidden.
+            form.validate().settings.ignore = ":disabled,:hidden";
+
+            // Start validation; Prevent going forward if false
+            return form.valid();
+        },
+        onStepChanged: function(event, currentIndex, priorIndex) {
+            // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+            if (currentIndex === 2 && priorIndex === 3) {
+                $(this).steps("previous");
+                return;
+            }
+
+            // Suppress (skip) "Warning" step if the user is old enough.
+            if (currentIndex === 2 && Number($("#age").val()) >= 18) {
+                $(this).steps("next");
+            }
+        },
+        onFinishing: function(event, currentIndex) {
+            let form = $(this);
+            // Disable validation on fields that are disabled.
+            // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+            form.validate().settings.ignore = ":disabled";
+            // Start validation; Prevent form submission if false
+            return form.valid();
+        },
+        onFinished: function(event, currentIndex) {
+            let form = $(this);
+            // Submit form input
+            form.submit();
+        }
+    }).validate({
+        errorPlacement: function(error, element) {
+            element.before(error);
         }
     });
 
-    $(".next-step").click(function (e) {
 
-        let $active = $('.wizard .nav-tabs li.active');
-        $active.next().removeClass('disabled');
+    /*
+       //Initialize tooltips
+       $('.nav-tabs > li a[title]').tooltip();
 
-        let formElements = new Array();
+       //Wizard
+       $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
-        $(this).closest('.tab-pane').find(":input:checked").each(function(){
-            formElements.push($(this));
-        });
+           let $target = $(e.target);
 
-        console.log(formElements);
+           if ($target.parent().hasClass('disabled')) {
+               returalse;
+           }
+       });
 
-        nextTab($active);
+      /* $(".next-step").click(function (e) {
 
-    });
-    $(".prev-step").click(function (e) {
+           let valid = $('#colloque-inscription')[0].checkValidity();
 
-        let $active = $('.wizard .nav-tabs li.active');
-        prevTab($active);
+           if(!valid){
+               $("#colloque-inscription").find("#submit-hidden").click();
+           }
+           else{
+               let $active = $('.wizard .nav-tabs li.active');
+               $active.next().removeClass('disabled');
+               nextTab($active);
+           }
 
-    });
+       });
+       $(".prev-step").click(function (e) {
+
+           let $active = $('.wizard .nav-tabs li.active');
+           prevTab($active);
+
+       });*/
 });
 
 function nextTab(elem) {

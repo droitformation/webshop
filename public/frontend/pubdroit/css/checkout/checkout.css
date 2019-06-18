@@ -292,31 +292,34 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
     z-index: 1;
 }
 
+.wizard .steps ul li a {
+    position: relative;
+}
+
+.wizard > .steps span.round-tab {
+    position: absolute;
+    top: 11px;
+    right: 8px;
+}
+
 .wizard .tab-content {
     overflow: auto;
     padding: 0;
 }
 
-.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
-    color: #555555;
-    cursor: default;
-    border: 0;
-    border-bottom-color: transparent;
-}
 
 span.round-tab {
-    width:40px;
-    height: 40px;
-    line-height: 35px;
+    width:30px;
+    height: 30px;
+    line-height: 28px;
     display: inline-block;
-    border-radius: 100px;
+    border-radius: 50px;
     background: #fff;
-    border: 2px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
     z-index: 2;
     position: absolute;
-    left: 0;
     text-align: center;
-    font-size: 18px;
+    font-size: 15px;
 }
 span.round-tab i{
     color:#555555;
@@ -330,14 +333,55 @@ span.round-tab i{
     color: #337ab7;
 }
 
-span.round-tab:hover {
-    color: #333;
-    border: 2px solid #333;
-}
 
 /*
 Wizard
 */
+
+#colloque-dependence .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#colloque-dependence .wrapper div.item_wrapper {
+    position: relative;
+    padding-bottom: 0px;
+    width: 33%;
+}
+
+#colloque-dependence .wrapper div label.error {
+    position: absolute;
+    top: -10px;
+    color: #ad5e09;
+    background: #fcf8e3;
+    padding: 2px 10px;
+    margin:0 5px 5px 5px;
+    width: 98%;
+    border: 1px solid #f0e298;
+    left: 0;
+    font-size: 12px;
+}
+
+#colloque-dependence input[type="radio"].options + label,
+#colloque-dependence input[type="checkbox"].options + label,
+#colloque-dependence input[type="radio"]:checked.options + label,
+input[type="checkbox"]:checked.options + label{
+    width: 98%;
+    height: 100px;
+    padding: 5px 10px;
+    margin: 0 5px 0 5px;
+}
+
+#colloque-dependence p.description_option{
+    margin-bottom: 0;
+}
+
+#colloque-dependence .options-list p{
+    margin-bottom: 0;
+}
+
+
 
 .adresse-verify{
     display: flex;
