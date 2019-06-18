@@ -4855,8 +4855,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             transaction_no: null,
             livraison_detail: '',
             facturation_detail: '',
-            adresse_livraison: this.livraison,
-            adresse_facturation: this.facturation
+            adresse_livraison: this.livraison ? this.livraison : null,
+            adresse_facturation: this.facturation ? this.facturation : null
         };
     },
     mounted: function mounted() {
@@ -34141,13 +34141,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "facturation.user_id",
       "type": "hidden"
     }
-  }), _vm._v(" "), _c('input', {
+  }), _vm._v(" "), (_vm.facturation) ? _c('input', {
     attrs: {
       "name": "id",
       "value": "facturation.id",
       "type": "hidden"
     }
-  }), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('button', {
+  }) : _vm._e(), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('button', {
     staticClass: "btn btn-info",
     attrs: {
       "type": "button"

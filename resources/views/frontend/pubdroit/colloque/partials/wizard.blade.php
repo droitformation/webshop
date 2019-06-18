@@ -153,11 +153,10 @@
                 <div class="tab-pane" role="tabpanel" id="step4">
                     <h4>Vérifier l'adresse</h4>
 
-                    <?php $user = $user->load('adresses'); ?>
-                    <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
                     <?php $adresse_livraison   = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
+                    <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
 
-                    <div class="adresse-verify">
+                  {{--  <div class="adresse-verify">
                         <address id="userAdresse">
                             <h5>Adresse indiqué sur bon</h5>
                             @include('frontend.pubdroit.partials.user-livraison')
@@ -166,11 +165,9 @@
                             <h5>Adresse indiqué sur facture</h5>
                             @include('frontend.pubdroit.partials.user-facturation')
                         </address>
-                    </div>
+                    </div>--}}
 
                     <facturation-adresse
-                            :livraison_detail="{{ json_encode($adresse_livraison->detail_adresse) }}"
-                            :facturation_detail="{{ json_encode($adresse_facturation->detail_adresse) }}"
                             :livraison="{{ json_encode($adresse_livraison) }}"
                             :facturation="{{ json_encode($adresse_facturation) }}">
                     </facturation-adresse>

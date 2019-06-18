@@ -94,7 +94,7 @@
                            <hr/>
                            <input name="type" value="4" type="hidden">
                            <input name="user_id" value="facturation.user_id" type="hidden">
-                           <input name="id" value="facturation.id" type="hidden">
+                           <input v-if="facturation" name="id" value="facturation.id" type="hidden">
 
                            <cite class="text-danger"><small>* Champs requis</small></cite>
                            <button @click="update" type="button" class="btn btn-info">Envoyer</button>
@@ -118,12 +118,12 @@
                 transaction_no:null,
                 livraison_detail:'',
                 facturation_detail:'',
-                adresse_livraison : this.livraison,
-                adresse_facturation : this.facturation,
+                adresse_livraison : this.livraison ? this.livraison : null,
+                adresse_facturation : this.facturation ? this.facturation : null,
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
             this.fetchLivraison(this.adresse_livraison.id);
             this.fetchFacturation(this.adresse_facturation.id);
         },
@@ -148,6 +148,7 @@
             },
             update(){
                 console.log(this.adresse_facturation);
+
             }
         }
     }
