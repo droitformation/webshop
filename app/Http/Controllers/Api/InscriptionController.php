@@ -89,5 +89,4 @@ class InscriptionController extends Controller
 
         echo 'ok';exit;
     }
-
 }

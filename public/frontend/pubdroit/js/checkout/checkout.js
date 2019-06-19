@@ -31,6 +31,17 @@
          *
          ****************************************************************/
 
+        // unserialize.js v1.0.1
+        function unserialize(serialize) {
+            let obj = {};
+            serialize = serialize.split('&');
+            for (let i = 0; i < serialize.length; i++) {
+                thisItem = serialize[i].split('=');
+                obj[decodeURIComponent(thisItem[0])] = decodeURIComponent(thisItem[1]);
+            };
+            return obj;
+        };
+
         /*****************************************************************
          *   Update user infos during checkout
          *****************************************************************/

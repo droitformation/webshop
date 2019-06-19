@@ -72,6 +72,7 @@ Route::group(['middleware' => ['site','impostor']], function () {
              * */
             Route::get('colloque/inscription/{id}', ['middleware' => ['registered','pending'], 'uses' => 'Frontend\Colloque\ColloqueController@inscription']);
             Route::post('registration', ['uses' => 'Frontend\Colloque\InscriptionController@store']);
+            Route::post('colloque/inscription/resume', 'Frontend\Colloque\ColloqueController@resume');
 
             /* *
              * User profile routes

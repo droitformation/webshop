@@ -8,7 +8,6 @@
            <address id="userFacturation">
                <h5>Adresse indiqué sur facture</h5>
                <div v-html="facturation_detail"></div>
-               {{ livraison_detail }}
            </address>
            <div>
               <div class="form-group">
@@ -17,13 +16,13 @@
               </div>
                <div class="form-group">
                    <label class="control-label" for="transaction_no">N° commande</label>
-                   <input class="form-control" name="reference_no" id="transaction_no" type="text" placeholder="Optionnel">
+                   <input class="form-control" name="transaction_no" id="transaction_no" type="text" placeholder="Optionnel">
                </div>
            </div>
        </div>
        <address>
            <p><button @click="open" type="button" class="text-danger">Changer l'adresse de facturation <i class="fa fa-caret-down"></i></button></p>
-           <ul v-show="change" class="billing-form">
+           <ul v-if="change" class="billing-form">
                <i><h4>Adresse de facturation</h4></i>
                <li class="form-group">
                    <div class="col-md-6">

@@ -94,4 +94,21 @@ class ColloqueController extends Controller
 
         return view('frontend.pubdroit.colloque.partials.download')->with(['colloque' => $colloque]);
     }
+
+    public function resume(Request $request)
+    {
+        $colloque = $this->colloque->find($request->input('colloque_id'));
+        $price    = $colloque->prices->find($request->input('price_id'));
+        $groupes  = $request->input('groupes');
+
+        $html  = '<strong>Prix</strong>: '.$price->description.' | '.$price->price_cents;
+        $html .= '<strong>Choix</strong>: '.$price->description.' | '.$price->price_cents;
+
+        return $html;
+
+        echo '<pre>';
+        print_r($price);
+        echo '</pre>';
+        exit();
+    }
 }

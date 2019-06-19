@@ -390,6 +390,37 @@ input[type="checkbox"]:checked.options + label{
 
 .adresse-verify address{
     width: 40%;
+    font-size: 13px;
+}
+
+.adresse-verify h5{
+    font-size: 16px;
+}
+
+.vue-form-wizard .wizard-header {
+    text-align: left !important;
+    padding: 15px 0 !important;
+    margin-bottom: 10px;
+}
+
+.vue-form-wizard .wizard-title {
+    text-align: left !important;
+    font-size: 25px;
+}
+
+.vue-form-wizard.md .wizard-icon-circle {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 19px !important;
+    margin-bottom: 8px;
+}
+
+.vue-form-wizard.md .wizard-nav-pills > li.active > a .wizard-icon {
+    font-size: 19px !important;
+}
+
+.vue-form-wizard .wizard-nav-pills > li > a {
+    top: 15px !important;
 }
 
 .wizard .btn-collapse{

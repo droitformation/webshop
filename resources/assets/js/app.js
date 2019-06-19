@@ -61,6 +61,8 @@ const app = new Vue({
     el: '#appComponent'
 });
 
+
+
 const appVue = new Vue({
     el: '#appVue',
     methods: {
@@ -69,17 +71,31 @@ const appVue = new Vue({
         },
         beforeTabSwitch: function(){
 
-            window.$ = window.jQuery = require('jquery');
-            var $inputs = {};
-
-            $("#inscriptionForm :input").each(function(){
-                $inputs.push($(this).val()); // This is the jquery object of the input, do what you will
-                console.log($(this).val());
+            let $form = $('#inscriptionForm');
+            let validator = $form.validate({
+                errorPlacement: function( label, element ) {
+                    label.insertBefore( element );
+                }
             });
 
-        //  document.getElementById('inscriptionForm')[0].checkValidity();
+            return $form.find('input').valid();
+        },
+        lastTabResume: function(){
+            let $form = $('#inscriptionForm');
 
-            return true;
+            axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/inscription/resume', $form.serialize()).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) { console.log(error);});
+
+        },
+        unserialize: function(serialize) {
+            let obj = {};
+            var serialize = serialize.split('&');
+            for (let i = 0; i < serialize.length; i++) {
+                var thisItem = serialize[i].split('=');
+                obj[decodeURIComponent(thisItem[0])] = decodeURIComponent(thisItem[1]);
+            };
+            return obj;
         }
     }
 });

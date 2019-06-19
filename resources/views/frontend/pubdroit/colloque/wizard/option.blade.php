@@ -1,5 +1,4 @@
 <div class="options-list">
-
     <?php $types = $colloque->options->groupBy('type'); ?>
 
     @if(!$types->isEmpty())
@@ -35,6 +34,7 @@
 
             @if($type == 'choix')
                 <h4>Merci de préciser</h4>
+
                 @foreach($options as $option)
                     <p class="description_option">{{ strip_tags($option->title) }} &nbsp;<div class="errorTxt"></div></p>
                     <div class='wrapper'>
