@@ -1551,3 +1551,13 @@ span.avis-hidden-square{
     border: 1px solid #f1f1f1;
     padding: 3px 5px;
 }
+
+.invoice_for{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.invoice_for address{
+    min-width: 50%;
+}

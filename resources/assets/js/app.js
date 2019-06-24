@@ -67,7 +67,7 @@ const appVue = new Vue({
     el: '#appVue',
     methods: {
         onComplete:function(){
-            alert('complete');
+            return true;
         },
         beforeTabSwitch: function(){
 
@@ -85,6 +85,7 @@ const appVue = new Vue({
 
             axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/inscription/resume', $form.serialize()).then(function (response) {
                 console.log(response.data);
+                $('#resumeWrapper').empty().append(response.data);
             }).catch(function (error) { console.log(error);});
 
         },

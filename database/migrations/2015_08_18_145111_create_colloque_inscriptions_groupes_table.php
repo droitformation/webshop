@@ -16,6 +16,7 @@ class CreateColloqueInscriptionsGroupesTable extends Migration
             $table->increments('id');
             $table->integer('colloque_id');
             $table->integer('user_id');
+            $table->integer('reference_id')->nullable();
             $table->string('description')->nullable();
             $table->integer('adresse_id')->nullable();
             $table->softDeletes();

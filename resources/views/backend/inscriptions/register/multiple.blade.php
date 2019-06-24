@@ -1,11 +1,13 @@
 <!-- Inscription multiple -->
-
-<h4><strong>Facturé à:</strong></h4>
-<address>
-    {{ $user->name }}<br/>
-    {{ $user->adresse_facturation->adresse }}<br/>
-    {{ $user->adresse_facturation->npa }} {{ $user->adresse_facturation->ville }}
-</address>
+<div class="invoice_for">
+    <address>
+        <h4><strong>Facturé à:</strong></h4>
+        {{ $user->name }}<br/>
+        {{ $user->adresse_facturation->adresse }}<br/>
+        {{ $user->adresse_facturation->npa }} {{ $user->adresse_facturation->ville }}
+    </address>
+    @include('backend.inscriptions.partials.references')
+</div>
 
 <form role="form" class="validate-form" method="POST" action="{{ url('admin/inscription') }}" data-validate="parsley" >
     <input type="hidden" name="_token" value="{{ csrf_token() }}">

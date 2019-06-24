@@ -249,6 +249,7 @@ return [
 		'Registry'   => DesignPond\Registry\Facades\Registry::class,
 		'Alert'      => Vinkla\Alert\Facades\Alert::class,
 		'Honeypot'   => Msurguy\Honeypot\HoneypotFacade::class,
+        'Arr'        => Illuminate\Support\Arr::class,
 		//'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
 	],
 

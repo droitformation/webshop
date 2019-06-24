@@ -174,8 +174,11 @@ Route::get('testing', function() {
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $order = $model->find(4395);
 
+    $colloque = $colloques->find(100);
+
+
     echo '<pre>';
-    print_r($abo_cindy->load('references'));
+    print_r($colloque->occurrences->last());
     echo '</pre>';
     exit();
 

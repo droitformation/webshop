@@ -609,4 +609,127 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $this->assertEquals(1, $inscriptions->count());
     }
+
+    public function testGroupAdminRegisterWithReferences()
+    {
+        $make   = new \tests\factories\ObjectFactory();
+        $groupe = $make->makeGroupInscription();
+
+        session()->put('reference_no', 'Ref_2019_designpond');
+        session()->put('transaction_no', '2109_10_19824');
+
+        $reference = \App\Droit\Transaction\Reference::make($groupe);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no' => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824'
+        ]);
+
+        $this->assertDatabaseHas('colloque_inscriptions_groupes', [
+            'id' => $groupe->id,
+            'reference_id' => $reference->id
+        ]);
+    }
+
+    public function testMakeSimpleWithReferenceInscription()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $prices   = $colloque->prices->pluck('id')->all();
+        $options  = $colloque->options->pluck('id')->all();
+
+        // See page with data
+        $data = [
+            'colloque_id' => $colloque->id,
+            'user_id' => $person->id,
+            'type' => 'simple',
+        ];
+
+        $this->call('POST', 'admin/inscription/make', $data);
+
+        $data = [
+            'type'           => 'simple',
+            'reference_no'   => 'Ref_2019_desipond',
+            'transaction_no' => '29_10_19824',
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'price_id'    => $prices[0],
+            'options'     => [
+                $options[0]
+            ]
+        ];
+
+        $this->call('POST', 'admin/inscription', $data);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'price_id'    => $prices[0],
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Ref_2019_desipond',
+            'transaction_no' => '29_10_19824'
+        ]);
+    }
+
+    public function testMakeMultipleWithReferenceInscription()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+        $prices   = $colloque->prices->pluck('id')->all();
+        $options  = $colloque->options->pluck('id')->all();
+
+        // See pag with data
+        $data = ['colloque_id' => $colloque->id, 'user_id' => $person->id, 'type' => 'multiple'];
+        $this->call('POST', 'admin/inscription/make', $data);
+
+        $data = [
+            'colloque_id' => $colloque->id ,
+            'user_id'     => $person->id,
+            'reference_no'   => 'Ref_2019_depond',
+            'transaction_no' => '29_10_1924',
+            'participant' => [
+                'Cindy Leschaud',
+                'Coralie Ahmetaj'
+            ],
+            'email' => [
+                'cindy.leschaud@gmail.com',
+                'coralie.ahmetaj@hotmail.com'
+            ],
+            'price_id' => [
+                $prices[0],
+                $prices[0]
+            ],
+            'options' => [
+                0 => [$options[0]],
+                1 => [$options[0]]
+            ]
+        ];
+
+        $reponse = $this->call('POST', 'admin/inscription', $data);
+
+        $reponse = $this->get('admin/inscription/colloque/'.$colloque->id);
+        $content = $reponse->getOriginalContent();
+
+        $inscriptions = $content['inscriptions'];
+        $inscription  = $inscriptions->first();
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'id'          => $inscription->id,
+            'colloque_id' => $colloque->id,
+            'group_id'    => $inscription->group_id,
+            'price_id'    => $prices[0],
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Ref_2019_depond',
+            'transaction_no' => '29_10_1924'
+        ]);
+    }
 }

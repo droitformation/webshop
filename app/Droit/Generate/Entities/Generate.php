@@ -258,4 +258,8 @@ class Generate{
         return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$this->model->user_id.'.pdf');
     }
 
+    public function getReferences()
+    {
+        return isset($this->model->references) ? $this->model->references : null;
+    }
 }

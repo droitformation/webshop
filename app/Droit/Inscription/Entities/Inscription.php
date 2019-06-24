@@ -13,7 +13,7 @@ class Inscription extends Model
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'inscription_no', 'price_id', 'payed_at', 'send_at', 'status','admin','present'];
+    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id', 'payed_at', 'send_at', 'status','admin','present'];
 
     public function getRappelListAttribute()
     {
@@ -414,5 +414,10 @@ class Inscription extends Model
     public function group_rappels()
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Rappel','group_id', 'group_id');
+    }
+
+    public function references()
+    {
+        return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference','reference_id');
     }
 }

@@ -124,25 +124,6 @@ class OrderMaker implements OrderMakerInterface{
         return $order;
     }
 
- /*   public function setReferences($order)
-    {
-        $references = [];
-        // if we have references
-        $references['reference_no']   = session()->get('reference_no');
-        $references['transaction_no'] = session()->get('transaction_no');
-
-        if(!empty(array_filter($references))){
-            $reference = \App\Droit\Transaction\Entities\Transaction_reference::create(array_filter($references));
-
-            $order->reference_id = $reference->id;
-            $order->save();
-
-            return $reference;
-        }
-
-        return null;
-    }*/
-
     /*
      *  Get the user or make new adresse from backend
      * */

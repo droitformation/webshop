@@ -1578,8 +1578,9 @@ a.navbar-btn.navbar-register:focus{
 #colloque-dependence input[type=radio].prices:checked + label,
 #colloque-dependence input[type=checkbox]:checked.prices  + label
 {
-    width: 180px;
+    width: 95%;
     height: 180px;
+    margin: 0 5px 10px 0px;
 }
 
 #colloque-dependence input[type=radio].options + label,

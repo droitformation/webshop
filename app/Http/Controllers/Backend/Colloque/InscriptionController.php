@@ -130,15 +130,20 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request)
     {
+        session()->put('reference_no', $request->input('reference_no',null));
+        session()->put('transaction_no', $request->input('transaction_no',null));
+
         // if type simple
         if($request->input('type') == 'simple') {
-            $inscription = $this->register->register($request->all(), true);
-            $this->register->makeDocuments($inscription, true);
+            $model = $this->register->register($request->all(), true);
+            $this->register->makeDocuments($model, true);
         }
         else {
-            $group = $this->register->register($request->except(['type','_token']));
-            $this->register->makeDocuments($group, true);
+            $model = $this->register->register($request->except(['type','_token']));
+            $this->register->makeDocuments($model, true);
         }
+
+        $reference = \App\Droit\Transaction\Reference::make($model);
 
         alert()->success('L\'inscription à bien été crée');
 

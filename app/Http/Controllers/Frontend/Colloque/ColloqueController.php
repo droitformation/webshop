@@ -98,17 +98,9 @@ class ColloqueController extends Controller
     public function resume(Request $request)
     {
         $colloque = $this->colloque->find($request->input('colloque_id'));
-        $price    = $colloque->prices->find($request->input('price_id'));
-        $groupes  = $request->input('groupes');
 
-        $html  = '<strong>Prix</strong>: '.$price->description.' | '.$price->price_cents;
-        $html .= '<strong>Choix</strong>: '.$price->description.' | '.$price->price_cents;
+        $preview = new \App\Droit\Transaction\Preview($colloque, $request->except('_token'));
 
-        return $html;
-
-        echo '<pre>';
-        print_r($price);
-        echo '</pre>';
-        exit();
+        return $preview->getHtml();
     }
 }

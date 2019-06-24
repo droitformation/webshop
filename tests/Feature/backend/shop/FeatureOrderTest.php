@@ -296,7 +296,6 @@ class FeatureOrderTest extends TestCase
 
     public function testVerificationAndReturnCreatePagePage()
     {
-
         $user_mock = \Mockery::mock('App\Droit\User\Repo\UserInterface');
         $this->app->instance('App\Droit\User\Repo\UserInterface', $user_mock);
 

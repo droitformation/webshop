@@ -15,7 +15,7 @@ class Groupe extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['colloque_id', 'user_id', 'description', 'adresse_id'];
+    protected $fillable = ['colloque_id', 'user_id', 'description','reference_id', 'adresse_id'];
 
     public function getNameAttribute()
     {
@@ -174,5 +174,10 @@ class Groupe extends Model
     public function rappels()
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Rappel', 'group_id');
+    }
+
+    public function references()
+    {
+        return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference','reference_id');
     }
 }

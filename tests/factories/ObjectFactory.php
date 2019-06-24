@@ -503,6 +503,35 @@ class ObjectFactory
         return $colloque->load(['inscriptions','prices']);
     }
 
+    public function makeGroupInscription()
+    {
+        $colloque  = $this->colloque();
+        $prices    = $colloque->prices->pluck('id')->all();
+        $detenteur = $this->makeUser();
+
+        $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->create([
+            'user_id'     => $detenteur->id,
+            'colloque_id' => $colloque->id
+        ]);
+
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,2)->create([
+            'user_id'     => null,
+            'group_id'    => $group->id,
+            'price_id'    => $prices[0],
+            'colloque_id' => $colloque->id
+        ]);
+
+        $inscriptions = $inscriptions->map(function ($item, $key) {
+            $item->inscription_no = '10-2016/1'.$key;
+
+            $participant = new \App\Droit\Inscription\Entities\Participant();
+            $participant->create(['name' => $this->faker->firstName, 'inscription_id' => $item->id ]);
+            return $item;
+        });
+
+        return $group;
+    }
+
     public function makeInscriptionForUser($user, $date, $colloque = null)
     {
         // Create colloque

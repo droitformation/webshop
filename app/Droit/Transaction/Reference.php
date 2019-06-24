@@ -45,6 +45,6 @@ class Reference
             return $reference;
         }
 
-        $model->references->delete();
+        return isset($model->references) ? $model->references->delete() : null;
     }
 }

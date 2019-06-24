@@ -47,6 +47,9 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             $this->inscription($data);
         });
 
+        // Attach references if any
+        $reference = \App\Droit\Transaction\Reference::make($group);
+
         return $group;
     }
 
@@ -58,6 +61,9 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $data = $data + ['inscription_no' => $inscription_no];
 
         $inscription = $this->inscription->create($data);
+
+        // Attach references if any
+        $reference = \App\Droit\Transaction\Reference::make($inscription);
 
         // Attach specialisations
         $user = ($inscription->group_id > 0 ? $inscription->groupe->user : $inscription->user);

@@ -52769,7 +52769,7 @@ var appVue = new Vue({
   el: '#appVue',
   methods: {
     onComplete: function onComplete() {
-      alert('complete');
+      return true;
     },
     beforeTabSwitch: function beforeTabSwitch() {
       var $form = $('#inscriptionForm');
@@ -52784,6 +52784,7 @@ var appVue = new Vue({
       var $form = $('#inscriptionForm');
       axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/inscription/resume', $form.serialize()).then(function (response) {
         console.log(response.data);
+        $('#resumeWrapper').empty().append(response.data);
       })["catch"](function (error) {
         console.log(error);
       });
