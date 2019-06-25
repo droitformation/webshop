@@ -9,14 +9,14 @@ label.error{
 
 .form-control.error{
     border-color: red;
-    background: url("../../images/error.png") no-repeat right;
+    background: #fff url("../../images/error.png") no-repeat right;
     padding-right: 25px;
 }
 
 .form-control.valid,
 .form-control.form-required.valid {
     border-color: #0db444;
-    background: url("../../images/check.png") no-repeat right;
+    background:#fff url("../../images/check.png") no-repeat right;
     padding-right: 25px;
 }
 

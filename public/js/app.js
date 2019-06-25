@@ -3739,12 +3739,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['livraison', 'facturation', 'main'],
   data: function data() {
     return {
       url: location.protocol + "//" + location.host + "/",
       change: false,
+      changed: false,
       livraison_detail: 'asdfg',
       facturation_detail: 'sdfg',
       id: this.facturation ? this.facturation.id : null,
@@ -3761,6 +3778,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     open: function open() {
       this.change = this.change ? false : true;
+      $('html, body').animate({
+        scrollTop: $('#billing-form').offset().top + 200
+      }, 2000);
     },
     fetchLivraison: function fetchLivraison(id) {
       var self = this;
@@ -3788,6 +3808,10 @@ __webpack_require__.r(__webpack_exports__);
         self.adresse_facturation = response.data;
         self.fetchFacturation(self.adresse_facturation.id);
         self.change = false;
+        self.changed = true;
+        setTimeout(function () {
+          self.changed = false;
+        }, 3000);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -6445,6 +6469,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.choixAdresse{\n    margin-bottom:10px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.slide-enter-active, .slide-leave-active {\n    transition: opacity .4s ease-in-out, transform .4s ease-in-out;\n}\n.slide-enter, .slide-leave-to {\n    opacity: 0;\n    transform: translateY(20px);\n}\n", ""]);
 
 // exports
 
@@ -28134,6 +28177,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FacturationAdresse.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/FilterAdresse.vue?vue&type=style&index=0&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/FilterAdresse.vue?vue&type=style&index=0&lang=css& ***!
@@ -32192,432 +32265,556 @@ var render = function() {
       _vm._m(0)
     ]),
     _vm._v(" "),
-    _c("address", [
-      _c("p", [
-        _c(
-          "button",
-          {
-            staticClass: "text-danger",
-            attrs: { type: "button" },
-            on: { click: _vm.open }
-          },
-          [
-            _vm._v("Changer l'adresse de facturation "),
-            _c("i", { staticClass: "fa fa-caret-down" })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm.change
-        ? _c("ul", { staticClass: "billing-form" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "" } },
-                  [_vm._v("Titre")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.facturation.civilite_id,
-                        expression: "facturation.civilite_id"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "civilite_id", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.facturation,
-                          "civilite_id",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "4" } }),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [
-                      _vm._v("Monsieur")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [_vm._v("Madame")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [_vm._v("Me")])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.first_name,
-                      expression: "facturation.first_name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    required: "",
-                    name: "first_name",
-                    id: "first_name",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.facturation.first_name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.facturation,
-                        "first_name",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.last_name,
-                      expression: "facturation.last_name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    required: "",
-                    name: "last_name",
-                    id: "last_name",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.facturation.last_name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.facturation,
-                        "last_name",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "" } },
-                  [_vm._v("Entreprise")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.company,
-                      expression: "facturation.company"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "company", type: "text" },
-                  domProps: { value: _vm.facturation.company },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.facturation, "company", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-12" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.adresse,
-                      expression: "facturation.adresse"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    required: "",
-                    id: "adresse",
-                    name: "adresse",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.facturation.adresse },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.facturation, "adresse", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-4" }, [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "" } },
-                  [_vm._v("CP")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.cp,
-                      expression: "facturation.cp"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "cp", name: "cp", type: "text" },
-                  domProps: { value: _vm.facturation.cp },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.facturation, "cp", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "" } },
-                  [_vm._v("Complément d'adresse")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.complement,
-                      expression: "facturation.complement"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "complement", name: "complement", type: "text" },
-                  domProps: { value: _vm.facturation.complement },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.facturation,
-                        "complement",
-                        $event.target.value
-                      )
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-4" }, [
-                _vm._m(5),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.npa,
-                      expression: "facturation.npa"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "npa", name: "npa", type: "text" },
-                  domProps: { value: _vm.facturation.npa },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.facturation, "npa", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-8" }, [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.facturation.ville,
-                      expression: "facturation.ville"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "ville", name: "ville", type: "text" },
-                  domProps: { value: _vm.facturation.ville },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.facturation, "ville", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "label",
-                  { staticClass: "control-label", attrs: { for: "" } },
-                  [_vm._v("Pays")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.facturation.pays_id,
-                        expression: "facturation.pays_id"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { disabled: "", name: "pays_id" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.facturation,
-                          "pays_id",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "208" } }, [
-                      _vm._v("Suisse")
-                    ])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c("input", {
-                    attrs: { name: "type", value: "4", type: "hidden" }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    attrs: { name: "user_id", type: "hidden" },
-                    domProps: { value: _vm.livraison.user_id }
-                  }),
-                  _vm._v(" "),
-                  _vm.id != _vm.main
-                    ? _c("input", {
-                        attrs: { name: "id", type: "hidden" },
-                        domProps: { value: _vm.id }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm._m(7),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-info",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.update($event)
-                        }
-                      }
-                    },
-                    [_vm._v("Envoyer")]
-                  )
-                ])
-              ])
+    _c(
+      "address",
+      [
+        _vm.changed
+          ? _c("div", { staticClass: "text-success" }, [
+              _vm._v("Adresse mise à jour"),
+              _c("i", { staticClass: "fa fa-check" })
             ])
-          ])
-        : _vm._e()
-    ])
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.changed
+          ? _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "text-danger",
+                  staticStyle: { padding: "0", "margin-bottom": "5px" },
+                  attrs: { type: "button" },
+                  on: { click: _vm.open }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-undo" }),
+                  _vm._v("\n            Changer l'adresse de facturation "),
+                  _c("i", { staticClass: "fa fa-caret-down" })
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("transition", { attrs: { name: "slide", mode: "out-in" } }, [
+          _vm.change
+            ? _c(
+                "div",
+                {
+                  staticClass: "billing-form-update",
+                  attrs: { id: "billing-form" }
+                },
+                [
+                  _c("h4", [
+                    _vm._v("Adresse de facturation "),
+                    _c(
+                      "cite",
+                      {
+                        staticClass: "text-danger pull-right",
+                        staticStyle: { color: "red" }
+                      },
+                      [_c("small", [_vm._v("* Champs requis")])]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.change
+                    ? _c("ul", { staticClass: "billing-form" }, [
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Titre")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.facturation.civilite_id,
+                                    expression: "facturation.civilite_id"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { name: "civilite_id", required: "" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.facturation,
+                                      "civilite_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "4" } }),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v("Monsieur")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("Madame")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "3" } }, [
+                                  _vm._v("Me")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Prénom "), _c("sup", [_vm._v("*")])]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.first_name,
+                                  expression: "facturation.first_name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                required: "",
+                                name: "first_name",
+                                id: "first_name",
+                                type: "text"
+                              },
+                              domProps: { value: _vm.facturation.first_name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "first_name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Nom "), _c("sup", [_vm._v("*")])]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.last_name,
+                                  expression: "facturation.last_name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                required: "",
+                                name: "last_name",
+                                id: "last_name",
+                                type: "text"
+                              },
+                              domProps: { value: _vm.facturation.last_name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "last_name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Entreprise")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.company,
+                                  expression: "facturation.company"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { name: "company", type: "text" },
+                              domProps: { value: _vm.facturation.company },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "company",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Adresse "), _c("sup", [_vm._v("*")])]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.adresse,
+                                  expression: "facturation.adresse"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                required: "",
+                                id: "adresse",
+                                name: "adresse",
+                                type: "text"
+                              },
+                              domProps: { value: _vm.facturation.adresse },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "adresse",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("CP")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.cp,
+                                  expression: "facturation.cp"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { id: "cp", name: "cp", type: "text" },
+                              domProps: { value: _vm.facturation.cp },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "cp",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-8" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Complément d'adresse")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.complement,
+                                  expression: "facturation.complement"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "complement",
+                                name: "complement",
+                                type: "text"
+                              },
+                              domProps: { value: _vm.facturation.complement },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "complement",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("NPA "), _c("sup", [_vm._v("*")])]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.npa,
+                                  expression: "facturation.npa"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { id: "npa", name: "npa", type: "text" },
+                              domProps: { value: _vm.facturation.npa },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "npa",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-8" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Ville "), _c("sup", [_vm._v("*")])]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.facturation.ville,
+                                  expression: "facturation.ville"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "ville",
+                                name: "ville",
+                                type: "text"
+                              },
+                              domProps: { value: _vm.facturation.ville },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.facturation,
+                                    "ville",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "form-group" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "control-label",
+                                attrs: { for: "" }
+                              },
+                              [_vm._v("Pays")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.facturation.pays_id,
+                                    expression: "facturation.pays_id"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { disabled: "", name: "pays_id" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.facturation,
+                                      "pays_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "208" } }, [
+                                  _vm._v("Suisse")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "col-md-12 text-right" }, [
+                              _c("hr"),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: {
+                                  name: "type",
+                                  value: "4",
+                                  type: "hidden"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                attrs: { name: "user_id", type: "hidden" },
+                                domProps: { value: _vm.livraison.user_id }
+                              }),
+                              _vm._v(" "),
+                              _vm.id != _vm.main
+                                ? _c("input", {
+                                    attrs: { name: "id", type: "hidden" },
+                                    domProps: { value: _vm.id }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.update($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Mettre à jour")]
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _vm._e()
+                ]
+              )
+            : _vm._e()
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -32661,65 +32858,6 @@ var staticRenderFns = [
           }
         })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("i", [_c("h4", [_vm._v("Adresse de facturation")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "control-label", attrs: { for: "" } }, [
-      _vm._v("Prénom "),
-      _c("sup", [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "control-label", attrs: { for: "" } }, [
-      _vm._v("Nom "),
-      _c("sup", [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "control-label", attrs: { for: "" } }, [
-      _vm._v("Adresse "),
-      _c("sup", [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "control-label", attrs: { for: "" } }, [
-      _vm._v("NPA "),
-      _c("sup", [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "control-label", attrs: { for: "" } }, [
-      _vm._v("Ville "),
-      _c("sup", [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("cite", { staticClass: "text-danger" }, [
-      _c("small", [_vm._v("* Champs requis")])
     ])
   }
 ]
@@ -53607,7 +53745,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FacturationAdresse_vue_vue_type_template_id_4d29797a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FacturationAdresse.vue?vue&type=template&id=4d29797a& */ "./resources/assets/js/components/FacturationAdresse.vue?vue&type=template&id=4d29797a&");
 /* harmony import */ var _FacturationAdresse_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FacturationAdresse.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/FacturationAdresse.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FacturationAdresse.vue?vue&type=style&index=0&lang=css& */ "./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -53615,7 +53755,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _FacturationAdresse_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _FacturationAdresse_vue_vue_type_template_id_4d29797a___WEBPACK_IMPORTED_MODULE_0__["render"],
   _FacturationAdresse_vue_vue_type_template_id_4d29797a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -53644,6 +53784,22 @@ component.options.__file = "resources/assets/js/components/FacturationAdresse.vu
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FacturationAdresse.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/FacturationAdresse.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************!*\
+  !*** ./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FacturationAdresse.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/FacturationAdresse.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FacturationAdresse_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

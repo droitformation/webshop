@@ -1,10 +1,13 @@
 
 <div id="colloque-dependence">
-
     <div id="appVue">
         <form id="inscriptionForm" method="POST" action="{{ url('pubdroit/registration') }}">{!! csrf_field() !!}
-            <form-wizard @on-complete="onComplete" title="Inscription" subtitle="">
-                <tab-content title="Prix" :before-change="beforeTabSwitch">
+
+            <form-wizard @on-complete="onComplete" title="" subtitle=""
+                         back-button-text="Précédent"
+                         color="#b01d22"
+                         next-button-text="Suivant">
+                <tab-content title="Prix" :before-change="beforeTabSwitch" backButtonText="Précédent">
                     @include('frontend.pubdroit.colloque.wizard.price')
                 </tab-content>
                 <tab-content title="Options" :before-change="beforeTabSwitch">

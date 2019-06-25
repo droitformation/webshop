@@ -70,6 +70,7 @@
 
                             @if(Auth::check())
                                 @if(!$pending && !$registered)
+                                    <h4>Inscription</h4>
                                     @include('frontend.pubdroit.colloque.partials.register')
                                 @else
                                     <?php $message = ($registered ? Registry::get('inscription.messages.registered') : Registry::get('inscription.messages.pending')); ?>
