@@ -20,7 +20,7 @@
                 <form action="{{ url('admin/order/'.$order->id) }}" method="POST" class="form-horizontal">
                     <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
-                    <div class="panel-body">
+                    <div class="panel-body" id="appComponent">
                         <h4><i class="fa fa-edit"></i> &nbsp;Editer la commande</h4>
 
                         <div class="form-group">
@@ -62,8 +62,30 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Client</label>
-                            <div class="col-sm-6 col-xs-8" id="appComponent">
+                            <div class="col-sm-6 col-xs-8">
                                 <list-autocomplete type="user_id" chosen_id="{{ $order->user_id }}"></list-autocomplete>
+                            </div>
+                        </div>
+
+                        <!-- Modal for adresse facturation change -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Adresse de facturation</label>
+                            <div class="col-sm-6 col-xs-8">
+                                <facturation-update :facturation="{{ $order->user->adresse_facturation }}"></facturation-update>
+                                <div class="panel panel-primary">
+                                    <div class="panel-body panel-colloque">
+
+                                        <address id="userAdresse">
+                                            @include('frontend.pubdroit.partials.user-facturation',['user' => $order->user])
+                                        </address>
+
+                                        <!-- Button trigger modal -->
+                                        <p class="text-right">
+                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#changeFacturation">modifier</button>
+                                        </p>
+
+                                     </div>
+                                </div>
                             </div>
                         </div>
 
@@ -234,5 +256,27 @@
 
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="changeFacturation" tabindex="-1" role="dialog" aria-labelledby="changeFacturation">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ url('admin/adresse/createOrUpdateFacturation') }}" data-validate="parsley" method="POST" class="validate-form form-horizontal">{!! csrf_field() !!}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modifier l'adresse de facturation</h4>
+                    </div>
+                    <div class="modal-body">
+                        @include('backend.orders.partials.facturation',['adresse' => $order->user->adresse_facturation])
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+                        <button class="btn btn-primary pull-right" id="updateUser" type="submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal end -->
 
 @stop

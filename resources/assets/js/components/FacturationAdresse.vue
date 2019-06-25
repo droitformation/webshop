@@ -20,10 +20,10 @@
                </div>
            </div>
        </div>
-       <address>
+       <address style="position: relative;">
 
-           <div v-if="changed" class="text-success">Adresse mise à jour<i class="fa fa-check"></i></div>
-           <div v-if="!changed"><button @click="open" type="button" class="text-danger" style="padding: 0; margin-bottom: 5px;"><i class="fa fa-undo"></i>
+           <div v-if="changed" class="text-success" style="position: absolute;top: 25px;">Adresse mise à jour<i class="fa fa-check"></i></div>
+           <div><button @click="open" type="button" class="text-danger" style="padding: 0; margin-bottom: 5px;"><i class="fa fa-undo"></i>
                Changer l'adresse de facturation <i class="fa fa-caret-down"></i></button></div>
 
            <transition name="slide" mode="out-in">
@@ -114,7 +114,7 @@
 </template>
 <style>
     .slide-enter-active, .slide-leave-active {
-        transition: opacity .4s ease-in-out, transform .4s ease-in-out;
+        transition: opacity .8s ease-in-out, transform .8s ease-in-out;
     }
 
     .slide-enter, .slide-leave-to {
@@ -147,9 +147,13 @@
             open: function() {
                 this.change = this.change ? false :true;
 
-                $('html, body').animate({
-                    scrollTop: $('#billing-form').offset().top + 200
-                }, 2000);
+                this.$nextTick(function(){
+                    let self = this;
+
+                    $('html, body').animate({
+                        scrollTop: $('#billing-form').offset().top
+                    }, 600);
+                });
             },
             fetchLivraison (id) {
                 let self = this;
@@ -170,12 +174,18 @@
             update(){
                 console.log('update');
                 let self = this;
-                axios.post(self.url+'admin/adresse/createOrUpdateFacturation', this.adresse_facturation).then(function (response) {
+                axios.post(self.url+'admin/adresse/createOrUpdateFacturation', this.facturation).then(function (response) {
 
                     self.adresse_facturation = response.data;
                     self.fetchFacturation(self.adresse_facturation.id);
+
+                    $('html, body').animate({
+                        scrollTop: $('#inscriptionForm').offset().top
+                    }, 600);
+
                     self.change = false;
                     self.changed = true;
+
                     setTimeout(function() {
                         self.changed = false;
                     },3000);

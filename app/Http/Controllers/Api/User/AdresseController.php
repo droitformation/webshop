@@ -143,7 +143,12 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->facturation($request->all());
 
-        return response()->json($adresse);
-        die();
+        if($request->ajax())
+        {
+            return response()->json($adresse);
+            die();
+        }
+
+        return redirect()->back();
     }
 }
