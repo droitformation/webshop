@@ -48,7 +48,7 @@ Vue.component('edit-bloc', require('./components/EditBloc.vue').default);
 
 Vue.component('product-select', require('./components/ProductSelect.vue').default);
 Vue.component('facturation-adresse', require('./components/FacturationAdresse.vue').default);
-Vue.component('facturation-update', require('./components/FacturationUpdate.vue').default);
+Vue.component('adresse-update', require('./components/AdresseUpdate.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);
@@ -57,8 +57,8 @@ import VueFormWizard from 'vue-form-wizard';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 Vue.use(VueFormWizard)
 
-import VModal from 'vue-js-modal';
-Vue.use(VModal);
+import vmodal from 'vue-js-modal';
+Vue.use(vmodal);
 
 const app = new Vue({
     el: '#appComponent'

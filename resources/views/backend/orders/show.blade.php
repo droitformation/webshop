@@ -71,20 +71,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Adresse de facturation</label>
                             <div class="col-sm-6 col-xs-8">
-                                <facturation-update :facturation="{{ $order->user->adresse_facturation }}"></facturation-update>
                                 <div class="panel panel-primary">
                                     <div class="panel-body panel-colloque">
-
-                                        <address id="userAdresse">
-                                            @include('frontend.pubdroit.partials.user-facturation',['user' => $order->user])
-                                        </address>
-
-                                        <!-- Button trigger modal -->
-                                        <p class="text-right">
-                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#changeFacturation">modifier</button>
-                                        </p>
-
-                                     </div>
+                                        <adresse-update :original="{{ $order->user->adresse_facturation }}" type="facturation"></adresse-update>
+                                    </div>
                                 </div>
                             </div>
                         </div>

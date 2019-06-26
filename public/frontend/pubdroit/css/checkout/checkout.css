@@ -357,6 +357,13 @@ Wizard
     margin: 0 -10px;
 }
 
+.adresse_update{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
 #colloque-dependence .wrapper {
     display: flex;
     flex-direction: row;

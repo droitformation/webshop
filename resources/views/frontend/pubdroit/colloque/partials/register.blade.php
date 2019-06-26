@@ -24,6 +24,25 @@
                     <?php $adresse_livraison   = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
                     <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
 
+                    <div class="adresse-verify">
+                        <address id="userAdresse">
+                            <adresse-update :original="{{ $adresse_livraison }}" title="Adresse indiqué sur bon"></adresse-update>
+                        </address>
+                        <address id="userFacturation">
+                            <adresse-update :original="{{ $adresse_facturation }}" title="Adresse indiqué sur facture"></adresse-update>
+                        </address>
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label" for="reference_no">N° référence</label>
+                                <input class="form-control" name="reference_no" id="reference_no" type="text" placeholder="Optionnel">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="transaction_no">N° commande</label>
+                                <input class="form-control" name="transaction_no" id="transaction_no" type="text" placeholder="Optionnel">
+                            </div>
+                        </div>
+                    </div>
+
                     <facturation-adresse
                             :main="{{ $adresse_livraison->id }}"
                             :livraison="{{ json_encode($adresse_livraison) }}"
