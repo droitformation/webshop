@@ -37,7 +37,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Tiers payant</label>
                             <div class="col-sm-7 col-xs-5">
-                                <list-autocomplete type="tiers_user_id" chosen_id="{{ $abonnement->tiers_user_id ? $abonnement->tiers_user_id : null }}"></list-autocomplete>
+                          {{--      <list-autocomplete type="tiers_user_id" chosen_id="{{ $abonnement->tiers_user_id ? $abonnement->tiers_user_id : null }}"></list-autocomplete>--}}
+
+                                <div class="panel panel-primary">
+                                    <div class="panel-body panel-colloque">
+                                        <adresse-update :original="{{ $abonnement->user_facturation }}" title="" type="4"></adresse-update>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

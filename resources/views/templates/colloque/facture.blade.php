@@ -20,7 +20,7 @@
                     </td>
                     <td align="top" width="40%" valign="top">
                         @if($generate->getAdresse())
-                            @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
+                            @include('templates.partials.adresse',['adresse' => $generate->getAdresse(true)])
                         @endif
                         @if($generate->getReferences())
                             <div id="user_reference">

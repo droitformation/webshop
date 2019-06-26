@@ -30,7 +30,7 @@ class AboGenerate{
         return $this->model->abonnement->user_adresse;
     }
 
-    public function getAdresse()
+    public function getAdresse($tiers = null)
     {
         $abonnement = $this->model->abonnement->load('user','tiers_user');
 

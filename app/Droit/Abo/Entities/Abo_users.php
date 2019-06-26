@@ -85,6 +85,11 @@ class Abo_users extends Model{
         return isset($user->facturation_adresse) ? $user->facturation_adresse : $user->adresse_contact;
     }
 
+    public function getIsTiersAttribute()
+    {
+        return isset($this->tiers_user) || ($this->user->facturation_adresse->id != $this->user->adresse_contact->id) ? true : false;
+    }
+
     public function getSubstituteEmailAttribute()
     {
         if(substr(strrchr($this->user_facturation->email, "@"), 1) == 'publications-droit.ch'){

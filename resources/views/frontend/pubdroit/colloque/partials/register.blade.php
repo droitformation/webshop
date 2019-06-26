@@ -26,10 +26,10 @@
 
                     <div class="adresse-verify">
                         <address id="userAdresse">
-                            <adresse-update :original="{{ $adresse_livraison }}" title="Adresse indiqué sur bon"></adresse-update>
+                            <adresse-update :original="{{ $adresse_livraison }}" title="Adresse indiqué sur bon" type="1"></adresse-update>
                         </address>
                         <address id="userFacturation">
-                            <adresse-update :original="{{ $adresse_facturation }}" title="Adresse indiqué sur facture"></adresse-update>
+                            <adresse-update :original="{{ $adresse_facturation }}" title="Adresse indiqué sur facture" type="4"></adresse-update>
                         </address>
                         <div>
                             <div class="form-group">
@@ -43,11 +43,6 @@
                         </div>
                     </div>
 
-                    <facturation-adresse
-                            :main="{{ $adresse_livraison->id }}"
-                            :livraison="{{ json_encode($adresse_livraison) }}"
-                            :facturation="{{ json_encode($adresse_facturation) }}">
-                    </facturation-adresse>
                 </tab-content>
                 <tab-content title="Confirmer" :after-change="lastTabResume">
 

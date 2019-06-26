@@ -1934,6 +1934,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['original', 'type', 'title'],
   components: {},
@@ -1951,6 +1953,15 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
     this.$forceUpdate();
     this.fetch(this.adresse_update.id);
+  },
+  computed: {
+    path: function path() {
+      if (this.type == 4) {
+        return this.url + 'admin/adresse/createOrUpdateFacturation';
+      }
+
+      return this.url + 'admin/adresse/updateAdresse';
+    }
   },
   methods: {
     show: function show() {
@@ -1970,7 +1981,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     update: function update() {
       var self = this;
-      axios.post(self.url + 'admin/adresse/createOrUpdateFacturation', this.adresse_update).then(function (response) {
+      axios.post(this.path, this.adresse_update).then(function (response) {
         self.adresse_update = response.data;
         self.fetch(self.adresse_update.id);
         self.hide();
@@ -29837,17 +29848,21 @@ var render = function() {
       _vm._v(" "),
       _c("div", { domProps: { innerHTML: _vm._s(_vm.update_detail) } }),
       _vm._v(" "),
-      _c("div", { staticClass: "text-right" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-warning btn-xs",
-            attrs: { type: "button" },
-            on: { click: _vm.show }
-          },
-          [_vm._v("changer")]
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "text-right", staticStyle: { "margin-top": "5px" } },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-warning btn-xs",
+              attrs: { type: "button" },
+              on: { click: _vm.show }
+            },
+            [_vm._v("mettre à jour")]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "modal",
@@ -30277,26 +30292,49 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12 text-right" }, [
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.update($event)
+              _c(
+                "div",
+                { staticClass: "row", staticStyle: { "margin-top": "25px" } },
+                [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-default",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.hide($event)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Mettre à jour")]
-                  )
-                ])
-              ])
+                      },
+                      [_vm._v("Annuler")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6 text-right" }, [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.update($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Mettre à jour")]
+                    )
+                  ])
+                ]
+              )
             ])
           ])
         ]
@@ -34724,12 +34762,6 @@ var render = function() {
                 _vm._v(_vm._s(_vm.chosen.user_id))
               ]),
               _vm._v(" "),
-              _vm.chosen.company && _vm.chosen.company != _vm.chosen.company
-                ? _c("span", [
-                    _c("strong", [_vm._v(_vm._s(_vm.chosen.company))])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
               _vm.chosen.civilite
                 ? _c("span", [_vm._v(_vm._s(_vm.chosen.civilite))])
                 : _vm._e(),
@@ -34746,6 +34778,10 @@ var render = function() {
                   [_vm._v(_vm._s(_vm.chosen.name))]
                 )
               ]),
+              _vm._v(" "),
+              _vm.chosen.company && _vm.chosen.company != _vm.chosen.name
+                ? _c("span", [_vm._v(_vm._s(_vm.chosen.company))])
+                : _vm._e(),
               _vm._v(" "),
               _vm.chosen.cp
                 ? _c("span", [_vm._v(_vm._s(_vm.chosen.cp))])

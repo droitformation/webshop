@@ -88,6 +88,16 @@ class AboGenerateTest extends TestCase
         $this->assertSame($response->name, $abo_user->user_facturation->name);
     }
 
+    public function testIsTiersAdresse()
+    {
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeUserAbonnement($abo, null, true);
+
+        $this->assertTrue($abo_user->is_tiers);
+    }
+
     public function testGetAboAdresseName()
     {
         $make  = new \tests\factories\ObjectFactory();

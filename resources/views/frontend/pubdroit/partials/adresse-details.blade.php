@@ -3,6 +3,6 @@
 {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
 {{ $adresse->adresse }}<br>
 {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
-{!! !empty($adresse->cp) ? $adresse->cp.'<br>' : '' !!}
+{!! !empty($adresse->cp) ? 'CP '.$adresse->cp.'<br>' : '' !!}
 {{ $adresse->npa }} {{ $adresse->ville }}<br>
-{{ $adresse->pays->title }}
+{{ $adresse->pays->id != 208 ? $adresse->pays->title : '' }}

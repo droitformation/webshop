@@ -53,50 +53,42 @@ class Generate{
         }
     }
 
-    public function getAdresse()
+    public function getAdresse($facturation = null)
     {
-        if($this->getType() == 'abo')
-        {
+        if($this->getType() == 'abo') {
             $this->model->abonnement->load('user','tiers','originaluser','originaltiers');
 
-            if($this->model->abonnement->tiers_id > 0)
-            {
+            if($this->model->abonnement->tiers_id > 0) {
                 return $this->model->abonnement->tiers ? $this->model->abonnement->tiers : $this->model->abonnement->originaltiers;
             }
 
-            if($this->model->abonnement->user)
-            {
+            if($this->model->abonnement->user) {
                 return $this->model->abonnement->user;
             }
 
-            if($this->model->abonnement->originaluser)
-            {
+            if($this->model->abonnement->originaluser) {
                 return $this->model->abonnement->originaluser;
             }
 
             return null;
         }
 
-        if($this->getType() == 'inscription' && $this->model->group_id)
-        {
+        if($this->getType() == 'inscription' && $this->model->group_id) {
             $this->model->groupe->load('user');
-
             $user = $this->model->groupe->user;
         }
-        else
-        {
+        else {
             $user = $this->model->user;
         }
 
         // Test if user exist
-        if (!$user)
-        {
+        if (!$user) {
             throw new \App\Exceptions\UserNotExistException('No user');
         }
 
         $user->load('adresses');
 
-        return isset($user->adresse_facturation) ? $user->adresse_facturation : null;
+        return $facturation ? $user->adresse_facturation  : $user->adresse_livraison;
     }
 
     public function getColloque()

@@ -73,7 +73,7 @@
                             <div class="col-sm-6 col-xs-8">
                                 <div class="panel panel-primary">
                                     <div class="panel-body panel-colloque">
-                                        <adresse-update :original="{{ $order->user->adresse_facturation }}" type="facturation"></adresse-update>
+                                        <adresse-update :original="{{ $order->user->adresse_facturation }}" title="" type="4"></adresse-update>
                                     </div>
                                 </div>
                             </div>

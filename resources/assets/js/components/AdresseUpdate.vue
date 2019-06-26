@@ -3,7 +3,7 @@
 
         <h5 v-if="title">{{ title }}</h5>
         <div v-html="update_detail"></div>
-        <div class="text-right"><button type="button" @click="show" class="btn btn-warning btn-xs">changer</button></div>
+        <div class="text-right" style="margin-top: 5px;"><button type="button" @click="show" class="btn btn-warning btn-xs">mettre à jour</button></div>
 
         <modal :name="'update-modal'+id" :adaptive="true" :scrollable="true" :reset="true" height="auto">
 
@@ -72,9 +72,11 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-12 text-right"><hr/>
+                    <div class="row" style="margin-top: 25px;">
+                        <div class="col-md-6"><hr/>
+                            <button v-on:click.prevent="hide" type="button" class="btn btn-default">Annuler</button>
+                        </div>
+                        <div class="col-md-6 text-right"><hr/>
                             <button v-on:click.prevent="update" type="button" class="btn btn-primary">Mettre à jour</button>
                         </div>
                     </div>
@@ -114,6 +116,15 @@
             this.$forceUpdate();
             this.fetch(this.adresse_update.id);
         },
+        computed: {
+            path: function () {
+
+                if(this.type == 4){
+                    return this.url+'admin/adresse/createOrUpdateFacturation';
+                }
+                return this.url+'admin/adresse/updateAdresse';
+            },
+        },
         methods: {
             show () {
                 this.$modal.show('update-modal'+this.id);
@@ -131,7 +142,7 @@
             },
             update(){
                 let self = this;
-                axios.post(self.url+'admin/adresse/createOrUpdateFacturation', this.adresse_update).then(function (response) {
+                axios.post(this.path, this.adresse_update).then(function (response) {
 
                     self.adresse_update = response.data;
                     self.fetch(self.adresse_update.id);

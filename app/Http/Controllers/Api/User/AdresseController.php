@@ -86,6 +86,12 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
+        if($request->ajax())
+        {
+            return response()->json($adresse);
+            die();
+        }
+
         return redirect('adresse/'.$id);
     }
 
@@ -146,9 +152,21 @@ class AdresseController extends Controller {
         if($request->ajax())
         {
             return response()->json($adresse);
-            die();
+        }
+
+        return redirect()->back();
+    }
+
+    public function updateAdresse(UpdateAdresse $request)
+    {
+        $adresse = $this->adresse->update($request->all());
+
+        if($request->ajax())
+        {
+            return response()->json($adresse);
         }
 
         return redirect()->back();
     }
 }
+
