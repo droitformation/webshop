@@ -1,9 +1,14 @@
 <template>
     <div class="adresse_update">
 
-        <h5 v-if="title">{{ title }}</h5>
-        <div v-html="update_detail"></div>
-        <div class="text-right" style="margin-top: 5px;"><button type="button" @click="show" class="btn btn-warning btn-xs">mettre à jour</button></div>
+        <div v-if="showing">
+            <h5 v-if="title">{{ title }}</h5>
+            <div v-html="update_detail"></div>
+        </div>
+
+        <div :class="'text-' + direction">
+            <button type="button" @click="show" :class="'btn ' + btnClass">{{ btnText }}</button>
+        </div>
 
         <modal :name="'update-modal'+id" :adaptive="true" :scrollable="true" :reset="true" height="auto">
 
@@ -98,13 +103,17 @@
 </style>
 <script>
     export default {
-        props: ['original','type','title'],
+        props: ['original','type','title','dir','hidden','btn','texte'],
         components: {
         },
         data () {
             return {
                 url: location.protocol + "//" + location.host+"/",
                 change:false,
+                btnClass: this.btn ? this.btn : 'btn-warning btn-xs',
+                btnText: this.texte ? this.texte : 'Mettre à jour',
+                direction: this.dir ? this.dir : 'right',
+                showing: this.hidden ? false : true,
                 changed:false,
                 id:Math.random(),
                 update_detail:'',

@@ -5,7 +5,7 @@
         <option value="">Choix</option>
         @foreach($colloque->prices as $price)
             <option value="{{ $price->id }}" <?php echo (isset($price_current) && $price_current == $price->id ? 'selected' : ''); ?>>
-                {{ $price->description }} | <strong>{{ $price->price_cents }} CHF</strong>
+                {{ $price->description }} | {{ $price->price_cents }} CHF
             </option>
         @endforeach
     </select>

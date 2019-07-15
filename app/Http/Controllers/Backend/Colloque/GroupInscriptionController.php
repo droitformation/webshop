@@ -104,4 +104,17 @@ class GroupInscriptionController extends Controller
         return redirect()->back();
     }
 
+    public function references(Request $request, $id)
+    {
+        $group = $this->groupe->find($id);
+
+        // Attach references if any
+        $reference = \App\Droit\Transaction\Reference::update($group, $request->only(['reference_no','transaction_no']));
+
+        $this->register->makeDocuments($group, true);
+
+        alert()->success('Références modifiés');
+
+        return redirect()->back();
+    }
 }

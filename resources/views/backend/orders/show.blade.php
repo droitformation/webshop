@@ -79,6 +79,22 @@
                             </div>
                         </div>
 
+                        <!-- New version -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Réferences</label>
+                            <div class="col-sm-8 col-xs-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">N° référence</span>
+                                    <input type="text" class="form-control" value="{{ isset($order->references) ? $order->references->reference_no : '' }}" name="reference_no">
+                                </div><br>
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">N° commande</span>
+                                    <input type="text" class="form-control" value="{{ isset($order->references) ? $order->references->transaction_no : '' }}" name="transaction_no">
+                                </div>
+                            </div>
+                        </div>
+
                         @if(!$order->user_id)
                             <div class="form-group">
                                 <label class="col-sm-3 col-xs-12 control-label">
@@ -167,33 +183,18 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label"><i class="fa fa-dollar"></i>&nbsp; Modifier les taux de tva</label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="tva[taux_reduit]" value="{{ old('tva.taux_reduit') }}" placeholder="Réduit"><span class="input-group-addon">%</span>
                                 </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="tva[taux_normal]" value="{{ old('tva.taux_normal') }}" placeholder="Normal"><span class="input-group-addon">%</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- New version -->
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Réferences</label>
-                            <div class="col-sm-8 col-xs-8">
-                                <div class="input-group">
-                                    <span class="input-group-addon">N° référence</span>
-                                    <input type="text" class="form-control" value="{{ isset($order->references) ? $order->references->reference_no : '' }}" name="reference_no">
-                                </div><br>
-
-                                <div class="input-group">
-                                    <span class="input-group-addon">N° commande</span>
-                                    <input type="text" class="form-control" value="{{ isset($order->references) ? $order->references->transaction_no : '' }}" name="transaction_no">
-                                </div>
-                            </div>
-                        </div>
 
                         <?php $messages = unserialize($order->comment); ?>
                         <?php $warning = isset($messages['warning']) ? $messages['warning'] : old('message.warning'); ?>

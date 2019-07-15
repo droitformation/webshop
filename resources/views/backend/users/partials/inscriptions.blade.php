@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col-md-2 line-spacer">
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
-                                        <i class="fa fa-edit"></i>
+                                        Éditer/Références
                                     </button>
                                 </div>
                                 <div class="col-md-6 line-spacer">
@@ -52,7 +52,18 @@
                                         Envoyer l'inscription
                                     </button>
                                 </div>
-                                <div class="col-md-4 line-spacer text-right">
+                                <div class="col-md-2 line-spacer">
+                                    <adresse-update
+                                            hidden="1"
+                                            :original="{{ $inscription->adresse_facturation }}"
+                                            title=""
+                                            btn="btn-sm btn-default"
+                                            texte="Adresse facturation MAJ"
+                                            dir="left"
+                                            type="4">
+                                    </adresse-update>
+                                </div>
+                                <div class="col-md-2 line-spacer text-right">
                                     <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">X</button>

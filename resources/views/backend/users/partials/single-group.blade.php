@@ -40,5 +40,8 @@
         @endif
 
         @include('backend.users.inscription.options')
+
+        <!-- Modal edit inscription -->
+        @include('backend.users.modals.edit', ['inscription' => $inscription])
     </td>
 </tr>

@@ -1936,13 +1936,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['original', 'type', 'title'],
+  props: ['original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte'],
   components: {},
   data: function data() {
     return {
       url: location.protocol + "//" + location.host + "/",
       change: false,
+      btnClass: this.btn ? this.btn : 'btn-warning btn-xs',
+      btnText: this.texte ? this.texte : 'Mettre à jour',
+      direction: this.dir ? this.dir : 'right',
+      showing: this.hidden ? false : true,
       changed: false,
       id: Math.random(),
       update_detail: '',
@@ -29844,25 +29853,25 @@ var render = function() {
     "div",
     { staticClass: "adresse_update" },
     [
-      _vm.title ? _c("h5", [_vm._v(_vm._s(_vm.title))]) : _vm._e(),
+      _vm.showing
+        ? _c("div", [
+            _vm.title ? _c("h5", [_vm._v(_vm._s(_vm.title))]) : _vm._e(),
+            _vm._v(" "),
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.update_detail) } })
+          ])
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { domProps: { innerHTML: _vm._s(_vm.update_detail) } }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "text-right", staticStyle: { "margin-top": "5px" } },
-        [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-warning btn-xs",
-              attrs: { type: "button" },
-              on: { click: _vm.show }
-            },
-            [_vm._v("mettre à jour")]
-          )
-        ]
-      ),
+      _c("div", { class: "text-" + _vm.direction }, [
+        _c(
+          "button",
+          {
+            class: "btn " + _vm.btnClass,
+            attrs: { type: "button" },
+            on: { click: _vm.show }
+          },
+          [_vm._v(_vm._s(_vm.btnText))]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "modal",

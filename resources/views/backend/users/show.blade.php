@@ -13,7 +13,7 @@
 </div>
 <br>
 <!-- start row -->
-<div class="row">
+<div class="row" id="appVue">
     @if (!empty($user))
            <div class="col-md-12"><!-- col -->
 
@@ -57,7 +57,7 @@
 
                                   <div class="form-group">
                                       <label for="message" class="control-label">Email global si aucun email personnel</label>
-                                      <input type="email" name="username" class="form-control" value="{{ $user->username != $user->email ?  $user->username : '' }}">
+                                      <input type="text" autocomplete="false" name="username" class="form-control" value="{{ $user->username != $user->email ?  $user->username : '' }}">
                                   </div>
 
                                   @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
@@ -73,7 +73,7 @@
                                   </div><br>
                                   <div class="form-group">
                                       <input value="{{ $user->id }}" type="hidden" name="id">
-                                      <button class="btn btn-primary pull-right" id="updateUser" type="submit">Enregistrer</button>
+                                      <button class="btn btn-primary pull-right" id="updateUser{{ $user->id }}" type="submit">Enregistrer</button>
                                   </div>
                                   <div class="clearfix"></div>
                               </form>
@@ -151,7 +151,7 @@
                                                   <h4 style="margin-bottom: 5px;"> {{ $adresse->name }} </h4>
                                                   <p class="text-muted">
                                                       <i class="fa fa-map-marker"></i>&nbsp;Adresse {{ $adresse->type_title }}
-                                                      {!! $adresse->l5vraison ? '<small>livraison</small>' : '' !!}
+                                                      {!! $adresse->livraison ? '<small>livraison</small>' : '' !!}
                                                   </p>
                                               </div>
                                               <div class="col-md-4 text-right">
@@ -182,6 +182,7 @@
                                   <i class="fa fa-table"></i> &nbsp;Inscriptions
                                   <a href="{{ url('admin/inscription/create') }}" class="btn btn-success btn-sm  pull-right">Ajouter une inscription</a>
                               </h3>
+
                               @include('backend.users.partials.inscriptions')
                           </div>
                       </div>

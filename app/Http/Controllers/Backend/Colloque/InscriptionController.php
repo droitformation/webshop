@@ -180,7 +180,11 @@ class InscriptionController extends Controller
         // Update inscription
         $inscription = $this->inscription->update($request->all());
 
+        // Attach references if any
+        $reference = \App\Droit\Transaction\Reference::update($inscription, $request->only(['reference_no','transaction_no']));
+
         $model = $inscription->group_id ? $inscription->groupe : $inscription;
+        $model = $model->fresh();
 
         // Remake the documents
         $this->register->makeDocuments($model, true);

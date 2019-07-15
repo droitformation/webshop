@@ -17,7 +17,7 @@
                     {!! csrf_field() !!}
 
                     <input type="hidden" name="group_id" value="{{ $group_id }}" />
-                    <h4>Détenteur: {!! $groupe->name !!}</h4>
+                    <h4 class="mb-40">Détenteur: {!! $groupe->name !!}</h4>
 
                     <div class="form-group">
                         <label><strong>Colloque</strong></label>

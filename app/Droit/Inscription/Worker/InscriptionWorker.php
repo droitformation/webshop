@@ -86,7 +86,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     public function sendEmail($model, $email)
     {
         // Update documents if they don't exist
-        $this->makeDocuments($model);
+        $this->makeDocuments($model,true);
 
         // Send prepared data and documents, update inscription with send date for admin
         $this->send($this->prepareData($model), $model->user, $model->documents, $email);

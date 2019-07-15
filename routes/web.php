@@ -293,6 +293,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('desinscription', 'Backend\Colloque\DesinscriptionController');
 
         Route::get('group/restore/{id}','Backend\Colloque\GroupInscriptionController@restore');
+        Route::post('group/references/{id}','Backend\Colloque\GroupInscriptionController@references');
         Route::resource('group', 'Backend\Colloque\GroupInscriptionController');
 
         // Rappels inscription

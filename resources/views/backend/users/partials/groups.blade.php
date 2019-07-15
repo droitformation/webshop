@@ -42,9 +42,6 @@
 
                                         @include('backend.users.partials.single-group', ['inscription' => $inscription])
 
-                                        <!-- Modal edit inscription -->
-                                        @include('backend.users.modals.edit', ['inscription' => $inscription])
-
                                     @endforeach
 
                                 <!-- END Inscription loop -->

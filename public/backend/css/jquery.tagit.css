@@ -11,6 +11,7 @@ ul.tagit {
     border:none;
     position: relative;
     margin-bottom: 0;
+    z-index: 1;
 }
 ul.tagit li {
     display: block;

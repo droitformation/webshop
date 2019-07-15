@@ -9,7 +9,7 @@
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Editer {{ $inscription->inscription_no }}</h4>
+                    <h4 class="modal-title">Editer {{ $inscription->inscription_no }}</h4>
                 </div>
                 <div class="modal-body">
                     <fieldset>
@@ -44,20 +44,43 @@
                             </div>
                         @endif
 
+                        @if(!$inscription->group_id)
+                            <br>
+                            <h4>Réferences</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">N° référence</span>
+                                        <input type="text" class="form-control" value="{{ isset($inscription->references) ? $inscription->references->reference_no : '' }}" name="reference_no">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">N° commande</span>
+                                        <input type="text" class="form-control" value="{{ isset($inscription->references) ? $inscription->references->transaction_no : '' }}" name="transaction_no">
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         <?php $user = ($inscription->group_id ? 'group_id' : 'user_id'); ?>
 
                         <input name="{{ $user }}" value="{{ $inscription->$user }}" type="hidden">
                         <input name="colloque_id" value="{{ $inscription->colloque->id }}" type="hidden">
                         <input name="payed_at" value="{{ $inscription->payed_at ? $inscription->payed_at->format('Y-m-d') : null }}" type="hidden">
                     </fieldset>
-
-                    <p class="text-warning"><i class="fa fa-warning"></i> &nbsp;La mise a jour prend quelques secondes car les documents sont regénérés</p>
-
                 </div>
                 <div class="modal-footer">
-                    {!! Form::hidden('id', $inscription->id ) !!}
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-primary">&eacute;diter</button>
+                    <div class="row">
+                        <div class="col-md-8 text-left">
+                            <p class="text-warning"><i class="fa fa-warning"></i> &nbsp;La mise a jour prend quelques secondes car les documents sont regénérés</p>
+                        </div>
+                        <div class="col-md-4">
+                            {!! Form::hidden('id', $inscription->id ) !!}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary">&eacute;diter</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

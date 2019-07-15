@@ -860,9 +860,7 @@ select[multiple] {
     padding-top: 15px;
 }
 
-.line-spacer div:last-child{
-    margin-top: 10px;
-}
+
 
 .table{
     margin-bottom: 0;

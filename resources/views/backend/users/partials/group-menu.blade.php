@@ -20,22 +20,40 @@
             @endif
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-9">
+    <div class="row mt-10">
+        <div class="col-md-10">
             <div class="btn-group">
                 <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGroup_{{ $group->id }}">Changer le détenteur</a>
                 <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#addToGroup_{{ $group->id }}">Ajouter un participant</a>
                 @if(!empty($group->colloque->annexe))
-                    <a href="{{ url('admin/inscription/regenerate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
+                    <a href="{{ url('admin/inscription/regenerate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les docs</a>
                 @endif
+
                 <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscriptionGroup_{{ $group->id }}">Envoyer l'inscription</button>
             </div>
         </div>
-        <div class="col-md-3 text-right">
+        <div class="col-md-2 text-right">
             <form action="{{ url('admin/group/'. $inscription->groupe->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
                 <input type="hidden" name="_method" value="DELETE">
                 <button data-what="Supprimer" data-action="le groupe et ses inscriptions" class="btn btn-danger btn-sm deleteAction">X</button>
             </form>
+        </div>
+    </div>
+    <div class="row mt-10">
+        <div class="col-md-6">
+            <div style="display: flex;flow-direction:row;">
+                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#addReference_{{ $group->id }}">Ajouter/Modifier références</button>
+                @include('backend.inscriptions.modals.references', ['group' => $group])
+                <adresse-update
+                        hidden="1"
+                        :original="{{ $group->user->adresse_facturation }}"
+                        title=""
+                        btn="btn-sm btn-default"
+                        texte="Adresse facturation MAJ"
+                        dir="left"
+                        type="4">
+                </adresse-update>
+            </div>
         </div>
     </div>
 </div>
