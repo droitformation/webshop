@@ -55,7 +55,8 @@
                                 <div class="col-md-2 line-spacer">
                                     <adresse-update
                                             hidden="1"
-                                            :original="{{ $inscription->adresse_facturation }}"
+                                            :main="{{ $inscription->user->adresse_livraison }}"
+                                            :original="{{ $inscription->user->adresse_facturation }}"
                                             title=""
                                             btn="btn-sm btn-default"
                                             texte="Adresse facturation MAJ"

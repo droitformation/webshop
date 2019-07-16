@@ -73,7 +73,13 @@
                             <div class="col-sm-6 col-xs-8">
                                 <div class="panel panel-primary">
                                     <div class="panel-body panel-colloque">
-                                        <adresse-update :original="{{ $order->user->adresse_facturation }}" title="" type="4"></adresse-update>
+                                        <adresse-update
+                                                :main="{{ $order->user->adresse_livraison }}"
+                                                :original="{{ $order->user->adresse_facturation }}"
+                                                title=""
+                                                btn="btn-sm btn-info"
+                                                texte="Changer"
+                                                type="4"></adresse-update>
                                     </div>
                                 </div>
                             </div>

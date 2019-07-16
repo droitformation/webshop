@@ -1941,8 +1941,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte'],
+  props: ['main', 'original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte'],
   components: {},
   data: function data() {
     return {
@@ -1970,6 +1971,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.url + 'admin/adresse/updateAdresse';
+    },
+    isDefault: function isDefault() {
+      return this.main.id == this.original.id;
     }
   },
   methods: {
@@ -29857,7 +29861,16 @@ var render = function() {
         ? _c("div", [
             _vm.title ? _c("h5", [_vm._v(_vm._s(_vm.title))]) : _vm._e(),
             _vm._v(" "),
-            _c("div", { domProps: { innerHTML: _vm._s(_vm.update_detail) } })
+            _vm.isDefault
+              ? _c("small", { staticClass: "text-muted" }, [
+                  _vm._v("Adresse principale")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "adresse-wrapper",
+              domProps: { innerHTML: _vm._s(_vm.update_detail) }
+            })
           ])
         : _vm._e(),
       _vm._v(" "),

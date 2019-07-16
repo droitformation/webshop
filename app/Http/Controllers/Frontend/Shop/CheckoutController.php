@@ -79,7 +79,7 @@ class CheckoutController extends Controller {
     public function resume(Request $request)
     {
         if(!empty($request->except('_token'))){
-            $this->adresse->facturation($request->except('_token'));
+            //$this->adresse->facturation($request->except('_token'));
 
             session()->put('reference_no', $request->input('reference_no',null));
             session()->put('transaction_no', $request->input('transaction_no',null));

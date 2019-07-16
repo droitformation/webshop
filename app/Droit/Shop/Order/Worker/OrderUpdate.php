@@ -31,7 +31,8 @@ class OrderUpdate
 
     public function prepareData()
     {
-        $this->data = array_filter(array_only($this->request,['id','created_at','paquet','user_id','adresse_id','comment','payed_at']));
+        $this->data = array_filter(array_only($this->request,['id','created_at','paquet','user_id','adresse_id','comment','payed_at','reference_no','transaction_no']));
+
         $this->data['coupon_id']   = $this->order->coupon_id;
         $this->data['shipping_id'] = $this->order->shipping_id;
         $this->data['comment']     = isset($this->order->comment) ? unserialize($this->order->comment) : null;
@@ -107,6 +108,8 @@ class OrderUpdate
         $order = $this->repo_order->update($this->data);
 
         $reference = \App\Droit\Transaction\Reference::update($order, \Arr::only($this->data,['reference_no','transaction_no']));
+
+        $order = $order->fresh();
 
         if(isset($this->data['tva']) && !empty(array_filter($this->data['tva'])))
             $this->pdfgenerator->setTva($this->data['tva']);

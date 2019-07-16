@@ -41,7 +41,12 @@
 
                                 <div class="panel panel-primary">
                                     <div class="panel-body panel-colloque">
-                                        <adresse-update :original="{{ $abonnement->user_facturation }}" title="" type="4"></adresse-update>
+                                        <adresse-update  :main="{{ $abonnement->user_adresse }}"
+                                                         :original="{{ $abonnement->user_facturation }}"
+                                                         title=""
+                                                         btn="btn-sm btn-info"
+                                                         texte="Changer"
+                                                         type="4"></adresse-update>
                                     </div>
                                 </div>
                             </div>

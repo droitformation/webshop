@@ -3,7 +3,8 @@
 
         <div v-if="showing">
             <h5 v-if="title">{{ title }}</h5>
-            <div v-html="update_detail"></div>
+            <small class="text-muted" v-if="isDefault">Adresse principale</small>
+            <div class="adresse-wrapper" v-html="update_detail"></div>
         </div>
 
         <div :class="'text-' + direction">
@@ -103,9 +104,8 @@
 </style>
 <script>
     export default {
-        props: ['original','type','title','dir','hidden','btn','texte'],
-        components: {
-        },
+        props: ['main','original','type','title','dir','hidden','btn','texte'],
+        components: {},
         data () {
             return {
                 url: location.protocol + "//" + location.host+"/",
@@ -132,6 +132,9 @@
                     return this.url+'admin/adresse/createOrUpdateFacturation';
                 }
                 return this.url+'admin/adresse/updateAdresse';
+            },
+            isDefault: function () {
+                return this.main.id == this.original.id;
             },
         },
         methods: {

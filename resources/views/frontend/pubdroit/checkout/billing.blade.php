@@ -1,7 +1,7 @@
 @extends('frontend.pubdroit.layouts.master')
 @section('content')
 
-    <div class="row">
+    <div class="row" id="appVue">
         <div class="col-md-12">
 
             <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit/checkout/cart') }}"><span aria-hidden="true">&larr;</span> Retour au panier</a></p>
@@ -14,103 +14,36 @@
                         <span class="h-line"></span>
                     </div>
 
+                    <?php $adresse_livraison   = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
+                    <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
+
                     <form class="form" method="post" action="{{ url('pubdroit/checkout/resume') }}" id="billing">{!! csrf_field() !!}
-                        <ul class="billing-form">
-
-                            <!-- if adresse exist -->
-                            <?php $adresse = $user->load('adresses')->adresse_facturation ? $user->adresse_facturation : null; ?>
-
-                            <li class="form-group">
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">Titre</label>
-                                    <select name="civilite_id" class="form-control">
-                                        <option {{ $adresse && $adresse->civilite_id == 4 ? 'selected' : '' }} value="4"></option>
-                                        <option {{ $adresse && $adresse->civilite_id == 1 ? 'selected' : '' }} value="1">Monsieur</option>
-                                        <option {{ $adresse && $adresse->civilite_id == 2 ? 'selected' : '' }} value="2">Madame</option>
-                                        <option {{ $adresse && $adresse->civilite_id == 3 ? 'selected' : '' }} value="3">Me</option>
-                                    </select>
-                                </div>
-                            </li>
-                            <li class="form-group">
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">Prénom <sup>*</sup></label>
-                                    <input class="form-control"  name="first_name" id="first_name" value="{{ $user->first_name }}" type="text">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">Nom <sup>*</sup></label>
-                                    <input class="form-control"  name="last_name" id="last_name" value="{{ $user->last_name }}" type="text">
-                                </div>
-                            </li>
-                            <li class="form-group">
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">Entreprise</label>
-                                    <input class="form-control" name="company" value="{{ $adresse ? $adresse->company : '' }}" type="text">
-                                </div>
-                            </li>
-
-                            <li class="form-group">
-                                <div class="col-md-12">
-                                    <label class="control-label" for="">Adresse <sup>*</sup></label>
-                                    <input class="form-control" name="adresse" id="adresse" value="{{ $adresse ? $adresse->adresse : '' }}" type="text">
-                                </div>
-                            </li>
-                            <li class="form-group">
-                                <div class="col-md-4">
-                                    <label class="control-label" for="">CP</label>
-                                    <input class="form-control" name="cp" value="{{ $adresse ? $adresse->cp : '' }}" type="text">
-                                </div>
-                                <div class="col-md-8">
-                                    <label class="control-label" for="">Complément d'adresse</label>
-                                    <input class="form-control" name="complement" value="{{ $adresse ? $adresse->complement : '' }}" type="text">
-                                </div>
-                            </li>
-                            <li class="form-group">
-                                <div class="col-md-4">
-                                    <label class="control-label" for="">NPA <sup>*</sup></label>
-                                    <input class="form-control" id="npa" name="npa" value="{{ $adresse ? $adresse->npa : '' }}" type="text">
-                                </div>
-                                <div class="col-md-8">
-                                    <label class="control-label" for="">Ville <sup>*</sup></label>
-                                    <input class="form-control" id="ville" name="ville" value="{{ $adresse ? $adresse->ville : '' }}" type="text">
-                                </div>
-                            </li>
-                            <li class="form-group">
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">Pays</label>
-                                    <select disabled name="pays_id" class="form-control">
-                                        <option value="208">Suisse</option>
-                                    </select>
-                                </div>
-                            </li>
-                            <li class="form-group"><div class="col-md-12"><hr/></div></li>
-                            <li class="form-group">
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">Votre référence</label>
-                                    <input class="form-control"  name="reference_no" id="reference_no" value="{{ old('reference_no') }}" type="text">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label" for="">N° de commande</label>
-                                    <input class="form-control"  name="transaction_no" id="transaction_no" value="{{ old('transaction_no') }}" type="text">
-                                </div>
-                            </li>
-
-                            <li>
+                        <div class="adresse-verify">
+                            <address id="userFacturation">
+                                <adresse-update
+                                        :main="{{ $adresse_livraison }}"
+                                        btn="btn-sm btn-info"
+                                        texte="Changer"
+                                        dir="left"
+                                        :original="{{ $adresse_facturation }}"
+                                        title="Vérifiez l'adresse de facturation"
+                                        type="4"></adresse-update>
+                            </address>
+                            <div>
                                 <div class="form-group">
-                                    <div class="col-md-12">
-                                        <hr/>
-                                        <input name="type" value="4" type="hidden">
-                                        <input name="user_id" value="{{ $user->id }}" type="hidden">
-
-                                        {!! $adresse ? '<input type="hidden" name="id" value="'.$adresse->id.'">' : '' !!}
-
-                                        <cite class="text-danger"><small>* Champs requis</small></cite>
-                                        <button type="submit" class="more-btn" id="btn-next-confirm">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
-                                    </div>
+                                    <label class="control-label" for="reference_no">N° référence</label>
+                                    <input class="form-control" name="reference_no" id="reference_no" type="text" placeholder="Optionnel">
                                 </div>
-                            </li>
-
-                        </ul>
+                                <div class="form-group">
+                                    <label class="control-label" for="transaction_no">N° commande</label>
+                                    <input class="form-control" name="transaction_no" id="transaction_no" type="text" placeholder="Optionnel">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="more-btn" id="btn-next-confirm">Continuer &nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                     </form>
+
+
                 </div>
                 <div class="col-md-4">
 

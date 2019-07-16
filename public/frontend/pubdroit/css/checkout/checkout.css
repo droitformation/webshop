@@ -338,6 +338,10 @@ span.round-tab i{
 Wizard
 */
 
+#billing{
+    margin-top: 25px;
+}
+
 #inscriptionForm{
     padding: 10px 30px;
     background: #f1f4f6;
@@ -449,12 +453,19 @@ input[type="checkbox"]:checked.options + label{
 
 .adresse-verify address{
     width: 40%;
-    font-size: 13px;
+    font-size: 15px;
+    line-height: 19px;
     padding-right: 10px;
+}
+
+.adresse-verify address .adresse-wrapper{
+    margin-bottom: 15px;
+    padding: 5px 0;
 }
 
 .adresse-verify h5{
     font-size: 16px;
+    margin-top: 0;
 }
 
 .vue-form-wizard .wizard-header {

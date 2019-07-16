@@ -29,7 +29,8 @@
                             <adresse-update :original="{{ $adresse_livraison }}" title="Adresse indiqué sur bon" type="1"></adresse-update>
                         </address>
                         <address id="userFacturation">
-                            <adresse-update :original="{{ $adresse_facturation }}" title="Adresse indiqué sur facture" type="4"></adresse-update>
+                            <adresse-update  :main="{{ $adresse_livraison }}"
+                                             :original="{{ $adresse_facturation }}" title="Adresse indiqué sur facture" type="4"></adresse-update>
                         </address>
                         <div>
                             <div class="form-group">

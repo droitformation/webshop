@@ -46,6 +46,7 @@
                 @include('backend.inscriptions.modals.references', ['group' => $group])
                 <adresse-update
                         hidden="1"
+                        :main="{{ $group->user->adresse_livraison }}"
                         :original="{{ $group->user->adresse_facturation }}"
                         title=""
                         btn="btn-sm btn-default"
