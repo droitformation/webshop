@@ -33,6 +33,68 @@ class AboBackend extends TestCase
         parent::tearDown();
     }
 
+    public function testCreateAboWithReferences()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $abo  = $make->makeAbo();
+        $user = factory(\App\Droit\User\Entities\User::class)->create();
+
+        $response = $this->call('POST', 'admin/abonnement', [
+            'abo_id'   => $abo->id,
+            'user_id'  => $user->id,
+            'reference_no'   => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824',
+            'numero' => 213,
+            'exemplaires' => 1,
+            'renouvellement' => 'auto',
+            'status' => 'abonne',
+            'product_id'  => $abo->products->first()->id
+        ]);
+
+        $this->assertDatabaseHas('abo_users', [
+            'abo_id'  => $abo->id,
+            'user_id' => $user->id
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824',
+        ]);
+    }
+
+    public function testUpdateAboWithReferences()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $abo  = $make->makeAbo();
+
+        $abonnement = $make->makeUserAbonnement($abo);
+        $make->abonnementFacture($abonnement);
+
+        $response = $this->call('PUT', 'admin/abonnement/'.$abonnement->id, [
+            'id'   => $abonnement->id,
+            'abo_id'   => $abo->id,
+            'user_id'  => $abonnement->user_id,
+            'reference_no'   => 'Ref_24567designpond',
+            'transaction_no' => '2109456_19824',
+            'numero' => 234567,
+            'exemplaires' => 2,
+            'renouvellement' => 'auto',
+            'status' => 'abonne'
+        ]);
+
+        $this->assertDatabaseHas('abo_users', [
+            'abo_id'  => $abo->id,
+            'user_id' => $abonnement->user_id,
+            'numero' => 234567,
+            'exemplaires' => 2,
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Ref_24567designpond',
+            'transaction_no' => '2109456_19824',
+        ]);
+    }
+
     public function testEditFacture()
     {
         $make = new \tests\factories\ObjectFactory();

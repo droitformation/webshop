@@ -620,14 +620,14 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $reference = \App\Droit\Transaction\Reference::make($groupe);
 
-        $this->assertDatabaseHas('transaction_references', [
-            'reference_no' => 'Ref_2019_designpond',
-            'transaction_no' => '2109_10_19824'
-        ]);
-
         $this->assertDatabaseHas('colloque_inscriptions_groupes', [
             'id' => $groupe->id,
             'reference_id' => $reference->id
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no' => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824'
         ]);
     }
 
@@ -730,6 +730,51 @@ class FeatureInscriptionAdminTest extends TestCase
         $this->assertDatabaseHas('transaction_references', [
             'reference_no'   => 'Ref_2019_depond',
             'transaction_no' => '29_10_1924'
+        ]);
+    }
+
+    public function testUpdateInscriptionAndDocsWithReferences()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $prices   = $colloque->prices->pluck('id')->all();
+        $options  = $colloque->options->pluck('id')->all();
+
+        $date = \Carbon\Carbon::now()->toDateString();
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id' => $person->id,
+            'group_id' => null,
+            'colloque_id' => $colloque->id,
+            'payed_at'    => null,
+        ]);
+
+        $data = [
+            'id'          => $inscription->id,
+            'colloque_id' => $colloque->id,
+            'user_id'     => $person->id,
+            'reference_no'   => 'Rf_2019_depond',
+            'transaction_no' => '29_10_124',
+            'payed_at'    => $date,
+            'price_id'    => $prices[0],
+            'options'     => [
+                $options[0]
+            ]
+        ];
+
+        $this->call('PUT', 'admin/inscription/'.$inscription->id, $data);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'id'          => $inscription->id,
+            'colloque_id' => $colloque->id,
+            'payed_at'    => $date,
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Rf_2019_depond',
+            'transaction_no' => '29_10_124',
         ]);
     }
 }

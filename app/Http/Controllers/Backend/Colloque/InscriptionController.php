@@ -136,14 +136,13 @@ class InscriptionController extends Controller
         // if type simple
         if($request->input('type') == 'simple') {
             $model = $this->register->register($request->all(), true);
-            $this->register->makeDocuments($model, true);
         }
         else {
             $model = $this->register->register($request->except(['type','_token']));
-            $this->register->makeDocuments($model, true);
         }
 
         $reference = \App\Droit\Transaction\Reference::make($model);
+        $this->register->makeDocuments($model, true);
 
         alert()->success('L\'inscription à bien été crée');
 

@@ -67,6 +67,12 @@ class AboUserController extends Controller {
 
         $abonnement = $this->abonnement->create($request->all());
 
+        // References
+        session()->put('reference_no', $request->input('reference_no',null));
+        session()->put('transaction_no', $request->input('transaction_no',null));
+
+        $reference = \App\Droit\Transaction\Reference::make($abonnement);
+
         if($abonnement->status == 'abonne') {
             $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $request->input('product_id')]);
             $this->worker->make($facture);

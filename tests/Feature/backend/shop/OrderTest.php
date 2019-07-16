@@ -334,4 +334,69 @@ class OrderTest extends TestCase
         \DB::table('shop_paquets')->truncate();
         \DB::table('shop_order_paquets')->truncate();
     }
+
+    public function testCreateOrderWithReferences()
+    {
+        $make = new \tests\factories\ObjectFactory();
+        $user = $make->makeUser();
+
+        $product1 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+        $product2 = factory(\App\Droit\Shop\Product\Entities\Product::class)->create(['price' => 1000]);
+
+        $data = [
+            'user_id' => $user->id,
+            'order' => [
+                'products' => [0 => $product1->id, 1 => $product2->id],
+                'qty'      => [0 => 2, 1 => 2],
+                'rabais'   => [0 => 50],
+                'gratuit'  => [1 => 1]
+            ],
+            'admin'   => 1,
+            'reference_no'   => 'Rf_2019_depond',
+            'transaction_no' => '29_10_124',
+            'shipping_id' => 1,
+            'adresse' => [],
+            'tva'     => [],
+            'message' => []
+        ];
+
+        $data_product = [
+            [
+                'product'  => $product1->id ,
+                'qty'      => 2,
+                'rabais'   => '25',
+                'price'    => null,
+                'gratuit'  => null,
+                'prix'     => $product1->price_cents,
+                'computed' => 10.00,
+            ],
+            [
+                'product'  => $product2->id ,
+                'qty'      => 2,
+                'rabais'   => null,
+                'price'    => null,
+                'gratuit'  => 'oui',
+                'prix'     => $product2->price_cents,
+                'computed' => 0.00,
+            ]
+        ];
+
+        $total = 20.00;
+
+        session()->put('reference_no', 'Ref_2019_designpond');
+        session()->put('transaction_no', '2109_10_19824');
+
+        $response = $this->call('POST', '/admin/order', ['data' => json_encode($data)]);
+
+        $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+        $order  = $model->getLast(1)->first();
+
+        $this->assertEquals($total,$order->total_with_shipping);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824',
+        ]);
+
+    }
 }
