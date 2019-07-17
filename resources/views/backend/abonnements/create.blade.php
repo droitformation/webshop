@@ -33,13 +33,8 @@
                             <label class="col-sm-3 control-label">Compte</label>
                             <div class="col-sm-7 col-xs-5">
                                 <list-autocomplete type="user_id" chosen_id=""></list-autocomplete>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Tiers payant</label>
-                            <div class="col-sm-7 col-xs-5">
-                                <list-autocomplete type="tiers_user_id" chosen_id=""></list-autocomplete>
+                                <p class="mt-10 text-danger">On peut gérer le tiers payant une fois l'abonnement crée</p>
                             </div>
                         </div>
 

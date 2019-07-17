@@ -3,8 +3,12 @@
     $user->load('adresses');
     $user->adresse_facturation->load(['pays','civilite']);
 ?>
-{!! !empty($user->adresse_facturation->civilite_title) ? $user->adresse_facturation->civilite_title.'<br>' : '' !!}
-{{ $user->adresse_facturation->first_name }} {{ $user->adresse_facturation->last_name }}<br>
+
+{!! !empty(trim($user->adresse_facturation->civilite_title)) ? $user->adresse_facturation->civilite_title.'<br>' : '' !!}
+
+{{ !empty($user->adresse_facturation->first_name) ? $user->adresse_facturation->first_name : '' }} {{ !empty($user->adresse_facturation->last_name) ? $user->adresse_facturation->last_name : '' }}
+{!! !empty($user->adresse_facturation->first_name) || !empty($user->adresse_facturation->last_name) ? '<br>' : '' !!}
+
 {!! !empty($user->adresse_facturation->company) ? $user->adresse_facturation->company.'<br>' : '' !!}
 {{ $user->adresse_facturation->adresse }}<br>
 {!! !empty($user->adresse_facturation->complement) ? $user->adresse_facturation->complement.'<br>' : '' !!}

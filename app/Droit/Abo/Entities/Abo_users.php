@@ -79,15 +79,22 @@ class Abo_users extends Model{
 
     public function getUserFacturationAttribute()
     {
-        // Change to user
-        $user = isset($this->tiers_user) ? $this->tiers_user : $this->user;
+        // If exist tiers facturation => tiers contact
+        if(isset($this->user->tiers_adresse)){
+            return $this->user->tiers_adresse;
+        }
 
-        return isset($user->facturation_adresse) ? $user->facturation_adresse : $user->adresse_contact;
+        // if not tiers facture => user facturation OR contact, User model gives facturation if exist else primary adresse
+        if(isset($this->user->adresse_facturation)){
+            return $this->user->adresse_facturation;
+        }
+
+        return null;
     }
 
     public function getIsTiersAttribute()
     {
-        return isset($this->tiers_user) || ($this->user->facturation_adresse->id != $this->user->adresse_contact->id) ? true : false;
+        return isset($this->user->tiers_adresse) && ($this->user->tiers_adresse->id != $this->user->adresse_contact->id) ? true : false;
     }
 
     public function getSubstituteEmailAttribute()

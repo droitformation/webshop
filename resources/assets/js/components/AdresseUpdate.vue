@@ -3,7 +3,7 @@
 
         <div v-if="showing">
             <h5 v-if="title">{{ title }}</h5>
-            <small class="text-muted" v-if="isDefault">Adresse principale</small>
+            <small class="text-muted" v-if="isDefault">Adresse principale (défaut)</small>
             <div class="adresse-wrapper" v-html="update_detail"></div>
         </div>
 
@@ -124,11 +124,11 @@
             console.log('Component mounted.');
             this.$forceUpdate();
             this.fetch(this.adresse_update.id);
+            this.adresse_update.type = this.type;
         },
         computed: {
             path: function () {
-
-                if(this.type == 4){
+                if(this.type == 4 || this.type == 5){
                     return this.url+'admin/adresse/createOrUpdateFacturation';
                 }
                 return this.url+'admin/adresse/updateAdresse';

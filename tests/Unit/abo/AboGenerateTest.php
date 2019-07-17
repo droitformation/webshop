@@ -77,14 +77,13 @@ class AboGenerateTest extends TestCase
         $make  = new \tests\factories\ObjectFactory();
 
         $abo         = $make->makeAbo();
-        $abo_user    = $make->makeUserAbonnement($abo, null, true);
+        $abo_user    = $make->makeTiersAbonnement($abo, null);
         $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->create(['abo_user_id' => $abo_user->id ,'product_id' => $abo->current_product->id]);
 
         $generate = new \App\Droit\Generate\Entities\AboGenerate($abo_facture);
         $response = $generate->getAdresse();
 
         $this->assertNotSame($response->name, $abo_user->user_adresse->name);
-        $this->assertSame($response->name, $abo_user->user_facturation->name);
         $this->assertSame($response->name, $abo_user->user_facturation->name);
     }
 
@@ -93,7 +92,7 @@ class AboGenerateTest extends TestCase
         $make  = new \tests\factories\ObjectFactory();
 
         $abo         = $make->makeAbo();
-        $abo_user    = $make->makeUserAbonnement($abo, null, true);
+        $abo_user    = $make->makeTiersAbonnement($abo, null);
 
         $this->assertTrue($abo_user->is_tiers);
     }
@@ -106,7 +105,7 @@ class AboGenerateTest extends TestCase
         $adresse = $make->adresse($user);
 
         $abo         = $make->makeAbo();
-        $abo_user    = $make->makeUserAbonnement($abo, $user, true);
+        $abo_user    = $make->makeTiersAbonnement($abo, $user);
 
         $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->create(['abo_user_id' => $abo_user->id ,'product_id' => $abo->current_product->id]);
 

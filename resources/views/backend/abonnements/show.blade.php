@@ -21,6 +21,16 @@
                         <h4><i class="fa fa-edit"></i> &nbsp;Abonnement</h4>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label"></label>
+                            <div class="col-sm-7 col-xs-5">
+                                <p class="text-danger">
+                                    <i class="fa fa-exclamation"></i> &nbsp;
+                                    Mettre à jour la/les factures si vous faites des mise à jour de l'adresse de facturation ou des références!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Numéro</label>
                             <div class="col-sm-4 col-xs-5">
                                 <input type="text" class="form-control" value="{{ $abonnement->numero }}" name="numero">
@@ -31,22 +41,28 @@
                             <label class="col-sm-3 control-label">Compte</label>
                             <div class="col-sm-7 col-xs-5">
                                 <list-autocomplete type="user_id" chosen_id="{{ $abonnement->user_id ? $abonnement->user_id : null }}"></list-autocomplete>
+
+                                @if(!$abonnement->isTiers)
+                                    <button class="btn btn-inverse btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample">
+                                        Gérer tiers payant
+                                    </button>
+                                @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Tiers payant</label>
-                            <div class="col-sm-7 col-xs-5">
-                          {{--      <list-autocomplete type="tiers_user_id" chosen_id="{{ $abonnement->tiers_user_id ? $abonnement->tiers_user_id : null }}"></list-autocomplete>--}}
-
-                                <div class="panel panel-primary">
-                                    <div class="panel-body panel-colloque">
-                                        <adresse-update  :main="{{ $abonnement->user_adresse }}"
-                                                         :original="{{ $abonnement->user_facturation }}"
-                                                         title=""
-                                                         btn="btn-sm btn-info"
-                                                         texte="Changer"
-                                                         type="4"></adresse-update>
+                        <div class="collapse {{ $abonnement->isTiers ? 'in' :'' }}" id="collapseExample">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Adresse de facturation <small>(ex tiers payant)</small></label>
+                                <div class="col-sm-7 col-xs-5">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-body panel-colloque">
+                                            <adresse-update  :main="{{ $abonnement->user_adresse }}"
+                                                             :original="{{ $abonnement->user_facturation }}"
+                                                             title=""
+                                                             btn="btn-sm btn-info"
+                                                             texte="Changer"
+                                                             type="5"></adresse-update>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -144,12 +160,12 @@
                             <div class="col-sm-8 col-xs-8">
                                 <div class="input-group">
                                     <span class="input-group-addon">N° référence</span>
-                                    <input type="text" class="form-control" value="{{ $abonnement->references->reference_no }}" name="reference_no">
+                                    <input type="text" class="form-control" value="{{ isset($abonnement->references) ? $abonnement->references->reference_no : '' }}" name="reference_no">
                                 </div><br>
 
                                 <div class="input-group">
                                     <span class="input-group-addon">N° commande</span>
-                                    <input type="text" class="form-control" value="{{ $abonnement->references->transaction_no }}" name="transaction_no">
+                                    <input type="text" class="form-control" value="{{ isset($abonnement->references) ? $abonnement->references->transaction_no : '' }}" name="transaction_no">
                                 </div>
                             </div>
                         </div>

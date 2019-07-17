@@ -21,12 +21,17 @@
                 <tab-content title="Adresse" :after-change="beforeTabSwitch">
                     <h4>Vérifier l'adresse</h4>
 
-                    <?php $adresse_livraison   = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
+                    <?php $user = $user->load('primary_adresse'); ?>
+                    <?php $adresse_livraison   = $user->primary_adresse ? $user->primary_adresse : null; ?>
                     <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
 
                     <div class="adresse-verify">
                         <address id="userAdresse">
-                            <adresse-update :original="{{ $adresse_livraison }}" title="Adresse indiqué sur bon" type="1"></adresse-update>
+                            <adresse-update
+                                    :main="{{ $adresse_livraison }}"
+                                    :original="{{ $adresse_livraison }}"
+                                    title="Adresse indiqué sur bon"
+                                    type="1"></adresse-update>
                         </address>
                         <address id="userFacturation">
                             <adresse-update  :main="{{ $adresse_livraison }}"

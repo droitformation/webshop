@@ -154,7 +154,7 @@
                 <div class="tab-pane" role="tabpanel" id="step4">
                     <h4>Vérifier l'adresse</h4>
 
-                    <?php $adresse_livraison   = $user->adresse_livraison ? $user->adresse_livraison : null; ?>
+                    <?php $adresse_livraison   = $user->primary_adresse ? $user->primary_adresse : null;?>
                     <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
 
                     <facturation-adresse

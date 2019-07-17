@@ -30,7 +30,7 @@ interface AdresseInterface {
 	public function create(array $data);
 	public function update(array $data);
     public function contact(array $data);
-    public function facturation(array $data);
+    public function facturation(array $data, $type = 4);
     public function updateColumn($id , $column , $value);
     public function changeLivraison($adresse_id , $user_id);
 	public function delete($id);

@@ -247,6 +247,12 @@ class User extends Authenticatable {
             ->where('type', '=', 4);
     }
 
+    public function tiers_adresse()
+    {
+        return $this->hasOne('App\Droit\Adresse\Entities\Adresse','user_id', 'id')
+            ->where('type', '=', 5);
+    }
+
     public function adresses_and_trashed()
     {
         return $this->hasMany('App\Droit\Adresse\Entities\Adresse','user_id', 'id')->orderBy('deleted_at','ASC')->orderBy('id','ASC')->withTrashed();

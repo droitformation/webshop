@@ -1963,10 +1963,11 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
     this.$forceUpdate();
     this.fetch(this.adresse_update.id);
+    this.adresse_update.type = this.type;
   },
   computed: {
     path: function path() {
-      if (this.type == 4) {
+      if (this.type == 4 || this.type == 5) {
         return this.url + 'admin/adresse/createOrUpdateFacturation';
       }
 

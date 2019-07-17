@@ -49,7 +49,7 @@ class AboGenerate{
 
     public function isTiers()
     {
-        return isset($this->model->abonnement->tiers_user) ? true : false;
+        return $this->model->abonnement->is_tiers;
     }
 
     public function getFilename($annexe,$name)

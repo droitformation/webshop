@@ -68,12 +68,12 @@ class AboFactureController extends Controller {
     public function update(Request $request, $id)
     {
         $facture = $this->facture->update($request->except('price'));
+        $facture = $facture->fresh();
 
         // update the price of the abo and remake invoice
         $price = $request->input('price',null);
 
-        if($price)
-        {
+        if($price) {
             $this->abonnement->update(['id' => $facture->abo_user_id, 'price' => $request->input('price') * 100]);
         }
 

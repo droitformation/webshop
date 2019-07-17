@@ -87,8 +87,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
                     $this->generator->setPrint(true);
                     $this->generator->makeAbo('facture', $facture);
                 }
-                else
-                {
+                else {
                      // delete all files because the status is free and don't need a facture 
                      if (!\File::exists($facture->abo_facture)) {
                          \File::delete($facture->abo_facture);

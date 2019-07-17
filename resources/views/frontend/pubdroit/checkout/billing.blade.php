@@ -29,14 +29,15 @@
                                         title="Vérifiez l'adresse de facturation"
                                         type="4"></adresse-update>
                             </address>
+
                             <div>
                                 <div class="form-group">
                                     <label class="control-label" for="reference_no">N° référence</label>
-                                    <input class="form-control" name="reference_no" id="reference_no" type="text" placeholder="Optionnel">
+                                    <input class="form-control" name="reference_no" value="{{ session()->has('reference_no') ? session()->get('reference_no') : '' }}" id="reference_no" type="text" placeholder="Optionnel">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label" for="transaction_no">N° commande</label>
-                                    <input class="form-control" name="transaction_no" id="transaction_no" type="text" placeholder="Optionnel">
+                                    <input class="form-control" name="transaction_no" value="{{ session()->has('transaction_no') ? session()->get('transaction_no') : '' }}" id="transaction_no" type="text" placeholder="Optionnel">
                                 </div>
                             </div>
                         </div>

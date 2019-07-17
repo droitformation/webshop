@@ -313,9 +313,9 @@ class AdresseEloquent implements AdresseInterface{
         ]);
     }
 
-    public function facturation(array $data)
+    public function facturation(array $data, $type = 4)
     {
-        return $this->adresse->updateOrCreate(['user_id' => $data['user_id'], 'type' => 4], [
+        return $this->adresse->updateOrCreate(['user_id' => $data['user_id'], 'type' => $type], [
             'civilite_id'   => (isset($data['civilite_id']) ? $data['civilite_id'] : 4),
             'first_name'    => $this->format->formatingName($data['first_name']),
             'last_name'     => $this->format->formatingName($data['last_name']),
@@ -329,7 +329,7 @@ class AdresseEloquent implements AdresseInterface{
             'ville'         => $data['ville'],
             'canton_id'     => (isset($data['canton_id']) ? $data['canton_id'] : null),
             'pays_id'       => (isset($data['pays_id']) ? $data['pays_id'] : 208),
-            'type'          => 4,
+            'type'          => $type,
             'user_id'       => $data['user_id'],
             'livraison'     => null,
         ]);

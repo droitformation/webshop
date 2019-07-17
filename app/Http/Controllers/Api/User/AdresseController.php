@@ -147,10 +147,9 @@ class AdresseController extends Controller {
 
     public function createOrUpdateFacturation(Request $request)
     {
-        $adresse = $this->adresse->facturation($request->all());
+        $adresse = $this->adresse->facturation($request->except('type'), $request->input('type'));
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             return response()->json($adresse);
         }
 
@@ -161,8 +160,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             return response()->json($adresse);
         }
 
