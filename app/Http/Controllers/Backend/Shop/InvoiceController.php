@@ -29,10 +29,6 @@ class InvoiceController extends Controller {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}
 
-    /**
-     *
-     * @return Response
-     */
     public function show($id)
     {
         $order  = $this->order->find($id);

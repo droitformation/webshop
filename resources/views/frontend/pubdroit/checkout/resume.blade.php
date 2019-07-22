@@ -1,7 +1,7 @@
 @extends('frontend.pubdroit.layouts.master')
 @section('content')
 
-<section class="row">
+<div class="row">
     <div class="col-md-12">
 
         <p class="backBtn"><a class="btn btn-sm btn-default btn-profile" href="{{ url('pubdroit/checkout/billing') }}"><span aria-hidden="true">&larr;</span> Retour à l'adresse</a></p>
@@ -89,7 +89,7 @@
                             @endif
 
                             <p class="text-right terms">
-                                <label><input id="termsAndConditions" name="termsAndConditions" type="checkbox"> &nbsp;J'ai lu <a href="#">les termes et conditions générales</a></label>
+                                <label><input id="termsAndConditions" name="termsAndConditions" type="checkbox"> &nbsp;J'ai lu <a href="{{ url('pubdroit/checkout/billing') }}">les termes et conditions générales</a></label>
                             </p>
 
                             <hr/>

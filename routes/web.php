@@ -275,6 +275,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::match(['get', 'post'], 'inscription/colloque/{id}', 'Backend\Colloque\InscriptionController@colloque');
         Route::get('inscription/create/{id?}', 'Backend\Colloque\InscriptionController@create');
         Route::get('inscription/regenerate/{id}', 'Backend\Colloque\InscriptionController@regenerate');
+        Route::get('inscription/display/{id}', 'Backend\Colloque\InscriptionController@display');
         Route::post('inscription/restore/{id}', 'Backend\Colloque\InscriptionController@restore');
         Route::post('inscription/make', ['middleware' => 'already', 'uses' => 'Backend\Colloque\InscriptionController@make']);
         Route::resource('inscription', 'Backend\Colloque\InscriptionController');
@@ -465,6 +466,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('facture/edit', 'Backend\Abo\AboFactureController@edit');
         Route::post('facture/generate', 'Backend\Abo\AboFactureController@generate');
         Route::post('facture/make', 'Backend\Abo\AboFactureController@make');
+        Route::get('facture/display/{id}', 'Backend\Abo\AboFactureController@display');
         Route::resource('facture', 'Backend\Abo\AboFactureController');
 
         Route::post('abo/generate', 'Backend\Abo\AboFileController@generate');

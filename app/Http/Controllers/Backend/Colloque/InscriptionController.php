@@ -243,4 +243,15 @@ class InscriptionController extends Controller
         return redirect()->back();
     }
 
+    public function display($id)
+    {
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+        $inscription = $this->inscription->find($id);
+
+        if($inscription){
+            $generator->stream = true;
+            return $generator->make('facture', $inscription);
+        }
+    }
 }

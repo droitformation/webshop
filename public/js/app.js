@@ -1941,7 +1941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['main', 'original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte'],
   components: {},
@@ -29860,11 +29859,9 @@ var render = function() {
     [
       _vm.showing
         ? _c("div", [
-            _vm.title ? _c("h5", [_vm._v(_vm._s(_vm.title))]) : _vm._e(),
-            _vm._v(" "),
-            _vm.isDefault
-              ? _c("small", { staticClass: "text-muted" }, [
-                  _vm._v("Adresse principale")
+            _vm.title
+              ? _c("h5", [
+                  _c("div", { domProps: { innerHTML: _vm._s(_vm.title) } })
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -29901,7 +29898,8 @@ var render = function() {
         [
           _c("div", { staticClass: "adresse-update-wrapper" }, [
             _c("h4", [
-              _vm._v(_vm._s(_vm.title) + " "),
+              _c("div", { domProps: { innerHTML: _vm._s(_vm.title) } }),
+              _vm._v(" "),
               _c(
                 "cite",
                 {

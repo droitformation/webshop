@@ -2,6 +2,7 @@
 @section('content')
 
     <?php $colloque = $generate->getColloque(); ?>
+
     <div class="content">
         <div id="header-main">
             <table class="content-table">
@@ -22,12 +23,6 @@
                         @if($generate->getAdresse())
                             @include('templates.partials.adresse',['adresse' => $generate->getAdresse(true)])
                         @endif
-                        @if($generate->getReferences())
-                            <div id="user_reference">
-                                {!! !empty($generate->getReferences()->reference_no) ? '<p>Votre référence: <i>'.$generate->getReferences()->reference_no.'</i></p>' : '' !!}
-                                {!! !empty($generate->getReferences()->transaction_no) ? '<p>N° commande: <i>'.$generate->getReferences()->transaction_no.'</i></p>' : '' !!}
-                            </div>
-                        @endif
                     </td>
                 </tr>
                 <tr><td colspan="2" height="15">&nbsp;</td></tr>
@@ -35,12 +30,30 @@
         </div>
     </div>
 
-    <div class="content">
+    <t class="content">
 
         <?php $rappel = (isset($rappel) && $rappel > 0 ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'e' : 'er').' Rappel</span>' : ''); ?>
         <h1 class="title blue">
             {!! $rappel !!} Facture {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
         </h1>
+
+        @if($generate->getReferences())
+            <table class="content-table content-wide" valign="top">
+                @if(!empty($generate->getReferences()->reference_no))
+                    <tr>
+                        <td width="100px"><p><strong>Votre référence</strong></p></td>
+                        <td><i>{{ $generate->getReferences()->reference_no }}</i></td>
+                    </tr>
+                @endif
+                @if(!empty($generate->getReferences()->transaction_no))
+                    <tr><td height="2" style="line-height: 1px;">&nbsp;</td></tr>
+                    <tr>
+                        <td width="100px"><p><strong>N° commande</strong></p></td>
+                        <td><i>{{ $generate->getReferences()->transaction_no }}</i></td>
+                    </tr>
+                @endif
+            </table>
+        @endif
 
         @if(is_array($generate->getNo()) && !isset($print))
             <table class="content-table" valign="top">

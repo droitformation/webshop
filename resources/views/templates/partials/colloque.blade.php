@@ -1,13 +1,13 @@
 <tr valign="top">
     <td valign="top">
-        <p class="organisateur"><strong>Organisé par:</strong> <?php echo $colloque->organisateur; ?></p>
-    </td>
-</tr>
-<tr><td height="3">&nbsp;</td></tr>
-<tr valign="top">
-    <td valign="top">
         <h2><?php echo $colloque->titre; ?></h2>
         <h3><?php echo $colloque->soustitre; ?></h3>
+    </td>
+</tr>
+<tr><td height="1">&nbsp;</td></tr>
+<tr valign="top">
+    <td valign="top">
+        <p class="organisateur"><strong>Organisé par:</strong> <?php echo $colloque->organisateur; ?></p>
     </td>
 </tr>
 <tr><td height="3">&nbsp;</td></tr>

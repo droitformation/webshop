@@ -2,8 +2,7 @@
     <div class="adresse_update">
 
         <div v-if="showing">
-            <h5 v-if="title">{{ title }}</h5>
-            <small class="text-muted" v-if="isDefault">Adresse principale (défaut)</small>
+            <h5 v-if="title"><div v-html="title"></div></h5>
             <div class="adresse-wrapper" v-html="update_detail"></div>
         </div>
 
@@ -14,7 +13,7 @@
         <modal :name="'update-modal'+id" :adaptive="true" :scrollable="true" :reset="true" height="auto">
 
             <div class="adresse-update-wrapper">
-                <h4>{{ title }} <cite class="text-danger pull-right" style="color: red;"><small>* Champs requis</small></cite></h4>
+                <h4><div v-html="title"></div> <cite class="text-danger pull-right" style="color: red;"><small>* Champs requis</small></cite></h4>
                 <div class="adresse-update">
                     <div class="row">
                         <div class="col-md-6">

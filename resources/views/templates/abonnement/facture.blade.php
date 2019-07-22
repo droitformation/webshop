@@ -35,12 +35,6 @@
                     @if($generate->getAdresse())
                         @include('templates.partials.adresse',['adresse' => $generate->getAdresse()])
                     @endif
-                    @if($generate->getReferences())
-                        <div id="user_reference">
-                            {!! !empty($generate->getReferences()->reference_no) ? '<p>Votre référence: <i>'.$generate->getReferences()->reference_no.'</i></p>' : '' !!}
-                            {!! !empty($generate->getReferences()->transaction_no) ? '<p>N° commande: <i>'.$generate->getReferences()->transaction_no.'</i></p>' : '' !!}
-                        </div>
-                    @endif
                 </td>
             </tr>
         </table>
@@ -54,7 +48,13 @@
     <table class="content-table">
         <tr>
             <td width="33%" align="middle" class="misc-infos">
-                <h4><strong>{{ $facture->abo_ref }}</strong></h4>
+                <h4 style="margin-top:4px;"><strong>{{ $facture->abo_ref }}</strong></h4>
+                @if($generate->getReferences())
+                    <div id="user_reference">
+                        {!! !empty($generate->getReferences()->reference_no) ? '<p style="margin-bottom:4px;"><strong>Votre référence:</strong> <i>'.$generate->getReferences()->reference_no.'</i></p>' : '' !!}
+                        {!! !empty($generate->getReferences()->transaction_no) ? '<p style="margin-bottom:4px;"><strong>N° commande: </strong> <i>'.$generate->getReferences()->transaction_no.'</i></p>' : '' !!}
+                    </div>
+                @endif
             </td>
             <td width="1%"  align="top"></td>
             <td width="30%" align="left" style="text-align: left;" class="misc-infos">

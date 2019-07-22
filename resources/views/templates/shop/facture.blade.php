@@ -11,7 +11,18 @@
 
         <table class="content-table">
             <tr>
-                <td width="59%" align="top" valign="top"  class="misc-infos">
+
+                @if($generate->getReferences())
+                    <td width="33%" align="middle" class="misc-infos">
+                        <div id="user_reference">
+                            {!! !empty($generate->getReferences()->reference_no) ? '<div style="margin-bottom:7px;"><p><strong>Votre référence:</strong></p><p><i>'.$generate->getReferences()->reference_no.'</i></p></div>' : '' !!}
+                            {!! !empty($generate->getReferences()->transaction_no) ? '<p><strong>N° commande: </strong></p><p><i>'.$generate->getReferences()->transaction_no.'</i></p>' : '' !!}
+                        </div>
+                    </td>
+                    <td width="1%"  align="top"></td>
+                @endif
+
+                <td width="51%" align="top" valign="top"  class="misc-infos">
                     @if(!empty($tva))
                         <ul id="tva">
                             <li><strong>{{ \Registry::get('shop.infos.tva') }}</strong></li>

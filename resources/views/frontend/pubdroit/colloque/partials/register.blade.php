@@ -3,6 +3,10 @@
     <div id="appVue">
         <form id="inscriptionForm" method="POST" action="{{ url('pubdroit/registration') }}">{!! csrf_field() !!}
 
+            <?php $user = $user->load('primary_adresse'); ?>
+            <?php $adresse_livraison   = $user->primary_adresse ? $user->primary_adresse : null; ?>
+            <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
+
             <form-wizard @on-complete="onComplete" title="" subtitle=""
                          back-button-text="Précédent"
                          color="#b01d22"
@@ -21,21 +25,19 @@
                 <tab-content title="Adresse" :after-change="beforeTabSwitch">
                     <h4>Vérifier l'adresse</h4>
 
-                    <?php $user = $user->load('primary_adresse'); ?>
-                    <?php $adresse_livraison   = $user->primary_adresse ? $user->primary_adresse : null; ?>
-                    <?php $adresse_facturation = $user->adresse_facturation ? $user->adresse_facturation : null; ?>
-
                     <div class="adresse-verify">
                         <address id="userAdresse">
                             <adresse-update
                                     :main="{{ $adresse_livraison }}"
                                     :original="{{ $adresse_livraison }}"
-                                    title="Adresse indiqué sur bon"
+                                    title="Adresse de livraison"
                                     type="1"></adresse-update>
                         </address>
                         <address id="userFacturation">
                             <adresse-update  :main="{{ $adresse_livraison }}"
-                                             :original="{{ $adresse_facturation }}" title="Adresse indiqué sur facture" type="4"></adresse-update>
+                                             :original="{{ $adresse_facturation }}"
+                                             title="Adresse de facturation <br><small>(si différente)</small>"
+                                             type="4"></adresse-update>
                         </address>
                         <div>
                             <div class="form-group">
@@ -54,6 +56,23 @@
 
                     <h4>Résumé</h4>
                     <p>Veuillez vérifier vos choix:</p>
+
+                    <div class="adresse-verify">
+                        <address id="userAdresse">
+                            <adresse-update
+                                    :main="{{ $adresse_livraison }}"
+                                    :original="{{ $adresse_livraison }}"
+                                    title="Adresse de livraison"
+                                    type="1"></adresse-update>
+                        </address>
+                        <address id="userFacturation">
+                            <adresse-update
+                                    :main="{{ $adresse_livraison }}"
+                                     :original="{{ $adresse_facturation }}"
+                                     title="Adresse de facturation <br><small>(si différente)</small>"
+                                     type="4"></adresse-update>
+                        </address>
+                    </div>
 
                     <div id="resumeWrapper"></div>
 

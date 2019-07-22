@@ -132,5 +132,18 @@ class AboFactureController extends Controller {
 
         return redirect()->back();
     }
-    
+
+    public function display($id)
+    {
+        $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+
+        $facture  = $this->facture->find($id);
+
+        if($facture){
+
+            $generator->stream = true;
+
+            return $generator->makeAbo('facture', $facture);
+        }
+    }
 }
