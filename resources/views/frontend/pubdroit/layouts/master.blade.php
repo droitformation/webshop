@@ -73,7 +73,11 @@
 
 	<script src="//platform-api.sharethis.com/js/sharethis.js#property=5beaaa2158e49d001b369ef0&product=inline-share-buttons"></script>
 </head>
-	<body>
+<body>
+
+    @if(config('app.env') == 'staging' || config('app.env') == 'local')
+        <div class="alert alert-warning text-center" role="alert">Mode test</div>
+    @endif
 
 		<!-- Start Main Wrapper -->
 		<div class="wrapper">

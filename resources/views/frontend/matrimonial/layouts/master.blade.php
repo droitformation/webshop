@@ -46,6 +46,11 @@
 
 </head>
 <body>
+
+@if(config('app.env') == 'staging' || config('app.env') == 'local')
+    <div class="alert alert-warning text-center" role="alert">Mode test</div>
+@endif
+
 <div class="container">
     <div id="main">
 

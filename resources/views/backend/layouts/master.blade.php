@@ -60,11 +60,19 @@
         ]); ?>
     </script>
 </head>
-<body>
 
-<?php $current_user = (isset(Auth::user()->name) ? Auth::user()->name : ''); ?>
+@if(config('app.env') == 'staging' || config('app.env') == 'local' )
+    <body style="padding-top:0;">
+        <header class="navbar navbar-inverse" role="banner">
+        @if(config('app.env') == 'staging' || config('app.env') == 'local')
+            <div class="alert alert-warning text-center" style="margin-bottom: 0;" role="alert">Mode test</div>
+        @endif
+@else
+    <body>
+        <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+@endif
 
-<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+    <?php $current_user = (isset(Auth::user()->name) ? Auth::user()->name : ''); ?>
 
     <a id="leftmenu-trigger" class="tooltips" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a>
     <div class="navbar-header pull-left"><a class="navbar-brand" href="{{ url('/')  }}">Droit Formation</a></div>
