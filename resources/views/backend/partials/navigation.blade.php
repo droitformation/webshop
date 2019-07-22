@@ -17,6 +17,13 @@
                 <li class="<?php echo (Request::is('admin/config/colloque') ? 'active' : '' ); ?>"><a href="{{ url('admin/config/colloque')  }}">Colloque</a></li>
             </ul>
         </li>
+
+        <li class="<?php echo (Request::is('admin/conference') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/conference') }}">
+                <i class="fa fa-calendar"></i> <span>Déjeuners académiques</span>
+            </a>
+        </li>
+
         <li class="<?php echo (Request::is('admin/reminder') || Request::is('admin/reminder/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/reminder') }}">
                 <i class="fa fa-bolt"></i> <span>Rappels (livres,colloques)</span>

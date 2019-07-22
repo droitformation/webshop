@@ -17,6 +17,10 @@ Route::get('event', 'Api\ColloqueController@event');
 //Route::post('tracking', 'Backend\Newsletter\TrackingController@tracking');
 Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
 
+Route::get('conference', 'Frontend\ConferenceController@index');
+Route::post('conference', 'Frontend\ConferenceController@store');
+Route::delete('conference', 'Frontend\ConferenceController@delete');
+
 Route::get('site/subscribe/{site_id}', 'HomeController@subscribe');
 Route::get('site/unsubscribe/{site_id}', 'HomeController@unsubscribe');
 Route::get('site/confirmation/{site_id}', 'HomeController@confirmation');
@@ -248,6 +252,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
         Route::resource('duplicate', 'Backend\User\DuplicateController');
+
+        /*
+         |--------------------------------------------------------------------------
+         | Conference dejeuner académique Routes
+         |--------------------------------------------------------------------------
+         */
+
+        Route::get('conference', 'Backend\ConferenceController@index');
+        Route::post('conference', 'Backend\ConferenceController@store');
 
         /*
         |--------------------------------------------------------------------------
