@@ -34,6 +34,8 @@ class ConferenceController extends Controller
 
         \Registry::store(['academiques' => $academiques]);
 
+        $academiques = \Registry::get('academiques');
+
         alert()->success('Inscription ajoutée');
 
         return redirect()->back();
