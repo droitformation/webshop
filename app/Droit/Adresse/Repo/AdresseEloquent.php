@@ -260,7 +260,7 @@ class AdresseEloquent implements AdresseInterface{
 	public function update(array $data)
     {
 		$adresse = $this->adresse->withTrashed()->findOrFail($data['id']);
-		
+
 		if( ! $adresse ) {
 			return false;
 		}
@@ -271,7 +271,7 @@ class AdresseEloquent implements AdresseInterface{
         }
 
         // if the type is changed
-        if(isset($data['type'])){
+        if(isset($data['type']) && !isset($data['deleted'])){
             $this->changeType($adresse,$data['type']);
         }
 

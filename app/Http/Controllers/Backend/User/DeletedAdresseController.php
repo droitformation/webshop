@@ -74,7 +74,7 @@ class DeletedAdresseController extends Controller
     public function compare(Request $request)
     {
         $ids = $request->input('adresses',session()->get('adresses'));
-        
+
         session(['adresses' => $ids]);
         
         $adresses = $this->adresse->getMultiple($ids);
@@ -87,6 +87,7 @@ class DeletedAdresseController extends Controller
     * */
     public function transvase(Request $request)
     {
+
         $worker = \App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
 
         // Adresses ids and transvase recipient id (an adresse id to)
@@ -108,7 +109,7 @@ class DeletedAdresseController extends Controller
             alert()->danger('Aucun utilisateur pour accrocher les éléments');
             return redirect('admin/deletedadresses');
         }
-        
+
         $worker->setFromAdresses([$adresses_ids])
             ->setAction($request->input('action'))
             ->setTypes($request->input('types'))

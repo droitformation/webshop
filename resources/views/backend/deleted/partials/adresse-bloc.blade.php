@@ -1,4 +1,13 @@
 <div class="{{ $adresse->trashed() ? 'isTrashed' : 'isNotTrashed' }}" style="margin-bottom: 6px;">
+
+    @if($adresse->type == 4)
+        <p class="text-danger">Adressse de facturation</p>
+    @endif
+
+    @if($adresse->type == 5)
+        <p class="text-danger">Adressse de facturation tiers</p>
+    @endif
+
     <p><strong>{{ $adresse->name }}</strong></p>
     <p><i>{{ $adresse->email }}</i></p>
     <p>{{ $adresse->adresse }}</p>

@@ -28,36 +28,44 @@
             <?php $user->load('adresses_and_trashed');?>
             @if(!$user->adresses_and_trashed->isEmpty())
                 @foreach($user->adresses_and_trashed as $adresse_user)
-                    <div class="well well-sm {{ $adresse_user->trashed() ? 'isTrashed' : 'isNotTrashed' }}">
 
-                        <p>
-                            {!! $adresse_user->type == 1 ? '<span class="label label-info pull-left">Contact</span>' : '' !!}
-                            {!! $adresse_user->livraison == 1 ? '<span class="label label-primary pull-left">Livraison</span>' : '' !!}
-                            <span class="label label-default pull-right">{{ $adresse_user->id }}</span>
-                        </p>
+                        <div class="well well-sm {{ $adresse_user->trashed() ? 'isTrashed' : 'isNotTrashed' }}">
+                            <p>
+                                {!! $adresse_user->type == 1 ? '<span class="label label-info pull-left">Contact</span>' : '' !!}
+                                {!! $adresse_user->livraison == 1 ? '<span class="label label-primary pull-left">Livraison</span>' : '' !!}
+                                <span class="label label-default pull-right">{{ $adresse_user->id }}</span>
+                            </p>
 
-                        <div class="clearfix"></div>
+                            <div class="clearfix"></div>
 
-                        @include('backend.deleted.partials.adresse-bloc', ['adresse' => $adresse_user])
+                            @include('backend.deleted.partials.adresse-bloc', ['adresse' => $adresse_user])
 
-                        @if($adresse_user->trashed())
-                        <button type="button"
-                                data-user_id="{{ $user->id }}"
-                                data-id="{{ $adresse_user->id }}"
-                                data-type="adresse"
-                                class="btn btn-xs btn-warning pull-right restoreAdresseBtn">restaurer</button>
-                        @endif
+                            @if($adresse_user->trashed() && $adresse_user->type < 4)
+                                <button type="button"
+                                        data-user_id="{{ $user->id }}"
+                                        data-id="{{ $adresse_user->id }}"
+                                        data-type="adresse"
+                                        class="btn btn-xs btn-warning pull-right restoreAdresseBtn">restaurer</button>
+                            @endif
 
-                        @if(!$adresse_user->trashed())
-                        <button type="button"
-                                data-user_id="{{ $user->id }}"
-                                data-id="{{ $adresse_user->id }}"
-                                data-type="adresse"
-                                class="btn btn-xs btn-danger pull-right deleteAdresseBtn">x</button>
-                        @endif
+                            @if(!$adresse_user->trashed() && $adresse_user->type < 4)
+                                <button type="button"
+                                        data-user_id="{{ $user->id }}"
+                                        data-id="{{ $adresse_user->id }}"
+                                        data-type="adresse"
+                                        class="btn btn-xs btn-danger pull-right deleteAdresseBtn">x</button>
+                            @endif
 
-                        <div class="clearfix"></div>
-                    </div>
+                            @if($adresse_user->type > 3 && !$adresse_user->trashed())
+                                <p class="text-right"><small>A modifier dans {{ $adresse_user->type == 4 ? 'les transactions' : 'l\'abonnement' }}</small></p>
+                            @endif
+
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        @if($adresse_user->trashed() && $adresse_user->type < 4) <!-- don't display trashed facturation adresse -->
+                    @endif
                 @endforeach
             @endif
         </td>
