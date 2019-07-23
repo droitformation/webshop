@@ -12,6 +12,11 @@ class Abo_users extends Model{
     protected $fillable = ['abo_id','numero','exemplaires','adresse_id','tiers_id','user_id','raison',
         'tiers_user_id','price','reference', 'reference_id', 'remarque','status','renouvellement','deleted_at'];
 
+    public function getMainStatusAttribute()
+    {
+        return $this->is_tiers ? 'tiers' : $this->status;
+    }
+
     public function getAboNoAttribute()
     {
         $this->load('abo');
@@ -85,8 +90,8 @@ class Abo_users extends Model{
         }
 
         // if not tiers facture => user facturation OR contact, User model gives facturation if exist else primary adresse
-        if(isset($this->user->adresse_facturation)){
-            return $this->user->adresse_facturation;
+        if(isset($this->user->adresse_contact)){
+            return $this->user->adresse_contact;
         }
 
         return null;

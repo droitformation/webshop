@@ -107,7 +107,7 @@ class AboUserEloquent implements AboUserInterface{
         $abo_user->tiers_id = (isset($data['tiers_id']) && $data['tiers_id'] > 0) ? $data['tiers_id'] : null;
         $abo_user->tiers_user_id = (isset($data['tiers_user_id']) && $data['tiers_user_id'] > 0) ? $data['tiers_user_id'] : null;
 
-        if($abo_user->tiers_id || $abo_user->tiers_user_id){
+        if($abo_user->tiers_id || $abo_user->tiers_user_id || $abo_user->main_status == 'tiers'){
             $abo_user->status = 'tiers';
         }
         else{

@@ -11,9 +11,13 @@
                     <option {{ old('status') == 'gratuit' ? 'selected' : '' }} value="gratuit">Gratuit</option>
                 </select>
                 <span class="input-group-btn">
-               <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp;OK</button>
-            </span>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> &nbsp;OK</button>
+                </span>
             </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="facturation" value="1"> que adresses de facturation tiers</label>
+            </div>
+
         </div>
     </form>
     <div class="btn-group pull-right">

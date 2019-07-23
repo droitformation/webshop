@@ -79,7 +79,7 @@ class AboFileController extends Controller {
         $status  =  !empty($request->input('status')) ? $request->input('status') : ['abonne','tiers','gratuit'];
         $abonnes = $abo->abonnements->whereIn('status', $status );
 
-        $adresses = $this->prepareAdresse($abonnes);
+        $adresses = $this->prepareAdresse($abonnes, $request->input('facturation',null));
 
         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
         $writer = WriterFactory::create(Type::XLSX); // for XLSX files
@@ -96,27 +96,29 @@ class AboFileController extends Controller {
         $writer->close();exit;
     }
 
-    public function prepareAdresse($abonnes)
+    public function prepareAdresse($abonnes, $facturation = null)
     {
-        return $abonnes->map(function ($abo) {
+        return $abonnes->map(function ($abo) use ($facturation) {
 
-            if(isset($abo->user_adresse)){
+            $adresse = $facturation ? $abo->user_facturation : $abo->user_adresse;
+
+            if(isset($adresse)){
                 return [
-                    'civilite_title'   => trim($abo->user_adresse->civilite_title),
-                    'first_name'       => trim($abo->user_adresse->first_name),
-                    'last_name'        => trim($abo->user_adresse->last_name),
-                    'email'            => trim($abo->user_adresse->email),
-                    'profession_title' => trim($abo->user_adresse->profession_title),
-                    'company'          => trim($abo->user_adresse->company),
-                    'telephone'        => trim($abo->user_adresse->telephone),
-                    'mobile'           => trim($abo->user_adresse->mobile),
-                    'adresse'          => trim($abo->user_adresse->adresse),
-                    'cp_trim'          => trim($abo->user_adresse->cp_trim),
-                    'complement'       => trim($abo->user_adresse->complement),
-                    'npa'              => trim($abo->user_adresse->npa),
-                    'ville'            => trim($abo->user_adresse->ville),
-                    'canton_title'     => trim($abo->user_adresse->canton_title),
-                    'pays_title'       => trim($abo->user_adresse->pays_title),
+                    'civilite_title'   => trim($adresse->civilite_title),
+                    'first_name'       => trim($adresse->first_name),
+                    'last_name'        => trim($adresse->last_name),
+                    'email'            => $facturation ? '' : trim($adresse->email),
+                    'profession_title' => $facturation ? '' : trim($adresse->profession_title),
+                    'company'          => trim($adresse->company),
+                    'telephone'        => trim($adresse->telephone),
+                    'mobile'           => trim($adresse->mobile),
+                    'adresse'          => trim($adresse->adresse),
+                    'cp_trim'          => trim($adresse->cp_trim),
+                    'complement'       => trim($adresse->complement),
+                    'npa'              => trim($adresse->npa),
+                    'ville'            => trim($adresse->ville),
+                    'canton_title'     => trim($adresse->canton_title),
+                    'pays_title'       => trim($adresse->pays_title),
                     'exemplaires'      => trim($abo->exemplaires),
                     'numero'           => trim($abo->numero),
                 ];

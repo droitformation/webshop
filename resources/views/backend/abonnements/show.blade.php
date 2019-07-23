@@ -137,12 +137,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Statut {{ $abonnement->status }}</label>
+
+                            <label class="col-sm-3 control-label">Statut</label>
                             <div class="col-sm-4 col-xs-8">
                                 <select class="form-control" name="status">
-                                    <option {{ ($abonnement->status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
-                                    <option {{ ($abonnement->status == 'tiers' ?  'selected' : '') }} value="tiers">Abonné Tiers payant</option>
-                                    <option {{ ($abonnement->status == 'gratuit' ? 'selected' : '') }} value="gratuit">Gratuit</option>
+                                    <option {{ ($abonnement->main_status == 'abonne' ?  'selected' : '') }} value="abonne">Abonné</option>
+                                    <option {{ ($abonnement->main_status == 'tiers' ?  'selected' : '') }} value="tiers">Abonné Tiers payant</option>
+                                    <option {{ ($abonnement->main_status == 'gratuit' ? 'selected' : '') }} value="gratuit">Gratuit</option>
                                 </select>
                             </div>
                         </div>
