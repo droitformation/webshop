@@ -3,9 +3,10 @@
 
 <h2>Inscriptions aux Déjeuners académiques</h2>
 
-<h3>{!! Registry::get('conference.title')!!}</h3>
+<h3>{!! Registry::get('conference.title') !!}</h3>
 <h4>{{ frontendDate(Registry::get('conference.date')) }}</h4>
 <div>{!! Registry::get('conference.comment')!!}</div>
+
 <hr style="margin-top: 35px;">
 
 @include('alert::bootstrap')
@@ -13,6 +14,7 @@
 <div class="row">
     <div class="col-md-6 col-xs-12" style="border-right: 1px solid #eee; padding-right: 25px;">
         <h4>Inscription</h4>
+        @if($isOpen)
         <form class="form-sondage" style="margin-top: 20px;" action="{{ url('conference') }}" method="POST">{!! csrf_field() !!}
             <div class="form-group">
                 <label><strong>Prénom</strong></label>
@@ -28,6 +30,9 @@
             </div>
             <p class="text-right"><button type="submit" class="btn btn-primary">Envoyer &nbsp; <i class="fa fa-arrow-circle-o-right"></i></button></p>
         </form>
+        @else
+            <p class="text-danger">L'événement est complet</p>
+        @endif
     </div>
     <div class="col-md-6 col-xs-12" style="padding-left: 25px;">
         @if(!empty(Registry::get('academiques')))

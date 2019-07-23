@@ -261,6 +261,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::get('conference', 'Backend\ConferenceController@index');
         Route::post('conference', 'Backend\ConferenceController@store');
+        Route::post('conference/export', 'Backend\ConferenceController@export');
 
         /*
         |--------------------------------------------------------------------------

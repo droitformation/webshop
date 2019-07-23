@@ -7,23 +7,30 @@ class ConferenceController extends Controller
 {
     public function index()
     {
-        return view('frontend.conferences');
+        $academiques = \Registry::get('academiques');
+        $conference  = \Registry::get('conference');
+
+        $count = isset($academiques) && !empty($academiques) ? count($academiques) : 0;
+
+        $isOpen = $count < $conference['places'] ? true : false;
+
+        return view('frontend.conferences')->with(['isOpen' => $isOpen]);
     }
 
     public function store(Request $request)
     {
-        $academiques   = \Registry::get('academiques');
+        $academiques = \Registry::get('academiques');
 
+        $count = collect()->count($academiques);
+
+        // Email already exist
         if(collect($academiques)->contains('email', $request->input('email'))){
-            alert()->danger('Vous êtes déjà inscrit à l\'évenement');
+            alert()->danger('Vous êtes déjà inscrit à l\'évenement avec cet email');
             return redirect()->back();
         }
 
-        $academiques[] = [
-            'first_name' => $request->input('first_name'),
-            'last_name'  => $request->input('last_name'),
-            'email'      => $request->input('email'),
-        ];
+        // Add to array
+        $academiques[] = $request->only(['first_name','last_name','email']);
 
         \Registry::store(['academiques' => $academiques]);
 
@@ -34,8 +41,9 @@ class ConferenceController extends Controller
 
     public function delete(Request $request)
     {
-        $academiques   = \Registry::get('academiques');
+        $academiques = \Registry::get('academiques');
 
+        // if array at index exist, unset it
         if(isset($academiques[$request->input('index')])){
             unset($academiques[$request->input('index')]);
             \Registry::store(['academiques' => $academiques]);

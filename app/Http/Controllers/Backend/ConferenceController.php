@@ -18,4 +18,15 @@ class ConferenceController extends Controller
 
         return redirect()->back();
     }
+
+    public function export()
+    {
+        $academiques = \Registry::get('academiques');
+        $conference  = \Registry::get('conference');
+
+        $exporter    = new \App\Droit\Generate\Excel\ExcelConference($conference['title'],$conference['date']);
+        $filename    = $exporter->export($academiques,true);
+
+        return response()->download($filename['full']);
+    }
 }
