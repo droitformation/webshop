@@ -100,6 +100,12 @@
         console.log(id);
     });
 
+  /*  $('.tip').tipr({
+        'mode': 'above',
+        'marginAbove': -60,
+    });*/
+
+    tippy('button')
 
 }(window.jQuery);
 

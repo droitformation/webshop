@@ -98,18 +98,18 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-4">
-                            <label>Case Postale</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-circle"></i></span>
-                                <input type="text" class="form-control" name="cp" value="{{ old('cp') }}">
-                            </div>
-                        </div>
                         <div class="col-sm-8">
                             <label>Complément d'adresse</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-plus"></i></span>
                                 <input type="text" class="form-control" name="complement" value="{{ old('complement') }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Case Postale</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-circle"></i></span>
+                                <input type="text" class="form-control" name="cp" value="{{ old('cp') }}">
                             </div>
                         </div>
                     </div>

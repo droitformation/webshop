@@ -446,16 +446,33 @@ input[type="checkbox"]:checked.options + label{
 }
 
 
+.label-info-tooltip{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.label-info-tooltip strong,
+.label-info-tooltip button{
+    display: block;
+    line-height: 25px;
+}
+
 .adresse-verify{
     display: flex;
     flex-direction: row;
 }
 
 .adresse-verify address{
-    width: 40%;
+    width: 35%;
     font-size: 15px;
     line-height: 19px;
     padding-right: 10px;
+}
+
+.adresse-verify div.references{
+    width: 30%;
 }
 
 .adresse-verify address .adresse-wrapper{

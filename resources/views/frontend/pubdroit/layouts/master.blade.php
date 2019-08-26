@@ -57,6 +57,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/checkout/checkout.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/sweetalert.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/jquery.steps.css');?>">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/microtip/microtip.css">
 
 	<noscript>
 		<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/noJS.css');?>">
@@ -251,17 +252,16 @@
 
 		</div>
 		<!-- End Main Wrapper -->
-
 		<!-- Javascript Files
     	================================================== -->
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="<?php echo secure_asset('common/js/jquery.selectric.js');?>"></script>
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>
-        <script src="<?php echo secure_asset('frontend/pubdroit/js/interaction.js');?>"></script>
+		<script src="<?php echo secure_asset('frontend/pubdroit/js/tipr.min.js');?>"></script>
         <script src="<?php echo secure_asset('frontend/pubdroit/js/checkout/checkout.js');?>"></script>
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/jquery.steps.js');?>"></script>
-		{{--<script src="<?php echo secure_asset('frontend/pubdroit/js/wizard.js');?>"></script>--}}
+		<script src="<?php echo secure_asset('frontend/pubdroit/js/interaction.js');?>"></script>
 		<script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->

@@ -39,13 +39,19 @@
                                              title="Adresse de facturation <br><small>(si différente)</small>"
                                              type="4"></adresse-update>
                         </address>
-                        <div>
+                        <div class="references">
                             <div class="form-group">
-                                <label class="control-label" for="reference_no">N° référence</label>
+                                <label class="control-label label-info-tooltip" for="reference_no">
+                                    <strong>Votre N° de référence</strong>
+                                    <button aria-label="Vous avez la possibilité d'indiquer un numéro de référence demandé par votre comptabilité." data-microtip-position="top-left" role="tooltip">  <i class="fa fa-info-circle"></i></button>
+                                </label>
                                 <input class="form-control" name="reference_no" id="reference_no" type="text" placeholder="Optionnel">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="transaction_no">N° commande</label>
+                                <label class="control-label label-info-tooltip" for="transaction_no">
+                                    <strong>Votre N° de commande</strong>
+                                    <button aria-label="En plus du N° de référence vous avez la possibilité d'indiquer un numéro de commande." data-microtip-position="top-left" role="tooltip">  <i class="fa fa-info-circle"></i></button>
+                                </label>
                                 <input class="form-control" name="transaction_no" id="transaction_no" type="text" placeholder="Optionnel">
                             </div>
                         </div>
