@@ -81,18 +81,11 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-4">
-                            <label>NPA</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-dot-circle-o"></i></span>
-                                <input type="text" class="form-control form-required"  name="npa" value="{{ old('npa') }}">
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <label>Adresse</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                <input type="text" class="form-control form-required" name="adresse" value="{{ old('adresse') }}">
+                                <input type="text" class="form-control form-required" name="adresse" value="{{ old('adresse') }}" placeholder="rue, place, avenue ">
                             </div>
                         </div>
                     </div>
@@ -115,7 +108,14 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <label>NPA</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-dot-circle-o"></i></span>
+                                <input type="text" class="form-control form-required"  name="npa" value="{{ old('npa') }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
                             <label>Ville</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-globe"></i></span>
