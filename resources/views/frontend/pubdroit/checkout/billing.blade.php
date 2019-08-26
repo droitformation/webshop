@@ -30,7 +30,7 @@
                                         type="4"></adresse-update>
                             </address>
 
-                            <div style="width: 60%;">
+                            <div style="width: 55%;">
                                 <div class="form-group">
                                     <label class="control-label label-info-tooltip" for="reference_no">
                                         <strong>Votre N° de référence</strong>

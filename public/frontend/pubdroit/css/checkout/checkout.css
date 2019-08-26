@@ -465,7 +465,7 @@ input[type="checkbox"]:checked.options + label{
 }
 
 .adresse-verify address{
-    width: 35%;
+    width:45%;
     font-size: 15px;
     line-height: 19px;
     padding-right: 10px;
