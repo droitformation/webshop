@@ -33,15 +33,15 @@
                             <div style="width: 55%;">
                                 <div class="form-group">
                                     <label class="control-label label-info-tooltip" for="reference_no">
-                                        <strong>Votre N° de référence</strong>
+                                        <strong>Votre numéro de référence</strong>
                                         <button aria-label="Vous avez la possibilité d'indiquer un numéro de référence demandé par votre comptabilité." data-microtip-position="top-left" role="tooltip">  <i class="fa fa-info-circle"></i></button>
                                     </label>
                                     <input class="form-control" name="reference_no" value="{{ session()->has('reference_no') ? session()->get('reference_no') : '' }}" id="reference_no" type="text" placeholder="Optionnel">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label label-info-tooltip" for="transaction_no">
-                                        <strong>Votre N° de commande</strong>
-                                        <button aria-label="En plus du N° de référence vous avez la possibilité d'indiquer un numéro de commande." data-microtip-position="top-left" role="tooltip">  <i class="fa fa-info-circle"></i></button>
+                                        <strong>Votre numéro de commande</strong>
+                                        <button aria-label="En plus du numéro de référence vous avez la possibilité d'indiquer un numéro de commande." data-microtip-position="top-left" role="tooltip">  <i class="fa fa-info-circle"></i></button>
                                     </label>
                                     <input class="form-control" name="transaction_no" value="{{ session()->has('transaction_no') ? session()->get('transaction_no') : '' }}" id="transaction_no" type="text" placeholder="Optionnel">
                                 </div>
