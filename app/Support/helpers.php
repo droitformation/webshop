@@ -168,7 +168,12 @@ function setEnv($key, $value)
     ));
 }
 
-
 function removeTag($str) {
     return strip_tags($str,'<p><b><strong><ul><li><i><h1><h2><h3><h4><h5>');
+}
+
+function frontendDate($date){
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+    $thedate = \Carbon\Carbon::createFromFormat('Y-m-d',$date);
+    return $thedate->formatLocalized('%A %d %B %Y');
 }
