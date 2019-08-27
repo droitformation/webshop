@@ -10,9 +10,8 @@ class ConferenceController extends Controller
         $academiques = \Registry::get('academiques');
         $conference  = \Registry::get('conference');
 
-        $count = isset($academiques) && !empty($academiques) ? count($academiques) : 0;
-
-        $isOpen = $count < $conference['places'] ? true : false;
+        $count  = isset($academiques) && !empty($academiques) ? count($academiques) : 0;
+        $isOpen = \Registry::get('conference') !== null && $count < $conference['places'] ? true : false;
 
         return view('frontend.conferences')->with(['isOpen' => $isOpen]);
     }
