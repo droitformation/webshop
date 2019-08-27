@@ -18,8 +18,8 @@
             </ul>
         </li>
 
-        <li class="<?php echo (Request::is('admin/conference') ? 'active' : '' ); ?>">
-            <a href="{{ url('admin/conference') }}">
+        <li class="<?php echo (Request::is('admin/dejeuner') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/dejeuner') }}">
                 <i class="fa fa-calendar"></i> <span>Déjeuners académiques</span>
             </a>
         </li>

@@ -26,7 +26,7 @@ class ConferenceTest extends TestCase
     {
         $data       = ['title' => 'Test 123', 'date' => date('Y-m-d'),'places' => 25, 'comment' => 'test'];
         $conference = ['conference' => $data];
-        $reponse    = $this->post('admin/conference', $conference);
+        $reponse    = $this->post('admin/dejeuner', $conference);
 
         $this->assertDatabaseHas('system_registries', ['key' => 'conference', 'value' => json_encode($data)]);
     }
@@ -35,13 +35,13 @@ class ConferenceTest extends TestCase
     {
         $data1       = ['title' => 'Test 123', 'date' => date('Y-m-d'),'places' => 25, 'comment' => 'test'];
         $conference = ['conference' => $data1];
-        $reponse    = $this->post('admin/conference', $conference);
+        $reponse    = $this->post('admin/dejeuner', $conference);
 
         $this->assertDatabaseHas('system_registries', ['key' => 'conference', 'value' => json_encode($data1)]);
 
         $data2       = ['title' => 'Test 456', 'date' => date('Y-m-d'),'places' => 15, 'comment' => 'test'];
         $conference = ['conference' => $data2];
-        $reponse    = $this->post('admin/conference', $conference);
+        $reponse    = $this->post('admin/dejeuner', $conference);
 
         $this->assertDatabaseHas('system_registries', ['key' => 'conference', 'value' => json_encode($data2)]);
     }
@@ -51,7 +51,7 @@ class ConferenceTest extends TestCase
         $faker = \Faker\Factory::create();
 
         $data    = ['first_name' => $faker->firstName, 'last_name' => $faker->lastName, 'email' => $faker->email];
-        $reponse = $this->post('conference', $data);
+        $reponse = $this->post('dejeuner', $data);
 
         $academiques = \Registry::get('academiques');
 
@@ -65,7 +65,7 @@ class ConferenceTest extends TestCase
         $last        = array_pop($academiques);
 
         $data    = ['index' => $lastKey];
-        $reponse = $this->delete('conference', $data);
+        $reponse = $this->delete('dejeuner', $data);
 
         $academiques = \Registry::get('academiques');
 

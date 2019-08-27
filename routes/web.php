@@ -17,9 +17,9 @@ Route::get('event', 'Api\ColloqueController@event');
 //Route::post('tracking', 'Backend\Newsletter\TrackingController@tracking');
 Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
 
-Route::get('conference', 'Frontend\ConferenceController@index');
-Route::post('conference', 'Frontend\ConferenceController@store');
-Route::delete('conference', 'Frontend\ConferenceController@delete');
+Route::get('dejeuner', 'Frontend\ConferenceController@index');
+Route::post('dejeuner', 'Frontend\ConferenceController@store');
+Route::delete('dejeuner', 'Frontend\ConferenceController@delete');
 
 Route::get('site/subscribe/{site_id}', 'HomeController@subscribe');
 Route::get('site/unsubscribe/{site_id}', 'HomeController@unsubscribe');
@@ -259,9 +259,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
          |--------------------------------------------------------------------------
          */
 
-        Route::get('conference', 'Backend\ConferenceController@index');
-        Route::post('conference', 'Backend\ConferenceController@store');
-        Route::post('conference/export', 'Backend\ConferenceController@export');
+        Route::get('dejeuner', 'Backend\ConferenceController@index');
+        Route::post('dejeuner', 'Backend\ConferenceController@store');
+        Route::post('dejeuner/export', 'Backend\ConferenceController@export');
 
         /*
         |--------------------------------------------------------------------------

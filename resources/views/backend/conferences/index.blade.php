@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form action="{{ url('admin/conference') }}" method="POST" class="form">{!! csrf_field() !!}
+        <form action="{{ url('admin/dejeuner') }}" method="POST" class="form">{!! csrf_field() !!}
             <h4><i class="fa fa-home"></i> &nbsp;Déjeuners académiques</h4>
             <div class="panel panel-primary">
                 <div class="panel-body">
@@ -48,7 +48,7 @@
                                 <p><strong><i class="fa fa-caret-right"></i> &nbsp; {{ $personne['first_name'] }} {{ $personne['last_name'] }}</strong></p>
                             </div>
                             <div class="col-md-2 text-right">
-                                <form action="{{ url('conference') }}" method="POST" class="form-horizontal">
+                                <form action="{{ url('dejeuner') }}" method="POST" class="form-horizontal">
                                     <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                     <input type="hidden" name="index" value="{{ $index }}">
                                     <button data-what="Supprimer" data-action="{{ $personne['first_name'] }} {{ $personne['last_name'] }}" class="btn btn-danger btn-xs deleteAction">x</button>
@@ -59,7 +59,7 @@
                     @endforeach
                 </div>
                 <div class="panel-footer">
-                    <form action="{{ url('admin/conference/export') }}" method="POST">{!! csrf_field() !!}
+                    <form action="{{ url('admin/dejeuner/export') }}" method="POST">{!! csrf_field() !!}
                         <button type="submit" class="btn btn-inverse btn-sm pull-right">Exporter [Excel]</button>
                     </form>
                 </div>
