@@ -196,6 +196,10 @@ class Inscription extends Model
 
         $adresse =  $this->inscrit->adresses->where('type',1)->first();
 
+        if(!isset($adresse)){
+            return ['id' => 1, 'civilite' => '', 'name' => 'Aucune adresse de contact pour ce compte: '.$this->id, 'email' => ''];
+        }
+
         return [
             'id' => $this->inscrit->id,
             'civilite' => civilites($adresse->civilite_id),
