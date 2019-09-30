@@ -14,7 +14,7 @@
         @include('alert::bootstrap')
 
         <div class="row">
-            <div class="col-md-6 col-xs-12" style="border-right: 1px solid #eee; padding-right: 25px;">
+            <div class="col-md-6 col-xs-12 col-md-push-3">
                 <h4>Inscription</h4>
                 @if($isOpen)
                     <form class="form-sondage" style="margin-top: 20px;" action="{{ url('dejeuner') }}" method="POST">{!! csrf_field() !!}
@@ -36,27 +36,7 @@
                     <p class="text-danger">L'événement est complet</p>
                 @endif
             </div>
-            <div class="col-md-6 col-xs-12" style="padding-left: 25px;">
-                @if(!empty(Registry::get('academiques')))
-                    <h4 style="margin-bottom: 20px;">Personnes inscrites</h4>
-                    @foreach(Registry::get('academiques') as $index => $personne)
 
-                        <div class="row">
-                            <div class="col-md-10">
-                                <p><strong><i class="fa fa-caret-right"></i> &nbsp; {{ $personne['first_name'] }} {{ $personne['last_name'] }}</strong></p>
-                            </div>
-                            <div class="col-md-2 text-right">
-                                <form action="{{ url('dejeuner') }}" method="POST" class="form-horizontal">
-                                    <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
-                                    <input type="hidden" name="index" value="{{ $index }}">
-                                    <button data-what="Supprimer" data-action="{{ $personne['first_name'] }} {{ $personne['last_name'] }}" class="btn btn-danger btn-xs deleteAction">x</button>
-                                </form>
-                            </div>
-                        </div>
-
-                    @endforeach
-                @endif
-            </div>
         </div>
 
     @else
