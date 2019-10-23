@@ -19,34 +19,34 @@ window.Vue = require('vue');
 //Vue.component('inscription', require('./components/Inscription.vue'));
 // Vue.component('content-form', require('./components/ContentForm.vue'));
 
-Vue.component('generate', require('./components/Generate.vue'));
-Vue.component('rappel', require('./components/Rappel.vue'));
-Vue.component('organisateur', require('./components/Organisateur.vue'));
-Vue.component('endroit', require('./components/Endroit.vue'));
-Vue.component('jurisprudence', require('./components/Jurisprudence.vue'));
-Vue.component('occurrence', require('./components/Occurrence.vue'));
-Vue.component('price', require('./components/Price.vue'));
-Vue.component('option-groupe', require('./components/OptionGroupe.vue'));
-Vue.component('detenteur', require('./components/Detenteur.vue'));
+Vue.component('generate', require('./components/Generate.vue').default);
+Vue.component('rappel', require('./components/Rappel.vue').default);
+Vue.component('organisateur', require('./components/Organisateur.vue').default);
+Vue.component('endroit', require('./components/Endroit.vue').default);
+Vue.component('jurisprudence', require('./components/Jurisprudence.vue').default);
+Vue.component('occurrence', require('./components/Occurrence.vue').default);
+Vue.component('price', require('./components/Price.vue').default);
+Vue.component('option-groupe', require('./components/OptionGroupe.vue').default);
+Vue.component('detenteur', require('./components/Detenteur.vue').default);
 
-Vue.component('manager', require('./components/Manager.vue'));
-Vue.component('image-uploader', require('./components/ImageUploader.vue'));
-Vue.component('filter-adresse', require('./components/FilterAdresse.vue'));
-Vue.component('list-autocomplete', require('./components/ListAutocomplete.vue'));
+Vue.component('manager', require('./components/Manager.vue').default);
+Vue.component('image-uploader', require('./components/ImageUploader.vue').default);
+Vue.component('filter-adresse', require('./components/FilterAdresse.vue').default);
+Vue.component('list-autocomplete', require('./components/ListAutocomplete.vue').default);
 
-Vue.component('build', require('./components/Build.vue'));
-Vue.component('edit-build', require('./components/EditBuild.vue'));
+Vue.component('build', require('./components/Build.vue').default);
+Vue.component('edit-build', require('./components/EditBuild.vue').default);
 
-Vue.component('build-newsletter', require('./components/BuildNewsletter.vue'));
-Vue.component('build-newsletter-models', require('./components/BuildNewsletterModels.vue'));
-Vue.component('build-newsletter-group', require('./components/BuildNewsletterGroup.vue'));
-Vue.component('analyse-newsletter', require('./components/partials/AnalyseNewsletter.vue'));
-Vue.component('image-newsletter', require('./components/partials/ImageNewsletter.vue'));
+Vue.component('build-newsletter', require('./components/BuildNewsletter.vue').default);
+Vue.component('build-newsletter-models', require('./components/BuildNewsletterModels.vue').default);
+Vue.component('build-newsletter-group', require('./components/BuildNewsletterGroup.vue').default);
+Vue.component('analyse-newsletter', require('./components/partials/AnalyseNewsletter.vue').default);
+Vue.component('image-newsletter', require('./components/partials/ImageNewsletter.vue').default);
 
-Vue.component('create-bloc', require('./components/CreateBloc.vue'));
-Vue.component('edit-bloc', require('./components/EditBloc.vue'));
+Vue.component('create-bloc', require('./components/CreateBloc.vue').default);
+Vue.component('edit-bloc', require('./components/EditBloc.vue').default);
 
-Vue.component('product-select', require('./components/ProductSelect.vue'));
+Vue.component('product-select', require('./components/ProductSelect.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 

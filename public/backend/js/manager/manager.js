@@ -8,6 +8,10 @@ $( function() {
         $(this).removeData('bs.modal');
     });
 
+/*    $(document).on('show.bs.modal','#uploadModal', function () {
+        alert('hi');
+    })*/
+
     $('body').on('show.bs.modal','#uploadModal', function () {
         var $gallery  = $('#gallery');
 

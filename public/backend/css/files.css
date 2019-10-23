@@ -188,14 +188,40 @@
 }
 
 /* item-content is visible, and transitions size */
+
+#gallery{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 5px;
+    align-items: center;
+    list-style: none;
+}
+
 .file-item {
-    width: 360px;
-    height: 239px;
+    width: 120px;
+    height: 120px;
+    position: relative;
+    list-style: none;
+    margin:5px;
+    padding:0px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 5px solid transparent;
     -webkit-transition: width 0.4s, height 0.4s;
     -moz-transition: width 0.4s, height 0.4s;
     -o-transition: width 0.4s, height 0.4s;
     transition: width 0.4s, height 0.4s;
+}
+
+.file-item button{
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 .btn-xs.file-manager-delete{
@@ -293,8 +319,8 @@ FILE MANAGER
 }
 
 #fileManager img {
-    max-width:  100px;
-    max-height: 60px;
+    max-width: 120px;
+    max-height: 80px;
     background-position: 50% 50%;
     background-repeat:   no-repeat;
     background-size:     cover;
