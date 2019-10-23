@@ -64,7 +64,7 @@ class AdresseWorker implements AdresseWorkerInterface{
 
         $adresses = $this->adresse->getMultiple($this->fromadresses);
 
-        // mergr all adresse and users, only for compare
+        // merge all adresse and users, only for compare
         if($compare){
             $adresses = $this->getList($adresses, $type = 'adresse');
             $accounts = $this->getList($adresses, $type = 'user');

@@ -202,6 +202,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/deleteadresse.js');?>"></script>
 
 <!-- Upload plugins -->
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/isotope.pkgd.min.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/manager.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/dropzone.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/upload/upload.js');?>"></script>

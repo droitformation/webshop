@@ -63,7 +63,12 @@
         font-size:30px;
     }
     .modal-dialog{
-        width:860px;
+        width: 80%;
+        min-width:860px;
+    }
+    .gallery li{
+        width: 200px;
+        display: inline-block;
     }
 
 </style>

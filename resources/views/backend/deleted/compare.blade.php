@@ -39,8 +39,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form class="form" id="transvaseForm" action="{{ url('admin/deletedadresses/transvase') }}" method="post">
-                            {!! csrf_field() !!}
+                        <form class="form" id="transvaseForm" action="{{ url('admin/deletedadresses/transvase') }}" method="post">{!! csrf_field() !!}
                             <div class="row">
                                 <div class="col-md-2">
 
