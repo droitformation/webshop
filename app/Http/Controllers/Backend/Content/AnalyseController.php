@@ -104,7 +104,7 @@ class AnalyseController extends Controller {
 
         $analyse = $this->analyse->create( $data );
 
-        alert()->success('Analyse crée');
+        flash('Analyse crée')->success();
 
         return redirect('admin/analyse/'.$analyse->id);
     }
@@ -131,7 +131,7 @@ class AnalyseController extends Controller {
 
         $analyse = $this->analyse->update($data);
 
-        alert()->success('Analyse mise à jour');
+        flash('Analyse mise à jour')->success();
 
         return redirect('admin/analyse/'.$analyse->id);
     }
@@ -147,7 +147,7 @@ class AnalyseController extends Controller {
     {
         $this->analyse->delete($id);
 
-        alert()->success('Analyse supprimée');
+        flash('Analyse supprimée')->success();
 
         return redirect()->back();
     }

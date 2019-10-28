@@ -15,7 +15,7 @@ class CampagneErrorTest extends TestCase
     protected $mailjet;
     protected $campagne;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -36,7 +36,7 @@ class CampagneErrorTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

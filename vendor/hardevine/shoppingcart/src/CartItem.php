@@ -65,6 +65,13 @@ class CartItem implements Arrayable, Jsonable
     private $taxRate = 0;
 
     /**
+     * Is item saved for later.
+     *
+     * @var boolean
+     */
+    private $isSaved = false;
+
+    /**
      * CartItem constructor.
      *
      * @param int|string $id
@@ -243,6 +250,19 @@ class CartItem implements Arrayable, Jsonable
     }
 
     /**
+     * Set saved state.
+     *
+     * @param bool $bool
+     * @return \Gloudemans\Shoppingcart\CartItem
+     */
+    public function setSaved($bool)
+    {
+        $this->isSaved = $bool;
+
+        return $this;
+    }
+
+    /**
      * Get an attribute from the cart item or get the associated model.
      *
      * @param string $attribute
@@ -254,24 +274,24 @@ class CartItem implements Arrayable, Jsonable
             return $this->{$attribute};
         }
 
-        if($attribute === 'priceTax') {
-            return $this->price + $this->tax;
-        }
-        
-        if($attribute === 'subtotal') {
-            return $this->qty * $this->price;
-        }
-        
-        if($attribute === 'total') {
-            return $this->qty * ($this->priceTax);
+        if ($attribute === 'priceTax') {
+            return number_format(($this->price + $this->tax), 2, '.', '');
         }
 
-        if($attribute === 'tax') {
-            return $this->price * ($this->taxRate / 100);
+        if ($attribute === 'subtotal') {
+            return number_format(($this->qty * $this->price), 2, '.', '');
         }
-        
-        if($attribute === 'taxTotal') {
-            return $this->tax * $this->qty;
+
+        if ($attribute === 'total') {
+            return number_format(($this->qty * $this->priceTax), 2, '.', '');
+        }
+
+        if ($attribute === 'tax') {
+            return number_format(($this->price * ($this->taxRate / 100)), 2, '.', '');
+        }
+
+        if ($attribute === 'taxTotal') {
+            return number_format(($this->tax * $this->qty), 2, '.', '');
         }
 
         if($attribute === 'model' && isset($this->associatedModel)) {
@@ -349,6 +369,7 @@ class CartItem implements Arrayable, Jsonable
             'price'    => $this->price,
             'options'  => $this->options->toArray(),
             'tax'      => $this->tax,
+            'isSaved'      => $this->isSaved,
             'subtotal' => $this->subtotal
         ];
     }
@@ -373,7 +394,7 @@ class CartItem implements Arrayable, Jsonable
      * @param string $thousandSeperator
      * @return string
      */
-    private function numberFormat($value, $decimals, $decimalPoint, $thousandSeperator)
+    private function numberFormat($value, $decimals = null, $decimalPoint = null, $thousandSeperator = null)
     {
         if (is_null($decimals)){
             $decimals = is_null(config('cart.format.decimals')) ? 2 : config('cart.format.decimals');

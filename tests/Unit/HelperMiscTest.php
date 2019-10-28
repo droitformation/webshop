@@ -10,7 +10,7 @@ class HelperMiscTest extends TestCase
     protected $format;
     protected $helper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

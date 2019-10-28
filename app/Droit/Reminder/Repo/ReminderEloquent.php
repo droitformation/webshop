@@ -26,7 +26,7 @@ class ReminderEloquent implements ReminderInterface{
 
     public function toSend()
     {
-        return $this->reminder->where('send_at','=', Carbon::now()->format('Y-m-d'))->get();
+        return $this->reminder->where('send_at','<=', Carbon::now()->format('Y-m-d'))->get();
     }
 
     public function find($id){

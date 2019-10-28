@@ -15,8 +15,7 @@
             <?php $config = config('reminder.'.$type); ?>
 
             <!-- form start -->
-            <form action="{!!  url('admin/reminder')!!}" method="POST" class="validate-form form-horizontal" data-validate="parsley">
-                {!! csrf_field() !!}
+            <form action="{!!  url('admin/reminder')!!}" method="POST" class="validate-form form-horizontal" data-validate="parsley">{!! csrf_field() !!}
 
             <div class="panel-body event-info">
                 <h4>Ajouter un rappel</h4>
@@ -61,9 +60,9 @@
                     <label for="message" class="col-sm-3 control-label">Email de rappel pour {{ $config['name'] }}</label>
                     <div class="col-sm-7">
 
-                        @if($items && !$items->isEmpty())
+                        @if(!$items->isEmpty())
                             <select class="form-control" name="model_id">
-                                @foreach($items as $item)
+                                @foreach($items->sortBy('title') as $item)
                                     <option value="{{ $item->id }}">{{ $item->title ?? $item->titre }}</option>
                                 @endforeach
                             </select>

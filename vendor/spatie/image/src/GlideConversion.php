@@ -2,10 +2,12 @@
 
 namespace Spatie\Image;
 
+use Exception;
 use FilesystemIterator;
 use League\Glide\Server;
 use League\Glide\ServerFactory;
 use Spatie\Image\Exceptions\CouldNotConvert;
+use Spatie\Image\Exceptions\InvalidTemporaryDirectory;
 
 final class GlideConversion
 {
@@ -18,13 +20,46 @@ final class GlideConversion
     /** @var string */
     private $conversionResult = null;
 
+    /** @var string */
+    private $temporaryDirectory = null;
+
     public static function create(string $inputImage): self
     {
         return new self($inputImage);
     }
 
+    public function setTemporaryDirectory(string $temporaryDirectory)
+    {
+        if (! isset($temporaryDirectory)) {
+            return $this;
+        }
+
+        if (! is_dir($temporaryDirectory)) {
+            try {
+                mkdir($temporaryDirectory);
+            } catch (Exception $exception) {
+                throw InvalidTemporaryDirectory::temporaryDirectoryNotCreatable($temporaryDirectory);
+            }
+        }
+
+        if (! is_writable($temporaryDirectory)) {
+            throw InvalidTemporaryDirectory::temporaryDirectoryNotWritable($temporaryDirectory);
+        }
+
+        $this->temporaryDirectory = $temporaryDirectory;
+
+        return $this;
+    }
+
+    public function getTemporaryDirectory(): string
+    {
+        return $this->temporaryDirectory;
+    }
+
     public function __construct(string $inputImage)
     {
+        $this->temporaryDirectory = sys_get_temp_dir();
+
         $this->inputImage = $inputImage;
     }
 
@@ -46,10 +81,16 @@ final class GlideConversion
 
             $glideServer->setGroupCacheInFolders(false);
 
-            $this->conversionResult = sys_get_temp_dir().DIRECTORY_SEPARATOR.$glideServer->makeImage(
+            $manipulatedImage = $this->temporaryDirectory.DIRECTORY_SEPARATOR.$glideServer->makeImage(
                     pathinfo($inputFile, PATHINFO_BASENAME),
                     $this->prepareManipulations($manipulationGroup)
                 );
+
+            if ($this->conversionResult) {
+                unlink($this->conversionResult);
+            }
+
+            $this->conversionResult = $manipulatedImage;
         }
 
         return $this;
@@ -78,7 +119,7 @@ final class GlideConversion
     {
         $config = [
             'source' => dirname($inputFile),
-            'cache' => sys_get_temp_dir(),
+            'cache' => $this->temporaryDirectory,
             'driver' => $this->imageDriver,
         ];
 

@@ -75,14 +75,18 @@ class BackupDestination
     public function write(string $file)
     {
         if (is_null($this->disk)) {
-            throw InvalidBackupDestination::diskNotSet();
+            throw InvalidBackupDestination::diskNotSet($this->backupName);
         }
 
         $destination = $this->backupName.'/'.pathinfo($file, PATHINFO_BASENAME);
 
         $handle = fopen($file, 'r+');
 
-        $this->disk->getDriver()->writeStream($destination, $handle);
+        $this->disk->getDriver()->writeStream(
+            $destination,
+            $handle,
+            $this->getDiskOptions()
+        );
 
         if (is_resource($handle)) {
             fclose($handle);
@@ -113,6 +117,11 @@ class BackupDestination
         return $this->connectionError;
     }
 
+    public function getDiskOptions(): array
+    {
+        return config("filesystems.disks.{$this->diskName()}.backup_options") ?? [];
+    }
+
     public function isReachable(): bool
     {
         if (is_null($this->disk)) {
@@ -130,7 +139,7 @@ class BackupDestination
         }
     }
 
-    public function usedStorage(): int
+    public function usedStorage(): float
     {
         return $this->backups()->size();
     }

@@ -17,7 +17,7 @@ class MailgunWorkerTest extends TestCase
     protected $recipients;
     protected $response_ok;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -59,7 +59,7 @@ class MailgunWorkerTest extends TestCase
 
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
     }

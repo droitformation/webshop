@@ -68,7 +68,7 @@ class CleanWorker{
             });
         }
 
-        return array_flatten($allusers);
+        return \Arr::flatten($allusers);
     }
 
     /*

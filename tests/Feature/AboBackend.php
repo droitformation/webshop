@@ -13,7 +13,7 @@ class AboBackend extends TestCase
 
     protected $person;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('database.default','testing');
@@ -27,7 +27,7 @@ class AboBackend extends TestCase
         $this->person = $user;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

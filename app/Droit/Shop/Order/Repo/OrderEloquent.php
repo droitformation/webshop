@@ -153,7 +153,7 @@ class OrderEloquent implements OrderInterface{
         // All products for order isFree
         if(!empty($data['products'])) {
             foreach($data['products'] as $product) {
-                $id = array_pull($product, 'id');
+                $id = \Arr::pull($product, 'id');
 
                 $order->products()->attach([$id => $product]);
             }
@@ -229,7 +229,7 @@ class OrderEloquent implements OrderInterface{
             $order->products()->detach();
 
             foreach($data['products'] as $product) {
-                $id = array_pull($product, 'id');
+                $id = \Arr::pull($product, 'id');
 
                 $order->products()->attach([$id => $product]);
             }

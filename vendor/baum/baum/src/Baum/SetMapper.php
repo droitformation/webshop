@@ -128,7 +128,7 @@ class SetMapper {
   protected function getSearchAttributes($attributes) {
     $searchable = array($this->node->getKeyName());
 
-    return array_only($attributes, $searchable);
+    return \Arr::only($attributes, $searchable);
   }
 
   protected function getDataAttributes($attributes) {

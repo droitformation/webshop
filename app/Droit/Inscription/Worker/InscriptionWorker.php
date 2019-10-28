@@ -27,8 +27,8 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             return $this->inscription($data);
         }
 
-        $colloque_id = array_pull($data, 'colloque_id');
-        $user_id     = array_pull($data, 'user_id');
+        $colloque_id = \Arr::pull($data, 'colloque_id');
+        $user_id     = \Arr::pull($data, 'user_id');
 
         // create new group
         $group = $this->group->create(['colloque_id' => $colloque_id, 'user_id' => $user_id]);

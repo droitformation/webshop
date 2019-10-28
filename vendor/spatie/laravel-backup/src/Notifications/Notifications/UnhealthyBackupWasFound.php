@@ -5,6 +5,7 @@ namespace Spatie\Backup\Notifications\Notifications;
 use Spatie\Backup\Notifications\BaseNotification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
+use Spatie\Backup\Tasks\Monitor\HealthCheckFailure;
 use Illuminate\Notifications\Messages\SlackAttachment;
 use Spatie\Backup\Events\UnhealthyBackupWasFound as UnhealthyBackupWasFoundEvent;
 
@@ -17,6 +18,7 @@ class UnhealthyBackupWasFound extends BaseNotification
     {
         $mailMessage = (new MailMessage)
             ->error()
+            ->from(config('backup.notifications.mail.from.address', config('mail.from.address')), config('backup.notifications.mail.from.name', config('mail.from.name')))
             ->subject(trans('backup::notifications.unhealthy_backup_found_subject', ['application_name' => $this->applicationName()]))
             ->line(trans('backup::notifications.unhealthy_backup_found_body', ['application_name' => $this->applicationName(), 'disk_name' => $this->diskName()]))
             ->line($this->problemDescription());
@@ -25,12 +27,19 @@ class UnhealthyBackupWasFound extends BaseNotification
             $mailMessage->line("{$name}: $value");
         });
 
+        if ($this->failure()->wasUnexpected()) {
+            $mailMessage
+                ->line('Health check: '.$this->failure()->healthCheck()->name())
+                ->line(trans('backup::notifications.exception_message', ['message' => $this->failure()->exception()->getMessage()]))
+                ->line(trans('backup::notifications.exception_trace', ['trace' => $this->failure()->exception()->getTraceAsString()]));
+        }
+
         return $mailMessage;
     }
 
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage)
+        $slackMessage = (new SlackMessage)
             ->error()
             ->from(config('backup.notifications.slack.username'), config('backup.notifications.slack.icon'))
             ->to(config('backup.notifications.slack.channel'))
@@ -38,29 +47,41 @@ class UnhealthyBackupWasFound extends BaseNotification
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields($this->backupDestinationProperties()->toArray());
             });
+
+        if ($this->failure()->wasUnexpected()) {
+            $slackMessage
+                ->attachment(function (SlackAttachment $attachment) {
+                    $attachment
+                        ->title('Health check')
+                        ->content($this->failure()->healthCheck()->name());
+                })
+                ->attachment(function (SlackAttachment $attachment) {
+                    $attachment
+                        ->title(trans('backup::notifications.exception_message_title'))
+                        ->content($this->failure()->exception()->getMessage());
+                })
+                ->attachment(function (SlackAttachment $attachment) {
+                    $attachment
+                        ->title(trans('backup::notifications.exception_trace_title'))
+                        ->content($this->failure()->exception()->getTraceAsString());
+                });
+        }
+
+        return $slackMessage;
     }
 
     protected function problemDescription(): string
     {
-        $backupStatus = $this->event->backupDestinationStatus;
-
-        if (! $backupStatus->isReachable()) {
-            return trans('backup::notification.unhealthy_backup_found_not_reachable', ['error' => $backupStatus->connectionError()]);
+        if ($this->failure()->wasUnexpected()) {
+            return trans('backup::notifications.unhealthy_backup_found_unknown');
         }
 
-        if ($backupStatus->amountOfBackups() === 0) {
-            return trans('backup::notifications.unhealthy_backup_found_empty');
-        }
+        return $this->failure()->exception()->getMessage();
+    }
 
-        if ($backupStatus->usesTooMuchStorage()) {
-            return trans('backup::notifications.unhealthy_backup_found_full', ['disk_usage' => $backupStatus->humanReadableUsedStorage(), 'disk_limit' => $backupStatus->humanReadableAllowedStorage()]);
-        }
-
-        if ($backupStatus->newestBackupIsTooOld()) {
-            return trans('backup::notifications.unhealthy_backup_found_old', ['date' => $backupStatus->dateOfNewestBackup()->format('Y/m/d h:i:s')]);
-        }
-
-        return trans('backup::notifications.unhealthy_backup_found_unknown');
+    protected function failure(): HealthCheckFailure
+    {
+        return $this->event->backupDestinationStatus->getHealthCheckFailure();
     }
 
     public function setEvent(UnhealthyBackupWasFoundEvent $event)

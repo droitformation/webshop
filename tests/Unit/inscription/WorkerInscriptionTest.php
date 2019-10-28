@@ -12,7 +12,7 @@ class WorkerInscriptionTest extends TestCase
 
     protected $generator;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ class WorkerInscriptionTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

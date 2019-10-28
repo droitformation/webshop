@@ -16,6 +16,7 @@ class HealthyBackupWasFound extends BaseNotification
     public function toMail(): MailMessage
     {
         $mailMessage = (new MailMessage)
+            ->from(config('backup.notifications.mail.from.address', config('mail.from.address')), config('backup.notifications.mail.from.name', config('mail.from.name')))
             ->subject(trans('backup::notifications.healthy_backup_found_subject', ['application_name' => $this->applicationName(), 'disk_name' => $this->diskName()]))
             ->line(trans('backup::notifications.healthy_backup_found_body', ['application_name' => $this->applicationName()]));
 

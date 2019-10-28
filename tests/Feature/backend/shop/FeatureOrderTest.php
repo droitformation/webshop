@@ -12,7 +12,7 @@ class FeatureOrderTest extends TestCase
 
     protected $account;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ class FeatureOrderTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

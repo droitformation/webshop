@@ -1167,6 +1167,14 @@ Route::get('sondage', function()
 Route::get('testproduct', function()
 {
     $reminders  = \App::make('App\Droit\Reminder\Repo\ReminderInterface');
+
+    $reminders = $reminders->toSend();
+
+    echo '<pre>';
+    print_r($reminders);
+    echo '</pre>';
+    exit();
+
     $list = $reminders->toSend();
 
     $insc_repo  = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');

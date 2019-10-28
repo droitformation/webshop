@@ -103,7 +103,7 @@ class ImportWorker implements ImportWorkerInterface
 
 
         // If the upload is not formatted correctly redirect back
-        if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') ) {
+        if(isset($results) && $results->isEmpty() || !\Arr::has($results->toArray(), '0.email') ) {
             throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
         }
         

@@ -16,7 +16,7 @@ class SubscriptionAcceptTest extends TestCase
     protected $subscription_worker;
     protected $mailjet;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class SubscriptionAcceptTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
          parent::tearDown();

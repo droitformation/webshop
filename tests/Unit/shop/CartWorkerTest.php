@@ -15,7 +15,7 @@ class CartWorkerTest extends TestCase
     protected $product;
     protected $abo;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('database.default','testing');
@@ -40,7 +40,7 @@ class CartWorkerTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Cart::instance('shop')->destroy();
         \Cart::instance('abonnement')->destroy();

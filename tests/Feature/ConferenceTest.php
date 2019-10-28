@@ -10,7 +10,7 @@ class ConferenceTest extends TestCase
 {
     use RefreshDatabase,ResetTbl;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('database.default','testing');

@@ -20,7 +20,7 @@ class ImportTest extends TestCase
     protected $upload;
     protected $excel;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -63,7 +63,7 @@ class ImportTest extends TestCase
         );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

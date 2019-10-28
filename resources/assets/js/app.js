@@ -101,6 +101,3 @@ const appVue = new Vue({
         }
     }
 });
-
-
-

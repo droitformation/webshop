@@ -12,7 +12,7 @@ class FeaturePagesTest extends TestCase
 
     protected $site;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -22,7 +22,7 @@ class FeaturePagesTest extends TestCase
         $this->site = \App::make('App\Droit\Site\Repo\SiteInterface');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

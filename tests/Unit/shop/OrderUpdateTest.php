@@ -10,7 +10,7 @@ class OrderUpdateTest extends TestCase
 {
     use RefreshDatabase,ResetTbl;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +21,7 @@ class OrderUpdateTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

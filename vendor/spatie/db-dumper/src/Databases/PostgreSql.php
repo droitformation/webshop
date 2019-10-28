@@ -44,11 +44,9 @@ class PostgreSql extends DbDumper
         fwrite($tempFileHandle, $this->getContentsOfCredentialsFile());
         $temporaryCredentialsFile = stream_get_meta_data($tempFileHandle)['uri'];
 
-        $process = new Process($command, null, $this->getEnvironmentVariablesForDumpCommand($temporaryCredentialsFile));
+        $envVars = $this->getEnvironmentVariablesForDumpCommand($temporaryCredentialsFile);
 
-        if (! is_null($this->timeout)) {
-            $process->setTimeout($this->timeout);
-        }
+        $process = Process::fromShellCommandline($command, null, $envVars, null, $this->timeout);
 
         $process->run();
 
@@ -64,8 +62,10 @@ class PostgreSql extends DbDumper
      */
     public function getDumpCommand(string $dumpFile): string
     {
+        $quote = $this->determineQuote();
+
         $command = [
-            "'{$this->dumpBinaryPath}pg_dump'",
+            "{$quote}{$this->dumpBinaryPath}pg_dump{$quote}",
             "-U {$this->userName}",
             '-h '.($this->socket === '' ? $this->host : $this->socket),
             "-p {$this->port}",

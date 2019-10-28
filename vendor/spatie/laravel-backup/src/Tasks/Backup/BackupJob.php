@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Spatie\DbDumper\DbDumper;
 use Illuminate\Support\Collection;
 use Spatie\DbDumper\Databases\Sqlite;
+use Spatie\DbDumper\Databases\MongoDb;
 use Spatie\Backup\Events\BackupHasFailed;
 use Spatie\Backup\Events\BackupWasSuccessful;
 use Spatie\Backup\Events\BackupZipWasCreated;
@@ -222,14 +223,17 @@ class BackupJob
      */
     protected function dumpDatabases(): array
     {
-        return $this->dbDumpers->map(function (DbDumper $dbDumper) {
+        return $this->dbDumpers->map(function (DbDumper $dbDumper, $key) {
             consoleOutput()->info("Dumping database {$dbDumper->getDbName()}...");
 
             $dbType = mb_strtolower(basename(str_replace('\\', '/', get_class($dbDumper))));
 
-            $dbName = $dbDumper instanceof Sqlite ? 'database' : $dbDumper->getDbName();
+            $dbName = $dbDumper->getDbName();
+            if ($dbDumper instanceof Sqlite) {
+                $dbName = $key.'-database';
+            }
 
-            $fileName = "{$dbType}-{$dbName}.sql";
+            $fileName = "{$dbType}-{$dbName}.{$this->getExtension($dbDumper)}";
 
             if (config('backup.backup.gzip_database_dump')) {
                 $dbDumper->useCompressor(new GzipCompressor());
@@ -271,7 +275,18 @@ class BackupJob
     protected function sendNotification($notification)
     {
         if ($this->sendNotifications) {
-            event($notification);
+            rescue(function () use ($notification) {
+                event($notification);
+            }, function () {
+                consoleOutput()->error('Sending notification failed');
+            });
         }
+    }
+
+    protected function getExtension(DbDumper $dbDumper): string
+    {
+        return $dbDumper instanceof MongoDb
+            ? 'archive'
+            : 'sql';
     }
 }

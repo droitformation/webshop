@@ -12,7 +12,7 @@ class AboUserAdminTest extends DuskTestCase
 
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

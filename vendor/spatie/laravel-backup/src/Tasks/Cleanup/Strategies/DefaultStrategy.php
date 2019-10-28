@@ -41,31 +41,31 @@ class DefaultStrategy extends CleanupStrategy
 
     protected function calculateDateRanges(): Collection
     {
-        $config = $this->config->get('backup.cleanup.defaultStrategy');
+        $config = $this->config->get('backup.cleanup.default_strategy');
 
         $daily = new Period(
-            Carbon::now()->subDays($config['keepAllBackupsForDays']),
+            Carbon::now()->subDays($config['keep_all_backups_for_days']),
             Carbon::now()
-                ->subDays($config['keepAllBackupsForDays'])
-                ->subDays($config['keepDailyBackupsForDays'])
+                ->subDays($config['keep_all_backups_for_days'])
+                ->subDays($config['keep_daily_backups_for_days'])
         );
 
         $weekly = new Period(
             $daily->endDate(),
             $daily->endDate()
-                ->subWeeks($config['keepWeeklyBackupsForWeeks'])
+                ->subWeeks($config['keep_weekly_backups_for_weeks'])
         );
 
         $monthly = new Period(
             $weekly->endDate(),
             $weekly->endDate()
-                ->subMonths($config['keepMonthlyBackupsForMonths'])
+                ->subMonths($config['keep_monthly_backups_for_months'])
         );
 
         $yearly = new Period(
             $monthly->endDate(),
             $monthly->endDate()
-                ->subYears($config['keepYearlyBackupsForYears'])
+                ->subYears($config['keep_yearly_backups_for_years'])
         );
 
         return collect(compact('daily', 'weekly', 'monthly', 'yearly'));
@@ -84,9 +84,7 @@ class DefaultStrategy extends CleanupStrategy
             $groupedBackupsByDateProperty->each(function (Collection $group) {
                 $group->shift();
 
-                $group->each(function (Backup $backup) {
-                    $backup->delete();
-                });
+                $group->each->delete();
             });
         });
     }
@@ -95,9 +93,7 @@ class DefaultStrategy extends CleanupStrategy
     {
         $backups->filter(function (Backup $backup) use ($endDate) {
             return $backup->exists() && $backup->date()->lt($endDate);
-        })->each(function (Backup $backup) {
-            $backup->delete();
-        });
+        })->each->delete();
     }
 
     protected function removeOldBackupsUntilUsingLessThanMaximumStorage(BackupCollection $backups)
@@ -106,7 +102,7 @@ class DefaultStrategy extends CleanupStrategy
             return;
         }
 
-        $maximumSize = $this->config->get('backup.cleanup.defaultStrategy.deleteOldestBackupsWhenUsingMoreMegabytesThan')
+        $maximumSize = $this->config->get('backup.cleanup.default_strategy.delete_oldest_backups_when_using_more_megabytes_than')
             * 1024 * 1024;
 
         if (($backups->size() + $this->newestBackup->size()) <= $maximumSize) {

@@ -16,7 +16,7 @@ class InvalidInscriptionTest extends TestCase
     protected $inscription_group;
     protected $inscriptions;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,7 +45,7 @@ class InvalidInscriptionTest extends TestCase
         })->first();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

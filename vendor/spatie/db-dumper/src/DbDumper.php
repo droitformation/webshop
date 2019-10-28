@@ -257,12 +257,19 @@ abstract class DbDumper
 
     protected function echoToFile(string $command, string $dumpFile): string
     {
-        $compressor = $this->compressor
-            ? ' | '.$this->compressor->useCommand()
-            : '';
-
         $dumpFile = '"'.addcslashes($dumpFile, '\\"').'"';
 
-        return $command.$compressor.' > '.$dumpFile;
+        if ($this->compressor) {
+            $compressCommand = $this->compressor->useCommand();
+
+            return "(((({$command}; echo \$? >&3) | {$compressCommand} > {$dumpFile}) 3>&1) | (read x; exit \$x))";
+        }
+
+        return $command.' > '.$dumpFile;
+    }
+
+    protected function determineQuote(): string
+    {
+        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? '"' : "'";
     }
 }

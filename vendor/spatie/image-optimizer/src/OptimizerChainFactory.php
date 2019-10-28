@@ -3,6 +3,7 @@
 namespace Spatie\ImageOptimizer;
 
 use Spatie\ImageOptimizer\Optimizers\Svgo;
+use Spatie\ImageOptimizer\Optimizers\Cwebp;
 use Spatie\ImageOptimizer\Optimizers\Optipng;
 use Spatie\ImageOptimizer\Optimizers\Gifsicle;
 use Spatie\ImageOptimizer\Optimizers\Pngquant;
@@ -30,12 +31,18 @@ class OptimizerChainFactory
             ]))
 
             ->addOptimizer(new Svgo([
-                '--disable=cleanupIDs',
+                '--disable={cleanupIDs,removeViewBox}',
             ]))
 
             ->addOptimizer(new Gifsicle([
                 '-b',
                 '-O3',
+            ]))
+            ->addOptimizer(new Cwebp([
+                '-m 6',
+                '-pass 10',
+                '-mt',
+                '-q 80',
             ]));
     }
 }

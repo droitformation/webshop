@@ -107,6 +107,7 @@
 
             <!-- messages and errors -->
             @include('alert::bootstrap')
+            @include('flash::message')
             @include('backend.partials.message')
 
             <div id="page-heading">

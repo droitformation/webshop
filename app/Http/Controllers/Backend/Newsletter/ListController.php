@@ -119,7 +119,7 @@ class ListController extends Controller
             // Read uploded xls
             $results = $this->import->read($path);
 
-            if(isset($results) && $results->isEmpty() || !array_has($results->toArray(), '0.email') ) {
+            if(isset($results) && $results->isEmpty() || !\Arr::has($results->toArray(), '0.email') ) {
                 alert()->danger('Le fichier est vide ou mal formaté');
                 return redirect()->back();
             }

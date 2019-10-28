@@ -7,11 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Venturecraft\\Revisionable' => array($vendorDir . '/venturecraft/revisionable/src'),
-    'Svg\\' => array($vendorDir . '/phenx/php-svg-lib/src'),
+    'UpdateHelper\\' => array($vendorDir . '/kylekatarnls/update-helper/src'),
     'SimpleSoftwareIO\\QrCode\\' => array($vendorDir . '/simplesoftwareio/simple-qrcode/src'),
     'ShvetsGroup\\LaravelEmailDatabaseLog\\' => array($vendorDir . '/shvetsgroup/laravel-email-database-log/src'),
     'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
-    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'PDFMerger' => array($vendorDir . '/rguedes/pdfmerger/Classes'),
@@ -20,8 +20,8 @@ return array(
     'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),
     'Mailgun' => array($vendorDir . '/mailgun/mailgun-php/src'),
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
+    'Laracasts\\Flash' => array($vendorDir . '/laracasts/flash/src'),
     'InlineStyle' => array($vendorDir . '/inlinestyle/inlinestyle'),
-    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Baum' => array($vendorDir . '/baum/baum/src'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

@@ -12,14 +12,14 @@ class ImportListTest extends DuskTestCase
 
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->app['config']->set('database.default','testing');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

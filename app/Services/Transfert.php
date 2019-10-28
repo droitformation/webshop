@@ -61,7 +61,7 @@ class Transfert
     {
         $new = $this->makeNew('Newsletter');
 
-        $data = array_only($newsletter->toArray(),[
+        $data = \Arr::only($newsletter->toArray(),[
             'titre','from_name','from_email','return_email','unsuscribe','preview','list_id','color','logos','header','soutien',
             'pdf','classe','comment','comment_title','display','hide_title','second_color'
         ]);
@@ -87,7 +87,7 @@ class Transfert
             foreach ($old_models as $model){
 
                 $new = $this->makeNew('Newsletter_campagnes','Newsletter');
-                $new->fill(array_only($model->toArray(),['sujet','auteurs','status','send_at','api_campagne_id', 'hidden','created_at']));
+                $new->fill(\Arr::only($model->toArray(),['sujet','auteurs','status','send_at','api_campagne_id', 'hidden','created_at']));
                 $new->newsletter_id = $this->newsletter->id;
                 $new->save();
 
@@ -107,7 +107,7 @@ class Transfert
         $arrets = $this->conversions['Arret']['table'];
 
         $newcontent = $this->makeNew('Newsletter_contents','Newsletter');
-        $newcontent->fill(array_only($content->toArray(),['type_id','titre','contenu','image','lien','rang']));
+        $newcontent->fill(\Arr::only($content->toArray(),['type_id','titre','contenu','image','lien','rang']));
         $newcontent->newsletter_campagne_id = $new->id;
 
         if(isset($content->arret_id) && isset($arrets[$content->arret_id]) && $content->arret_id){

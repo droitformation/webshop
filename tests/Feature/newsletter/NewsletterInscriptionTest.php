@@ -15,7 +15,7 @@ class NewsletterInscriptionTest extends TestCase
     protected $worker;
     protected $subscription_worker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -39,7 +39,7 @@ class NewsletterInscriptionTest extends TestCase
         $this->actingAs($user);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

@@ -32,7 +32,7 @@ class AccountWorker implements AccountWorkerInterface
     {
         $this->prepareData($data)->validate()->makeUser();
 
-        $data = array_only($this->data,['first_name','last_name','email','company','adresse','npa','ville','cp','complement','canton_id','pays_id','civilite_id']);
+        $data = \Arr::only($this->data,['first_name','last_name','email','company','adresse','npa','ville','cp','complement','canton_id','pays_id','civilite_id']);
 
         $adresse = $this->adresse ? $this->adresse : $this->repo_adresse->create($data);
 
@@ -49,14 +49,14 @@ class AccountWorker implements AccountWorkerInterface
     public function makeUser()
     {
         // Create user account
-        $this->user = $this->repo_user->create(array_only($this->data,['email','password','username','first_name','last_name','company']));
+        $this->user = $this->repo_user->create(\Arr::only($this->data,['email','password','username','first_name','last_name','company']));
 
         return $this;
     }
 
     public function prepareData($data)
     {
-        $this->data = $this->adresse ? array_only($this->adresse->toArray(), ['first_name','last_name','company','email','adresse','npa','ville']) + $data : $data;
+        $this->data = $this->adresse ? \Arr::only($this->adresse->toArray(), ['first_name','last_name','company','email','adresse','npa','ville']) + $data : $data;
 
         $this->uniqueEmail();
 

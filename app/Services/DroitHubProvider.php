@@ -69,9 +69,9 @@ class DroitHubProvider extends AbstractProvider implements ProviderInterface
         return (new User)->setRaw($user)->map([
             'id'         => $user['id'],
             'provider'   => $this->provider,
-            'first_name' => array_get($user, 'first_name'),
-            'last_name'  => array_get($user, 'last_name'),
-            'email'      => array_get($user, 'email')
+            'first_name' => \Arr::get($user, 'first_name'),
+            'last_name'  => \Arr::get($user, 'last_name'),
+            'email'      => \Arr::get($user, 'email')
         ]);
     }
 }

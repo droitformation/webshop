@@ -2,34 +2,49 @@
 
 namespace Spatie\Backup\Tasks\Backup;
 
+use Exception;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Spatie\DbDumper\DbDumper;
 use Spatie\DbDumper\Databases\MySql;
 use Spatie\DbDumper\Databases\Sqlite;
 use Spatie\DbDumper\Databases\MongoDb;
 use Spatie\DbDumper\Databases\PostgreSql;
+use Illuminate\Database\ConfigurationUrlParser;
 use Spatie\Backup\Exceptions\CannotCreateDbDumper;
 
 class DbDumperFactory
 {
+    protected static $custom = [];
+
     public static function createFromConnection(string $dbConnectionName): DbDumper
     {
-        $dbConfig = config("database.connections.{$dbConnectionName}");
+        $parser = new ConfigurationUrlParser();
+        try {
+            $dbConfig = $parser->parseConfiguration(config("database.connections.{$dbConnectionName}"));
+        } catch (Exception $e) {
+            throw CannotCreateDbDumper::unsupportedDriver($dbConnectionName);
+        }
 
         if (isset($dbConfig['read'])) {
-            $dbConfig = array_except(
+            $dbConfig = Arr::except(
                 array_merge($dbConfig, $dbConfig['read']),
                 ['read', 'write']
             );
         }
 
         $dbDumper = static::forDriver($dbConfig['driver'])
-            ->setHost(array_first(array_wrap($dbConfig['host'] ?? '')))
+            ->setHost(Arr::first(Arr::wrap($dbConfig['host'] ?? '')))
             ->setDbName($dbConfig['database'])
             ->setUserName($dbConfig['username'] ?? '')
             ->setPassword($dbConfig['password'] ?? '');
 
         if ($dbDumper instanceof MySql) {
             $dbDumper->setDefaultCharacterSet($dbConfig['charset'] ?? '');
+        }
+
+        if ($dbDumper instanceof MongoDb) {
+            $dbDumper->setAuthenticationDatabase(config('database.connections.mongodb.dump.mongodb_user_auth') ?? '');
         }
 
         if (isset($dbConfig['port'])) {
@@ -43,9 +58,18 @@ class DbDumperFactory
         return $dbDumper;
     }
 
+    public static function extend(string $driver, callable $callback)
+    {
+        static::$custom[$driver] = $callback;
+    }
+
     protected static function forDriver($dbDriver): DbDumper
     {
         $driver = strtolower($dbDriver);
+
+        if (isset(static::$custom[$driver])) {
+            return (static::$custom[$driver])();
+        }
 
         if ($driver === 'mysql' || $driver === 'mariadb') {
             return new MySql();
@@ -69,7 +93,7 @@ class DbDumperFactory
     protected static function processExtraDumpParameters(array $dumpConfiguration, DbDumper $dbDumper): DbDumper
     {
         collect($dumpConfiguration)->each(function ($configValue, $configName) use ($dbDumper) {
-            $methodName = lcfirst(studly_case(is_numeric($configName) ? $configValue : $configName));
+            $methodName = lcfirst(Str::studly(is_numeric($configName) ? $configValue : $configName));
             $methodValue = is_numeric($configName) ? null : $configValue;
 
             $methodName = static::determineValidMethodName($dbDumper, $methodName);

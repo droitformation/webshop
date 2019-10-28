@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\ReminderRequest;
 use App\Http\Controllers\Controller;
 use App\Droit\Reminder\Repo\ReminderInterface;
 use App\Droit\Reminder\Worker\ReminderWorkerInterface;
@@ -48,14 +49,11 @@ class ReminderController extends Controller
 
     public function create($type)
     {
-        if($type != 'rappel')
-        {
+        $items = collect([]);
+
+        if($type != 'rappel') {
             $active = ($type == 'colloque' || $type == 'attribute' ? true : null); // products getall pass search
             $items  = $this->$type->getAll($active);
-        }
-        else
-        {
-            $items = null;
         }
 
         return view('backend.reminders.create')->with(['type' => $type, 'items' => $items]);
@@ -67,7 +65,7 @@ class ReminderController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ReminderRequest $request)
     {
         $data     = $request->all();
         $send_at  = Carbon::now();
@@ -110,7 +108,7 @@ class ReminderController extends Controller
     {
         $reminder  = $this->reminder->find($id);
         $type      = $reminder->type;
-        $items     = null;
+        $items     = collect([]);
 
         if($type != 'rappel')
         {

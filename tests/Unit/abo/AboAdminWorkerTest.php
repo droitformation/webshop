@@ -14,7 +14,7 @@ class AboAdminWorkerTest extends TestCase
     protected $generator;
     protected $facture;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('database.default','testing');
@@ -29,7 +29,7 @@ class AboAdminWorkerTest extends TestCase
         $this->facture   = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

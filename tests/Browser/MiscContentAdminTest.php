@@ -11,7 +11,7 @@ class MiscContentAdminTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -23,7 +23,7 @@ class MiscContentAdminTest extends DuskTestCase
         $this->user = $user;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         \Mockery::close();
         parent::tearDown();

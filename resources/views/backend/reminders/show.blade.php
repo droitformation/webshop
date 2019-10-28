@@ -61,9 +61,9 @@
 
                         <label for="message" class="col-sm-3 control-label">Email de rappel pour {{ $config['name'] }}</label>
                         <div class="col-sm-7">
-                            @if($items && !$items->isEmpty())
+                            @if(!$items->isEmpty())
                                 <select class="form-control" name="model_id">
-                                    @foreach($items as $item)
+                                    @foreach($items->sortBy('title') as $item)
                                         <option {{ $reminder->model_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->title ?? $item->titre }}</option>
                                     @endforeach
                                 </select>

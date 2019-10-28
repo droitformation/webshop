@@ -31,7 +31,7 @@ class OrderUpdate
 
     public function prepareData()
     {
-        $this->data = array_filter(array_only($this->request,['id','created_at','paquet','user_id','adresse_id','comment','payed_at','reference_no','transaction_no']));
+        $this->data = array_filter(\Arr::only($this->request,['id','created_at','paquet','user_id','adresse_id','comment','payed_at','reference_no','transaction_no']));
 
         $this->data['coupon_id']   = $this->order->coupon_id;
         $this->data['shipping_id'] = $this->order->shipping_id;
