@@ -16,7 +16,7 @@ class AccessUserMiddleware
     public function handle($request, Closure $next)
     {
         if(\Auth::user()->access->isEmpty()){
-            alert()->warning('Vous n\'avez pas les autorisation pour entrer');
+            flash('Vous n\'avez pas les autorisation pour entrer')->warning();
             return redirect('/login');
         }
 

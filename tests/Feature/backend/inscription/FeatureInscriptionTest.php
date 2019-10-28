@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class FeatureInscriptionTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     protected $mock;
     protected $groupe;
@@ -104,6 +105,6 @@ class FeatureInscriptionTest extends TestCase
 
         $response = $this->call('PUT', 'admin/inscription/'.$inscription->id, $input);
 
-        $this->assertEquals('L\'inscription a été mise à jour',$this->app['session.store']->get('alert.message'));
+        $this->assertCount(1, $this->flashMessagesForMessage('L\'inscription a été mise à jour'));
     }
 }

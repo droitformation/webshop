@@ -48,6 +48,15 @@ class Conversion
         return $this->name;
     }
 
+    public function getPerformOnCollections(): array
+    {
+        if (! count($this->performOnCollections)) {
+            return ['default'];
+        }
+
+        return $this->performOnCollections;
+    }
+
     /*
      * Set the timecode in seconds to extract a video thumbnail.
      * Only used on video media.
@@ -109,7 +118,7 @@ class Conversion
     /**
      * Set the manipulations for this conversion.
      *
-     * @param \Spatie\Image\Manipulations|closure $manipulations
+     * @param \Spatie\Image\Manipulations|\Closure $manipulations
      *
      * @return $this
      */
@@ -244,7 +253,7 @@ class Conversion
     public function getResultExtension(string $originalFileExtension = ''): string
     {
         if ($this->shouldKeepOriginalImageFormat()) {
-            if (in_array($originalFileExtension, ['jpg', 'pjpg', 'png', 'gif'])) {
+            if (in_array($originalFileExtension, ['jpg', 'jpeg', 'pjpg', 'png', 'gif'])) {
                 return $originalFileExtension;
             }
         }
@@ -259,12 +268,9 @@ class Conversion
     public function getConversionFile(string $file): string
     {
         $fileName = pathinfo($file, PATHINFO_FILENAME);
+        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 
-        $extension = $this->getResultExtension();
-
-        if (! $extension) {
-            $extension = pathinfo($file, PATHINFO_EXTENSION);
-        }
+        $extension = $this->getResultExtension($fileExtension) ?: $fileExtension;
 
         return "{$fileName}-{$this->getName()}.{$extension}";
     }

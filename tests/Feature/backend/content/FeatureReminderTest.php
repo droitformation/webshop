@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class FeatureReminderTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     protected $user;
 
@@ -50,7 +51,7 @@ class FeatureReminderTest extends TestCase
         $response = $this->call('POST', '/admin/reminder', $data);
 
         $response->isRedirect('admin/reminder/create/product');
-        $this->assertSame('danger', $this->app->session->get('alert.style'));
+        $this->assertCount(1, $this->flashMessagesForLevel('danger'));
     }
 
     public function testReminderUpdateNoDates()
@@ -75,7 +76,7 @@ class FeatureReminderTest extends TestCase
 
         // Error message because date is not good
         $response->isRedirect('admin/reminder/'.$reminder->id);
-        $this->assertSame('danger', $this->app->session->get('alert.style'));
+        $this->assertCount(1, $this->flashMessagesForLevel('danger'));
 
         $data = [
             'id'       => $reminder->id,
@@ -89,7 +90,7 @@ class FeatureReminderTest extends TestCase
 
         // Error message because model not found
         $response->isRedirect('admin/reminder/'.$reminder->id);
-        $this->assertSame('warning', $this->app->session->get('alert.style'));
+        $this->assertCount(1, $this->flashMessagesForLevel('warning'));
     }
 
     public function testDeleteReminder()

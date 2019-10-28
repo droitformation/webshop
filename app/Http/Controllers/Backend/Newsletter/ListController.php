@@ -77,7 +77,7 @@ class ListController extends Controller
         $file = $this->upload->upload( $request->file('file') , 'files/import');
 
         if(!$file) {
-            alert()->danger('Le téléchargement a échoué');
+            flash('Le téléchargement a échoué')->error();
             return redirect()->back();
         }
 
@@ -97,7 +97,7 @@ class ListController extends Controller
             'emails' => $emails,
             'specialisations' => $request->input('specialisations')]);
 
-        alert()->success('Fichier importé!');
+        flash('Fichier importé!')->success();
 
         return redirect()->back();
     }
@@ -120,7 +120,7 @@ class ListController extends Controller
             $results = $this->import->read($path);
 
             if(isset($results) && $results->isEmpty() || !\Arr::has($results->toArray(), '0.email') ) {
-                alert()->danger('Le fichier est vide ou mal formaté');
+                flash('Le fichier est vide ou mal formaté')->error();
                 return redirect()->back();
             }
 
@@ -132,7 +132,7 @@ class ListController extends Controller
 
         $list = $this->list->update($data);
 
-        alert()->success('Liste mise à jour');
+        flash('Liste mise à jour')->success();
 
         return redirect()->back();
     }
@@ -141,7 +141,7 @@ class ListController extends Controller
     {
         $this->list->delete($id);
 
-        alert()->success('Liste supprimée');
+        flash('Liste supprimée')->success();
 
         return redirect()->back();
     }
@@ -156,7 +156,7 @@ class ListController extends Controller
         $list = $this->list->find($request->input('list_id'));
 
         if(!$list) {
-            alert()->danger('Les emails de la liste n\'ont pas pu être récupérés');
+            flash('Les emails de la liste n\'ont pas pu être récupérés')->error();
             return redirect('build/newsletter');
         }
         
@@ -177,7 +177,7 @@ class ListController extends Controller
             'send_at'    => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
-        alert()->success('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.');
+        flash('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.')->success();
 
         return redirect('build/newsletter');
     }

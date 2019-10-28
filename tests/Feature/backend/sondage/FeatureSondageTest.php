@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class FeatureSondageTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     public function setUp(): void
     {
@@ -181,8 +182,8 @@ class FeatureSondageTest extends TestCase
 
         $response = $this->post('admin/sondage/send', ['sondage_id' => $sondage->id, 'email' => $email]);
 
-        $this->assertSame('warning', $this->app->session->get('alert.style'));
-        $this->assertSame('Aucun sondage trouvé ou aucune question dans ce sondage!', $this->app->session->get('alert.message'));
+        $this->assertCount(1, $this->flashMessagesForLevel('warning'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Aucun sondage trouvé ou aucune question dans ce sondage!'));
     }
 
     public function testAnswerAndAnswerAgain()

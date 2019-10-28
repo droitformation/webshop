@@ -69,7 +69,7 @@ class AboController extends Controller {
 
         $abo = $this->abo->create($data);
 
-        alert()->success('L\'abo a été crée');
+        flash('L\'abo a été crée')->success();
         
         return redirect('admin/abo');
 	}
@@ -94,7 +94,7 @@ class AboController extends Controller {
 
         $abo = $this->abo->update($data);
 
-        alert()->success('L\'abo a été mis à jour');
+        flash('L\'abo a été mis à jour')->success();
 
         return redirect('admin/abo/'.$abo->id);
     }
@@ -105,14 +105,14 @@ class AboController extends Controller {
 
         if(!$abo->abonnements->isEmpty())
         {
-            alert()->warning('Il existe des utilisateurs pour cet abo');
+            flash('Il existe des utilisateurs pour cet abo')->warning();
 
             return redirect()->back();
         }
 
         $this->abo->delete($id);
 
-        alert()->success('L\'abo  a été supprimé');
+        flash('L\'abo a été supprimé')->success();
 
         return redirect()->back();
 	}

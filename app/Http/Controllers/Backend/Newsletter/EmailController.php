@@ -29,13 +29,13 @@ class EmailController extends Controller
         $exist = $this->list->emailExist($request->input('list_id'),$request->input('email'));
 
         if(!$exist->isEmpty()){
-            alert()->warning('Cet email est déjà dans la liste');
+            flash('Cet email est déjà dans la liste')->warning();
             return redirect()->back();
         }
 
         $email = $this->emails->create($request->all());
 
-        alert()->success('Email ajouté');
+        flash('Email ajouté')->success();
 
         return redirect('build/liste/'.$email->list_id);
     }
@@ -51,7 +51,7 @@ class EmailController extends Controller
     {
         $email = $this->emails->update( $request->all() );
 
-        alert()->success('Email mis à jour');
+        flash('Email mis à jour')->success();
 
         return redirect('build/liste/'.$email->list_id);
     }
@@ -66,7 +66,7 @@ class EmailController extends Controller
     {
         $this->emails->delete($id);
 
-        alert()->success('Email supprimée de la liste');
+        flash('Email supprimée de la liste')->success();
 
         return redirect()->back();
     }

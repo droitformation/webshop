@@ -69,7 +69,7 @@ class SondageController extends Controller
             $worker->getList($sondage->colloque_id);
         }
 
-        alert()->success('Le sondage a été crée');
+        flash('Le sondage a été crée')->success();
 
         return redirect('admin/sondage/'.$sondage->id);
     }
@@ -111,7 +111,7 @@ class SondageController extends Controller
             $worker->updateList($sondage->colloque_id);
         }
 
-        alert()->success('Le sondage a été mis à jour');
+        flash('Le sondage a été mis à jour')->success();
 
         return redirect('admin/sondage/'.$sondage->id);
     }
@@ -121,7 +121,7 @@ class SondageController extends Controller
         $worker = new \App\Droit\Sondage\Worker\SondageWorker();
         $worker->updateList($request->input('colloque_id'));
 
-        alert()->success('La liste pour le sondage a été mis à jour');
+        flash('La liste pour le sondage a été mis à jour')->success();
 
         return redirect()->back();
     }
@@ -131,7 +131,7 @@ class SondageController extends Controller
         $worker = new \App\Droit\Sondage\Worker\SondageWorker();
         $worker->createList($request->input('colloque_id'));
 
-        alert()->success('La liste pour le sondage a été crée');
+        flash('La liste pour le sondage a été crée')->success();
 
         return redirect()->back();
     }
@@ -146,7 +146,7 @@ class SondageController extends Controller
     {
         $this->sondage->delete($id);
 
-        alert()->success('Le sondage a été supprimé');
+        flash('Le sondage a été supprimé')->success();
 
         return redirect('admin/sondage');
     }
@@ -193,7 +193,7 @@ class SondageController extends Controller
             $this->dispatch(new SendSondage($sondage, $request->except(['_token','sondage_id'])));
         }
 
-        alert()->success('Le sondage a été envoyé');
+        flash('Le sondage a été envoyé')->success();
 
         return redirect('admin/sondage');
     }

@@ -4,12 +4,13 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AdresseUpdateTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     public function setUp(): void
     {
@@ -47,11 +48,8 @@ class AdresseUpdateTest extends TestCase
 
         $response->assertStatus(302);
 
-        $style = $this->app['session.store']->get('alert.style');
-        $message = $this->app['session.store']->get('alert.message');
-
-        $this->assertEquals('danger',$style);
-        $this->assertEquals('Attention! Un compte doit avoir une adresse de contact!',$message);
+        $this->assertCount(1, $this->flashMessagesForLevel('warning'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Attention! Un compte doit avoir une adresse de contact!'));
     }
 
     public function testAdresseToTypeContact()
@@ -71,11 +69,8 @@ class AdresseUpdateTest extends TestCase
             'ville'        => $adresse2->ville,
         ]);
 
-        $style = $this->app['session.store']->get('alert.style');
-        $message = $this->app['session.store']->get('alert.message');
-
-        $this->assertEquals('warning',$style);
-        $this->assertEquals('Adresse mise à jour. Il existe déjà un adresse de contact, seul la première crée sera pris en compte pour les transactions!',$message);
+        $this->assertCount(1, $this->flashMessagesForLevel('warning'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Adresse mise à jour. Il existe déjà un adresse de contact, seul la première crée sera pris en compte pour les transactions!'));
     }
 
     public function testAdresseNormal()
@@ -93,10 +88,7 @@ class AdresseUpdateTest extends TestCase
             'ville'        => $adresse->ville,
         ]);
 
-        $style = $this->app['session.store']->get('alert.style');
-        $message = $this->app['session.store']->get('alert.message');
-
-        $this->assertEquals('success',$style);
-        $this->assertEquals('Adresse mise à jour',$message);
+        $this->assertCount(1, $this->flashMessagesForLevel('success'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Adresse mise à jour'));
     }
 }

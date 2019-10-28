@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class ListImportTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     protected $worker;
 
@@ -44,8 +45,9 @@ class ListImportTest extends TestCase
 
         $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => $campagne->id]);
 
-        $response->assertSessionHas('alert.style','success');
-        $response->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.');
+        $this->assertCount(1, $this->flashMessagesForLevel('success'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.'));
+
     }
 
     public function testAddEmailToList()

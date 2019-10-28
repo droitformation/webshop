@@ -115,7 +115,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         $job = (new NotifyJobFinishedEmail('Les factures ont été crées et attachés.'));
         $this->dispatch($job);
 
-        alert()->success('Les factures sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
+        flash('Les factures sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.')->success();
 
         return redirect()->back();
     }

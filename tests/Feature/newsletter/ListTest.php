@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class ListTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     protected $subscription;
     protected $newsletter;
@@ -57,7 +58,6 @@ class ListTest extends TestCase
         $response = $this->get('build/liste/'.$liste->id);
         $response->assertViewHas('lists');
         $response->assertViewHas('list');
-
     }
 
     public function testSendToList()
@@ -76,8 +76,10 @@ class ListTest extends TestCase
         $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => $campagne->id]);
 
         $response->assertRedirect('build/newsletter');
-        $response->assertSessionHas('alert.style','success');
-        $response->assertSessionHas('alert.message','Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.');
+
+        $this->assertCount(1, $this->flashMessagesForLevel('success'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.'));
+
     }
 
     public function testSendGetTheListFails()
@@ -93,8 +95,8 @@ class ListTest extends TestCase
         $this->list->shouldReceive('find')->once()->andReturn(null);
         $response = $this->call('POST', 'build/send/list', ['list_id' => $liste->id, 'campagne_id' => 1]);
 
-        $response->assertSessionHas('alert.style','danger');
-        $response->assertSessionHas('alert.message','Les emails de la liste n\'ont pas pu être récupérés');
+        $this->assertCount(1, $this->flashMessagesForLevel('danger'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Les emails de la liste n\'ont pas pu être récupérés'));
     }
 
     function prepareFileUpload($path)

@@ -43,7 +43,7 @@ class ProductAttributeController extends Controller {
 
         $product->attributs()->attach($request->input('attribute_id'), ['value' => $request->input('value')]);
 
-        alert()->success('L\'attribut a été ajouté');
+        flash('L\'attribut a été ajouté')->success();
 
         return redirect()->back();
     }
@@ -60,7 +60,7 @@ class ProductAttributeController extends Controller {
 
         $product->attributs()->detach($id);
 
-        alert()->success('L\'attribut a été supprimé');
+        flash('L\'attribut a été supprimé')->success();
 
         return redirect()->back();
     }

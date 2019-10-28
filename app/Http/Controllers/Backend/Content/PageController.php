@@ -63,7 +63,7 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
-        alert()->success('La page a été crée');
+        flash('La page a été crée')->success();
 
         return redirect('admin/page/'.$page->id);
     }
@@ -96,7 +96,7 @@ class PageController extends Controller
     {
         $page = $this->page->update($request->all());
 
-        alert()->success('La page a été mise à jour');
+        flash('La page a été mise à jour')->success();
 
         return redirect('admin/page/'.$page->id);
     }
@@ -113,7 +113,7 @@ class PageController extends Controller
 
         $this->page->delete($id);
 
-        alert()->success('La page a été supprimé');
+        flash('La page a été supprimé')->success();
 
         return redirect()->back();
     }

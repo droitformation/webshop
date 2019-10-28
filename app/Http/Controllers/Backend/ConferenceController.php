@@ -14,7 +14,7 @@ class ConferenceController extends Controller
     {
         \Registry::store($request->except('_token'));
 
-        alert()->success('Informations enregistrées');
+        flash('Informations enregistrées')->success();
 
         return redirect()->back();
     }

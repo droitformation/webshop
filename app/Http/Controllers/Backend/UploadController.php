@@ -39,17 +39,17 @@ class UploadController extends Controller
                         'titre'       => $request->input('titre')
                     ]);
 
-                alert()->success('Document ajouté');
+                flash('Document ajouté')->success();
 
                 return redirect()->back();
             }
 
-            alert()->warning('Problème avec le document');
+            flash('Problème avec le document')->warning();
 
             return redirect()->back();
         }
 
-        alert()->warning('Veuillez choisir un document');
+        flash('Veuillez choisir un document')->warning();
 
         return redirect()->back();
     }

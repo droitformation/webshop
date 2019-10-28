@@ -96,7 +96,7 @@ class UserController extends Controller {
     {
         $this->user->delete($id);
 
-        alert()->success('Utilisateur supprimé');
+        flash('Utilisateur supprimée')->success();
 
         return redirect('/');
     }

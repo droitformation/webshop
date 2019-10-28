@@ -76,7 +76,7 @@ class UserController extends Controller {
     {
         $user = $this->user->create(array_filter($request->all()));
 
-        alert()->success('Utilisateur crée');
+        flash('Utilisateur crée')->success();
 
         return redirect()->to('admin/user/'.$user->id);
     }
@@ -111,7 +111,7 @@ class UserController extends Controller {
 
         $request->ajax();
 
-        alert()->success('Utilisateur mis à jour');
+        flash('Utilisateur mis à jour')->success();
 
         return redirect('admin/user/'.$id);
     }
@@ -144,7 +144,7 @@ class UserController extends Controller {
 
         $this->user->delete($id);
 
-        alert()->success('Utilisateur supprimé');
+        flash('Utilisateur supprimé')->success();
 
         return redirect('admin/search/user');
     }
@@ -159,7 +159,7 @@ class UserController extends Controller {
     {
         $this->account->restore($id);
 
-        alert()->success('Utilisateur restauré');
+        flash('Utilisateur restauré')->success();
 
         return redirect()->back();
     }
@@ -169,7 +169,7 @@ class UserController extends Controller {
         $subscriber = $this->subscription_worker->exist($request->input('email'));
         $this->subscription_worker->unsubscribe($subscriber,[$request->input('newsletter_id')]);
 
-        alert()->success('Abonnement à la newsletter supprimé');
+        flash('Abonnement à la newsletter supprimé')->success();
 
         return redirect()->back();
     }

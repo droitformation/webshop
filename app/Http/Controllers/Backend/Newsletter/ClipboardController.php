@@ -26,7 +26,7 @@ class ClipboardController extends Controller
     {
         $this->clipboard->create($request->all());
 
-        alert()->success('Contenu copié dans le presse papier');
+        flash('Contenu copié dans le presse papier')->success();
 
         return redirect()->back();
     }
@@ -43,7 +43,7 @@ class ClipboardController extends Controller
 
         $copy->delete();
 
-        alert()->success('Contenu collé dans la campagne');
+        flash('Contenu collé dans la campagne')->success();
 
         return redirect()->back();
     }

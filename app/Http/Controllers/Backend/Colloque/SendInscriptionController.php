@@ -46,7 +46,7 @@ class SendInscriptionController extends Controller
 
         $this->register->sendEmail($item, $request->input('email'));
 
-        alert()->success('Email envoyé');
+        flash('Email envoyé')->success();
 
         return redirect()->back();
     }

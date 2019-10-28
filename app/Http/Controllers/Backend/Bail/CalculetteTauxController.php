@@ -44,7 +44,7 @@ class CalculetteTauxController extends Controller
     {
         $taux = $this->taux->create( $request->all() );
 
-        alert()->success('Taux crée');
+        flash('Ipc crée')->success();
 
         return redirect('admin/calculette/taux');
     }
@@ -53,7 +53,7 @@ class CalculetteTauxController extends Controller
     {
         $this->taux->update( $request->all() );
 
-        alert()->success('Taux mis à jour');
+        flash('Ipc mis à jour')->success();
 
         return redirect('admin/calculette/taux/'.$id);
     }
@@ -62,7 +62,7 @@ class CalculetteTauxController extends Controller
     {
         $this->taux->delete($id);
 
-        alert()->success('Taux supprimée');
+        flash('Ipc supprimée')->success();
 
         return redirect()->back();
     }

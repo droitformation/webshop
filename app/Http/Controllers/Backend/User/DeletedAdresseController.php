@@ -42,7 +42,7 @@ class DeletedAdresseController extends Controller
 
             if(empty($terms)){
                 $request->flash();
-                alert()->danger('Les termes ne correspondent pas au type de recherche');
+                flash('Les termes ne correspondent pas au type de recherche')->error();
                 return redirect()->back();
             }
 
@@ -87,7 +87,6 @@ class DeletedAdresseController extends Controller
     * */
     public function transvase(Request $request)
     {
-
         $worker = \App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
 
         // Adresses ids and transvase recipient id (an adresse id to)
@@ -98,7 +97,7 @@ class DeletedAdresseController extends Controller
         // If there is a adresse for recipient and it is a user
         if(!$transvase_id){
             $request->flash();
-            alert()->danger('Oho! Il manque une adresse/compte pour transvaser vers.');
+            flash('Oho! Il manque une adresse/compte pour transvaser vers.')->error();
             return redirect()->back();
         }
 
@@ -106,7 +105,7 @@ class DeletedAdresseController extends Controller
 
         // no user? redirect
         if(!$recipient || !isset($recipient->user)){
-            alert()->danger('Aucun utilisateur pour accrocher les éléments');
+            flash('Aucun utilisateur pour accrocher les éléments')->error();
             return redirect('admin/deletedadresses');
         }
 
@@ -117,8 +116,8 @@ class DeletedAdresseController extends Controller
             ->reassignFor($recipient->user);
 
         session(['transvase' => $request->all()]);
-        
-        alert()->success('Transfert terminé!');
+
+        flash('Transfert terminé!')->success();
         
         return redirect('admin/deletedadresses/result');
     }
@@ -131,7 +130,7 @@ class DeletedAdresseController extends Controller
         $transvase = session()->get('transvase', []);
 
         if(empty($transvase)){
-            alert()->danger('Aucune info trouvé sur le transfert :(');
+            flash('Aucune info trouvé sur le transfert :(')->error();
             return redirect('admin/deletedadresses');
         }
 

@@ -62,7 +62,7 @@
             <div class="container">
 
                 <!-- messages and errors -->
-                @include('alert::bootstrap')
+                @include('flash::message')
                 @include('backend.partials.message')
 
                 <!-- Contenu -->

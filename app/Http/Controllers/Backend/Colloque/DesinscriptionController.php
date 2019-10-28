@@ -80,7 +80,7 @@ class DesinscriptionController extends Controller
             $this->groupe->restore($inscription->group_id);
         }
 
-        alert()->success('L\'inscription a été restauré');
+        flash('L\'inscription a été restauré')->success();
 
         return redirect()->back();
     }

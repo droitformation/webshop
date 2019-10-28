@@ -71,7 +71,7 @@ class ThemeController extends Controller {
 
         $theme = $this->theme->create( $data );
 
-		alert()->success('Thème crée');
+        flash('Thème crée')->success();
 
         return redirect('admin/theme/'.$theme->id);
 	}
@@ -111,7 +111,7 @@ class ThemeController extends Controller {
 
         $this->theme->update( $data );
 
-		alert()->success('Thème mise à jour');
+        flash('Thème mise à jour')->success();
 
         return redirect('admin/theme/'.$id);
 	}
@@ -127,7 +127,7 @@ class ThemeController extends Controller {
 	{
         $this->theme->delete($id);
 
-		alert()->success('Thème supprimée');
+        flash('Thème supprimée')->success();
 
         return redirect()->back();
 	}

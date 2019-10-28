@@ -31,7 +31,7 @@ class ConfigController extends Controller
 
         \Registry::store($settings);
 
-        alert()->success('Configuration mises à jour');
+        flash('Configuration mises à jour')->success();
 
         return redirect()->back();
     }

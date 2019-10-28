@@ -90,7 +90,9 @@ class OrderController extends Controller {
         });
 
         if(isset($data['export'])) {
-            if($orders->isEmpty()){ alert()->success('Aucune commande à exporter'); }
+            if($orders->isEmpty()){
+                flash('Aucune commande à exporter')->success();
+            }
             $exporter = new \App\Droit\Generate\Export\ExportOrder();
             $details  = isset($data['details']) ? true : null;
             $onlyfree = isset($data['onlyfree']) ? true : null;
@@ -201,7 +203,7 @@ class OrderController extends Controller {
         session()->forget('reference_no');
         session()->forget('transaction_no');
 
-        alert()->success('La commande a été crée');
+        flash('La commande a été crée')->success();
 
         return redirect('admin/orders');
     }
@@ -246,7 +248,7 @@ class OrderController extends Controller {
         $updater = new \App\Droit\Shop\Order\Worker\OrderUpdate(array_filter($request->all()),$order);
         $order = $updater->updateOrder();
 
-        alert()->success('La commande a été mise à jour');
+        flash('La commande a été mise à jour')->success();
 
         return redirect('admin/order/'.$order->id);
     }
@@ -266,7 +268,7 @@ class OrderController extends Controller {
 
         $this->pdfgenerator->factureOrder($order);
 
-        alert()->success('La commande a été mise à jour');
+        flash('La commande a été mise à jour')->success();
 
         return redirect('admin/order/'.$order->id);
     }
@@ -284,7 +286,7 @@ class OrderController extends Controller {
         $this->ordermaker->resetQty($order,'+');
         $this->order->delete($id);
 
-        alert()->success('La commande a été annulé');
+        flash('La commande a été annulé')->success();
 
         return redirect('admin/orders');
     }
@@ -299,7 +301,7 @@ class OrderController extends Controller {
     {
         $this->order->restore($id);
 
-        alert()->success('La commande a été restauré');
+        flash('La commande a été restauré')->success();
 
         return redirect('admin/orders');
     }

@@ -51,7 +51,7 @@ class AboFileController extends Controller {
 
         $this->$worker->generate($product,$abo, $request->input('all'), $date, $request->input('print',null));
 
-        alert()->success('La création des '.$worker.'s est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
+        flash('La création des '.$worker.'s est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.')->success();
 
         return redirect()->back();
     }
@@ -68,7 +68,7 @@ class AboFileController extends Controller {
         
         $this->$worker->bind($product, $abo);
 
-        alert()->success('Les '.$worker.'s sont re-attachés, cela peut prendre quelques secondes.<br/>Rafraichissez la page pour mettre à jour le document.');
+        flash('Les '.$worker.'s sont re-attachés, cela peut prendre quelques secondes.<br/>Rafraichissez la page pour mettre à jour le document.')->success();
 
         return redirect()->back();
     }

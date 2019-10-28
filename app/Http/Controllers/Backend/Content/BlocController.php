@@ -68,7 +68,7 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->create( $data );
 
-        alert()->success('Contenu crée');
+        flash('Contenu crée')->success();
 
         return redirect('admin/bloc/'.$bloc->id);
     }
@@ -109,7 +109,7 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->update( $data );
 
-        alert()->success('Contenu mis à jour');
+        flash('Contenu mis à jour')->success();
 
         return redirect('admin/bloc/'.$bloc->id);
     }
@@ -124,7 +124,7 @@ class BlocController extends Controller
     {
         $this->bloc->delete($id);
 
-        alert()->success('Contenu supprimée');
+        flash('Contenu supprimée')->success();
 
         return redirect()->back();
     }

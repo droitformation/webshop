@@ -72,7 +72,7 @@ class SpecialisationController extends Controller {
     {
         $specialisation = $this->specialisation->update($request->all());
 
-        alert()->success('Spécialisations mise à jour');
+        flash('Spécialisations mise à jour')->success();
 
         return redirect('admin/specialisation');
     }
@@ -109,7 +109,7 @@ class SpecialisationController extends Controller {
 
         $specialisation = $this->specialisation->create($request->all());
 
-        alert()->success('Spécialisations crée');
+        flash('Spécialisations crée')->success();
 
         return redirect('admin/specialisation');
 	}
@@ -142,7 +142,7 @@ class SpecialisationController extends Controller {
 
         $this->specialisation->delete($id);
 
-        alert()->success('Spécialisations supprimé');
+        flash('Spécialisations supprimé')->success();
 
         return redirect('admin/specialisation');
 	}

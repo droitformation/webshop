@@ -60,7 +60,7 @@ class CategorieController extends Controller {
 
         $categorie = $this->categorie->create( $data );
 
-		alert()->success('Catégorie crée');
+        flash('Catégorie crée')->success();
 
         return redirect('admin/categorie/'.$categorie->id);
 	}
@@ -99,7 +99,7 @@ class CategorieController extends Controller {
 
         $this->categorie->update( $data );
 
-		alert()->success('Catégorie mise à jour');
+        flash('Catégorie mise à jour')->success();
 
         return redirect('admin/categorie/'.$id);
 	}
@@ -115,7 +115,7 @@ class CategorieController extends Controller {
 	{
         $this->categorie->delete($id);
 
-		alert()->success('Catégorie supprimée');
+        flash('Catégorie supprimée')->success();
 
         return redirect()->back();
 	}

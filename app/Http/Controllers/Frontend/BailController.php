@@ -63,7 +63,7 @@ class BailController extends Controller
 
         if(!$page)
         {
-            alert()->warning('Aucune page trouvé');
+            flash('Aucune page trouvé')->warning();
             return redirect('/bail');
         }
 

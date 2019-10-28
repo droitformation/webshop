@@ -44,7 +44,7 @@ class QuestionController extends Controller
     {
         $question = $this->question->create( $request->all() );
 
-        alert()->success('Question crée');
+        flash('Question crée')->success();
 
         return redirect('admin/question/'.$question->id);
     }
@@ -74,7 +74,7 @@ class QuestionController extends Controller
     {
         $question = $this->question->update( $request->all() );
 
-        alert()->success('Question mise à jour');
+        flash('Question mise à jour')->success();
 
         return redirect('admin/question/'.$question->id);
     }
@@ -89,7 +89,7 @@ class QuestionController extends Controller
     {
         $this->question->delete($id);
 
-        alert()->success('Question supprimée');
+        flash('Question supprimée')->success();
 
         return redirect()->back();
     }

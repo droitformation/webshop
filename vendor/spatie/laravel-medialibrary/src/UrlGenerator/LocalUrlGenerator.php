@@ -3,6 +3,7 @@
 namespace Spatie\MediaLibrary\UrlGenerator;
 
 use DateTimeInterface;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Exceptions\UrlCannotBeDetermined;
 
 class LocalUrlGenerator extends BaseUrlGenerator
@@ -21,6 +22,8 @@ class LocalUrlGenerator extends BaseUrlGenerator
         $url = $this->makeCompatibleForNonUnixHosts($url);
 
         $url = $this->rawUrlEncodeFilename($url);
+
+        $url = $this->versionUrl($url);
 
         return $url;
     }
@@ -52,7 +55,7 @@ class LocalUrlGenerator extends BaseUrlGenerator
             return str_replace(url('/'), '', $diskUrl);
         }
 
-        if (! starts_with($this->getStoragePath(), public_path())) {
+        if (! Str::startsWith($this->getStoragePath(), public_path())) {
             throw UrlCannotBeDetermined::mediaNotPubliclyAvailable($this->getStoragePath(), public_path());
         }
 

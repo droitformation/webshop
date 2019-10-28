@@ -92,7 +92,7 @@ class ArretController extends Controller {
         
         $arret = $this->arret->create( $data );
 
-        alert()->success('Arrêt crée');
+        flash('Arrêt crée')->success();
 
         return redirect('admin/arret/'.$arret->id);
     }
@@ -116,8 +116,8 @@ class ArretController extends Controller {
         $data['categories'] = $this->helper->prepareCategories($request->input('categories'));
         
         $arret = $this->arret->update( $data );
-    
-        alert()->success('Arrêt mis à jour');
+
+        flash('Arrêt mis à jour')->success();
 
         return redirect('admin/arret/'.$arret->id);
     }
@@ -133,7 +133,7 @@ class ArretController extends Controller {
     {
         $this->arret->delete($id);
 
-        alert()->success('Arrêt supprimée');
+        flash('Arrêt supprimée')->success();
 
         return redirect()->back();
     }

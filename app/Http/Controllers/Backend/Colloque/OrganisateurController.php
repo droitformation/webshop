@@ -58,7 +58,7 @@ class OrganisateurController extends Controller
 
         $organisateur = $this->organisateur->create($data);
 
-        alert()->success('Organisateur crée');
+        flash('Organisateur crée')->success();
 
         return redirect('admin/organisateur/'.$organisateur->id);
     }
@@ -101,7 +101,7 @@ class OrganisateurController extends Controller
 
         $organisateur = $this->organisateur->update($data);
 
-        alert()->success('Organisateur mis à jour');
+        flash('Organisateur mis à jour')->success();
 
         return redirect('admin/organisateur/'.$organisateur->id);
     }
@@ -116,7 +116,7 @@ class OrganisateurController extends Controller
     {
         $this->organisateur->delete($id);
 
-        alert()->success('Organisateur supprimée');
+        flash('Organisateur supprimée')->success();
 
         return redirect()->back();
     }

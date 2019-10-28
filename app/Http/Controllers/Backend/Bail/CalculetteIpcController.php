@@ -51,7 +51,7 @@ class CalculetteIpcController extends Controller
     {
         $this->ipc->update( $request->all() );
 
-        alert()->success('Ipc mis à jour');
+        flash('Ipc mis à jour')->success();
 
         return redirect('admin/calculette/ipc/'.$id);
     }
@@ -60,7 +60,7 @@ class CalculetteIpcController extends Controller
     {
         $this->ipc->delete($id);
 
-        alert()->success('Ipc supprimée');
+        flash('Ipc supprimée')->success();
 
         return redirect()->back();
     }

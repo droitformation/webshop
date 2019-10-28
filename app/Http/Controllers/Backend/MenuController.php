@@ -50,7 +50,7 @@ class MenuController extends Controller
     {
         $menu = $this->menu->create($request->all());
 
-        alert()->success('Le menu a été crée');
+        flash('Le menu a été crée')->success();
 
         return redirect('admin/menu/'.$menu->id);
     }
@@ -78,7 +78,7 @@ class MenuController extends Controller
     {
         $menu = $this->menu->update($request->all());
 
-        alert()->success('Le menu a été mis à jour');
+        flash('Le menu a été mis à jour')->success();
 
         return redirect('admin/menu/'.$menu->id);
     }
@@ -93,7 +93,7 @@ class MenuController extends Controller
     {
         $this->menu->delete($id);
 
-        alert()->success('Le menu a été supprimé');
+        flash('Le menu a été supprimé')->success();
 
         return redirect('admin/menu');
     }

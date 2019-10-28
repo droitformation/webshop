@@ -64,7 +64,7 @@ class SubjectController extends Controller
         
         $seminaire->subjects()->save($subject);
 
-        alert()->success('Sujet crée');
+        flash('Sujet crée')->success();
 
         return redirect()->back();
     }
@@ -100,7 +100,7 @@ class SubjectController extends Controller
 
         $subject = $this->subject->update( $data );
 
-        alert()->success('Sujet mis à jour');
+        flash('Sujet mis à jour')->success();
 
         return redirect()->back();
     }
@@ -116,7 +116,7 @@ class SubjectController extends Controller
     {
         $this->subject->delete($id);
 
-        alert()->success('Sujet supprimé');
+        flash('Sujet supprimé')->success();
 
         return redirect()->back();
     }

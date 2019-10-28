@@ -57,37 +57,37 @@ class Handler extends ExceptionHandler {
         }
 
 		if($e instanceof \App\Exceptions\MissingException) {
-			alert()->warning($e->getMessage());
+            flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 		
 		if($e instanceof \App\Exceptions\FactureColloqueTestException)
 		{
-			alert()->warning($e->getMessage());
+			        flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if($e instanceof \App\Exceptions\ColloqueMissingInfoException)
 		{
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if($e instanceof \App\Exceptions\ProductMissingInfoException)
 		{
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if($e instanceof \App\Exceptions\AccountValidationException)
 		{
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back()->withInput();
 		}
 
 		if($e instanceof \App\Exceptions\AdresseRemoveException)
 		{
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 
 			$back = redirect()->getUrlGenerator()->previous();
 
@@ -111,97 +111,98 @@ class Handler extends ExceptionHandler {
 
 		if($e instanceof \App\Exceptions\OrderAboException)
 		{
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
         if ($e instanceof \App\Exceptions\CardDeclined){
-			alert()->warning($e->getMessage());
+            flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\InscriptionExistException){
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\OrderCreationException){
-			alert()->danger($e->getMessage());
+            flash($e->getMessage())->error();
 			return redirect('checkout/confirm');
 		}
 
 		if ($e instanceof \App\Exceptions\NoDateReminder){
-			alert()->danger('Aucune date indiqué pour le rappel');
+            flash('Aucune date indiqué pour le rappel')->error();
 			return redirect()->back();
 		}
 
         if ($e instanceof \App\Exceptions\EmailSubstituteException){
-            alert()->danger('L\'email '.$e->getMessage().' est un email de substitution et n\'est pas valide pour l\'envoi de confirmation.');
+            flash('L\'email '.$e->getMessage().' est un email de substitution et n\'est pas valide pour l\'envoi de confirmation.')->error();
             return redirect()->back();
         }
 
 		if ($e instanceof \App\Exceptions\RegisterException){
-			alert()->danger('Vous êtes déjà inscrit à ce colloque');
-			return redirect()->back();
+            flash('Vous êtes déjà inscrit à ce colloque')->error();
+
+            return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\CampagneCreationException){
-			alert()->warning('Problème avec la création de campagne sur mailjet, re-essayer et si le problème persiste avertir le webmaster.');
+            flash('Problème avec la création de campagne sur mailjet, re-essayer et si le problème persiste avertir le webmaster.')->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\ContentCreationException){
-			alert()->warning('Problème avec la création du contenu pour la campagne');
+            flash('Problème avec la création du contenu pour la campagne')->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\FileUploadException){
-			alert()->warning('Problème avec le téléchargement du fichier '.$e->getMessage());
+            flash('Problème avec le téléchargement du fichier '.$e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\SubscribeUserException){
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\CampagneSendException) {
-			alert()->warning($e->getMessage());
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\DeleteUserException){
-			alert()->warning('Erreur avec la suppression de l\'abonnés sur mailjet');
+            flash('Erreur avec la suppression de l\'abonnés sur mailjet')->warning();
             return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\UserNotExistException){
-			alert()->warning('Cet utilisateur n\'existe pas');
+            flash('Cet utilisateur n\'existe pas')->warning();
             return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\StockCartException){
-			alert()->warning('Il n\'y a plus assez de stock pour cet article');
+            flash('Il n\'y a plus assez de stock pour cet article')->warning();
             return redirect()->back();
 		}
 
 		if ($e instanceof \App\Exceptions\ColloqueCompteException){
-			alert()->warning('Attention! Le colloque n\'as pas de compte! Veuillez contrôler le compte attaché au colloque.');
+            flash('Attention! Le colloque n\'as pas de compte! Veuillez contrôler le compte attaché au colloque.')->warning();
 			return redirect()->back();
 		}
 
         if ($e instanceof \App\Exceptions\AdresseTypeException){
-            alert()->danger('Attention! Un compte doit avoir une adresse de contact!');
+            flash('Attention! Un compte doit avoir une adresse de contact!')->warning();
             return redirect()->back();
         }
 
 		if ($e instanceof \App\Exceptions\AdresseNotExistException){
-			alert()->warning('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans');
+            flash('Il n\'existe aucune adresse de livraison, veuillez indiquer une adresse valide dans')->warning();
 			return redirect('/')->with(['link' => 'profil']);
 		}
 
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
-            alert()->warning('Méthode non autorisée');
+            flash('Méthode non autorisée')->warning();
             return redirect()->back();
         }
 
@@ -211,12 +212,12 @@ class Handler extends ExceptionHandler {
 		}
 		
 		if($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException){
-            alert()->warning('Aucune données trouvé');
+            flash('Aucune données trouvé')->warning();
             return redirect()->back();
 		}
 
 		if($e instanceof \Illuminate\Database\Eloquent\ProductNotFoundException){
-			alert()->warning('Aucune livre trouvé pour abonnent');
+            flash('Aucune livre trouvé pour abonnent')->warning();
 			return redirect()->back();
 		}
 

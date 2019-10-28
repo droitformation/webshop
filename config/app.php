@@ -167,7 +167,6 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-		Vinkla\Alert\AlertServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
 		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
 		Msurguy\Honeypot\HoneypotServiceProvider::class,

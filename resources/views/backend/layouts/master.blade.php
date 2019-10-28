@@ -106,7 +106,6 @@
         <div id='wrap'>
 
             <!-- messages and errors -->
-            @include('alert::bootstrap')
             @include('flash::message')
             @include('backend.partials.message')
 

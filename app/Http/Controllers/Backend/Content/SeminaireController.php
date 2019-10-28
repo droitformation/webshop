@@ -75,7 +75,7 @@ class SeminaireController extends Controller {
 
         $seminaire = $this->seminaire->create($data);
 
-		alert()->success('Seminaire crée');
+        flash('Seminaire crée')->success();
 
         return redirect('admin/seminaire/'.$seminaire->id);
 	}
@@ -116,7 +116,7 @@ class SeminaireController extends Controller {
 
         $this->seminaire->update( $data );
 
-		alert()->success('Seminaire mise à jour');
+        flash('Seminaire mise à jour')->success();
 
         return redirect('admin/seminaire/'.$id);
 	}
@@ -132,7 +132,7 @@ class SeminaireController extends Controller {
 	{
         $this->seminaire->delete($id);
 
-		alert()->success('Seminaire supprimé');
+        flash('Seminaire supprimé')->success();
 
         return redirect()->back();
 	}

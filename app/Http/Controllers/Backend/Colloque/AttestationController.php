@@ -45,7 +45,7 @@ class AttestationController extends Controller
 
         $this->generator->make('attestation', $inscription);
 
-        alert()->success('Attestation crée pour l\'inscription');
+        flash('Attestation crée pour l\'inscription')->success();
 
         return redirect()->back();
     }
@@ -60,7 +60,7 @@ class AttestationController extends Controller
     {
         $attestation = $this->attestation->create( $request->all() );
 
-        alert()->success('Attestation crée');
+        flash('Attestation crée')->success();
 
         return redirect('admin/attestation/'.$attestation->id);
     }
@@ -90,7 +90,7 @@ class AttestationController extends Controller
     {
         $this->attestation->update( $request->all() );
 
-        alert()->success('Attestation mise à jour');
+        flash('Attestation mise à jour')->success();
 
         return redirect('admin/attestation/'.$id);
     }

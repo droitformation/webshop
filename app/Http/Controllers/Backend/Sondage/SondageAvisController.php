@@ -27,7 +27,7 @@ class SondageAvisController extends Controller
             $sondage->avis()->attach($item, ['rang' => ($max + 1) + $key]);
         });
 
-        alert()->success('Question ajouté');
+        flash('Question ajouté')->success();
 
         return redirect()->back();
     }
@@ -38,7 +38,7 @@ class SondageAvisController extends Controller
 
         $sondage->avis()->detach($request->input('question_id'));
 
-        alert()->success('Question retirée');
+        flash('Question retirée')->success();
 
         return redirect()->back();
     }

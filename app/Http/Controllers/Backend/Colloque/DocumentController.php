@@ -50,7 +50,7 @@ class DocumentController extends Controller
     {
         $this->document->delete($id);
 
-        alert()->success('Le document a été supprimé');
+        flash('Le document a été supprimé')->success();
 
         return redirect()->back();
     }

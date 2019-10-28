@@ -144,7 +144,7 @@ class InscriptionController extends Controller
         $reference = \App\Droit\Transaction\Reference::make($model);
         $this->register->makeDocuments($model, true);
 
-        alert()->success('L\'inscription à bien été crée');
+        flash('L\'inscription à bien été crée')->success();
 
         return redirect('admin/inscription/colloque/'.$request->input('colloque_id'));
     }
@@ -188,7 +188,7 @@ class InscriptionController extends Controller
         // Remake the documents
         $this->register->makeDocuments($model, true);
 
-        alert()->success('L\'inscription a été mise à jour');
+        flash('L\'inscription a été mise à jour')->success();
 
         return redirect()->back();
     }
@@ -213,7 +213,7 @@ class InscriptionController extends Controller
 
         $this->inscription->delete($id);
 
-        alert()->success('Désinscription effectué');
+        flash('Désinscription effectué')->success();
 
         return redirect()->back();
     }
@@ -238,7 +238,7 @@ class InscriptionController extends Controller
             $this->generator->make('attestation', $inscription);
         }
 
-        alert()->success('Les documents ont été mis à jour');
+        flash('Les documents ont été mis à jour')->success();
 
         return redirect()->back();
     }

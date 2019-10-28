@@ -17,6 +17,7 @@ class SearchController extends Controller
     protected $user;
     protected $duplicate;
     protected $adresse;
+    protected $helper;
 
     public function __construct(UserInterface $user, AdresseInterface $adresse, DuplicateInterface $duplicate)
     {

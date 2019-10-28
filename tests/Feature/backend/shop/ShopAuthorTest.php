@@ -5,12 +5,13 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class ShopAuthorTest extends TestCase {
 
     protected $author;
 
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     public function setUp(): void
     {
@@ -55,8 +56,7 @@ class ShopAuthorTest extends TestCase {
         // filter to get all send orders
         $response = $this->call('POST', 'admin/shopauthor', $data);
 
-        $response->assertSessionHas('alert.style','danger');
-
+        $this->assertCount(1, $this->flashMessagesForLevel('danger'));
     }
 
     public function testShopAuthorUpdate()

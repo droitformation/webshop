@@ -19,7 +19,7 @@
 
     <!-- messages and errors -->
     @include('backend.partials.message')
-    @include('alert::bootstrap')
+    @include('flash::message')
 
     <div class="panel panel-inverse">
 

@@ -50,7 +50,7 @@ class DomainController extends Controller
     {
         $domain = $this->domain->create( $request->all() );
 
-        alert()->success('Collection crée');
+        flash('Collection crée')->success();
 
         return redirect('admin/domain/'.$domain->id);
     }
@@ -80,7 +80,7 @@ class DomainController extends Controller
     {
         $this->domain->update( $request->all() );
 
-        alert()->success('Collection mise à jour');
+        flash('Collection mise à jour')->success();
 
         return redirect('admin/domain/'.$id);
     }
@@ -95,8 +95,8 @@ class DomainController extends Controller
     public function destroy($id)
     {
         $domain = $this->domain->delete($id);
-   
-        alert()->success('Collection supprimée');
+
+        flash('Collection supprimée')->success();
 
         return redirect()->back();
     }

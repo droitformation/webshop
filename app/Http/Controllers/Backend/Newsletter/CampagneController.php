@@ -106,7 +106,7 @@ class CampagneController extends Controller
         // Update campagne status
         $this->campagne->update(['id' => $campagne->id, 'status' => 'brouillon', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => null]);
 
-        alert()->success('Envoi de la campagne annulé');
+        flash('Envoi de la campagne annulé')->success();
 
         return redirect('build/newsletter');
     }
@@ -160,7 +160,7 @@ class CampagneController extends Controller
 
         $this->campagne->update(['id' => $campagne->id, 'api_campagne_id' => $created]);
 
-        alert()->success('Campagne crée');
+        flash('Campagne crée')->success();
 
         return redirect('build/campagne/compose/'.$campagne->id);
     }
@@ -176,7 +176,7 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->update($request->all());
 
-        alert()->success('Campagne édité');
+        flash('Campagne édité')->success();
 
         return redirect()->back();
     }
@@ -194,7 +194,7 @@ class CampagneController extends Controller
         
         $this->campagne->delete($id);
 
-        alert()->success('Campagne supprimée');
+        flash('Campagne supprimée')->success();
 
         return redirect()->back();
     }
@@ -203,7 +203,7 @@ class CampagneController extends Controller
     {
         $this->campagne->archive($request->input('id'));
 
-        alert()->success('Campagne archivé');
+        flash('Campagne archivé')->success();
 
         return redirect('build/newsletter');
     }

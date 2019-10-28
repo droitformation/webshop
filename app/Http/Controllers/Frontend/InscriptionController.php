@@ -51,7 +51,7 @@ class InscriptionController extends Controller
         if(!$newsletter) { abort(404); }
         
         if(!$subscriber){
-            alert()->success('Le jeton ne correspond pas ou a expiré');
+            flash('Le jeton ne correspond pas ou a expiré')->warning();
             return redirect($newsletter->site->url);
         }
 
@@ -74,7 +74,7 @@ class InscriptionController extends Controller
         $newsletter = $this->newsletter->find($request->input('newsletter_id'));
 
         if(!$subscribe) {
-            alert()->danger('<strong>Vous êtes déjà inscrit à cette newsletter</strong>');
+            flash('<strong>Vous êtes déjà inscrit à cette newsletter</strong>')->error();
             return redirect()->back();
         }
             
@@ -83,7 +83,7 @@ class InscriptionController extends Controller
             $message->to($subscribe->email, $subscribe->email)->subject('Confirmation d\'inscription à la newsletter');
         });
 
-        alert()->success('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>');
+        flash('<strong>Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email</strong>')->success();
         return redirect()->back();
     }
 
@@ -95,10 +95,9 @@ class InscriptionController extends Controller
     public function unsubscribe(Request $request)
     {
         if(empty($request->input('email'))){
-            alert()->danger('<strong>Merci d\'indiquer une adresse email</strong>');
+            flash('<strong>Merci d\'indiquer une adresse email</strong>')->error();
             return redirect()->back();
         }
-
 
         // find the abo and newsletter
         $subscriber = $this->subscription->findByEmail( $request->input('email') );
@@ -106,13 +105,13 @@ class InscriptionController extends Controller
 
         if(!$newsletter || !$subscriber) {
             $msg = !$newsletter ? 'Cette newsletter n\'existe pas': 'L\'abonnée n\'existe pas';
-            alert()->danger($msg);
+            flash($msg)->error();
             return redirect($request->input('return_path', '/').'/unsubscribe');
         }
 
         $this->subscribeworker->unsubscribe($subscriber,[$newsletter->id]);
 
-        alert()->success('<strong>Vous avez été désinscrit</strong>');
+        flash('<strong>Vous avez été désinscrit</strong>')->success();
         return redirect()->back();
     }
 }

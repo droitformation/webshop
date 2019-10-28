@@ -97,7 +97,7 @@ class RappelController extends Controller
 
         $this->worker->make($inscriptions, $request->input('more',false));
 
-        alert()->success('Rappels crées.');
+        flash('Rappels crées')->success();
 
         return redirect()->back();
     }
@@ -114,7 +114,7 @@ class RappelController extends Controller
             $this->worker->generateSimple($inscription);
         }
 
-        alert()->success('Le rappel a été crée');
+        flash('Le rappel a été crée')->success();
 
         return redirect()->back();
     }
@@ -171,7 +171,7 @@ class RappelController extends Controller
             }
         }
 
-        alert()->success('Rappels envoyés');
+        flash('Rappels envoyés')->success();
 
         return redirect('admin/inscription/rappels/'.$request->input('colloque_id'));exit;
     }

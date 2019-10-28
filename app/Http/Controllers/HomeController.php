@@ -71,7 +71,7 @@ class HomeController extends Controller
         setEnv('DB_DATABASE_TRANSFERT', $request->input('database'));
 
         if(env('DB_DATABASE_TRANSFERT') != $request->input('database')){
-            alert()->danger('Refresh database connection');
+            flash('Refresh database connection')->error();
             return redirect()->back()->withInput($request->all());
         }
 
@@ -84,7 +84,7 @@ class HomeController extends Controller
         $transfert->makeNewsletter($model)->makeCampagne();
         $transfert->makeSubscriptions();
 
-        alert()->success('Terminé');
+        flash('Terminé')->success();
 
         return redirect()->back();
     }

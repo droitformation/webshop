@@ -127,9 +127,22 @@ class ConversionCollection extends Collection
      */
     protected function addManipulationToConversion(Manipulations $manipulations, string $conversionName)
     {
-        optional($this->first(function (Conversion $conversion) use ($conversionName) {
-            return $conversion->getName() === $conversionName;
-        }))->addAsFirstManipulations($manipulations);
+        /** @var \Spatie\MediaLibrary\Conversion\Conversion|null $conversion */
+        $conversion = $this->first(function (Conversion $conversion) use ($conversionName) {
+            if (! in_array($this->media->collection_name, $conversion->getPerformOnCollections())) {
+                return false;
+            }
+
+            if ($conversion->getName() !== $conversionName) {
+                return false;
+            }
+
+            return true;
+        });
+
+        if ($conversion) {
+            $conversion->addAsFirstManipulations($manipulations);
+        }
 
         if ($conversionName === '*') {
             $this->each->addAsFirstManipulations(clone $manipulations);

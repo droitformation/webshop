@@ -58,7 +58,9 @@ class OrderController extends Controller {
         });
 
         if(isset($data['export'])) {
-            if($orders->isEmpty()){ alert()->success('Aucune commande à exporter'); }
+            if($orders->isEmpty()){
+                flash('Aucune commande à exporter')->success();
+            }
             $exporter = new \App\Droit\Generate\Export\ExportOrder();
             $details  = isset($data['details']) ? true : null;
             $onlyfree = isset($data['onlyfree']) ? true : null;

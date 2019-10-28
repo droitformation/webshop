@@ -61,7 +61,7 @@ class RappelController extends Controller
             $this->dispatch($job);
         }
 
-        alert()->success('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.');
+        flash('La création des rappels est en cours.<br/>Un email vous sera envoyé dès que la génération sera terminée.')->success();
 
         session(['old_period' => $request->all()]);
 

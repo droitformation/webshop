@@ -68,7 +68,7 @@ class AvisController extends Controller
     {
         $avis = $this->avis->create($request->all());
 
-        alert()->success('La question a été crée');
+        flash('La question a été crée')->success();
 
         return redirect('admin/avis');
     }
@@ -96,7 +96,7 @@ class AvisController extends Controller
     {
         $avis = $this->avis->update($request->all());
 
-        alert()->success('La question a été mis à jour');
+        flash('La question a été mis à jour')->success();
 
         return redirect()->back();
     }
@@ -111,7 +111,7 @@ class AvisController extends Controller
     {
         $this->avis->delete($id);
 
-        alert()->success('La question a été supprimé');
+        flash('La question a été supprimé')->success();
 
         return redirect()->back();
     }

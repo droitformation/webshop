@@ -44,7 +44,7 @@ class PageContentController extends Controller
     {
         $content = $this->content->create($request->all());
 
-        alert()->success('Le bloc a été ajouté');
+        flash('Le bloc a été ajouté')->success();
 
         return redirect()->back();
     }
@@ -73,7 +73,7 @@ class PageContentController extends Controller
     {
         $content = $this->content->update($request->all());
 
-        alert()->success('Le bloc a été mis à jour');
+        flash('Le bloc a été mis à jour')->success();
 
         return redirect()->back();
     }
@@ -97,7 +97,7 @@ class PageContentController extends Controller
     {
         $this->content->delete($id);
 
-        alert()->success('Le bloc a été supprimé');
+        flash('Le bloc a été supprimé')->success();
 
         return redirect()->back();
     }

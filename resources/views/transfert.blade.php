@@ -19,7 +19,7 @@
 </head>
     <body>
         <div class="container">
-            @include('alert::bootstrap')
+            @include('flash::message')
             <div class="col-7">
             <div class="card mt-6">
                 <div class="card-body">

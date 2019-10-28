@@ -22,7 +22,7 @@ class ProductLabelController extends Controller {
 
         $product->$types()->sync($request->input('type_id'));
 
-        alert()->success('L\'objet a été ajouté');
+        flash('L\'objet a été ajouté')->success();
 
         return redirect()->back();
     }
@@ -34,7 +34,7 @@ class ProductLabelController extends Controller {
 
         $product->$types()->detach($id);
 
-        alert()->success('L\'objet a été supprimé');
+        flash('L\'objet a été supprimé')->success();
 
         return redirect()->back();
     }

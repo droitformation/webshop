@@ -5,6 +5,7 @@ namespace Spatie\MediaLibrary\FileAdder;
 use Spatie\MediaLibrary\Helpers\File;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Traits\Macroable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\File as PendingFile;
 use Spatie\MediaLibrary\Filesystem\Filesystem;
@@ -21,6 +22,8 @@ use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileUnacceptableForCollecti
 
 class FileAdder
 {
+    use Macroable;
+
     /** @var \Illuminate\Database\Eloquent\Model subject */
     protected $subject;
 
@@ -287,7 +290,7 @@ class FileAdder
             $class = get_class($this->subject);
 
             $class::created(function ($model) {
-                $model->processUnattachedMedia(function (Media $media, FileAdder $fileAdder) use ($model) {
+                $model->processUnattachedMedia(function (Media $media, self $fileAdder) use ($model) {
                     $this->processMediaItem($model, $media, $fileAdder);
                 });
             });
@@ -322,8 +325,12 @@ class FileAdder
             dispatch($job);
         }
 
-        if (optional($this->getMediaCollection($media->collection_name))->singleFile) {
-            $model->clearMediaCollectionExcept($media->collection_name, $media);
+        if ($collectionSizeLimit = optional($this->getMediaCollection($media->collection_name))->collectionSizeLimit) {
+            $collectionMedia = $this->subject->fresh()->getMedia($media->collection_name);
+
+            if ($collectionMedia->count() > $collectionSizeLimit) {
+                $model->clearMediaCollectionExcept($media->collection_name, $collectionMedia->reverse()->take($collectionSizeLimit));
+            }
         }
     }
 
@@ -346,6 +353,10 @@ class FileAdder
         }
 
         if (! ($collection->acceptsFile)($file, $this->subject)) {
+            throw FileUnacceptableForCollection::create($file, $collection, $this->subject);
+        }
+
+        if (! empty($collection->acceptsMimeTypes) && ! in_array($file->mimeType, $collection->acceptsMimeTypes)) {
             throw FileUnacceptableForCollection::create($file, $collection, $this->subject);
         }
     }

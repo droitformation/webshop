@@ -36,7 +36,7 @@ class ReponseController extends Controller
 
         if($answer)
         {
-            alert()->warning('Vous avez déjà répondu au sondage!');
+            flash('Vous avez déjà répondu au sondage!')->warning();
 
             return redirect('reponse');
         }
@@ -48,7 +48,7 @@ class ReponseController extends Controller
     {
         $reponse = $this->worker->make($request->except('reponses'), $request->only('reponses'));
 
-        alert()->success('Merci pour votre participation au sondage!');
+        flash('Merci pour votre participation au sondage!')->success();
 
         return redirect('reponse');
     }

@@ -104,7 +104,7 @@ class AboRappelController extends Controller {
             }
         }
 
-        alert()->success('Rappels envoyés');
+        flash('Rappels envoyés')->success();
 
         return redirect()->back();
     }

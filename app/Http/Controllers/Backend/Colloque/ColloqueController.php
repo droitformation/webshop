@@ -110,7 +110,7 @@ class ColloqueController extends Controller
             $this->document->updateColloqueDoc($colloque->id, ['illustration' => $file['name']]);
         }
 
-        alert()->success('Le colloque a été crée');
+        flash('Le colloque a été crée')->success();
 
         return redirect('admin/colloque/'.$colloque->id);
     }
@@ -153,7 +153,7 @@ class ColloqueController extends Controller
             $this->document->updateColloqueDoc($id, ['illustration' => $illustration]);
         }
 
-        alert()->success('Le colloque a été mis à jour');
+        flash('Le colloque a été mis à jour')->success();
 
         return redirect('admin/colloque/'.$colloque->id);
     }
@@ -168,7 +168,7 @@ class ColloqueController extends Controller
     {
         $this->colloque->delete($id);
 
-        alert()->success('Colloque supprimé');
+        flash('Le colloque supprimé')->success();
 
         return redirect('admin/colloque');
     }

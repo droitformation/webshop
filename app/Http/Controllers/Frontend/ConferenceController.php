@@ -24,7 +24,7 @@ class ConferenceController extends Controller
 
         // Email already exist
         if(collect($academiques)->contains('email', $request->input('email'))){
-            alert()->danger('Vous êtes déjà inscrit à l\'évenement avec cet email');
+            flash('Vous êtes déjà inscrit à l\'évenement avec cet email')->error();
             return redirect()->back();
         }
 
@@ -35,7 +35,7 @@ class ConferenceController extends Controller
 
         $academiques = \Registry::get('academiques');
 
-        alert()->success('Inscription ajoutée');
+        flash('Inscription ajoutée')->success();
 
         return redirect()->back();
     }
@@ -50,7 +50,7 @@ class ConferenceController extends Controller
             \Registry::store(['academiques' => $academiques]);
         }
 
-        alert()->success('Inscription supprimée');
+        flash('Inscription supprimée')->success();
 
         return redirect()->back();
     }

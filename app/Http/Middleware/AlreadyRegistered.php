@@ -34,7 +34,7 @@ class AlreadyRegistered
 
             if($exist)
             {
-                alert()->warning('Cet utilisateur est déjà inscrit à ce colloque');
+                flash('Cet utilisateur est déjà inscrit à ce colloque')->warning();
                 return redirect()->back()->withInput();
             }
         }

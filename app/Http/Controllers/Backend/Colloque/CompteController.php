@@ -51,7 +51,7 @@ class CompteController extends Controller
     {
         $compte = $this->compte->create( $request->all() );
 
-        alert()->success('Compte crée');
+        flash('Compte crée')->success();
 
         return redirect('admin/compte/'.$compte->id);
     }
@@ -81,7 +81,7 @@ class CompteController extends Controller
     {
         $this->compte->update( $request->all() );
 
-        alert()->success('Compte mise à jour');
+        flash('Compte mise à jour')->success();
 
         return redirect('admin/compte/'.$id);
     }
@@ -97,7 +97,7 @@ class CompteController extends Controller
     {
         $this->compte->delete($id);
 
-        alert()->success('Compte supprimé');
+        flash('Compte supprimé')->success();
 
         return redirect()->back();
     }

@@ -41,7 +41,7 @@ class SlideController extends Controller
             ->withCustomProperties(['title' => $request->input('title'),'start_at' => $request->input('start_at'), 'end_at' => $request->input('end_at')])
             ->toMediaCollection('slides');
 
-        alert()->success('Slide ajouté');
+        flash('Slide ajouté')->success();
 
         return redirect()->back();
     }
@@ -65,7 +65,7 @@ class SlideController extends Controller
             $media->delete();
         }
 
-        alert()->success('Slide édité');
+        flash('Slide édité')->success();
 
         return redirect()->back();
     }
@@ -86,7 +86,7 @@ class SlideController extends Controller
             $media->delete();
         }
 
-        alert()->success('Slide supprimé');
+        flash('Slide supprimé')->success();
 
         return redirect()->back();
     }
@@ -107,7 +107,7 @@ class SlideController extends Controller
 
         $this->list->update(['id' => $list->id, 'send_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        alert()->success('Le lien vers les slides ont été envoyés');
+        flash('Le lien vers les slides ont été envoyés')->success();
 
         return redirect('admin/colloque/'.$colloque->id);
     }

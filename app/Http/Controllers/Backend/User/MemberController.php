@@ -26,8 +26,7 @@ class MemberController extends Controller {
 	{
 		$members = $this->member->getAll();
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             return response()->json( $members->pluck('title')->all(), 200 );
         }
 
@@ -54,8 +53,7 @@ class MemberController extends Controller {
             return ['label' => $member->title, 'value' => $member->id];
         })->all();
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
             return response()->json( $data, 200 );
         }
     }
@@ -76,7 +74,7 @@ class MemberController extends Controller {
 
         $member = $this->member->create($request->all());
 
-        alert()->success('Membre crée');
+        flash('Membre crée')->success();
 
         return redirect('admin/member');
 	}
@@ -98,7 +96,7 @@ class MemberController extends Controller {
 
         $this->member->delete($id);
 
-        alert()->success('Membre supprimé');
+        flash('Membre supprimé')->success();
 
         return redirect('admin/member');
 	}

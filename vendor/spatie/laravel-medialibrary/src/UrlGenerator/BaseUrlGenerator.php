@@ -12,7 +12,7 @@ abstract class BaseUrlGenerator implements UrlGenerator
     /** @var \Spatie\MediaLibrary\Models\Media */
     protected $media;
 
-    /** @var \Spatie\MediaLibrary\Conversion\Conversion */
+    /** @var \Spatie\MediaLibrary\Conversion\Conversion|null */
     protected $conversion;
 
     /** @var \Spatie\MediaLibrary\PathGenerator\PathGenerator */
@@ -73,14 +73,20 @@ abstract class BaseUrlGenerator implements UrlGenerator
         }
 
         return $this->pathGenerator->getPathForConversions($this->media)
-            .pathinfo($this->media->file_name, PATHINFO_FILENAME)
-            .'-'.$this->conversion->getName()
-            .'.'
-            .$this->conversion->getResultExtension($this->media->extension);
+                .$this->conversion->getConversionFile($this->media->file_name);
     }
 
     public function rawUrlEncodeFilename(string $path = ''): string
     {
         return pathinfo($path, PATHINFO_DIRNAME).'/'.rawurlencode(pathinfo($path, PATHINFO_BASENAME));
+    }
+
+    public function versionUrl(string $path = ''): string
+    {
+        if (! $this->config->get('medialibrary.version_urls')) {
+            return $path;
+        }
+
+        return "{$path}?v={$this->media->updated_at->timestamp}";
     }
 }

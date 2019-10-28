@@ -59,8 +59,8 @@ class AboFactureController extends Controller {
         $item = $this->$type->create($request->except('type'));
 
         $this->worker->make($item);
-        
-        alert()->success($type.' a été crée');
+
+        flash($type.' a été crée')->success();
 
         return redirect()->back();
 	}
@@ -79,7 +79,7 @@ class AboFactureController extends Controller {
 
         $this->worker->make($facture);
 
-        alert()->success('La facture a été mis à jour');
+        flash('La facture a été mis à jour')->success();
 
         return redirect()->back();
     }
@@ -88,7 +88,7 @@ class AboFactureController extends Controller {
 	{
         $this->facture->delete($id);
 
-        alert()->success('La facture a été supprimé');
+        flash('La facture a été supprimé')->success();
 
         return redirect()->back();
 	}
@@ -128,7 +128,7 @@ class AboFactureController extends Controller {
 
         $this->worker->make($facture);
 
-        alert()->success('La facture a été généré');
+        flash('La facture a été généré')->success();
 
         return redirect()->back();
     }

@@ -70,7 +70,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->create($request->all());
 
-        alert()->success('Adresse crée');
+        flash('Adresse crée')->success();
 
         if($request->input('user_id'))
         {
@@ -92,7 +92,7 @@ class AdresseController extends Controller {
         // Assign all orders to new user
         $this->adresse->assignOrdersToUser($adresse->id, $user->id);
 
-        alert()->success('Adresse convertie');
+        flash('Adresse convertie')->success();
 
         return redirect('admin/user/'.$user->id);
     }
@@ -121,13 +121,12 @@ class AdresseController extends Controller {
         $adresse = $this->adresse->update($request->all());
 
         if(session()->has('warning_type')){
-            alert()->warning(session()->get('warning_type'));
+            flash(session()->get('warning_type'))->warning();
             return redirect()->back();
         }
 
-        alert()->success('Adresse mise à jour');
+        flash('Adresse mise à jour')->success();
         return redirect()->back();
-
     }
 
     /**
@@ -149,7 +148,7 @@ class AdresseController extends Controller {
         $back = $request->input('url',null);
         $back = $back && $back == url('admin/adresses') ? url('admin/adresses/back') : $back;
 
-        alert()->success('Adresse supprimée');
+        flash('Adresse supprimée')->success();
 
         return redirect($back);
     }
@@ -158,7 +157,7 @@ class AdresseController extends Controller {
     {
         $this->adresse->changeLivraison($request->input('adresse_id') , $request->input('user_id'));
 
-        alert()->success('Adresse de livraison modifié');
+        flash('Adresse de livraison modifié')->success();
 
         return redirect()->back();
     }

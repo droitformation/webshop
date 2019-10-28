@@ -156,7 +156,12 @@ class NewsletterInscriptionTest extends TestCase
 
         $response = $this->call('POST', 'unsubscribe', ['newsletter_id' => $newsletter->id, 'email' => 'info@leschaud.ch', 'return_path' => 'bail']);
 
+        echo '<pre>';
+        print_r($response->getContent());
+        echo '</pre>';
+        exit();
         $response->assertRedirect('bail/unsubscribe');
+
 
     }
     

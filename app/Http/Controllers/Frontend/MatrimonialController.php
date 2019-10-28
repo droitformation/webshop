@@ -60,7 +60,7 @@ class MatrimonialController extends Controller
 
         if(!$data['page'])
         {
-            alert()->warning('Aucune page trouvé');
+            flash('Aucune page trouvé')->warning();
             return redirect('/bail');
         }
         

@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\TestFlashMessages;
 
 class FeatureInscriptionAdminTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,TestFlashMessages;
 
     public function setUp(): void
     {
@@ -412,7 +413,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription/send', ['id' => $inscription->id, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
 
-        $this->assertEquals('Email envoyé', $this->app['session.store']->get('alert.message'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Email envoyé'));
     }
 
     /**
@@ -434,7 +435,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription/send', ['id' => $group->group_id, 'model' => 'group', 'email' => 'info@leschaud.ch']);
 
-        $this->assertEquals('Email envoyé', $this->app['session.store']->get('alert.message'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Email envoyé'));
     }
 
     public function testSendFails()
@@ -444,7 +445,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription/send', ['id' => 0, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
 
-        $this->assertEquals('Aucune inscription ou groupe trouvé!', $this->app['session.store']->get('alert.message'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Aucune inscription ou groupe trouvé!'));
     }
 
     public function testUpdateInscriptionAfterSendingKeepConferencesAndOptions()

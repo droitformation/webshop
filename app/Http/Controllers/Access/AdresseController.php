@@ -44,7 +44,7 @@ class AdresseController extends Controller {
 
         $adresse->specialisations()->attach(\Auth::user()->access->pluck('id')->all());
 
-        alert()->success('Adresse crée');
+        flash('Adresse crée')->success();
 
         return redirect('access/adresse/'.$adresse->id);
     }
@@ -53,7 +53,7 @@ class AdresseController extends Controller {
     {
         $adresse = $this->adresse->update($request->all());
 
-        alert()->success('Adresse mise à jour');
+        flash('Adresse mise à jour')->success();
 
         return redirect()->back();
     }
@@ -87,7 +87,7 @@ class AdresseController extends Controller {
 
         $this->adresse->delete($id);
 
-        alert()->success('Adresse supprimée');
+        flash('Adresse supprimée')->success();
 
         return redirect('access/adresses');
     }

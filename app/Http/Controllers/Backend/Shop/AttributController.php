@@ -53,7 +53,7 @@ class AttributController extends Controller
     {
         $attribut = $this->attr->create( $request->all() );
 
-        alert()->success('Attribut crée');
+        flash('Attribut crée')->success();
 
         return redirect('admin/attribut');
     }
@@ -83,7 +83,7 @@ class AttributController extends Controller
     {
         $this->attr->update( $request->all() );
 
-        alert()->success('Attribut mise à jour');
+        flash('Attribut mise à jour')->success();
 
         return redirect('admin/attribut/'.$id);
     }
@@ -99,7 +99,7 @@ class AttributController extends Controller
     {
         $attribu = $this->attr->delete($request->input('id'));
 
-        alert()->success('Attribut supprimée');
+        flash('Attribut supprimée')->success();
 
         return redirect()->back();
     }

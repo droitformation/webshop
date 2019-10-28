@@ -80,7 +80,7 @@ class ReminderController extends Controller
             $model  = $this->$type->find($request->input('model_id'));
 
             if(!$model || is_null($model->$start)) {
-                alert()->danger('Cette date ne correspond pas');
+                flash('Cette date ne correspond pas')->error();
                 return redirect()->back();
             }
 
@@ -92,7 +92,7 @@ class ReminderController extends Controller
 
         $reminder = $this->reminder->create( $data );
 
-        alert()->success('Rappel crée');
+        flash('Rappel crée')->success();
 
         return redirect('admin/reminder/'.$reminder->id);
     }
@@ -141,7 +141,7 @@ class ReminderController extends Controller
             $model  = $this->$type->find($request->input('model_id'));
 
             if(!$model || is_null($model->$start)) {
-                alert()->danger('Cette date ne correspond pas');
+                flash('Cette date ne correspond pas')->error();
                 return redirect()->back();
             }
 
@@ -153,7 +153,7 @@ class ReminderController extends Controller
 
         $reminder = $this->reminder->update( $data );
 
-        alert()->success('Rappel mis à jour');
+        flash('Rappel mis à jour')->success();
 
         return redirect()->back();
     }
@@ -168,7 +168,7 @@ class ReminderController extends Controller
     {
         $this->reminder->delete($id);
 
-        alert()->success('Rappel supprimé');
+        flash('Rappel supprimé')->success();
 
         return redirect()->back();
     }

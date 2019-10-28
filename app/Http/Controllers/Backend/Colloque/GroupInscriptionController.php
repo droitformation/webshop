@@ -48,7 +48,7 @@ class GroupInscriptionController extends Controller
         // Remake docs
         $this->register->makeDocuments($group, true);
 
-        alert()->success('L\'inscription à bien été crée');
+        flash('L\'inscription à bien été crée')->success();
 
         return redirect()->back();
     }
@@ -63,7 +63,7 @@ class GroupInscriptionController extends Controller
 
         $this->register->makeDocuments($groupe, true);
 
-        alert()->success('Le groupe a été modifié');
+        flash('Le groupe a été modifié')->success();
 
         return redirect('admin/inscription/colloque/'.$groupe->colloque_id);
     }
@@ -84,7 +84,7 @@ class GroupInscriptionController extends Controller
         // Delete the group
         $this->groupe->delete($id);
 
-        alert()->success('Suppression du groupe effectué');
+        flash('Suppression du groupe effectué')->success();
 
         return redirect()->back();
     }
@@ -99,7 +99,7 @@ class GroupInscriptionController extends Controller
     {
         $this->groupe->restore($id);
 
-        alert()->success('Groupe restauré');
+        flash('Groupe restauré')->success();
 
         return redirect()->back();
     }
@@ -113,7 +113,7 @@ class GroupInscriptionController extends Controller
 
         $this->register->makeDocuments($group, true);
 
-        alert()->success('Références modifiés');
+        flash('Références modifiés')->success();
 
         return redirect()->back();
     }

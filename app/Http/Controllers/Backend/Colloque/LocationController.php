@@ -57,7 +57,7 @@ class LocationController extends Controller
 
         $location = $this->location->create($data);
 
-        alert()->success('Lieu crée');
+        flash('Lieu crée')->success();
 
         return redirect('admin/location/'.$location->id);
     }
@@ -95,7 +95,7 @@ class LocationController extends Controller
 
         $location = $this->location->update($data);
 
-        alert()->success('Lieu mis à jour');
+        flash('Lieu mis à jour')->success();
 
         return redirect('admin/location/'.$location->id);
     }
@@ -110,7 +110,7 @@ class LocationController extends Controller
     {
         $this->location->delete($id);
 
-        alert()->success('Lieu supprimée');
+        flash('Lieu supprimée')->success();
 
         return redirect()->back();
     }

@@ -55,7 +55,7 @@ class ReponseController extends Controller
     {
         $this->avis->delete($id);
 
-        alert()->success('La question a été supprimé');
+        flash('La question a été supprimé')->success();
 
         return redirect()->back();
     }

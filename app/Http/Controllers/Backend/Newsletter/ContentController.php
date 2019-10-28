@@ -51,7 +51,7 @@ class ContentController extends Controller
 
         $this->content->create($data);
 
-        alert()->success('Bloc ajouté');
+        flash('Bloc ajouté')->success();
 
         //return redirect('build/campagne/'.$data['campagne'].'#componant');
         return redirect(url()->previous().'#componant');
@@ -66,7 +66,7 @@ class ContentController extends Controller
 
         $contents = $this->content->update($request->all());
 
-        alert()->success('Bloc édité');
+        flash('Bloc édité')->success();
 
         return redirect(url()->previous().'#componant');
     }
@@ -90,7 +90,8 @@ class ContentController extends Controller
             return $item;
         });
 
-        alert()->success('Bloc supprimé');
+        flash('Bloc supprimé')->success();
+
         return redirect(url()->previous().'#componant');
         //return response()->json($contents);
     }

@@ -95,7 +95,7 @@ class DuplicateController extends Controller {
             }
         }
 
-        alert()->success('terminé');
+        flash('terminé')->success();
 
         return redirect()->back();
     }
@@ -137,7 +137,7 @@ class DuplicateController extends Controller {
 
         $request->ajax();
 
-        alert()->success('Utilisateur mis à jour');
+        flash('Utilisateur mis à jour')->success();
 
         return redirect('admin/duplicate/'.$duplicate->id);
     }
@@ -152,7 +152,7 @@ class DuplicateController extends Controller {
     {
         $this->duplicate->delete($id);
 
-        alert()->success('Utilisateur supprimé');
+        flash('Utilisateur supprimé')->success();
 
         return redirect()->back();
     }

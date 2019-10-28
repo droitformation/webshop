@@ -61,7 +61,7 @@ class AboUserController extends Controller {
         $abo = $this->abo->find($request->input('abo_id'));
 
         if($abo->products->isEmpty()){
-            alert()->danger('Aucun livre attaché à cet abonnement!');
+            flash('Aucun livre attaché à cet abonnement!')->error();
             return redirect()->back()->withInput();
         }
 
@@ -78,7 +78,7 @@ class AboUserController extends Controller {
             $this->worker->make($facture);
         }
 
-        alert()->success('L\'abonné a été crée');
+        flash('L\'abonné a été crée')->success();
 
         return redirect('admin/abonnement/'.$abonnement->id);
     }
@@ -88,7 +88,7 @@ class AboUserController extends Controller {
         $abonnement = $this->abonnement->update($request->except(['reference_no','transaction_no']));
         $reference  = \App\Droit\Transaction\Reference::update($abonnement, $request->only(['reference_no','transaction_no']));
 
-        alert()->success('L\'abonné a été mis à jour');
+        flash('L\'abonné a été mis à jour')->success();
 
         return redirect('admin/abonnement/'.$abonnement->id);
     }
@@ -102,7 +102,7 @@ class AboUserController extends Controller {
             $this->abonnement->delete($id);
         }
 
-        alert()->success('L\'abonné a été supprimé');
+        flash('L\'abonné a été supprimé')->success();
 
         return redirect()->back();
 	}
@@ -111,7 +111,7 @@ class AboUserController extends Controller {
     {
         $this->abonnement->restore($id);
 
-        alert()->success('L\'abonné a été restauré');
+        flash('L\'abonné a été restauré')->success();
 
         return redirect()->back();
     }

@@ -93,7 +93,7 @@ class SubscriberController extends Controller
 
         $this->subscription_worker->subscribe($subscriber,$request->input('newsletter_id'));
 
-        alert()->success('Abonné ajouté');
+        flash('Abonné ajouté')->success();
 
         return redirect('build/subscriber');
     }
@@ -145,7 +145,8 @@ class SubscriberController extends Controller
 
             $this->subscription_worker->subscribe($newsubscriber,$new);
 
-            alert()->success('Abonné édité');
+            flash('Abonné édité')->success();
+
             return redirect('build/subscriber/'.$newsubscriber->id);
         }
         else{
@@ -157,11 +158,12 @@ class SubscriberController extends Controller
             $subscriber->fresh();
 
             if($subscriber->trashed()){
-                alert()->success('Abonné édité et supprimé');
+                flash('Abonné édité et supprimé')->success();
                 return redirect('build/subscriber');
             }
 
-            alert()->success('Abonné édité');
+            flash('Abonné édité')->success();
+
             return redirect('build/subscriber/'.$subscriber->id);
         }
 
@@ -182,7 +184,7 @@ class SubscriberController extends Controller
 
         $this->subscription_worker->unsubscribe($subscriber,$newsletters->pluck('id')->all());
 
-        alert()->success('Abonné supprimé');
+        flash('Abonné supprimé')->success();
 
         return redirect('build/subscriber');
     }

@@ -41,7 +41,7 @@ class ImportController extends Controller
 
         $this->worker->import($data,$file);
 
-        alert()->success('Fichier importé!');
+        flash('Fichier importé!')->success();
 
         return redirect('build/import');
     }

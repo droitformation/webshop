@@ -120,7 +120,7 @@ class AdresseController extends Controller {
     {
         $this->adresse->delete($id);
 
-        alert()->success('Adresse supprimé');
+        flash('Adresse supprimée')->success();
 
         return redirect('/');
     }

@@ -95,7 +95,7 @@ class NewsletterController extends Controller
 
         $newsletter = $this->newsletter->create($data);
 
-        alert()->success('Newsletter crée');
+        flash('Newsletter crée')->success();
 
         return redirect('build/newsletter/'.$newsletter->id);
     }
@@ -142,7 +142,7 @@ class NewsletterController extends Controller
 
         $newsletter = $this->newsletter->update($data);
 
-        alert()->success('Newsletter édité');
+        flash('Newsletter édité')->success();
 
         return redirect('build/newsletter/'.$newsletter->id);
     }
@@ -157,7 +157,7 @@ class NewsletterController extends Controller
     {
         $this->newsletter->delete($id);
 
-        alert()->success('Newsletter supprimée');
+        flash('Newsletter supprimée')->success();
 
         return redirect()->back();
     }

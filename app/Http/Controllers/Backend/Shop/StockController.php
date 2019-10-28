@@ -32,7 +32,7 @@ class StockController extends Controller
         // Create a entry in stock history
         $this->stock->create(['product_id' => $request->input('product_id'), 'amount' => $amount, 'motif' => $request->input('motif'), 'operator' => $operator]);
 
-        alert()->success('Le stock a été mis à jour');
+        flash('Le stock a été mis à jour')->success();
 
         return redirect('admin/product/'.$request->input('product_id'));
     }

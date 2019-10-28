@@ -102,7 +102,7 @@ class ProductController extends Controller {
         // Create a entry in stock history
         $this->stock->create(['product_id' => $product->id, 'amount' => $product->sku, 'motif' => 'Stock initial', 'operator' => '+']);
 
-        alert()->success('Le produit a été crée');
+        flash('Le produit a été crée')->success();
 
         return redirect('admin/product/'.$product->id);
     }
@@ -139,7 +139,7 @@ class ProductController extends Controller {
 
         $product = $this->product->update($data);
 
-        alert()->success('Le produit a été mis à jour');
+        flash('Le produit a été mis à jour')->success();
 
         return redirect()->back();
     }
@@ -154,7 +154,7 @@ class ProductController extends Controller {
     {
         $this->product->delete($id);
 
-        alert()->success('Le produit a été supprimé');
+        flash('Le produit a été supprimé')->success();
 
         return redirect('admin/product');
     }

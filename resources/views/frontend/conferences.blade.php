@@ -11,7 +11,7 @@
 
         <hr style="margin-top: 35px;">
 
-        @include('alert::bootstrap')
+        @include('flash::message')
 
         <div class="row">
             <div class="col-md-6 col-xs-12 col-md-push-3">

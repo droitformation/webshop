@@ -96,7 +96,7 @@ class AboRappelWorker implements AboRappelWorkerInterface{
         $job = (new NotifyJobFinished('Les rappels ont été attachés. Nom du fichier: <strong>'.'rappels_'.$product->reference.'_'.$product->edition.'</strong>'));
         $this->dispatch($job);
 
-        alert()->success('Les rappels sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.');
+        flash('Les rappels sont re-attachés.<br/>Rafraichissez la page pour mettre à jour le document.')->success();
 
         return redirect()->back();
     }
