@@ -126,6 +126,10 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
             'League\\Glide\\' => 13,
             'League\\Flysystem\\' => 17,
         ),
+        'K' => 
+        array (
+            'Kalnoy\\Nestedset\\' => 17,
+        ),
         'J' => 
         array (
             'JakubOnderka\\PhpConsoleHighlighter\\' => 35,
@@ -416,6 +420,10 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+        'Kalnoy\\Nestedset\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kalnoy/nestedset/src',
+        ),
         'JakubOnderka\\PhpConsoleHighlighter\\' => 
         array (
             0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
@@ -664,10 +672,6 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         ),
         'B' => 
         array (
-            'Baum' => 
-            array (
-                0 => __DIR__ . '/..' . '/baum/baum/src',
-            ),
             'BaconQrCode' => 
             array (
                 0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
@@ -1410,21 +1414,6 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',
-        'Baum\\Console\\BaumCommand' => __DIR__ . '/..' . '/baum/baum/src/Baum/Console/BaumCommand.php',
-        'Baum\\Console\\InstallCommand' => __DIR__ . '/..' . '/baum/baum/src/Baum/Console/InstallCommand.php',
-        'Baum\\Extensions\\Eloquent\\Collection' => __DIR__ . '/..' . '/baum/baum/src/Baum/Extensions/Eloquent/Collection.php',
-        'Baum\\Extensions\\Eloquent\\Model' => __DIR__ . '/..' . '/baum/baum/src/Baum/Extensions/Eloquent/Model.php',
-        'Baum\\Extensions\\Query\\Builder' => __DIR__ . '/..' . '/baum/baum/src/Baum/Extensions/Query/Builder.php',
-        'Baum\\Generators\\Generator' => __DIR__ . '/..' . '/baum/baum/src/Baum/Generators/Generator.php',
-        'Baum\\Generators\\MigrationGenerator' => __DIR__ . '/..' . '/baum/baum/src/Baum/Generators/MigrationGenerator.php',
-        'Baum\\Generators\\ModelGenerator' => __DIR__ . '/..' . '/baum/baum/src/Baum/Generators/ModelGenerator.php',
-        'Baum\\Move' => __DIR__ . '/..' . '/baum/baum/src/Baum/Move.php',
-        'Baum\\MoveNotPossibleException' => __DIR__ . '/..' . '/baum/baum/src/Baum/MoveNotPossibleException.php',
-        'Baum\\Node' => __DIR__ . '/..' . '/baum/baum/src/Baum/Node.php',
-        'Baum\\Providers\\BaumServiceProvider' => __DIR__ . '/..' . '/baum/baum/src/Baum/Providers/BaumServiceProvider.php',
-        'Baum\\SetBuilder' => __DIR__ . '/..' . '/baum/baum/src/Baum/SetBuilder.php',
-        'Baum\\SetMapper' => __DIR__ . '/..' . '/baum/baum/src/Baum/SetMapper.php',
-        'Baum\\SetValidator' => __DIR__ . '/..' . '/baum/baum/src/Baum/SetValidator.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
         'BeyondCode\\DumpServer\\Dumper' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/Dumper.php',
@@ -3821,6 +3810,14 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/Highlighter.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
+        'Kalnoy\\Nestedset\\AncestorsRelation' => __DIR__ . '/..' . '/kalnoy/nestedset/src/AncestorsRelation.php',
+        'Kalnoy\\Nestedset\\BaseRelation' => __DIR__ . '/..' . '/kalnoy/nestedset/src/BaseRelation.php',
+        'Kalnoy\\Nestedset\\Collection' => __DIR__ . '/..' . '/kalnoy/nestedset/src/Collection.php',
+        'Kalnoy\\Nestedset\\DescendantsRelation' => __DIR__ . '/..' . '/kalnoy/nestedset/src/DescendantsRelation.php',
+        'Kalnoy\\Nestedset\\NestedSet' => __DIR__ . '/..' . '/kalnoy/nestedset/src/NestedSet.php',
+        'Kalnoy\\Nestedset\\NestedSetServiceProvider' => __DIR__ . '/..' . '/kalnoy/nestedset/src/NestedSetServiceProvider.php',
+        'Kalnoy\\Nestedset\\NodeTrait' => __DIR__ . '/..' . '/kalnoy/nestedset/src/NodeTrait.php',
+        'Kalnoy\\Nestedset\\QueryBuilder' => __DIR__ . '/..' . '/kalnoy/nestedset/src/QueryBuilder.php',
         'Laracasts\\Flash\\Flash' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/Flash.php',
         'Laracasts\\Flash\\FlashNotifier' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/FlashNotifier.php',
         'Laracasts\\Flash\\FlashServiceProvider' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/FlashServiceProvider.php',
@@ -6471,6 +6468,7 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'Tests\\Feature\\OrderChangeTest' => __DIR__ . '/../..' . '/tests/Unit/shop/OrderChangeTest.php',
         'Tests\\Feature\\OrderEventTest' => __DIR__ . '/../..' . '/tests/Feature/backend/shop/OrderEventTest.php',
         'Tests\\Feature\\OrderTest' => __DIR__ . '/../..' . '/tests/Feature/backend/shop/OrderTest.php',
+        'Tests\\Feature\\PageSetTest' => __DIR__ . '/../..' . '/tests/Feature/backend/content/PageSetTest.php',
         'Tests\\Feature\\SearchAdminAdresseTest' => __DIR__ . '/../..' . '/tests/Feature/backend/user/SearchAdminAdresseTest.php',
         'Tests\\Feature\\ShopAuthorTest' => __DIR__ . '/../..' . '/tests/Feature/backend/shop/ShopAuthorTest.php',
         'Tests\\Feature\\SlideWorkerTest' => __DIR__ . '/../..' . '/tests/Feature/SlideWorkerTest.php',

@@ -592,6 +592,7 @@ $factory->define(App\Droit\Page\Entities\Page::class, function (Faker\Generator 
         'slug'        => $faker->word,
         'rang'        => 1,
         'menu_id'     => null,
+        'parent_id'   => null,
         'url'         => null,
         'isExternal'  => null,
         'hidden'      => null,

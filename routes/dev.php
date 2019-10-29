@@ -734,7 +734,10 @@ Route::get('cartworker', function()
 Route::get('categoriestest', function() {
     $model = App::make('App\Droit\Arret\Repo\ArretInterface');
    // $modela = App::make('App\Droit\Analyse\Repo\AnalyseInterface');
-   // $pages = App::make('App\Droit\Page\Repo\PageInterface');
+    $pages = App::make('App\Droit\Page\Repo\PageInterface');
+    $list = $pages->getAll(2);
+    echo traverse($list);
+    exit;
 /*
     $model  = \App::make('App\Droit\User\Repo\UserInterface');
     $user = $model->find(710);

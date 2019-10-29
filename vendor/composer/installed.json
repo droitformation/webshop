@@ -176,63 +176,6 @@
         ]
     },
     {
-        "name": "baum/baum",
-        "version": "1.1.1",
-        "version_normalized": "1.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/etrepat/baum.git",
-            "reference": "9290bed862d329aaaef666a71e0a2734afc28286"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/etrepat/baum/zipball/9290bed862d329aaaef666a71e0a2734afc28286",
-            "reference": "9290bed862d329aaaef666a71e0a2734afc28286",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/console": "5.*",
-            "illuminate/database": "5.*",
-            "illuminate/events": "5.*",
-            "illuminate/filesystem": "5.*",
-            "illuminate/support": "5.*",
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "d11wtq/boris": "~1.0.10",
-            "mockery/mockery": "~0.9",
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-03-04T12:07:54+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Baum": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Estanislau Trepat",
-                "email": "estanis@etrepat.com",
-                "homepage": "http://etrepat.com"
-            }
-        ],
-        "description": "Baum is an implementation of the Nested Set pattern for Eloquent models.",
-        "keywords": [
-            "Laravel 4",
-            "database",
-            "eloquent",
-            "laravel",
-            "laravel 5",
-            "nested set"
-        ]
-    },
-    {
         "name": "beyondcode/laravel-dump-server",
         "version": "1.3.0",
         "version_normalized": "1.3.0.0",
@@ -1125,29 +1068,29 @@
     },
     {
         "name": "fideloper/proxy",
-        "version": "4.0.0",
-        "version_normalized": "4.0.0.0",
+        "version": "4.2.0",
+        "version_normalized": "4.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/fideloper/TrustedProxy.git",
-            "reference": "cf8a0ca4b85659b9557e206c90110a6a4dba980a"
+            "reference": "39a4c2165e578bc771f5dc031c273210a3a9b6d2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/cf8a0ca4b85659b9557e206c90110a6a4dba980a",
-            "reference": "cf8a0ca4b85659b9557e206c90110a6a4dba980a",
+            "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/39a4c2165e578bc771f5dc031c273210a3a9b6d2",
+            "reference": "39a4c2165e578bc771f5dc031c273210a3a9b6d2",
             "shasum": ""
         },
         "require": {
-            "illuminate/contracts": "~5.0",
+            "illuminate/contracts": "~5.0|~6.0",
             "php": ">=5.4.0"
         },
         "require-dev": {
-            "illuminate/http": "~5.6",
+            "illuminate/http": "~5.6|~6.0",
             "mockery/mockery": "~1.0",
             "phpunit/phpunit": "^6.0"
         },
-        "time": "2018-02-07T20:20:57+00:00",
+        "time": "2019-07-29T16:49:45+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -1871,6 +1814,67 @@
             "serializable",
             "serialize",
             "tokenizer"
+        ]
+    },
+    {
+        "name": "kalnoy/nestedset",
+        "version": "v5.0.0",
+        "version_normalized": "5.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/lazychaser/laravel-nestedset.git",
+            "reference": "9c0ae248f38289147a5094fa0c5ba9bb9e93104b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/lazychaser/laravel-nestedset/zipball/9c0ae248f38289147a5094fa0c5ba9bb9e93104b",
+            "reference": "9c0ae248f38289147a5094fa0c5ba9bb9e93104b",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/database": "~5.7.0|~5.8.0|~6.0",
+            "illuminate/events": "~5.7.0|~5.8.0|~6.0",
+            "illuminate/support": "~5.7.0|~5.8.0|~6.0",
+            "php": ">=7.1.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "7.*"
+        },
+        "time": "2019-09-06T06:18:32+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "v5.0.x-dev"
+            },
+            "laravel": {
+                "providers": [
+                    "Kalnoy\\Nestedset\\NestedSetServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Kalnoy\\Nestedset\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alexander Kalnoy",
+                "email": "lazychaser@gmail.com"
+            }
+        ],
+        "description": "Nested Set Model for Laravel 5.7 and up",
+        "keywords": [
+            "database",
+            "hierarchy",
+            "laravel",
+            "nested sets",
+            "nsm"
         ]
     },
     {

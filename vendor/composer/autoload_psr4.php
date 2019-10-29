@@ -60,6 +60,7 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Glide\\' => array($vendorDir . '/league/glide/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'Kalnoy\\Nestedset\\' => array($vendorDir . '/kalnoy/nestedset/src'),
     'JakubOnderka\\PhpConsoleHighlighter\\' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'Intervention\\Image\\' => array($vendorDir . '/intervention/image/src/Intervention/Image'),

@@ -2,15 +2,16 @@
 
 namespace App\Droit\Page\Entities;
 
-use Baum\Node;
+use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
 * Page
 */
-class Page extends Node {
+class Page extends Model {
 
-    use SoftDeletes;
+    use SoftDeletes,NodeTrait;
 
     /**
     * Table name.
@@ -20,7 +21,7 @@ class Page extends Node {
     protected $table = 'pages';
 
     protected $dates    = ['deleted_at'];
-    protected $fillable = ['title','menu_title','content','excerpt','rang','menu_id','template','slug','parent_id','lft','rgt','depth','hidden','site_id','url','isExternal'];
+    protected $fillable = ['title','menu_title','content','excerpt','rang','menu_id','template','slug','parent_id','_lft','_rgt','depth','hidden','site_id','url','isExternal'];
 
     protected $orderColumn = 'rang';
 

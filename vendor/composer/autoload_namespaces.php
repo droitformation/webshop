@@ -22,6 +22,5 @@ return array(
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
     'Laracasts\\Flash' => array($vendorDir . '/laracasts/flash/src'),
     'InlineStyle' => array($vendorDir . '/inlinestyle/inlinestyle'),
-    'Baum' => array($vendorDir . '/baum/baum/src'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

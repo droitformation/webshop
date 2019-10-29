@@ -161,7 +161,6 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 		DesignPond\Registry\RegistryServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
-		Baum\Providers\BaumServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,

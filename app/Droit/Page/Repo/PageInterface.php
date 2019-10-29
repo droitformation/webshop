@@ -4,10 +4,8 @@ interface PageInterface {
 
     public function getAll($site = null);
     public function getRoot($site = null);
-    public function getTree($key = null, $seperator = '  ',$site = null);
     public function find($id);
     public function search($term);
-    public function buildTree($data);
     public function getBySlug($site,$slug);
     public function getHomepage($site_id);
     public function create(array $data);

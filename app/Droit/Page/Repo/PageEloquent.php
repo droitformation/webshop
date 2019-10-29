@@ -17,11 +17,6 @@ class PageEloquent implements PageInterface{
         return $this->page->sites($site)->orderBy('pages.rang')->get();
     }
 
-    public function getTree($key = null, $seperator = '  ',$site = null)
-    {
-        return $this->page->getNestedList('title', $key, $seperator);
-    }
-
     public function search($term)
     {
         return $this->page->where('content','LIKE', '%'.$term.'%')->get();
@@ -52,11 +47,6 @@ class PageEloquent implements PageInterface{
             ->first();
     }
 
-    public function buildTree($data)
-    {
-        return $this->page->buildTree($data);
-    }
-
     public function create(array $data){
 
         $page = $this->page->create(array(
@@ -84,7 +74,7 @@ class PageEloquent implements PageInterface{
         if($data['parent_id'] && $data['parent_id'] > 0)
         {
             $parent = $this->page->findOrFail($data['parent_id']);
-            $page->makeChildOf($parent);
+            $page->appendToNode($parent)->save();
         }
 
         return $page;
@@ -117,7 +107,7 @@ class PageEloquent implements PageInterface{
         {
             $parent = $this->page->find($data['parent_id']);
             if($parent){
-                $page->makeChildOf($parent);
+                $page->appendToNode($parent)->save();
             }
         }
 

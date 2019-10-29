@@ -177,3 +177,10 @@ function frontendDate($date){
     $thedate = \Carbon\Carbon::createFromFormat('Y-m-d',$date);
     return $thedate->formatLocalized('%A %d %B %Y');
 }
+
+function traverse($pages, $prefix = '-'){
+    foreach ($pages as $page) {
+        echo PHP_EOL.$prefix.' '.$page->title;
+        traverse($page->children, $page.'-');
+    }
+}
