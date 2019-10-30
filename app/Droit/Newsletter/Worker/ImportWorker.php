@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Excel;
 
 use App\Jobs\SendBulkEmail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\UploadedFile;
 
 class ImportWorker implements ImportWorkerInterface
 {
@@ -24,6 +25,8 @@ class ImportWorker implements ImportWorkerInterface
     protected $campagne;
     protected $worker;
     protected $upload;
+
+    protected $file = null;
 
     public function __construct(
         MailjetServiceInterface $mailjet ,
@@ -45,46 +48,74 @@ class ImportWorker implements ImportWorkerInterface
         $this->upload     = $upload;
     }
 
-    public function import($data,$file)
+    public function setFile(UploadedFile $file)
     {
-        $file          = $this->upload->upload( $file , 'files/import' );
-        $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
+        $this->file = $file;
 
-        if(!$file) {
+        return $this;
+    }
+
+    /*
+     * @param  UploadedFile $file
+     * @return Array of emails
+     * */
+    public function uploadAndRead()
+    {
+        $path = \Storage::disk('imports')->put('', $this->file);
+
+        if(!$path) {
             throw new \App\Exceptions\FileUploadException('Upload failed');
         }
 
-        // path to xls
-        $path = public_path('files/import/'.$file['name']);
+        // Read uploded xls
+        $results = $this->read(public_path('files/imports/'.$path));
 
+        // filter empty value and non email
+        return validateListEmail($results);
+    }
+
+    public function import($data, UploadedFile $file)
+    {
+    /*   $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
+        $file = $this->upload->upload( $file , 'files/import' );
+        if(!$file) { throw new \App\Exceptions\FileUploadException('Upload failed');}
+        $path = public_path('files/import/'.$file['name']);  */
         // Read uploaded xls
-        $results = $this->read($path);
+        //$results = $this->read($path);
+        //$path = \Storage::disk('imports')->put('', $file);
+        //if(!$path) {throw new \App\Exceptions\FileUploadException('Upload failed');}
+        // Read uploded xls
+        //$results = $this->import->read(public_path('files/imports/'.$path));
+        //$emails = validateListEmail($results);
+
+        $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
+
+        $emails = $this->setFile($file)->uploadAndRead();
 
         // we want to import in one of the newsletter subscriber's list
         if($newsletter_id) {
             // Subscribe the new emails
-            $this->subscribe($results,$newsletter_id);
+            $this->subscribe($emails->flatten(),$newsletter_id);
 
             // Store imported file as csv for mailjet sync
-            $this->store($path);
+            $name = $this->storeToCsv($emails->all());
 
             // Mailjet sync
-            $this->sync($file['name'], $newsletter_id);
+            $this->sync($name, $newsletter_id);
         }
 
-        return $results;
+        return $emails->flatten()->all();
     }
 
     public function subscribe($results,$list = null)
     {
-        foreach($results as $email)
-        {
-            $subscriber = $this->subscriber->findByEmail($email->email);
+        foreach($results as $email) {
 
-            if(!$subscriber)
-            {
+            $subscriber = $this->subscriber->findByEmail($email);
+
+            if(!$subscriber) {
                 $subscriber = $this->subscriber->create([
-                    'email'         => $email->email,
+                    'email'         => $email,
                     'activated_at'  => \Carbon\Carbon::now(),
                     'newsletter_id' => $list
                 ]);
@@ -94,28 +125,43 @@ class ImportWorker implements ImportWorkerInterface
         }
     }
 
+    /*
+     * @return Array multidimensionnal
+     * */
     public function read($file)
     {
-        $results = $this->excel->load($file, function($reader) {
-            $reader->ignoreEmpty();
-            $reader->setSeparator('\r\n');
-        })->get();
+        $results = \Excel::toArray(new \App\Imports\EmailImport, $file);
 
-
-        // If the upload is not formatted correctly redirect back
-        if(isset($results) && $results->isEmpty() || !\Arr::has($results->toArray(), '0.email') ) {
+        if(!isset($results) || empty(\Arr::flatten($results))) {
             throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
         }
-        
+
         return $results;
     }
 
     /*
      * Convert to csv
      * */
-    public function store($file)
+    public function storeToCsv($data)
     {
-        $this->excel->load($file)->store('csv', public_path('files/import'));
+        $image_name = 'conversion_'.rand(2000,6000);
+
+        if($this->file){
+            $name = $this->file->getClientOriginalName();
+            $ext  = $this->file->getClientOriginalExtension();
+
+            $image_name = basename($name,'.'.$ext);
+        }
+
+        $fp = fopen(public_path('files/imports/'.$image_name.'.csv'), 'wb');
+
+        foreach ($data as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        fclose($fp);
+
+        return $image_name;
     }
 
     public function sync($file,$list)

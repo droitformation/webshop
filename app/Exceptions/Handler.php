@@ -125,6 +125,11 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
+        if ($e instanceof \App\Exceptions\BadFormatException){
+            flash($e->getMessage())->warning();
+            return redirect()->back();
+        }
+
 		if ($e instanceof \App\Exceptions\OrderCreationException){
             flash($e->getMessage())->error();
 			return redirect('checkout/confirm');

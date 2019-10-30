@@ -90,7 +90,9 @@ class NewsletterListEloquent implements NewsletterListInterface{
             }
 
             foreach($data['emails'] as $email) {
-                $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
+                if(!$list->emails->contains('email',$email)){
+                    $list->emails()->save(new \App\Droit\Newsletter\Entities\Newsletter_emails(['list_id' => $list->id, 'email' => $email]));
+                }
             }
         }
 

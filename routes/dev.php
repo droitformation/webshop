@@ -137,6 +137,16 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
 
+
+    $import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
+    $results = $import_worker->read(public_path('files/imports/test.xlsx'));
+
+    echo '<pre>';
+    print_r($results);
+    echo '</pre>';
+    exit();
+
     //$mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
@@ -215,12 +225,8 @@ Route::get('testing', function() {
     //$worker->generateWithBv($inscriptions);
 
     $adresses = $me->adresses->where('type',1);
-    echo '<pre>';
-    print_r($adresses);
-    echo '</pre>';
-    exit();
 
-    //$import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
 
    // $model = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 

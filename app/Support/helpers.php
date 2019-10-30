@@ -184,3 +184,14 @@ function traverse($pages, $prefix = '-'){
         traverse($page->children, $page.'-');
     }
 }
+
+function validateListEmail($results){
+
+    return collect($results)->map(function ($values) {
+        return collect($values)->map(function ($items) {
+            return collect($items)->reject(function ($value, $key) {
+                return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
+            })->unique()->all();
+        })->all();
+    });
+}

@@ -3,6 +3,8 @@
 namespace Spatie\Honeypot;
 
 use Closure;
+use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Spatie\Honeypot\SpamResponder\SpamResponder;
@@ -35,16 +37,18 @@ class ProtectAgainstSpam
 
         $honeypotValue = $request->get($nameFieldName);
 
-        if (is_null($nameFieldName)) {
-            return $this->respondToSpam($request, $next);
-        }
-
         if (! empty($honeypotValue)) {
             return $this->respondToSpam($request, $next);
         }
 
         if ($validFrom = $request->get(config('honeypot.valid_from_field_name'))) {
-            if ((new EncryptedTime($validFrom))->isFuture()) {
+            try {
+                $time = new EncryptedTime($validFrom);
+            } catch (Exception $decryptException) {
+                $time = null;
+            }
+
+            if (! $time || $time->isFuture()) {
                 return $this->respondToSpam($request, $next);
             }
         }
@@ -55,7 +59,7 @@ class ProtectAgainstSpam
     private function getRandomizedNameFieldName($nameFieldName, $requestFields):?String
     {
         return collect($requestFields)->filter(function ($value, $key) use ($nameFieldName) {
-            return starts_with($key, $nameFieldName);
+            return Str::startsWith($key, $nameFieldName);
         })->keys()->first();
     }
 

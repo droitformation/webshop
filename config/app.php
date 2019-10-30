@@ -145,8 +145,9 @@ return [
         Illuminate\Encryption\EncryptionServiceProvider::class,
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        //Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
@@ -156,7 +157,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-		Illuminate\Notifications\NotificationServiceProvider::class,
 
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 		DesignPond\Registry\RegistryServiceProvider::class,
@@ -175,10 +175,6 @@ return [
 		 * Application Service Providers...
 		 */
 		App\Providers\TransitionalHashProvider::class,
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
         App\Providers\ContentServiceProvider::class,
         App\Providers\ColloqueServiceProvider::class,
 		App\Providers\UserServiceProvider::class,
@@ -187,6 +183,11 @@ return [
 		App\Providers\ExtraServiceProvider::class,
 		App\Providers\AboServiceProvider::class,
 		App\Providers\CollectionExtensions::class,
+
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
 	],
 
 	/*
@@ -248,7 +249,6 @@ return [
 		'Alert'      => Vinkla\Alert\Facades\Alert::class,
 		'Honeypot'   => Msurguy\Honeypot\HoneypotFacade::class,
         'Arr'        => Illuminate\Support\Arr::class,
-		//'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
 	],
 
 ];

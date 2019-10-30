@@ -73,6 +73,11 @@ return [
             'root'   => public_path('uploads'),
         ],
 
+        'imports' => [
+            'driver' => 'local',
+            'root'   => public_path('files/imports'),
+        ],
+
 		'fileuploads' => [
 			'driver' => 'local',
 			'root'   => public_path('files/uploads'),

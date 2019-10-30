@@ -2,16 +2,19 @@
 
 namespace Spatie\Honeypot;
 
-use Carbon\Carbon;
+use DateTimeInterface;
+use Illuminate\Support\Facades\Date;
 
 class EncryptedTime
 {
+    protected $carbon;
+
     /** @var string */
     protected $encryptedTime;
 
-    public static function create(Carbon $carbon)
+    public static function create(DateTimeInterface $dateTime)
     {
-        $encryptedTime = app('encrypter')->encrypt($carbon->timestamp);
+        $encryptedTime = app('encrypter')->encrypt($dateTime->getTimestamp());
 
         return new static($encryptedTime);
     }
@@ -22,7 +25,11 @@ class EncryptedTime
 
         $timestamp = app('encrypter')->decrypt($encryptedTime);
 
-        $this->carbon = Carbon::createFromTimestamp($timestamp);
+        if (! $this->isValidTimeStamp($timestamp)) {
+            throw new \Exception(sprintf('Timestamp %s is invalid', $timestamp));
+        }
+
+        $this->carbon = Date::createFromTimestamp($timestamp);
     }
 
     public function isFuture(): bool
@@ -33,5 +40,22 @@ class EncryptedTime
     public function __toString()
     {
         return $this->encryptedTime;
+    }
+
+    private function isValidTimeStamp(string $timestamp): bool
+    {
+        if ((string) (int) $timestamp !== $timestamp) {
+            return false;
+        }
+
+        if ($timestamp <= 0) {
+            return false;
+        }
+
+        if ($timestamp >= PHP_INT_MAX) {
+            return false;
+        }
+
+        return true;
     }
 }

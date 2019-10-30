@@ -32,16 +32,13 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
     {
         $user = $this->user->with(['subscriptions']);
 
-        if(is_array($email))
-        {
+        if(is_array($email)) {
             return $user->whereIn('email', $email)->get();
         }
-        else
-        {
-            $user = $user->where('email','=',$email)->get();
 
-            return !$user->isEmpty() ? $user->first() : null;
-        }
+        $user = $user->where('email','=',$email)->get();
+
+        return !$user->isEmpty() ? $user->first() : null;
 	}
 
     public function get_ajax($draw, $start, $length, $sortCol, $sortDir, $search){

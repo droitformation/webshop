@@ -74,28 +74,13 @@ class ListController extends Controller
 
     public function store(EmailListRequest $request)
     {
-        $file = $this->upload->upload( $request->file('file') , 'files/import');
-
-        if(!$file) {
-            flash('Le téléchargement a échoué')->error();
-            return redirect()->back();
-        }
-
-        // path to xls
-        $path = public_path('files/import/'.$file['name']);
-
-        // Read uploded xls
-        $results = $this->import->read($path);
-
-        $emails = $results->pluck('email')
-            ->unique()->reject(function ($value, $key) {
-                return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
-            })->all();
+        $emails = $this->import->setFile($request->file('file'))->uploadAndRead();
         
         $list = $this->list->create([
-            'title' => $request->input('title'), 
-            'emails' => $emails,
-            'specialisations' => $request->input('specialisations')]);
+            'title' => $request->input('title'),
+            'emails' => $emails->flatten()->all(),
+            'specialisations' => $request->input('specialisations')
+        ]);
 
         flash('Fichier importé!')->success();
 
@@ -105,32 +90,14 @@ class ListController extends Controller
     public function update(UpdateListRequest $request)
     {
         $data = $request->except('file');
-        
+
         if($request->file('file'))
         {
-            $file = $this->upload->upload( $request->file('file') , 'files/import');
-
-            if(!$file) {
-                throw new \App\Exceptions\FileUploadException('Upload failed');
-            }
-
-            // path to xls
-            $path = public_path('files/import/'.$file['name']);
-            // Read uploded xls
-            $results = $this->import->read($path);
-
-            if(isset($results) && $results->isEmpty() || !\Arr::has($results->toArray(), '0.email') ) {
-                flash('Le fichier est vide ou mal formaté')->error();
-                return redirect()->back();
-            }
-
-            $data['emails'] = $results->pluck('email')
-                ->unique()->reject(function ($value, $key) {
-                    return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
-                })->all();
+            $emails = $this->import->setFile($request->file('file'))->uploadAndRead();
+            $data['emails'] = $emails->flatten()->all();
         }
 
-        $list = $this->list->update($data);
+        $this->list->update($data);
 
         flash('Liste mise à jour')->success();
 
@@ -194,18 +161,7 @@ class ListController extends Controller
     {
         $list = $this->list->find($request->input('list_id'));
 
-        $emails = $list->emails->map(function ($item) {
-            return [$item->email];
-        });
-
-        \Excel::create('Export_liste_'.$list->title, function ($excel) use ($emails) {
-            $excel->sheet('Export', function ($sheet) use ($emails) {
-                $sheet->setOrientation('portrait');
-
-                $sheet->rows($emails->toArray());
-            });
-
-        })->export('xls');
+        return \Excel::download(new \App\Exports\ListExport($list), 'Export_liste_'.$list->title.'.xlsx');
     }
 
 }

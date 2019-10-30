@@ -39,6 +39,17 @@ class CollectionExtensions extends ServiceProvider
             return new static($result);
         });
 
+        collect()->macro('dilate', function () {
+
+            $result = [];
+
+            foreach ($this->items as $i => $value) {
+                $result[$i][] = $value;
+            }
+
+            return new static($result);
+        });
+
         Collection::macro('transpose', function () {
             $items = array_map(function (...$items) {
                 return $items;
