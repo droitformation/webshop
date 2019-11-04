@@ -98,7 +98,7 @@ class ImportWorker implements ImportWorkerInterface
             $this->subscribe($emails->flatten(),$newsletter_id);
 
             // Store imported file as csv for mailjet sync
-            $name = $this->storeToCsv($emails->all());
+            $name = $this->storeToCsv($emails->flatten()->all());
 
             // Mailjet sync
             $this->sync($name, $newsletter_id);
@@ -142,7 +142,7 @@ class ImportWorker implements ImportWorkerInterface
     /*
      * Convert to csv
      * */
-    public function storeToCsv($data)
+    public function storeToCsv(array $data)
     {
         $image_name = 'conversion_'.rand(2000,6000);
 
@@ -155,9 +155,8 @@ class ImportWorker implements ImportWorkerInterface
 
         $fp = fopen(public_path('files/imports/'.$image_name.'.csv'), 'wb');
 
-        foreach ($data as $fields) {
-            fputcsv($fp, $fields);
-        }
+        fputcsv($fp, $data);
+       // foreach ($data as $fields) {fputcsv($fp, $fields);}
 
         fclose($fp);
 

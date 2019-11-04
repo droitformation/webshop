@@ -11,6 +11,6 @@ interface ImportWorkerInterface
     public function import($data, UploadedFile $file);
     public function subscribe($results, $list = null);
     public function read($file);
-    public function storeToCsv($data);
+    public function storeToCsv(array $data);
     public function sync($file,$list);
 }

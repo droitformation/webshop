@@ -81,6 +81,8 @@ class ExportController extends Controller
         $colloque     = $this->colloque->find($request->input('id'));
         $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []));
 
+        return \Excel::download(new \App\Exports\InscriptionExport($inscriptions,$request->input('columns',config('columns.names'))),'export_inscriptions.xlsx');
+
         $exporter = new \App\Droit\Generate\Export\ExportInscription();
         $exporter->setColumns($request->input('columns', config('columns.names')))
             ->setSort($request->input('sort', null))

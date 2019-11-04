@@ -137,15 +137,27 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
 
-
     $import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+
+    $list = array (
+        array('aaa', 'bbb', 'ccc', 'dddd'),
+        array('123', '456', '789'),
+        array('"aaa"', '"bbb"')
+    );
 
     $results = $import_worker->read(public_path('files/imports/test.xlsx'));
 
     echo '<pre>';
-    print_r($results);
+    print_r(collect($results)->flatten());
+    echo '</pre>';
+    echo '<pre>';
+    print_r($list);
     echo '</pre>';
     exit();
+
+    $data = $import_worker->storeToCsv($results);
+
+
 
     //$mailjet = \App::make('App\Droit\Newsletter\Service\Mailjet');
     $groups       = \App::make('App\Droit\Inscription\Repo\GroupeInterface');

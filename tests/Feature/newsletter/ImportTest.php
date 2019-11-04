@@ -96,147 +96,136 @@ class ImportTest extends TestCase
         $results = $this->import->read($file);
     }
 
+    public function testSubscribeExist()
+    {
+        $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
 
-        public function testSubscribeExist()
-        {
-            $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
+        $file = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
 
-            $file = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
+        $this->subscription->shouldReceive('findByEmail')->twice()->andReturn($user);
+        $this->subscription->shouldReceive('subscribe')->twice();
 
-            $this->subscription->shouldReceive('findByEmail')->twice()->andReturn($user);
-            $this->subscription->shouldReceive('subscribe')->twice();
+        $results = $this->import->read($file);
 
-            $results = $this->import->read($file);
+        $this->import->subscribe(\Arr::flatten($results));
 
-            $this->import->subscribe(\Arr::flatten($results));
+        $this->assertTrue(true); // phpunit suppress complain risky test
+    }
 
-            $this->assertTrue(true);
+    public function testSubscribeDontExist()
+    {
+        $all = \App\Droit\Newsletter\Entities\Newsletter_users::all();
+
+        $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
+
+        $file = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
+
+        $this->subscription->shouldReceive('findByEmail')->twice()->andReturn(null);
+        $this->subscription->shouldReceive('create')->twice()->andReturn($user);
+        $this->subscription->shouldReceive('subscribe')->twice();
+
+        $results = $this->import->read($file);
+
+        $this->import->subscribe(\Arr::flatten($results));
+
+        $this->assertTrue(true); // phpunit suppress complain risky test
+    }
+
+    public function testSyncToMailjet()
+    {
+        $newsletter = \factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
+
+        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
+        $this->worker->shouldReceive('setList')->with(1)->once()->andReturn(true);
+
+        $dataID     = new \stdClass();
+        $dataID->ID = 1;
+
+        $this->worker->shouldReceive('uploadCSVContactslistData')->once()->andReturn($dataID);
+        $this->worker->shouldReceive('importCSVContactslistData')->once();
+
+        $this->import->sync('test.xlsx',1);
+
+        $this->assertTrue(true); // phpunit suppress complain risky test
+    }
+
+    public function testImportWithNewsletterId()
+    {
+        $dataID     = new \stdClass();
+        $dataID->ID = 1;
+
+        $user       = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
+        $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
+
+        $upload = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
+
+        $this->subscription->shouldReceive('findByEmail')->twice()->andReturn(null);
+        $this->subscription->shouldReceive('create')->twice()->andReturn($user);
+        $this->subscription->shouldReceive('subscribe')->twice();
+        $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
+
+        $this->worker->shouldReceive('setList')->with(1)->once()->andReturn(true);
+        $this->worker->shouldReceive('uploadCSVContactslistData')->once()->andReturn($dataID);
+        $this->worker->shouldReceive('importCSVContactslistData')->once();
+
+        $results = $this->import->import(['title' => 'Titre', 'newsletter_id' => 3], $upload);
+
+        $this->assertTrue(true); // phpunit suppress complain risky test
+    }
+
+    public function testImportWithoutNewsletterId()
+    {
+        $upload  = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
+        $results = $this->import->import(['title' => 'Titre'],$upload);
+
+        $this->assertTrue(true);
+    }
+
+    public function testSendListEmail()
+    {
+        Queue::fake();
+
+        // Prepare list of emails
+        $campagne = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
+        $html = '<html><head></head><body></body></html>';
+
+        $this->camp->shouldReceive('html')->once()->andReturn($html);
+        $this->campagne->shouldReceive('find')->once()->andReturn($campagne);
+
+        $liste  = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
+        $emails = factory(\App\Droit\Newsletter\Entities\Newsletter_emails::class, 410)->make();
+
+        foreach ($emails as $email){
+           $liste->emails()->save($email);
         }
 
-           public function testSubscribeDontExist()
-           {
-               $all = \App\Droit\Newsletter\Entities\Newsletter_users::all();
+        $chunks = $liste->emails->chunk(200);
+        $chunk1  = $chunks->shift();
+        $chunk2  = $chunks->shift();
+        $chunk3  = $chunks->shift();
 
-               $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
+        $this->assertEquals(10, count($chunk3));
 
-               $file = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
+        // Send job of emails by chunk, 100 at the time 210/100 => rounded to 3 times
 
-               $this->subscription->shouldReceive('findByEmail')->twice()->andReturn(null);
-               $this->subscription->shouldReceive('create')->twice()->andReturn($user);
-               $this->subscription->shouldReceive('subscribe')->twice();
+        $this->import->send(1,$liste);
 
-               $results = $this->import->read($file);
+        Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
+           return count($job->emails) == $chunk1->count();
+        });
 
-               $this->import->subscribe(\Arr::flatten($results));
+        Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
+           return count($job->emails) == $chunk2->count();
+        });
 
-               $this->assertTrue(true);
-           }
+        Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
+           return count($job->emails) == $chunk3->count();
+        });
+    }
 
-
-             public function testSyncToMailjet()
-             {
-                 $newsletter = \factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
-
-                 $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
-                 $this->worker->shouldReceive('setList')->with(1)->once()->andReturn(true);
-
-                 $dataID     = new \stdClass();
-                 $dataID->ID = 1;
-
-                 $this->worker->shouldReceive('uploadCSVContactslistData')->once()->andReturn($dataID);
-                 $this->worker->shouldReceive('importCSVContactslistData')->once();
-
-                 $this->import->sync('test.xlsx',1);
-
-                 $this->assertTrue(true);
-             }
-
-
-            public function testImportWithNewsletterId()
-            {
-                $dataID     = new \stdClass();
-                $dataID->ID = 1;
-
-                $user       = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make();
-                $newsletter = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['list_id' => 1]);
-
-                $upload = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
-
-                $this->upload->shouldReceive('upload')->once()->andReturn($upload);
-                $this->subscription->shouldReceive('findByEmail')->twice()->andReturn(null);
-                $this->subscription->shouldReceive('create')->twice()->andReturn($user);
-                $this->subscription->shouldReceive('subscribe')->twice();
-                $this->newsletter->shouldReceive('find')->once()->andReturn($newsletter);
-
-                $this->worker->shouldReceive('setList')->with(1)->once()->andReturn(true);
-                $this->worker->shouldReceive('uploadCSVContactslistData')->once()->andReturn($dataID);
-                $this->worker->shouldReceive('importCSVContactslistData')->once();
-
-                $results = $this->import->import(['title' => 'Titre', 'newsletter_id' => 3],$upload);
-
-                $this->assertTrue(true);
-            }
     /*
-                public function testImportWithoutNewsletterId()
-                {
-                    $file       = dirname(__DIR__).'/excel/test.xlsx';
-                    $upload     = $this->prepareFileUpload($file);
-                    $file       = ['name' => 'test.xlsx'];
-
-                    $email1     = new \Maatwebsite\Excel\Collections\CellCollection(['email' => 'cindy.leschaud@gmail.com']);
-                    $email2     = new \Maatwebsite\Excel\Collections\CellCollection(['email' => 'pruntrut@yahoo.fr']);
-                    $collection = new \Maatwebsite\Excel\Collections\RowCollection([$email1,$email2]);
-
-                    $this->excel->shouldReceive('load->get')->andReturn($collection);
-                    $this->upload->shouldReceive('upload')->once()->andReturn($file);
-
-                    $results = $this->import->import(['title' => 'Titre'],$upload);
-
-                    $this->assertTrue(true);
-                }
-
-                public function testSendListEmail()
-                {
-                    Queue::fake();
-
-                    // Prepare list of emails
-                    $campagne = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
-                    $html = '<html><head></head><body></body></html>';
-
-                    $this->camp->shouldReceive('html')->once()->andReturn($html);
-                    $this->campagne->shouldReceive('find')->once()->andReturn($campagne);
-
-                    $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create();
-                    $emails = factory(\App\Droit\Newsletter\Entities\Newsletter_emails::class, 410)->make();
-
-                    foreach ($emails as $email){
-                        $liste->emails()->save($email);
-                    }
-
-                    $chunks = $liste->emails->chunk(200);
-                    $chunk1  = $chunks->shift();
-                    $chunk2  = $chunks->shift();
-                    $chunk3  = $chunks->shift();
-
-                    $this->assertEquals(10, count($chunk3));
-
-                    // Send job of emails by chunk, 100 at the time 210/100 => rounded to 3 times
-
-                    $this->import->send(1,$liste);
-
-                    Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk1) {
-                        return count($job->emails) == $chunk1->count();
-                    });
-
-                    Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk2) {
-                        return count($job->emails) == $chunk2->count();
-                    });
-
-                    Queue::assertPushed(\App\Jobs\SendBulkEmail::class, function ($job) use ($chunk3) {
-                        return count($job->emails) == $chunk3->count();
-                    });
-                }*/
-
+     * Function to prepare test file upload
+     * */
     function prepareFileUpload($path,$name = 'test.xlsx')
     {
         $fileName = $name;
@@ -247,5 +236,4 @@ class ImportTest extends TestCase
 
         return $file;
     }
-
 }
