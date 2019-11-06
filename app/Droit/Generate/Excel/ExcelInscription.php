@@ -12,7 +12,7 @@
       * column names
       * if we want to sort
       * */
-     public function exportInscription($inscriptions, $colloque, $names, $sort = null)
+    /* public function exportInscription($inscriptions, $colloque, $names, $sort = null)
      {
          \Excel::create('Export inscriptions', function ($excel) use ($inscriptions,$colloque, $sort, $names) {
              $excel->sheet('Export', function ($sheet) use ($inscriptions,$colloque, $sort, $names) {
@@ -125,5 +125,5 @@
          {
              return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '');
          })->implode(';');
-     }
+     }*/
  }

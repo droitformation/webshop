@@ -1,6 +1,10 @@
 <?php
  namespace App\Droit\Generate\Excel;
- 
+
+ /*
+  * Used for export dejeuner academiques participant list
+  * */
+
  class ExcelConference{
 
      protected $title;

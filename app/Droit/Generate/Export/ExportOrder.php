@@ -113,18 +113,16 @@
 
                  if($this->details)
                  {
-                     // Only details of each order and group by product in orde, count qty
+                     // Only details of each order and group by product in orde,r count qty
                      $products = $this->free ? $this->hasFreeProducts($order) : $order->products;
                      $grouped  = $products->groupBy(function ($item, $key) {
                          return $item->id.$item->pivot->price.$item->pivot->rabais.$item->pivot->isFree;
                      });
 
-                     if($order->order_adresse)
-                     {
+                     if($order->order_adresse) {
                          $columns = array_keys($names);
                          // Get columns requested from user adresse
-                         foreach($columns as $column)
-                         {
+                         foreach($columns as $column) {
                              $user[$column] = $order->order_adresse->$column;
                          }
                      }
@@ -141,8 +139,7 @@
                          $converted[] = $info + $data + $user;
                      }
                  }
-                 else
-                 {
+                 else {
                      $converted[] = $info + $user;
                  }
              }

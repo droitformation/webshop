@@ -101,11 +101,11 @@ class ExportController extends Controller
         // Get adresses with terms
         $adresses = $this->adresse->searchMultiple($terms, $each);
 
+        return \Excel::download(new \App\Exports\AdresseExport($adresses), 'export_'.date("d-m-Y H:i").'.xlsx');
+
         // Export adresses
         $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-
         $filename = $exporter->export($adresses);
-
         return response()->download($filename, 'export_'.date("d-m-Y H:i").'.csv', ['Content-Type' => 'text/csv']);
     }
 

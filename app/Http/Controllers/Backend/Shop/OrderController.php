@@ -85,22 +85,21 @@ class OrderController extends Controller {
         $orders    = isset($data['order_no']) ? $this->order->search($data['order_no']) : $this->order->getPeriod($data);
         $cancelled = $this->order->getTrashed($data['period']);
 
+        // filter invalid order beacuse no user adresse
         list($orders, $invalid) = $orders->partition(function ($order) {
             return $order->order_adresse;
         });
 
         if(isset($data['export'])) {
-            if($orders->isEmpty()){
-                flash('Aucune commande à exporter')->success();
-            }
-            $exporter = new \App\Droit\Generate\Export\ExportOrder();
-            $details  = isset($data['details']) ? true : null;
-            $onlyfree = isset($data['onlyfree']) ? true : null;
-            $exporter->setColumns($request->input('columns',config('columns.names')))->setPeriod($data['period'])->setDetail($details)->setFree($onlyfree);
-            $exporter->export($orders);
+            if($orders->isEmpty()){ flash('Aucune commande à exporter')->warning();}
+
+            $title = 'Commandes du '.$this->helper->betweenTwoDates($data['period']['start'],$data['period']['end']);
+
+            return \Excel::download(new \App\Exports\OrderExport($orders,$data['columns'] ?? null ,$title, $data['details'] ?? null), 'commandes' . date('dmy').'.xlsx');
         }
 
         $request->flash();
+
 		return view('backend.orders.index')
             ->with(['orders' => $orders, 'invalid' => $invalid, 'period' => $data['period'], 'columns' => config('columns.names'), 'cancelled' => $cancelled] + $data);
 	}

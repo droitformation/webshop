@@ -6,7 +6,7 @@
      /*
       * Export
       * */
-     public function exportAdresse($adresses, $store = false)
+     /*public function exportAdresse($adresses, $store = false)
      {
          $export = \Excel::create('Export_Adresses_' . date('dmy'), function ($excel) use ($adresses){
              $excel->sheet('Export_Adresses', function ($sheet) use ($adresses){
@@ -42,5 +42,5 @@
 
              return $convert;
          });
-     }
+     }*/
  }

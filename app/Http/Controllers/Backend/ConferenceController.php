@@ -24,9 +24,6 @@ class ConferenceController extends Controller
         $academiques = \Registry::get('academiques');
         $conference  = \Registry::get('conference');
 
-        $exporter    = new \App\Droit\Generate\Excel\ExcelConference($conference['title'],$conference['date']);
-        $filename    = $exporter->export($academiques,true);
-
-        return response()->download($filename['full']);
+        return \Excel::download(new \App\Exports\DejeunerExport($academiques,$conference), 'inscriptions_dejeuner_academiques_' . date('dmy').'.xlsx');
     }
 }
