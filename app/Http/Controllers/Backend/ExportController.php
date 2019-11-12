@@ -78,10 +78,21 @@ class ExportController extends Controller
      */
     public function inscription(Request $request)
     {
-        $colloque     = $this->colloque->find($request->input('id'));
-        $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []));
+        //$colloque     = $this->colloque->find($request->input('id'));
+       // $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []));
 
-        return \Excel::download(new \App\Exports\InscriptionExport($inscriptions,$request->input('columns',config('columns.names'))),'export_inscriptions.xlsx');
+        $colloque   = $this->colloque->find($request->input('id'));
+        $occurences = $request->input('dispatch', null) ? $colloque->occurrences : $colloque->occurrences->whereIn('id',$request->input('occurrence', []));
+
+        // dispatch by occurences if any
+        $inscriptions = !$occurences->isEmpty() ? $occurences->mapWithKeys(function ($occurence, $key) use ($colloque) {
+            return [$occurence->title => $this->inscription->getByColloqueExport($colloque->id, [$occurence->id])];
+        }) : collect([$this->inscription->getByColloqueExport($colloque->id)]);
+
+        return \Excel::download(new \App\Exports\InscriptionExport($inscriptions,$colloque,$request->only(['sort','dispatch','occurrence','columns'])),'export_inscriptions.xlsx');
+
+        // tri salles (need occurences and dispatch)
+        // options checkbox or choice
 
         $exporter = new \App\Droit\Generate\Export\ExportInscription();
         $exporter->setColumns($request->input('columns', config('columns.names')))
@@ -102,11 +113,6 @@ class ExportController extends Controller
         $adresses = $this->adresse->searchMultiple($terms, $each);
 
         return \Excel::download(new \App\Exports\AdresseExport($adresses), 'export_'.date("d-m-Y H:i").'.xlsx');
-
-        // Export adresses
-        $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-        $filename = $exporter->export($adresses);
-        return response()->download($filename, 'export_'.date("d-m-Y H:i").'.csv', ['Content-Type' => 'text/csv']);
     }
 
     public function badges(Request $request)

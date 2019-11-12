@@ -233,6 +233,22 @@ class Inscription extends Model
         return true;
     }
 
+    public function getExportOptionHtmlAttribute()
+    {
+        return $this->user_options->map(function ($group, $key)
+        {
+            if(!isset($group->option)){
+                $option = $group->option()->withTrashed()->get();
+                $option = !$option->isEmpty() ? $option->first() : null;
+
+                return $option ? 'Ancienne option: '.$option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '') : '';
+            }
+
+            return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id && isset($group->option_groupe) ? $group->option_groupe->text : '');
+
+        })->implode(';');
+    }
+
     public function getListRappelAttribute()
     {
         return $this->group_id > 0 ? $this->group_rappels : $this->rappels;

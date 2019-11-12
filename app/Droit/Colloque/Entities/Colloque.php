@@ -219,6 +219,21 @@ class Colloque extends Model implements HasMedia
         });
     }
 
+    public function getExportOptionChoixAttribute()
+    {
+        return isset($this->options) ? $this->options->where('type', 'choix')->pluck('title', 'id')->toArray() : [];
+    }
+
+    public function getExportOptionCheckboxAttribute()
+    {
+        return isset($this->options) ? $this->options->where('type', 'checkbox')->pluck('title', 'id')->toArray() : [];
+    }
+
+    public function getExportOptionGroupAttribute()
+    {
+        return isset($this->groupes) ? $this->groupes->pluck('text', 'id')->toArray() : [];
+    }
+
     public function getAnnexeAttribute()
     {
         $annexes = [];

@@ -137,7 +137,7 @@ Route::get('mapped', function () {
 
 Route::get('testing', function() {
 
-    $import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
+/*    $import_worker = \App::make('App\Droit\Newsletter\Worker\ImportWorkerInterface');
 
     $list = array (
         array('aaa', 'bbb', 'ccc', 'dddd'),
@@ -155,7 +155,7 @@ Route::get('testing', function() {
     echo '</pre>';
     exit();
 
-    $data = $import_worker->storeToCsv($results);
+    $data = $import_worker->storeToCsv($results);*/
 
 
 
@@ -176,6 +176,30 @@ Route::get('testing', function() {
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
+
+
+    $inscription = $model_inscriptions->find(20992);
+
+    echo '<pre>';
+    print_r($inscription->export_option_html);
+    echo '</pre>';
+    exit();
+
+
+    $dispach = null;
+    $list = [1,2];
+
+    $colloque   = $colloques->find(100);
+    $occurences = $dispach ? $colloque->occurrences : $colloque->occurrences->whereIn('id',$list);
+
+    $grouped = !$occurences->isEmpty() ? $occurences->mapToGroups(function ($occurence, $key) use ($colloque,$model_inscriptions) {
+        return [$occurence->title => $model_inscriptions->getByColloqueExport($colloque->id, [$occurence->id])];
+    }) : collect([$model_inscriptions->getByColloqueExport($colloque->id)]);
+
+    echo '<pre>';
+    print_r($grouped);
+    echo '</pre>';
+    exit();
 
     $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $model = new \App\Droit\User\Entities\User();
