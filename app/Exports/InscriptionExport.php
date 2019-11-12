@@ -31,10 +31,11 @@ class InscriptionExport implements FromView
 
     public function view(): View
     {
-        $this->prepareInscription();
+        $sorted = $this->prepareInscription();
 
         return view('backend.export.inscriptions', [
-            'inscriptions' => $this->sorted,
+            'inscriptions' => $sorted,
+            'sort'         => $this->sort,
             'columns'      => $this->columns,
             'headers'      => $this->headers
         ]);
@@ -61,17 +62,32 @@ class InscriptionExport implements FromView
                 }
             }
             else{
-                $this->sorted[] = $occurence;
+                $this->sorted[] = $formatted;
             }
 
             return [$name => $this->sorted];
         });
+/*
+        foreach($sorted as $occurence => $grouped){
+            foreach($grouped as $inscriptions ){
+                foreach($inscriptions as $inscription ) {
 
+                    if(isset($inscription['filter_choices'])){
+                        unset($inscription['filter_choices']);
+                    }
+                    if(isset($inscription['filter_checkboxes'])){
+                        unset($inscription['filter_checkboxes']);
+                    }
 
-        echo '<pre>';
-        print_r($sorted);
-        echo '</pre>';
-        exit();
+                    echo '<pre>';
+                    print_r($inscription);
+                    echo '</pre>';
+                    exit();
+
+                }
+            }
+        }*/
+
 
         return $sorted;
     }
@@ -81,12 +97,12 @@ class InscriptionExport implements FromView
         $data = [];
         $user = $inscription->inscrit;
 
-        $data['Present']     = $inscription->present ? 'Oui' : '';
-        $data['Numéro']      = $inscription->inscription_no;
-        $data['Prix']        = $inscription->price_cents;
-        $data['Status']      = $inscription->status_name['status'];
-        $data['Date']        = $inscription->created_at->format('m/d/Y');
-        $data['Participant'] = $inscription->group_id > 0 ? $inscription->participant->name : '';
+        $data['present']     = $inscription->present ? 'Oui' : '';
+        $data['number']      = $inscription->inscription_no;
+        $data['prix']        = $inscription->price_cents;
+        $data['status']      = $inscription->status_name['status'];
+        $data['date']        = $inscription->created_at->format('m/d/Y');
+        $data['participant'] = $inscription->group_id > 0 ? $inscription->participant->name : '';
 
         // Adresse columns
         $data += ($user && isset($user->primary_adresse)) ? collect($this->columns)->map(function ($item, $key) use ($user) {

@@ -1,27 +1,36 @@
-<table>
-    <thead>
-        <tr>
-            @foreach($headers as $header)
-                <th>{{ $header }}</th>
-            @endforeach
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($inscriptions as $grouped)
-            @foreach($grouped as $inscription)
-                <tr>
-                    <td>{{ $inscription->present ? 'Oui' : '' }}</td>
-                    <td>{{ $inscription->inscription_no }}</td>
-                    <td>{{ $inscription->price_cents }}</td>
-                    <td>{{ $inscription->status_name['status'] }}</td>
-                    <td>{{ $inscription->created_at->format('m/d/Y') }}</td>
-                    <td>{{ ($inscription->group_id > 0 ? $inscription->participant->name : '') }}</td>
-                    @foreach($columns as $column)
-                        <?php $user = $inscription->inscrit; ?>
-                        {{ $user->adresses->first()->$column }}
+<!-- Occurences -->
+@foreach($inscriptions as $occurence => $grouped)
+    <table>
+        <thead>
+            <tr>
+                @foreach($headers as $header)
+                    <th>{{ $header }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            <!-- options -->
+            @if($sort == 'checkbox')
+                @foreach($grouped as $inscriptions)
+                    @foreach($inscriptions as $inscription)
+                        @include('backend.export.partials.row',['inscription' => $inscription])
                     @endforeach
-                </tr>
-            @endforeach
-        @endforeach
-    </tbody>
-</table>
+                @endforeach
+            @elseif($sort == 'choice')
+                @foreach($grouped as $group)
+                    @foreach($group as $options)
+                        @foreach($options as $inscription)
+                            @include('backend.export.partials.row',['inscription' => $inscription])
+                        @endforeach
+                    @endforeach
+                @endforeach
+            @else
+                @foreach($grouped as $inscriptions)
+                    @foreach($inscriptions as $inscription)
+                        @include('backend.export.partials.row',['inscription' => $inscription])
+                    @endforeach
+                @endforeach
+            @endif
+        </tbody>
+    </table>
+@endforeach
