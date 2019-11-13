@@ -37,7 +37,8 @@ class InscriptionExport implements FromView
             'inscriptions' => $sorted,
             'sort'         => $this->sort,
             'columns'      => $this->columns,
-            'headers'      => $this->headers
+            'headers'      => $this->headers,
+            'colloque'     => $this->colloque
         ]);
     }
 
@@ -69,23 +70,10 @@ class InscriptionExport implements FromView
         });
 /*
         foreach($sorted as $occurence => $grouped){
-            foreach($grouped as $inscriptions ){
-                foreach($inscriptions as $inscription ) {
-
-                    if(isset($inscription['filter_choices'])){
-                        unset($inscription['filter_choices']);
-                    }
-                    if(isset($inscription['filter_checkboxes'])){
-                        unset($inscription['filter_checkboxes']);
-                    }
-
-                    echo '<pre>';
-                    print_r($inscription);
+                   echo '<pre>';
+                    print_r($occurence);
                     echo '</pre>';
                     exit();
-
-                }
-            }
         }*/
 
 

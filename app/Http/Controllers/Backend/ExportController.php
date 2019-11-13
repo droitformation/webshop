@@ -79,7 +79,7 @@ class ExportController extends Controller
     public function inscription(Request $request)
     {
         //$colloque     = $this->colloque->find($request->input('id'));
-       // $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []));
+       // $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []))
 
         $colloque   = $this->colloque->find($request->input('id'));
         $occurences = $request->input('dispatch', null) ? $colloque->occurrences : $colloque->occurrences->whereIn('id',$request->input('occurrence', []));
