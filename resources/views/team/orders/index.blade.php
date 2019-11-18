@@ -51,8 +51,8 @@
                         <div class="row">
                             <div class="col-md-7">
 
-                                <p style="margin-top: 10px;"><input type="checkbox" id="select_all" /> &nbsp;<span class="text-primary">Séléctionner tous</span></p>
                                 @if(!empty(config('columns.names')))
+                                    <p><label><input type="checkbox" id="select_all"> Tout séléctionner</label></p>
                                     @foreach(config('columns.names') as $key => $name)
                                         <div class="checkbox-inline checkbox-border">
                                             <label>

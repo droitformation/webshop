@@ -63,7 +63,7 @@ class Handler extends ExceptionHandler {
 		
 		if($e instanceof \App\Exceptions\FactureColloqueTestException)
 		{
-			        flash($e->getMessage())->warning();
+		    flash($e->getMessage())->warning();
 			return redirect()->back();
 		}
 

@@ -76,18 +76,6 @@ class ImportWorker implements ImportWorkerInterface
 
     public function import($data, UploadedFile $file)
     {
-    /*   $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
-        $file = $this->upload->upload( $file , 'files/import' );
-        if(!$file) { throw new \App\Exceptions\FileUploadException('Upload failed');}
-        $path = public_path('files/import/'.$file['name']);  */
-        // Read uploaded xls
-        //$results = $this->read($path);
-        //$path = \Storage::disk('imports')->put('', $file);
-        //if(!$path) {throw new \App\Exceptions\FileUploadException('Upload failed');}
-        // Read uploded xls
-        //$results = $this->import->read(public_path('files/imports/'.$path));
-        //$emails = validateListEmail($results);
-
         $newsletter_id = isset($data['newsletter_id']) && $data['newsletter_id'] > 0 ? $data['newsletter_id'] : null;
 
         $emails = $this->setFile($file)->uploadAndRead();
@@ -156,8 +144,6 @@ class ImportWorker implements ImportWorkerInterface
         $fp = fopen(public_path('files/imports/'.$image_name.'.csv'), 'wb');
 
         fputcsv($fp, $data);
-       // foreach ($data as $fields) {fputcsv($fp, $fields);}
-
         fclose($fp);
 
         return $image_name;

@@ -20,6 +20,11 @@ $( function() {
         language: 'fr'
     });
 
+    $('#select_all').on('click',function(){
+        var checked = this.checked ? true : false;
+        $('.checkbox_all').each(function(){ this.checked = checked; });
+    });
+
 });
 
 $(document).ready(ajustamodal);

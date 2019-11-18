@@ -78,9 +78,6 @@ class ExportController extends Controller
      */
     public function inscription(Request $request)
     {
-        //$colloque     = $this->colloque->find($request->input('id'));
-       // $inscriptions = $this->inscription->getByColloqueExport($colloque->id, $request->input('occurrence', []))
-
         $colloque   = $this->colloque->find($request->input('id'));
         $occurences = $request->input('dispatch', null) ? $colloque->occurrences : $colloque->occurrences->whereIn('id',$request->input('occurrence', []));
 
@@ -90,18 +87,6 @@ class ExportController extends Controller
         }) : collect([$this->inscription->getByColloqueExport($colloque->id)]);
 
         return \Excel::download(new \App\Exports\InscriptionExport($inscriptions,$colloque,$request->only(['sort','dispatch','occurrence','columns'])),'export_inscriptions.xlsx');
-
-        // tri salles (need occurences and dispatch)
-        // options checkbox or choice
-
-        $exporter = new \App\Droit\Generate\Export\ExportInscription();
-        $exporter->setColumns($request->input('columns', config('columns.names')))
-            ->setSort($request->input('sort', null))
-            ->setDispatch($request->input('dispatch', null));
-        
-        ini_set('memory_limit', '-1');
-        
-        $exporter->export($inscriptions, $colloque, $request->input('occurrence', []));
     }
 
     public function generate(Request $request)

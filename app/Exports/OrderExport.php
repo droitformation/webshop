@@ -42,7 +42,9 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
         $header = $this->details ? array_merge($columns,$details) : $columns;
         $header = $this->columns ? array_merge($header,$this->columns) : $header;
 
-        return [[''],$header] + $orders;
+        $sum    = $this->orders->sum('price_cents');
+
+        return array_merge([[''],$header] ,$orders,[[''],['Total','',$sum]]);
     }
 
     /**
