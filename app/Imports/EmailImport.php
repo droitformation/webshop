@@ -5,12 +5,19 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 
 class EmailImport implements ToArray, WithStartRow
 {
+    protected $start;
+
+    public function __construct($start = 2)
+    {
+        $this->start = $start;
+    }
+
     /**
      * @return int
      */
     public function startRow(): int
     {
-        return 2;
+        return $this->start;
     }
 
     /**

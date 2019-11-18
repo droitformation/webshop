@@ -7,12 +7,12 @@
 
     <table>
         <tr>
-            <td height="80px">
+            <td style="font-size: 20px; height: 100px;">
                 <h3>{{ $colloque->titre }}</h3>
                 <h4>{{ $colloque->soustitre }}</h4>
             </td>
-            <td>
-                <h4><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->organisateur }}</a></h4>
+            <td style="font-size: 17px;">
+                <h4 style="font-size: 17px;"><a style="font-size: 17px;" href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->organisateur }}</a></h4>
                 <p>{{ $colloque->event_date }}</p>
             </td>
         </tr>

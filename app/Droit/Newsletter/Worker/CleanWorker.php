@@ -29,28 +29,37 @@ class CleanWorker{
     public function save()
     {
         $emails = $this->getList();
+        $data   = collect($emails)->map(function ($item, $key) {return [$item];});
 
-        $data = collect($emails)->map(function ($item, $key) {return [$item];});
+   /*     \Excel::create($this->name, function($excel) use ($data) {
+            $excel->sheet('Sheetname', function($sheet) use ($data) { $sheet->fromArray($data); });
+        })->store('xls', storage_path('excel'));*/
 
-        \Excel::create($this->name, function($excel) use ($data) {
-            $excel->sheet('Sheetname', function($sheet) use ($data) {
-                $sheet->fromArray($data);
-            });
-        })->store('xls', storage_path('excel'));
+        (new \App\Imports\EmailStore($data))->store(storage_path('excel/'.$this->name.'.xls'));
 
         return $this;
     }
+
+
 
     /*
      * Load all emails form excel file
      * */
     public function read()
     {
-        $results = \Excel::load(storage_path('excel/'.$this->name.'.xls'), function($reader) {
+       /* $results = \Excel::load(storage_path('excel/'.$this->name.'.xls'), function($reader) {
             $reader->ignoreEmpty();
         })->get();
 
-        return $results->flatten()->all();
+        return $results->flatten()->all();*/
+
+        $results = \Excel::toArray(new \App\Imports\EmailImport(1), storage_path('excel/'.$this->name.'.xls'));
+
+        if(!isset($results) || empty(\Arr::flatten($results))) {
+            throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
+        }
+
+        return $results;
     }
 
     /*

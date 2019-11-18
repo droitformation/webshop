@@ -1,6 +1,21 @@
 <!-- Occurences -->
 @foreach($inscriptions as $occurence => $grouped)
 
+    <table align="left">
+        <tr>
+            <td style="font-size: 20px;">
+                <h1>{{ $colloque->titre }}</h1>
+                <h2>{{ $colloque->soustitre }}</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->organisateur }}</a></h3>
+                <p>{{ $colloque->event_date }}</p>
+            </td>
+        </tr>
+    </table>
+
     @if(is_string($occurence))
         <table align="left">
             <tr align="left">
