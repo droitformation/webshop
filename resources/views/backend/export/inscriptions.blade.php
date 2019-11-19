@@ -1,20 +1,16 @@
 <!-- Occurences -->
-@foreach($inscriptions as $occurence => $grouped)
 
-    <table align="left">
-        <tr>
-            <td style="font-size: 20px;">
-                <h1>{{ $colloque->titre }}</h1>
-                <h2>{{ $colloque->soustitre }}</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h3><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->organisateur }}</a></h3>
-                <p>{{ $colloque->event_date }}</p>
-            </td>
-        </tr>
-    </table>
+<table align="left">
+    <tr>
+        <td style="font-size: 20px;">
+            <h1>{{ $colloque->titre }}</h1>
+            <h2>{{ $colloque->soustitre }}</h2>
+        </td>
+    </tr>
+    <tr><td style="font-size: 15px;"><h3>{{ $colloque->organisateur }} | {{ $colloque->event_date }}</h3></td></tr>
+</table>
+
+@foreach($inscriptions as $occurence => $grouped)
 
     @if(is_string($occurence))
         <table align="left">
@@ -34,7 +30,7 @@
                     $option_name = $colloque->options->find($option_id);
                     $option_name = $option_name ? $option_name->title : 'Aucune option';
                     ?>
-                    <td style="font-size: 17px;">{{ $option_name }}</td>
+                    <td style="font-size: 15px;">{{ $option_name }}</td>
                 </tr>
             </table>
 
@@ -49,7 +45,7 @@
                         $option_name = $colloque->options->find($option_id);
                         $option_name = $option_name ? $option_name->title : '';
                     ?>
-                    <td style="font-size: 17px;">{{ $option_name }}</td>
+                    <td style="font-size: 16px;">{{ $option_name }}</td>
                 </tr>
             </table>
 
@@ -61,7 +57,7 @@
                             $name = $colloque->groupes->find($group_id);
                             $name = $name ? $name->text : '';
                         ?>
-                        <td style="font-size: 15px;">{{ $name }}</td>
+                        <td style="font-size: 13px;">{{ $name }}</td>
                     </tr>
                 </table>
 

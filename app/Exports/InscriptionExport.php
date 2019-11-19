@@ -98,7 +98,8 @@ class InscriptionExport implements FromView
         })->toArray() : ['Le compte a été supprimé!'];
 
         // String with the options
-        $data['all_options'] = $inscription->export_option_html;
+        $data['checkbox_options'] = $inscription->export_checkbox_html;
+        $data['choix_options']    = $inscription->export_choix_html;
 
         $data['filter_choices'] = !$inscription->user_options->isEmpty() ? $inscription->user_options->filter(function ($option, $key) {
             return in_array($option->option_id, array_keys($this->colloque->export_option_choix)) ? true : false;
@@ -118,9 +119,15 @@ class InscriptionExport implements FromView
         // Sort each person in each options
         array_walk($filter, function (&$value,$key) use ($data,$depth) {
             if($depth == 1){
+                if(isset($data['checkbox_options'])){
+                    unset($data['checkbox_options']);
+                }
                 $this->sorted[$value['option_id']][] = $data;
             }
             if($depth == 2){
+                if(isset($data['choix_options'])){
+                    unset($data['choix_options']);
+                }
                 $this->sorted[$value['option_id']][$value['groupe_id']][] = $data;
             }
         });

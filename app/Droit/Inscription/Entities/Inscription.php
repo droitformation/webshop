@@ -233,19 +233,48 @@ class Inscription extends Model
         return true;
     }
 
-    public function getExportOptionHtmlAttribute()
+    public function getExportChoixHtmlAttribute()
     {
         return $this->user_options->map(function ($group, $key)
         {
-            if(!isset($group->option)){
-                $option = $group->option()->withTrashed()->get();
-                $option = !$option->isEmpty() ? $option->first() : null;
+            if($group->groupe_id && isset($group->option_groupe)){
 
-                return $option ? 'Ancienne option: '.$option->title.($group->groupe_id ? ':' : '').($group->groupe_id ? $group->option_groupe->text : '') : '';
+                if(!isset($group->option)){
+                    $option = $group->option()->withTrashed()->get();
+                    $option = !$option->isEmpty() ? $option->first() : null;
+
+                    return $option ? 'Ancienne option '.$option->title.': '.$group->option_groupe->text : '';
+                }
+
+                return $group->option->title.': '.$group->option_groupe->text;
             }
 
-            return $group->option->title.($group->groupe_id ? ':' : '').($group->groupe_id && isset($group->option_groupe) ? $group->option_groupe->text : '');
+            return '';
 
+        })->reject(function ($name) {
+            return empty($name);
+        })->implode(';');
+    }
+
+    public function getExportCheckboxHtmlAttribute()
+    {
+        return $this->user_options->map(function ($group, $key)
+        {
+            if(!isset($group->option_groupe)){
+                if(!isset($group->option)){
+                    $option = $group->option()->withTrashed()->get();
+                    $option = !$option->isEmpty() ? $option->first() : null;
+
+                    return $option ? 'Ancienne option: '.$option->title : '';
+                }
+
+                return $group->option->title;
+            }
+
+            return '';
+
+        })->reject(function ($name) {
+            return empty($name);
         })->implode(';');
     }
 
