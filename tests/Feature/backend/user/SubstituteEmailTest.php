@@ -59,23 +59,16 @@ class SubstituteEmailTest extends TestCase
 
     public function testExportRemoveSubstitude()
     {
-        $export = new \App\Droit\Generate\Export\ExportAdresse();
+        $adresse1 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create(['type' => 1, 'email' => '34rsw0anowewTwe@publications-droit.ch']);
+        $adresse2 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create(['type' => 1, 'email' => 'cindy.leschaud@gmail.com']);
 
-        $adresse1 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
-            'type'    => 1,
-            'email'   => '34rsw0anowewTwe@publications-droit.ch'
-        ]);
-
-        $adresse2 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create([
-            'type'    => 1,
-            'email'   => 'cindy.leschaud@gmail.com'
-        ]);
+        $export = new \App\Exports\AdresseExport(collect([$adresse1,$adresse2]));
 
         $prepared = $export->prepareAdresse(collect([$adresse1,$adresse2]));
 
-        $this->assertEquals(2,$prepared->count());
-        $this->assertTrue(!in_array('34rsw0anowewTwe@publications-droit.ch',$prepared->flatten()->toArray()));
-        $this->assertTrue(in_array('cindy.leschaud@gmail.com',$prepared->flatten()->toArray()));
+        $this->assertEquals(2,count($prepared));
+        $this->assertTrue(!in_array('34rsw0anowewTwe@publications-droit.ch',\Arr::flatten($prepared)));
+        $this->assertTrue(in_array('cindy.leschaud@gmail.com',\Arr::flatten($prepared)));
     }
 
     /**

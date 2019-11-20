@@ -49,14 +49,10 @@ class ImportTest extends TestCase
         $this->upload = \Mockery::mock('App\Droit\Service\UploadInterface');
         $this->app->instance('App\Droit\Service\UploadInterface', $this->upload);
 
-        $this->excel = \Mockery::mock('Maatwebsite\Excel\Excel');
-        $this->app->instance('Maatwebsite\Excel\Excel', $this->excel);
-
         $this->import = new \App\Droit\Newsletter\Worker\ImportWorker(
             $this->worker,
             $this->subscription,
             $this->newsletter,
-            $this->excel,
             $this->campagne,
             $this->camp,
             $this->upload

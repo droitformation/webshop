@@ -32,7 +32,6 @@ class ImportWorker implements ImportWorkerInterface
         MailjetServiceInterface $mailjet ,
         NewsletterUserInterface $subscriber,
         NewsletterInterface $newsletter,
-        Excel $excel,
         NewsletterCampagneInterface $campagne,
         CampagneInterface $worker,
         UploadInterface $upload
@@ -41,7 +40,6 @@ class ImportWorker implements ImportWorkerInterface
         $this->mailjet    = $mailjet;
         $this->newsletter = $newsletter;
         $this->subscriber = $subscriber;
-        $this->excel      = $excel;
         $this->campagne   = $campagne;
         $this->worker     = $worker;
         $this->mailjet    = $mailjet;

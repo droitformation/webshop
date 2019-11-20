@@ -20,7 +20,6 @@ class OrderController extends Controller {
     protected $coupon;
     protected $categorie;
     protected $order;
-    protected $export;
     protected $pdfgenerator;
     protected $worker;
     protected $adresse;
@@ -54,7 +53,6 @@ class OrderController extends Controller {
         $this->pdfgenerator  = $pdfgenerator;
         $this->ordermaker    = $ordermaker;
 
-        $this->export = new \App\Droit\Generate\Excel\ExcelOrder();
         $this->helper = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');

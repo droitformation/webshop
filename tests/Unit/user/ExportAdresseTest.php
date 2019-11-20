@@ -212,8 +212,6 @@ class ExportAdresseTest extends TestCase
 
     public function testPrepareAdresse()
     {
-        $exporter = new \App\Droit\Generate\Export\ExportAdresse();
-
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->make([
             'civilite_id'   => 2,
             'first_name'    => 'Cindy',
@@ -232,9 +230,9 @@ class ExportAdresseTest extends TestCase
         ]);
 
         $adresses = collect([$adresse]);
+        $exporter = new \App\Exports\AdresseExport($adresses);
 
-        $converted = $exporter->prepareAdresse($adresses);
-        $converted = $converted->toArray();
+        $converted = $exporter->prepareAdresse();
 
         $expect = [
             'Madame', 'Cindy','Leschaud', 'cindy.leschaud@gmail.com', 'Avocat', 'DesignPond', '032 690 00 23', '032 690 00 23',

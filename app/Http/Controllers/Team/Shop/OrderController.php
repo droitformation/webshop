@@ -10,7 +10,6 @@ use App\Droit\Shop\Shipping\Repo\ShippingInterface;
 class OrderController extends Controller {
     
     protected $order;
-    protected $export;
     protected $shipping;
     protected $helper;
     
@@ -24,7 +23,6 @@ class OrderController extends Controller {
         $this->order         = $order;
         $this->shipping      = $shipping;
 
-        $this->export = new \App\Droit\Generate\Excel\ExcelOrder();
         $this->helper = new \App\Droit\Helper\Helper();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');

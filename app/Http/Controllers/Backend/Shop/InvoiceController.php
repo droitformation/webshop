@@ -12,7 +12,6 @@ class InvoiceController extends Controller {
     
     protected $order;
     protected $pdfgenerator;
-    protected $export;
 
 	/**
 	 * Create a new controller instance.
@@ -23,8 +22,6 @@ class InvoiceController extends Controller {
 	{
         $this->order         = $order;
         $this->pdfgenerator  = $pdfgenerator;
-
-        $this->export = new \App\Droit\Generate\Excel\ExcelOrder();
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 	}

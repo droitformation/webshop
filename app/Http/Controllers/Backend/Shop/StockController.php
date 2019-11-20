@@ -42,9 +42,7 @@ class StockController extends Controller
         $product = $this->product->find($id);
         $stocks  = $product->stocks;
 
-        $export = new \App\Droit\Generate\Export\ExportStock();
-
-        return $export->export($stocks);
+        return \Excel::download(new \App\Exports\StockExport($stocks), 'Export_historique_stock_' . date('dmy').'.xlsx');
     }
 
     public function qty(Request $request)

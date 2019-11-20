@@ -23,7 +23,7 @@ class AdresseExport implements FromArray, WithHeadings, WithEvents
 
     public function array(): array
     {
-        return $this->prepareAdresse($this->adresses);
+        return $this->prepareAdresse();
     }
 
     /**
@@ -38,17 +38,15 @@ class AdresseExport implements FromArray, WithHeadings, WithEvents
         ];
     }
 
-    public function prepareAdresse($adresses)
+    public function prepareAdresse()
     {
         $columns = collect(array_keys(config('columns.names')));
 
-        return $adresses->map(function ($adresse) use ($columns) {
+        return $this->adresses->map(function ($adresse) use ($columns) {
             return $columns->map(function ($column) use ($adresse)
             {
                 // withdraw substitute @publications-droit.ch emails from excel
-                if($column == 'email' && (substr(strrchr($adresse->$column, "@"), 1) == 'publications-droit.ch')){
-                    return '';
-                }
+                if($column == 'email' && (substr(strrchr($adresse->$column, "@"), 1) == 'publications-droit.ch')){return '';}
 
                 return trim(html_entity_decode($adresse->$column));
             });
