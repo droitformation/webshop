@@ -14,7 +14,7 @@ class InscriptionExport implements FromView
     protected $dispatch;
     protected $occurrence;
 
-    protected $sorted;
+    public $sorted;
 
     public function __construct($inscriptions, $colloque, $filters)
     {
@@ -68,14 +68,6 @@ class InscriptionExport implements FromView
 
             return [$name => $this->sorted];
         });
-/*
-        foreach($sorted as $occurence => $grouped){
-                   echo '<pre>';
-                    print_r($occurence);
-                    echo '</pre>';
-                    exit();
-        }*/
-
 
         return $sorted;
     }

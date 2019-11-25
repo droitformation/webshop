@@ -30,8 +30,6 @@ class ExportInscriptionsTest extends TestCase
 
    public function testTextUserOption()
     {
-        $exporter = new \App\Droit\Generate\Export\ExportInscription();
-
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make(['colloque_id' => '12']);
 
         $option1 = factory(\App\Droit\Option\Entities\OptionUser::class)->make(['id' => 1,'title' => 'Option checkbox', 'type' => 'checkbox']);
@@ -48,11 +46,17 @@ class ExportInscriptionsTest extends TestCase
 
         $inscription->user_options = new \Illuminate\Database\Eloquent\Collection([$user_option1,$user_option2]);
 
-        $expect = 'Option checkbox;Option choix:The text';
-        $html   = $exporter->userOptionsHtml($inscription->user_options);
+        $expect = 'Option checkbox';
+
+        $html = $inscription->export_checkbox_html;
 
         $this->assertEquals($expect, $html);
 
+        $expect = 'Option choix: The text';
+
+        $html = $inscription->export_choix_html;
+
+        $this->assertEquals($expect, $html);
     }
 
     public function testSortByOptions()
@@ -78,9 +82,7 @@ class ExportInscriptionsTest extends TestCase
 
         $data = ['Name' => 'Cindy Leschaud'];
 
-        $exporter = new \App\Droit\Generate\Export\ExportInscription();
-        $exporter->options = ['1' => 'Option choix 1', '2' => 'Option choix 2'];
-        $exporter->groupes = ['1' => 'The text 1', '2' => 'The text 2'];
+        $exporter = new \App\Exports\InscriptionExport(collect($inscription),$inscription->colloque, ['sort']);
 
         $filter = [
             [
@@ -93,11 +95,11 @@ class ExportInscriptionsTest extends TestCase
             ]
         ];
 
-        $exporter->sortByOption($filter, $inscription, $depth = 1);
+        $exporter->sortByOption($filter, $data, $depth = 1);
 
         $expect = [
-            1 => [0 => $inscription],
-            2 => [0 => $inscription]
+            1 => [0 => $data],
+            2 => [0 => $data]
         ];
 
         $this->assertEquals($exporter->sorted, $expect);
