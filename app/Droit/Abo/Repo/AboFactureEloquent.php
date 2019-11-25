@@ -57,6 +57,9 @@ class AboFactureEloquent implements AboFactureInterface{
     {
         return $this->facture->has('abonnement.abo')
             ->with(['rappels','abonnement'])
+            ->whereHas('abonnement', function ($query) {
+                $query->where('status', '!=' ,'gratuit');
+            })
             ->where('product_id','=',$product_id)
             ->whereNull('payed_at')
             ->get();
