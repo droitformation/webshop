@@ -4,6 +4,7 @@ namespace Queueworker\SansDaemon;
 
 use Illuminate\Queue\QueueServiceProvider;
 use Queueworker\SansDaemon\Console\WorkCommand;
+use Illuminate\Contracts\Foundation\Application;
 
 class SansDaemonServiceProvider extends QueueServiceProvider
 {
@@ -26,8 +27,8 @@ class SansDaemonServiceProvider extends QueueServiceProvider
      */
     protected function registerWorkCommand()
     {
-        $this->app->extend('command.queue.work', function ($command, $app) {
-            return new WorkCommand($app['queue.worker']);
+        $this->app->extend('command.queue.work', function ($command, Application $app) {
+            return new WorkCommand($app['queue.worker'], $app['cache.store']);
         });
     }
 }

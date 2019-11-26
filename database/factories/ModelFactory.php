@@ -163,7 +163,7 @@ $factory->define(App\Droit\User\Entities\User::class, function (Faker\Generator 
         'first_name' => $faker->firstName,
         'last_name'  => $faker->lastName,
         'email'      => $faker->email,
-        'password'   => bcrypt(str_random(10))
+        'password'   => bcrypt(\Str::random(10))
     ];
 });
 

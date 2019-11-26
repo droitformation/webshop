@@ -8,7 +8,7 @@
 
  class ExportAdresse{
 
-     use DispatchesJobs;
+/*     use DispatchesJobs;
      
      protected $store = null;
 
@@ -54,6 +54,6 @@
                  return trim(html_entity_decode($adresse->$column));
              });
          });
-     }
+     }*/
 
  }

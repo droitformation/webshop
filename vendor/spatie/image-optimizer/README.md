@@ -41,7 +41,7 @@ The package will use these optimizers if they are present on your system:
 - [Pngquant 2](https://pngquant.org/)
 - [SVGO](https://github.com/svg/svgo)
 - [Gifsicle](http://www.lcdf.org/gifsicle/)
-- [Imagemin](https://github.com/imagemin/imagemin)
+- [cwebp](https://developers.google.com/speed/webp/docs/precompiled)
 
 Here's how to install all the optimizers on Ubuntu:
 
@@ -81,6 +81,8 @@ JPGs will be made smaller by running them through [JpegOptim](http://freecode.co
 PNGs will be made smaller by running them through two tools. The first one is [Pngquant 2](https://pngquant.org/), a lossy PNG compressor. We set no extra options, their defaults are used. After that we run the image through a second one: [Optipng](http://optipng.sourceforge.net/). These options are used:
 - `-i0`: this will result in a non-interlaced, progressive scanned image
 - `-o2`: this set the optimization level to two (multiple IDAT compression trials)
+
+This package only supports Pngquant 2.5 and lower.
 
 ### SVGs
 
