@@ -210,6 +210,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.mask.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
 

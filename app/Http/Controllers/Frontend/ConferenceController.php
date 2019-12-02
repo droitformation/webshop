@@ -10,10 +10,13 @@ class ConferenceController extends Controller
         $academiques = \Registry::get('academiques');
         $conference  = \Registry::get('conference');
 
+        $date = \Carbon\Carbon::createFromFormat('Y-m-d',$conference['date']);
+        $isFuture = $date->isFuture();
+
         $count  = isset($academiques) && !empty($academiques) ? count($academiques) : 0;
         $isOpen = \Registry::get('conference') !== null && $count < $conference['places'] ? true : false;
 
-        return view('frontend.conferences')->with(['isOpen' => $isOpen]);
+        return view('frontend.conferences')->with(['isOpen' => $isOpen, 'isFuture' => $isFuture]);
     }
 
     public function store(Request $request)

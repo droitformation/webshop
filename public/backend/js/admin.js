@@ -436,6 +436,14 @@ $( function() {
         });
     });
 
+    var btn = document.getElementById('copyUrlbtn');
+    var clipboard = new ClipboardJS(btn);
+
+    clipboard.on('success', function(e) {
+        alert('Lien copié dans le press-papier!');
+        e.clearSelection();
+    });
+
 });
 
 $(document).ready(ajustamodal);

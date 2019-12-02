@@ -49,6 +49,7 @@ Vue.component('edit-bloc', require('./components/EditBloc.vue').default);
 Vue.component('product-select', require('./components/ProductSelect.vue').default);
 Vue.component('facturation-adresse', require('./components/FacturationAdresse.vue').default);
 Vue.component('adresse-update', require('./components/AdresseUpdate.vue').default);
+Vue.component('choix-duplicate', require('./components/ChoixDuplicate.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);
