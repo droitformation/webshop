@@ -14,7 +14,7 @@ class SondageEloquent implements SondageInterface{
 
     public function getAll()
     {
-        return $this->sondage->with(['colloque','avis'])->get();
+        return $this->sondage->with(['colloque','avis'])->orderBy('created_at','DESC')->get();
     }
 
     public function find($id)
