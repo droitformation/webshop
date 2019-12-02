@@ -30,6 +30,22 @@
                             <label><strong>Email</strong></label>
                             <input type="email" class="form-control" required name="email" value="{{ old('email') }}">
                         </div>
+
+                        @if(\Registry::get('conference.choices') !== null && !empty(\Registry::get('conference.choices')))
+
+                            <div class="form-group">
+                            <label><strong>A choix</strong></label>
+                                @foreach(\Registry::get('conference.choices') as $i => $choice)
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="choices[{{ $i }}]" value="{{ $choice }}">
+                                        <label class="form-check-label">
+                                            {{ $choice }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                         <p class="text-right"><button type="submit" class="btn btn-primary">Envoyer &nbsp; <i class="fa fa-arrow-circle-o-right"></i></button></p>
                     </form>
                 </div>

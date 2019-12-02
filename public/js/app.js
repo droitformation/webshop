@@ -2919,6 +2919,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['choix'],
   components: {},
@@ -33326,16 +33327,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "form-group" },
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { type: "button" },
-          on: { click: _vm.add }
-        },
-        [_c("i", { staticClass: "fa fa-plus" }), _vm._v(" ajouter une option")]
-      ),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("p", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: { click: _vm.add }
+          },
+          [
+            _c("i", { staticClass: "fa fa-plus" }),
+            _vm._v(" ajouter une option")
+          ]
+        )
+      ]),
       _vm._v(" "),
       _vm._l(_vm.choices, function(item, index) {
         return _c("div", { staticClass: "choix-input" }, [
@@ -33360,7 +33369,14 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Options")])])
+  }
+]
 render._withStripped = true
 
 

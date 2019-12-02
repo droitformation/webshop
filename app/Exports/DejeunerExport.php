@@ -15,7 +15,16 @@ class DejeunerExport implements FromArray, WithHeadings, WithEvents
 
     public function __construct($participants,$dejeuner)
     {
-        $this->participants = $participants;
+
+        $this->participants = collect($participants)->map(function ($person) {
+            return [
+                'first_name' => $person['first_name'],
+                'last_name'  => $person['last_name'],
+                'email'      => $person['email'],
+                'choices'    => isset($person['choices']) ? implode(', ',$person['choices']) : ''
+            ];
+        })->toArray();
+
         $this->dejeuner = $dejeuner;
     }
 
@@ -27,7 +36,7 @@ class DejeunerExport implements FromArray, WithHeadings, WithEvents
     {
         $date = frontendDate($this->dejeuner['date']);
 
-        return [[$date,'',''],['','',''],['Prénom','Nom','Email']] + $this->participants;
+        return [[$date,'',''],['','',''],['Prénom','Nom','Email','Choix']] + $this->participants;
     }
 
     /**
@@ -41,7 +50,7 @@ class DejeunerExport implements FromArray, WithHeadings, WithEvents
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(17);
                 $cellRange1 = 'A2:C2'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange1)->getFont()->setSize(14);
-                $cellRange2 = 'A4:C4'; // All headers
+                $cellRange2 = 'A4:D4'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange2)->getFont()->setBold(true);
             },
         ];

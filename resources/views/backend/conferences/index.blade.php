@@ -53,6 +53,13 @@
                         <div class="row">
                             <div class="col-md-10">
                                 <p><strong><i class="fa fa-caret-right"></i> &nbsp; {{ $personne['first_name'] }} {{ $personne['last_name'] }}</strong></p>
+                                @if(isset($personne['choices']) && !empty($personne['choices']))
+                                    <ul>
+                                        @foreach($personne['choices'] as $choice)
+                                            <li>{{ $choice }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
                             <div class="col-md-2 text-right">
                                 <form action="{{ url('dejeuner') }}" method="POST" class="form-horizontal">

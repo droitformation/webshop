@@ -32,7 +32,7 @@ class ConferenceController extends Controller
         }
 
         // Add to array
-        $academiques[] = $request->only(['first_name','last_name','email']);
+        $academiques[] = $request->only(['first_name','last_name','email','choices']);
 
         \Registry::store(['academiques' => $academiques]);
 
