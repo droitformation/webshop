@@ -17,8 +17,9 @@
                         <thead>
                         <tr>
                             <th class="col-sm-2">Action</th>
-                            <th class="col-sm-3">Images</th>
+                            <th class="col-sm-2">Images</th>
                             <th class="col-sm-3">Titre</th>
+                            <th class="col-sm-3 text-right no-sort">Exporter</th>
                             <th class="col-sm-2 no-sort"></th>
                         </tr>
                         </thead>
@@ -28,6 +29,12 @@
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/categorie/'.$categorie->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><img height="40" src="{!! secure_asset('files/pictos/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
                                     <td><strong>{{ $categorie->title }}</strong></td>
+                                    <td class="text-right">
+                                        <form action="{{ url('admin/categorie/export') }}" method="POST" class="form-horizontal">
+                                            <input type="hidden" name="id" value="{{ $categorie->id }}">{!! csrf_field() !!}
+                                            <button type="submit" class="btn btn-inverse btn-sm">Exporter liste des arrêts</button>
+                                        </form>
+                                    </td>
                                     <td class="text-right">
                                         <form id="deleteCategorieForm_" action="{{ url('admin/categorie/'.$categorie->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}

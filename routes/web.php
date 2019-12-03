@@ -519,6 +519,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         Route::get('categories/{site}','Backend\Content\CategorieController@index');
         Route::get('categorie/create/{site}','Backend\Content\CategorieController@create');
+        Route::post('categorie/export','Backend\Content\CategorieController@export');
         Route::resource('categorie', 'Backend\Content\CategorieController');
 
         Route::get('blocs/{site}','Backend\Content\BlocController@index');

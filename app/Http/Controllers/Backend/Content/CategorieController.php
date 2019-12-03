@@ -164,4 +164,11 @@ class CategorieController extends Controller {
 
         return response()->json( $arrets, 200 );
     }
+
+    public function export(Request $request)
+    {
+        $categorie = $this->categorie->find($request->input('id'));
+
+        return \Excel::download(new \App\Exports\ArretListExport($categorie), 'arrets_categories_'.\Str::slug($categorie->title).'_'. date('dmy').'.xlsx');
+    }
 }

@@ -15,7 +15,6 @@ class DejeunerExport implements FromArray, WithHeadings, WithEvents
 
     public function __construct($participants,$dejeuner)
     {
-
         $this->participants = collect($participants)->map(function ($person) {
             return [
                 'first_name' => $person['first_name'],
