@@ -679,6 +679,17 @@ $factory->define(App\Droit\Newsletter\Entities\Newsletter_emails::class, functio
     ];
 });
 
+$factory->define(App\Droit\Shop\Stock\Entities\Stock::class, function (Faker\Generator $faker) {
+    return [
+        'product_id' => 1,
+        'amount' => '1',
+        'motif' => 'motif du changement',
+        'operator' => '+',
+        'created_at' => date('Y-m-d')
+    ];
+});
+
+
 $factory->define(App\Droit\Newsletter\Entities\Newsletter_contents::class, function (Faker\Generator $faker) {
     return [
         'type_id'       => 6, // text

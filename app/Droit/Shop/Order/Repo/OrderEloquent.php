@@ -31,7 +31,7 @@ class OrderEloquent implements OrderInterface{
         $send     = isset($data['send']) ? $data['send'] : null;
         $onlyfree = isset($data['onlyfree']) ? $data['onlyfree'] : null;
         
-        return $this->order->with(['products','user' ,'coupon','shipping','user.adresses','adresse'])
+        return $this->order->with(['products','user','coupon','shipping','user.adresses','adresse'])
             ->period($data['period'])
             ->status($status)
             ->send($send)

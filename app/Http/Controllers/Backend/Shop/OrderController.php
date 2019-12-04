@@ -69,7 +69,7 @@ class OrderController extends Controller {
 	public function index(Request $request, $back = null)
 	{
         // Defaults
-        $data = ['period' => ['start' => \Carbon\Carbon::now()->startOfMonth()->toDateString(), 'end' => \Carbon\Carbon::now()->endOfMonth()->toDateString() ]];
+        $data = ['period' => ['start' => \Carbon\Carbon::now()->startOfMonth()->toDateString(), 'end' => \Carbon\Carbon::now()->endOfMonth()->toDateString()]];
 
         if($back){
             $session = session()->has('order_search') ? session()->get('order_search') : [];
@@ -80,7 +80,9 @@ class OrderController extends Controller {
             session(['order_search' => $data]);
         }
 
-        $orders    = isset($data['order_no']) ? $this->order->search($data['order_no']) : $this->order->getPeriod($data);
+        $orders = isset($data['order_no']) ? $this->order->search($data['order_no']) : $this->order->getPeriod($data);
+
+
         $cancelled = $this->order->getTrashed($data['period']);
 
         // filter invalid order beacuse no user adresse

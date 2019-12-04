@@ -23,7 +23,7 @@ $(document).ready(function() {
     var initabo = function()
     {
         var api    = this.api();
-        var column = api.column(5);
+        var column = api.column(6);
 
         var select = $('<select class="form-control"><option value="">Filtrer par status</option></select>')
             .appendTo( $(column.header()).empty()).on( 'change', function () {

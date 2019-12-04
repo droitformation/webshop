@@ -7,7 +7,7 @@ class Stock extends Model{
 
     protected $table = 'shop_stocks';
 
-    protected $fillable = ['product_id','amount','motif','operator'];
+    protected $fillable = ['product_id','amount','motif','operator','created_at'];
 
     public function product()
     {

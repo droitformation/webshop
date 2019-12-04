@@ -278,7 +278,7 @@ class ObjectFactory
         return $product;
     }
 
-    public function order($nbr, $user_id = null)
+    public function order($nbr, $user_id = null, $isFree = null)
     {
         $product = new \App\Droit\Shop\Product\Entities\Product();
         $exist   = $product->all();
@@ -302,12 +302,14 @@ class ObjectFactory
                 'coupon_id'   => null,
                 'payement_id' => 1,
                 'order_no'    => '2016-0000000'.$x.'',
-                'amount'      => $amount,
-                'shipping_id' => 1,
+                'amount'      => $isFree ? 0 : $amount,
+                'shipping_id' => $isFree ? 6 : 1,
                 'status' => 'pending',
             ]);
 
-            $order->products()->attach($products->pluck('id')->all());
+            foreach ($products->pluck('id')->all() as $id){
+                $order->products()->attach($id, ['isFree' => $isFree]);
+            }
 
             $orders[] = $order;
         }

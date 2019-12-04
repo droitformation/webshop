@@ -124,7 +124,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
     {
         return $abonnes
             ->groupBy(function ($item, $key) {
-                if($item->status == 'tiers'){return 'tiers'; }
+                if($item->status == 'tiers'){return 'tiers';}
                 if($item->exemplaires > 1){return 'multiple';}
                 return 'abonne';
             })->map(function ($item, $key) use ($product) {
