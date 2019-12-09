@@ -79,21 +79,34 @@ class AboFileController extends Controller {
         $status  =  !empty($request->input('status')) ? $request->input('status') : ['abonne','tiers','gratuit'];
         $abonnes = $abo->abonnements->whereIn('status', $status );
 
+        $status = $request->input('status','tous');
+        /*
+              $adresses = $this->prepareAdresse($abonnes);
+
+           $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
+              $writer = WriterFactory::create(Type::XLSX); // for XLSX files
+
+              $filename = storage_path('excel/abo_statut_'.$request->input('status','tous').'.xlsx');
+
+              $writer->openToBrowser($filename);
+              $writer->addRowWithStyle($this->columns,$defaultStyle); // add multiple rows at a time
+
+              if(!$adresses->isEmpty()){
+                  $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
+              }
+
+              $writer->close();exit;*/
+
         $adresses = $this->prepareAdresse($abonnes);
+        ////////////
+        \Excel::create('abo_statut_'.$status.'.xls', function ($excel) use ($adresses){
+            $excel->sheet('status', function ($sheet) use ($adresses){
+                $sheet->appendRow($this->columns);
+                $sheet->row($sheet->getHighestRow(), function ($row) { $row->setFontWeight('bold')->setFontSize(14);});
+                $sheet->rows($adresses);
+            });
+        })->download('xlsx');
 
-        $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
-        $writer = WriterFactory::create(Type::XLSX); // for XLSX files
-
-        $filename = storage_path('excel/abo_statut_'.$request->input('status','tous').'.xlsx');
-
-        $writer->openToBrowser($filename);
-        $writer->addRowWithStyle($this->columns,$defaultStyle); // add multiple rows at a time
-
-        if(!$adresses->isEmpty()){
-            $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
-        }
-
-        $writer->close();exit;
     }
 
     public function prepareAdresse($abonnes)
