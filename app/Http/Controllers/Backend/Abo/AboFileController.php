@@ -81,6 +81,8 @@ class AboFileController extends Controller {
 
         $adresses = $this->prepareAdresse($abonnes, $request->input('facturation',null));
 
+       // return \Excel::download(new \App\Exports\AboExport($abonnes,$this->columns,$request->input('facturation',null)), 'abo_statut_'.$request->input('status','tous').'.xlsx');
+
         $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
         $writer = WriterFactory::create(Type::XLSX); // for XLSX files
 
