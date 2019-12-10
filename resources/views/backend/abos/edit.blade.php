@@ -86,7 +86,7 @@
                                 <textarea class="form-control redactorSimple" name="remarque">{!! $abo->remarque !!}</textarea>
                             </div>
                             <div class="col-sm-4 col-xs-12">
-                                <p class="help-block">Indiqué dans le shop (panier)</p>
+                                <p class="help-block">Indiqué dans les communications sur la facture</p>
                             </div>
                         </div>
 

@@ -157,14 +157,15 @@
             <td width="62%" align="top" valign="top">
 
                 <h3>Communications</h3>
-                <div class="communications"><?php echo \Registry::get('shop.abo.message'); ?></div>
                 <div class="communications">
 
                     @if($abo->payed_at)
                         <p class="message special">Acquitté le {{ $abo->payed_at->format('d/m/Y') }}</p>
                     @endif
 
-                    @if(!empty(\Registry::get('abo.message')))
+                    @if(!empty($abo->abo->remarque))
+                        {!! $abo->abo->remarque !!}
+                    @elseif(!empty(\Registry::get('abo.message')))
                         {!! \Registry::get('abo.message') !!}
                     @endif
 
