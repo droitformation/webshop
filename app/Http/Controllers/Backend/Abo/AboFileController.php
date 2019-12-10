@@ -79,55 +79,6 @@ class AboFileController extends Controller {
         $status  =  !empty($request->input('status')) ? $request->input('status') : ['abonne','tiers','gratuit'];
         $abonnes = $abo->abonnements->whereIn('status', $status );
 
-        $adresses = $this->prepareAdresse($abonnes, $request->input('facturation',null));
-
-       // return \Excel::download(new \App\Exports\AboExport($abonnes,$this->columns,$request->input('facturation',null)), 'abo_statut_'.$request->input('status','tous').'.xlsx');
-
-        $defaultStyle = (new StyleBuilder())->setFontName('Arial')->setFontSize(11)->build();
-        $writer = WriterFactory::create(Type::XLSX); // for XLSX files
-
-        $filename = storage_path('excel/abo_statut_'.$request->input('status','tous').'.xlsx');
-
-        $writer->openToBrowser($filename);
-        $writer->addRowWithStyle($this->columns,$defaultStyle); // add multiple rows at a time
-
-        if(!$adresses->isEmpty()){
-            $writer->addRowsWithStyle($adresses->toArray(),$defaultStyle); // add multiple rows at a time
-        }
-
-        $writer->close();exit;
-    }
-
-    public function prepareAdresse($abonnes, $facturation = null)
-    {
-        return $abonnes->map(function ($abo) use ($facturation) {
-
-            $adresse = $facturation ? $abo->user_facturation : $abo->user_adresse;
-
-            if(isset($adresse)){
-                return [
-                    'civilite_title'   => trim($adresse->civilite_title),
-                    'first_name'       => trim($adresse->first_name),
-                    'last_name'        => trim($adresse->last_name),
-                    'email'            => $facturation ? '' : trim($adresse->email),
-                    'profession_title' => $facturation ? '' : trim($adresse->profession_title),
-                    'company'          => trim($adresse->company),
-                    'telephone'        => trim($adresse->telephone),
-                    'mobile'           => trim($adresse->mobile),
-                    'adresse'          => trim($adresse->adresse),
-                    'cp_trim'          => trim($adresse->cp_trim),
-                    'complement'       => trim($adresse->complement),
-                    'npa'              => trim($adresse->npa),
-                    'ville'            => trim($adresse->ville),
-                    'canton_title'     => trim($adresse->canton_title),
-                    'pays_title'       => trim($adresse->pays_title),
-                    'exemplaires'      => trim($abo->exemplaires),
-                    'numero'           => trim($abo->numero),
-                ];
-            }
-
-            return '';
-
-        });
+        return \Excel::download(new \App\Exports\AboExport($abonnes,$this->columns,$request->input('facturation',null)), 'abo_statut_'.$request->input('status','tous').'.xlsx');
     }
 }

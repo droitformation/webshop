@@ -49,29 +49,31 @@ class AboExport implements FromArray, WithHeadings, WithEvents
             $adresse = $this->facturation ? $abo->user_facturation : $abo->user_adresse;
 
             if(isset($adresse)){
-                return array_values([
-                    'civilite_title'   => trim($adresse->civilite_title),
-                    'first_name'       => trim($adresse->first_name),
-                    'last_name'        => trim($adresse->last_name),
-                    'email'            => $this->facturation ? '' : trim($adresse->email),
-                    'profession_title' => $this->facturation ? '' : trim($adresse->profession_title),
-                    'company'          => trim($adresse->company),
-                    'telephone'        => trim($adresse->telephone),
-                    'mobile'           => trim($adresse->mobile),
-                    'adresse'          => trim($adresse->adresse),
-                    'cp_trim'          => trim($adresse->cp_trim),
-                    'complement'       => trim($adresse->complement),
-                    'npa'              => trim($adresse->npa),
-                    'ville'            => trim($adresse->ville),
-                    'canton_title'     => trim($adresse->canton_title),
-                    'pays_title'       => trim($adresse->pays_title),
-                    'exemplaires'      => trim($abo->exemplaires),
-                    'numero'           => trim($abo->numero),
-                ]);
+                return [
+                    trim($adresse->civilite_title),
+                    trim($adresse->first_name),
+                    trim($adresse->last_name),
+                    $this->facturation ? '' : trim($adresse->email),
+                    $this->facturation ? '' : trim($adresse->profession_title),
+                    trim($adresse->company),
+                    trim($adresse->telephone),
+                    trim($adresse->mobile),
+                    trim($adresse->adresse),
+                    trim($adresse->cp_trim),
+                    trim($adresse->complement),
+                    trim($adresse->npa),
+                    trim($adresse->ville),
+                    trim($adresse->canton_title),
+                    trim($adresse->pays_title),
+                    trim($abo->exemplaires),
+                    trim($abo->numero),
+                ];
             }
 
-            return '';
+            return [];
 
-        })->values()->toArray();
+        })->reject(function ($row, $key) {
+            return empty($row);
+        })->toArray();
     }
 }
