@@ -1546,3 +1546,17 @@ span.avis-hidden-square{
     border: 1px solid #f1f1f1;
     padding: 3px 5px;
 }
+
+.indication{
+    display: flex;
+    flex-flow: row;
+    justify-content: start;
+    margin-bottom: 20px;
+}
+
+.indication span{
+    display:inline-block;
+    width: 15px;
+    height: 20px;
+    margin-right: 8px;
+}
