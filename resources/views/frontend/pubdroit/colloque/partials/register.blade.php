@@ -30,7 +30,7 @@
                             <adresse-update
                                     :main="{{ $adresse_livraison }}"
                                     :original="{{ $adresse_livraison }}"
-                                    title="Adresse de livraison"
+                                    title="Adresse de contact"
                                     type="1"></adresse-update>
                         </address>
                         <address id="userFacturation">

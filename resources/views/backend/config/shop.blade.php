@@ -134,6 +134,18 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <h4><i class="fa fa-exclamation"></i> &nbsp;Avertissement payement</h4>
+                    <div class="panel panel-warning">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label><strong>Avertissement sur facture</strong></label>
+                                <textarea name="shop[avertissement]" class="form-control redactorLimit">{!! Registry::get('shop.avertissement') !!}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-info btn-sm pull-right">Mettre à jour</button>
+                    </div>
                 </div>
             </div>
 

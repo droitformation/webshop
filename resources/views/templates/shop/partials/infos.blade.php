@@ -11,6 +11,12 @@
                     <p class="message special">Acquitté le {{ $generate->order()->payed_at->format('d/m/Y') }}</p>
                 @endif
 
+                @if(!empty(\Registry::get('shop.avertissement')))
+                    <div class="important">
+                        {!! \Registry::get('shop.avertissement') !!}
+                    </div>
+                @endif
+
                 @if(!empty($messages) && !empty(config('generate.order.msgTypes')))
                     @foreach(config('generate.order.msgTypes') as $msgType)
                         @if(isset($messages[$msgType]) && !empty($messages[$msgType]))

@@ -163,6 +163,12 @@
                         <p class="message special">Acquitté le {{ $abo->payed_at->format('d/m/Y') }}</p>
                     @endif
 
+                    @if(!empty(\Registry::get('abo.avertissement')))
+                        <div class="important">
+                            {!! \Registry::get('abo.avertissement') !!}
+                        </div>
+                    @endif
+
                     @if(!empty($abo->abo->remarque))
                         {!! $abo->abo->remarque !!}
                     @elseif(!empty(\Registry::get('abo.message')))

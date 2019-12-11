@@ -180,6 +180,13 @@ td.pad-b{
     color: #056734;
 }
 
+.important{
+    margin-bottom: 15px;
+}
+.important, .important p{
+    font-weight: bold;
+}
+
 .message{
     margin: 0;
     display: block;

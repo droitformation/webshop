@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <t class="content">
+    <div class="content">
 
         <?php $rappel = (isset($rappel) && $rappel > 0 ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'e' : 'er').' Rappel</span>' : ''); ?>
         <h1 class="title blue">
@@ -112,6 +112,11 @@
             <tr><td height="20">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
+                    @if(!empty(\Registry::get('inscription.avertissement')))
+                        <div class="important">
+                            {!! \Registry::get('inscription.avertissement') !!}
+                        </div>
+                    @endif
                     <p class="message">{{ $messages['remerciements'] }}</p>
                     <p class="message">Neuchâtel, le
                         {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') : $generate->getDate() }}
