@@ -3,7 +3,7 @@
 
 	<div id="content" class="inner inner-app">
 		<div id="appComponent" style="min-height: 450px;">
-			<jurisprudence slug="matrimonial" site="3" :categories="{{ $categories }}" :years="{{ $years }}"></jurisprudence>
+			<jurisprudence slug="matrimonial" site="3" :categories="{{ $categories->where('hideOnSite',0) }}" :years="{{ $years }}"></jurisprudence>
 		</div>
 	</div>
 
