@@ -14,8 +14,7 @@
                 <div class="panel-body">
 
                     <p class="indication">
-                        <span class="bg-warning"></span>
-                        Catégories cachés sur le site
+                        <span class="bg-warning"></span>Catégories cachés sur le site
                     </p>
 
                     <table class="table simple" style="margin-bottom: 0px;">

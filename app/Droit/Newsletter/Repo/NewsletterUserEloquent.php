@@ -103,7 +103,7 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
                 // Limit to newsletter with list on mailjet
                 $abos = $abonne->subscriptions->reject(function ($newsletter, $key) {
                     return !in_array($newsletter->id,config('newsletter.lists'));
-                })->pluck('titre')->all();
+                })->pluck('titre')->unique()->all();
 
                 $row['abo'] = implode(',',$abos);
             }
