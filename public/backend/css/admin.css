@@ -1556,6 +1556,20 @@ span.avis-hidden-square{
     justify-content: space-between;
 }
 
-.invoice_for address{
+.invoice_for address {
     min-width: 50%;
+}
+
+.indication{
+    display: flex;
+    flex-flow: row;
+    justify-content: start;
+    margin-bottom: 20px;
+}
+
+.indication span{
+    display:inline-block;
+    width: 15px;
+    height: 20px;
+    margin-right: 8px;
 }

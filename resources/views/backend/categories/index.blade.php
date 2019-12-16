@@ -13,6 +13,11 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
 
+                    <p class="indication">
+                        <span class="bg-warning"></span>
+                        Catégories cachés sur le site
+                    </p>
+
                     <table class="table simple" style="margin-bottom: 0px;">
                         <thead>
                         <tr>
@@ -26,16 +31,16 @@
                         <tbody class="selects">
                             @foreach($categories as $categorie)
                                 <tr>
-                                    <td><a class="btn btn-sky btn-sm" href="{{ url('admin/categorie/'.$categorie->id) }}"><i class="fa fa-edit"></i></a></td>
-                                    <td><img height="40" src="{!! secure_asset('files/pictos/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
-                                    <td><strong>{{ $categorie->title }}</strong></td>
-                                    <td class="text-right">
+                                    <td class="{{ $categorie->hideOnSite ? 'bg-warning' : '' }}"><a class="btn btn-sky btn-sm" href="{{ url('admin/categorie/'.$categorie->id) }}"><i class="fa fa-edit"></i></a></td>
+                                    <td class="{{ $categorie->hideOnSite ? 'bg-warning' : '' }}"><img height="40" src="{!! secure_asset('files/pictos/'.$categorie->image) !!}" alt="{{ $categorie->title }}" /></td>
+                                    <td class="{{ $categorie->hideOnSite ? 'bg-warning' : '' }}"><strong>{{ $categorie->title }}</strong></td>
+                                    <td class="text-right {{ $categorie->hideOnSite ? 'bg-warning' : '' }}">
                                         <form action="{{ url('admin/categorie/export') }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="id" value="{{ $categorie->id }}">{!! csrf_field() !!}
                                             <button type="submit" class="btn btn-inverse btn-sm">Exporter liste des arrêts</button>
                                         </form>
                                     </td>
-                                    <td class="text-right">
+                                    <td class="text-right {{ $categorie->hideOnSite ? 'bg-warning' : '' }}">
                                         <form id="deleteCategorieForm_" action="{{ url('admin/categorie/'.$categorie->id) }}" method="POST" class="form-horizontal">
                                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                                         </form>

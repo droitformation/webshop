@@ -17,7 +17,7 @@ class Categorie extends Model {
      */
     public function scopeSites($query,$site)
     {
-        if ($site) $query->where('site_id','=',$site);
+        if (isset($site)) $query->where('site_id','=',$site);
     }
 
     public function arrets()

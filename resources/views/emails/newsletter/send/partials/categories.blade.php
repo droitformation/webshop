@@ -3,9 +3,9 @@
         <td style="margin: 0;padding: 0;page-break-before: always;" valign="top">
             @foreach($categories as $categorie)
                 @if($bloc->groupe_id == 0 || (isset($bloc) && isset($bloc->groupe) && $bloc->groupe_id > 0 && $categorie->id != $bloc->groupe->categorie_id))
-                    <?php $site = isset($campagne->newsletter->site) ? $campagne->newsletter->preview.'/'.$campagne->newsletter->site->slug : 'pubdroit'; ?>
+                    <?php $site = isset($campagne->newsletter->site) && !empty($campagne->newsletter->site->link) ? $campagne->newsletter->site->link : url('/pubdroit'); ?>
 
-                    <a target="_blank" href="{{ $site }}/page/jurisprudence">
+                    <a target="_blank" href="{{ $site }}">
                        <img width="130" border="0" alt="{{ $categorie->title }}" src="{{ secure_asset(config('newsletter.path.categorie').$categorie->image) }}">
                     </a>
                     @if(!$campagne->newsletter->hide_title)
