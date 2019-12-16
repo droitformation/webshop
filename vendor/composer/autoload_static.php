@@ -1096,6 +1096,7 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'App\\Exceptions\\SubscribeUserException' => __DIR__ . '/../..' . '/app/Exceptions/SubscribeUserException.php',
         'App\\Exceptions\\TestSendException' => __DIR__ . '/../..' . '/app/Exceptions/TestSendException.php',
         'App\\Exceptions\\UserNotExistException' => __DIR__ . '/../..' . '/app/Exceptions/UserNotExistException.php',
+        'App\\Exports\\AboExport' => __DIR__ . '/../..' . '/app/Exports/AboExport.php',
         'App\\Exports\\AdresseExport' => __DIR__ . '/../..' . '/app/Exports/AdresseExport.php',
         'App\\Exports\\ArretListExport' => __DIR__ . '/../..' . '/app/Exports/ArretListExport.php',
         'App\\Exports\\DejeunerExport' => __DIR__ . '/../..' . '/app/Exports/DejeunerExport.php',

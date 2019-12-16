@@ -374,6 +374,7 @@ return array(
     'App\\Exceptions\\SubscribeUserException' => $baseDir . '/app/Exceptions/SubscribeUserException.php',
     'App\\Exceptions\\TestSendException' => $baseDir . '/app/Exceptions/TestSendException.php',
     'App\\Exceptions\\UserNotExistException' => $baseDir . '/app/Exceptions/UserNotExistException.php',
+    'App\\Exports\\AboExport' => $baseDir . '/app/Exports/AboExport.php',
     'App\\Exports\\AdresseExport' => $baseDir . '/app/Exports/AdresseExport.php',
     'App\\Exports\\ArretListExport' => $baseDir . '/app/Exports/ArretListExport.php',
     'App\\Exports\\DejeunerExport' => $baseDir . '/app/Exports/DejeunerExport.php',
