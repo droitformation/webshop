@@ -11,9 +11,11 @@
         @endif
     </div>
     <div class="col-md-3">
-        @if(!$bloc->arret->categories->isEmpty() )
+        <?php $site = isset($campagne->newsletter->site) && !empty($campagne->newsletter->site->link) ? $campagne->newsletter->site->link : url('/pubdroit'); ?>
+
+         @if(!$bloc->arret->categories->isEmpty() )
             @foreach($bloc->arret->categories as $categorie)
-                <a target="_blank" href="{{ url(config('newsletter.link.arret')) }}#{{ $bloc->reference }}">
+                <a target="_blank" href="{{ $site }}#{{ $bloc->arret->reference }}">
                     <img style="max-width: 130px;" border="0"  alt="{{ $categorie->title }}" src="{{ secure_asset(config('newsletter.path.categorie').$categorie->image) }}">
                 </a>
             @endforeach

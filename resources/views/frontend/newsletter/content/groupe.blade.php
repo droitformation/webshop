@@ -24,9 +24,11 @@
             </div>
             <div class="col-md-3">
 
+                <?php $site = isset($campagne->newsletter->site) && !empty($campagne->newsletter->site->link) ? $campagne->newsletter->site->link : url('/pubdroit'); ?>
+
                 @if(!$arret->categories->isEmpty())
                     @foreach($arret->categories as $categorie)
-                        <a target="_blank" href="{{ config('newsletter.link.arret') }}#{{ $bloc->reference }}">
+                        <a target="_blank" href="{{ $site }}#{{ $arret->reference }}">
                             <img style="max-width: 130px;" border="0" alt="{{ $categorie->title }}" src="{{ secure_asset(config('newsletter.path.categorie').$categorie->image) }}">
                         </a>
                     @endforeach
