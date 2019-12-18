@@ -68,7 +68,7 @@
                         <p style="{{$resetMargin}}margin-bottom: 10px;{{ $resetPadding }}"><strong>Participants:</strong></p>
                         <ul style="{{$resetMargin}}margin-bottom: 10px;margin-left: 15px;{{ $resetPadding }}">
                             @foreach($participants as $no => $participant)
-                                <li>{{ $participant }} : <strong>{{ $no }}</strong></li>
+                                <li>{{ str_replace(',',' ',$participant) }} : <strong>{{ $no }}</strong></li>
                             @endforeach
                         </ul>
                     @endif

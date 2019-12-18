@@ -14,6 +14,9 @@
                 @if(!empty(\Registry::get('shop.avertissement')))
                     <div class="important">
                         {!! \Registry::get('shop.avertissement') !!}
+
+                        <!-- N° facture -->
+                        <p>Référence: {{ $generate->order()->order_no }}</p>
                     </div>
                 @endif
 

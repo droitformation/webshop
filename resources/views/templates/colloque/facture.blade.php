@@ -78,7 +78,6 @@
 
             @include('templates.partials.occurrences',['occurrences' => $generate->getOccurrences()])
 
-            <tr><td height="5">&nbsp;</td></tr>
         </table>
 
     </div>
@@ -103,20 +102,35 @@
             <tr><td height="10">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
-                    <div class="coordonnees">
-                        <h4>Coordonnées pour le paiement</h4>
-                        <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
-                    </div>
+
+                    <table class="content-table" valign="top">
+                        <tr valign="top">
+                            <td valign="top">
+                                <div class="coordonnees">
+                                    <h4>Coordonnées pour le paiement</h4>
+                                    <p>IBAN: {{ \Registry::get('inscription.infos.iban') }}</p>
+                                </div>
+                            </td>
+                            <td valign="top">
+                                @if(!empty(\Registry::get('inscription.avertissement')))
+                                    <div class="important">
+                                    {!! \Registry::get('inscription.avertissement') !!}
+
+                                    <!-- N° facture -->
+                                        @if(is_array($generate->getNo()))
+                                            <p>Références: {{ implode(' | ',array_keys($generate->getNo())) }}</p>
+                                        @else
+                                            <p>Référence: {{ $generate->getNo() }}</p>
+                                        @endif
+                                    </div>
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
-            <tr><td height="20">&nbsp;</td></tr>
             <tr valign="top">
                 <td valign="top">
-                    @if(!empty(\Registry::get('inscription.avertissement')))
-                        <div class="important">
-                            {!! \Registry::get('inscription.avertissement') !!}
-                        </div>
-                    @endif
                     <p class="message">{{ $messages['remerciements'] }}</p>
                     <p class="message">Neuchâtel, le
                         {{ isset($rappel) && !empty($rappel) ? \Carbon\Carbon::now()->formatLocalized('%d %B %Y') : $generate->getDate() }}

@@ -4,11 +4,11 @@ h1{
     display: block;
 }
 h3{
-    font-size: 13px;
+    font-size: 12px;
     display: block;
     font-weight: normal;
     color: #000;
-    line-height: 20px;
+    line-height: 18px;
     margin: 0;
     padding: 0;
     padding-bottom: 5px;
@@ -183,8 +183,10 @@ td.pad-b{
 .important{
     margin-bottom: 15px;
 }
+
 .important, .important p{
     font-weight: bold;
+    font-size: 10px;
 }
 
 .message{

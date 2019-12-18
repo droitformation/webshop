@@ -166,6 +166,9 @@
                     @if(!empty(\Registry::get('abo.avertissement')))
                         <div class="important">
                             {!! \Registry::get('abo.avertissement') !!}
+
+                            <!-- N° facture -->
+                            <p>Référence: {{ $facture->abo_ref }}</p>
                         </div>
                     @endif
 
