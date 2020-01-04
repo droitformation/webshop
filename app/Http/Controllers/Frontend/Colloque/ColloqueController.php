@@ -65,6 +65,10 @@ class ColloqueController extends Controller
             return redirect('pubdroit/colloque');
         }
 
+        if(isset($colloque->url) && !empty($colloque->url)) {
+            return redirect($colloque->url);
+        }
+
         $pending    = \Auth::check() && \Auth::user()->cant_register ? 'pending' : false;
         $registered = \Auth::check() && \Auth::user()->inscriptions->contains('colloque_id',$id) ? 'registered' : false;
 

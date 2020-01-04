@@ -615,6 +615,7 @@ Route::group(['prefix' => 'access' , 'middleware' => ['auth','access']], functio
 |--------------------------------------------------------------------------
 */
 
+
 Auth::routes();
 Route::post('password/link', 'Auth\PasswordController@postLink');
 

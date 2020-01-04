@@ -3,6 +3,23 @@
  * Test routes
  ============================================ */
 
+Route::get('cartworker2', function()
+{
+
+    $abo        = \App::make('App\Droit\Abo\Repo\AboInterface');
+    $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
+    
+    $abofacture    = $abofactures->find(5296);
+
+    $generator    = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
+    $generator->stream = true;
+    $generator->setPrint(true);
+
+
+    return $generator->makeAbo('facture', $abofacture);
+});
+
+
 Route::get('abos_test', function () {
 
     $abouser       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
