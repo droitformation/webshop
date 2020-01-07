@@ -93,10 +93,14 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
                 });
 
                 foreach($grouped as $product) {
+
+                    $special = $product->first()->price_special ? $product->first()->price_special : null;
+                    $special = $special ?  number_format((float)$special, 2, ',', '') : '';
+
                     $data['title']   = $product->first()->title;
                     $data['qty']     = $product->count();
                     $data['prix']    = $product->first()->price_normal;
-                    $data['special'] = $product->first()->price_special ? $product->first()->price_special : '';
+                    $data['special'] = $special;
                     $data['free']    = $product->first()->pivot->isFree ? 'Oui' : '';
                     $data['rabais']  = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
 
