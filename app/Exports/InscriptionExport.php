@@ -77,9 +77,11 @@ class InscriptionExport implements FromView
         $data = [];
         $user = $inscription->inscrit;
 
+        $price = number_format((float)$inscription->price_cents, 2, ',', '');
+
         $data['present']     = $inscription->present ? 'Oui' : '';
         $data['number']      = $inscription->inscription_no;
-        $data['prix']        = $inscription->price_cents;
+        $data['prix']        = $price;
         $data['status']      = $inscription->status_name['status'];
         $data['date']        = $inscription->created_at->format('m/d/Y');
         $data['participant'] = $inscription->group_id > 0 ? $inscription->participant->name : '';
