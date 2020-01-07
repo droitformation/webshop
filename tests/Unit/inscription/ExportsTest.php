@@ -122,7 +122,7 @@ class ExportsTest extends TestCase
             return [
                 'Numero'  => $order->order_no,
                 'Date'    => $order->created_at->format('d.m.Y'),
-                'Montant' => $order->total_with_shipping,
+                'Montant' => number_format((float)$order->total_with_shipping, 2, ',', ''),
                 'Port'    => $order->total_shipping,
                 'Paye'    => '',
                 'Status'  => $order->total_with_shipping > 0 ? $order->status_code['status']: 'Gratuit'
@@ -153,7 +153,7 @@ class ExportsTest extends TestCase
             return [
                 'Numero'  => $order->order_no,
                 'Date'    => $order->created_at->format('d.m.Y'),
-                'Montant' => $order->total_with_shipping,
+                'Montant' => number_format((float)$order->total_with_shipping, 2, ',', ''),
                 'Port'    => $order->total_shipping,
                 'Paye'    => '',
                 'Status'  => $order->total_with_shipping > 0 ? $order->status_code['status'] : 'Gratuit'
