@@ -1967,10 +1967,10 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     path: function path() {
       if (this.type == 4 || this.type == 5) {
-        return this.url + 'admin/adresse/createOrUpdateFacturation';
+        return this.url + 'vue/adresse/createOrUpdateFacturation';
       }
 
-      return this.url + 'admin/adresse/updateAdresse';
+      return this.url + 'vue/adresse/updateAdresse';
     },
     isDefault: function isDefault() {
       return this.main.id == this.original.id;
@@ -1985,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     fetch: function fetch(id) {
       var self = this;
-      axios.get(self.url + 'admin/adresse/getAdresseDetail/' + id, {}).then(function (response) {
+      axios.get(self.url + 'vue/adresse/getAdresseDetail/' + id, {}).then(function (response) {
         self.update_detail = response.data;
         console.log(self.update_detail);
       })["catch"](function (error) {
