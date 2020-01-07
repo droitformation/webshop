@@ -73,7 +73,11 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Adresse pour BV</label>
                             <div class="col-sm-5 col-xs-6">
-                                <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
+                                @if(!empty($abo->adresse))
+                                    <textarea class="form-control redactorSimple" name="adresse">{{ $abo->adresse }}</textarea>
+                                @else
+                                    <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
+                                @endif
                             </div>
                             <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">Par défaut l'adresse est celle indiquée dans la configuration des abos</p>
