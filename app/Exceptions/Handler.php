@@ -226,10 +226,14 @@ class Handler extends ExceptionHandler {
 			return redirect()->back();
 		}
 
-		if ($e instanceof \Illuminate\Session\TokenMismatchException)
-			return redirect('login');
+        if ($e instanceof \Illuminate\Session\TokenMismatchException)
+        {
+            $request->session()->flash('sessionExpired', 'Ok');
 
-		return parent::render($request, $e);
+            return redirect()->back()->withInput();
+        }
+
+        return parent::render($request, $e);
 	}
 
 	/**

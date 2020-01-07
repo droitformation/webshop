@@ -26,6 +26,21 @@
     </script>
 @endif
 
+@if(!empty(session('sessionExpired')))
+    <script>
+        $(function(){
+            swal({
+                title: "Session",
+                text: 'Votre session a éxpirée, merci de recommencer',
+                timer: 2000,
+                type: "warning",
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
+
+
 @if(!empty(session('wrongCoupon')))
     <script>
         $(function(){
