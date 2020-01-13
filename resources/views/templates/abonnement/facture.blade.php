@@ -20,15 +20,7 @@
             <tr align="top">
                 <td align="top" width="60%" valign="top">
                     <div id="facdroit">
-                        {!! ($abo->abo->name ? '<li>'.$abo->abo->name.'</li>' : '') !!}
-                        <li>{!! \Registry::get('abo.infos.nom') !!}</li>
-                        <li class="mb-5">{!! \Registry::get('abo.infos.adresse') !!}</li>
-                        {!!  !empty(\Registry::get('shop.infos.telephone')) ? '<li>Tél. '.\Registry::get('shop.infos.telephone').'</li>' : '' !!}
-                        @if(!empty($abo->abo->email))
-                            <li>{{ $abo->abo->email }}</li>
-                        @else
-                            {!! !empty(\Registry::get('shop.infos.email')) ? '<li>'.\Registry::get('shop.infos.email').'</li>' : '' !!}
-                        @endif
+                        {!! ($abo->abo->adresse ? '<li>'.$abo->abo->adresse.'</li>' : '') !!}
                     </div>
                 </td>
                 <td align="top" width="40%" valign="top">
@@ -212,8 +204,8 @@
                 <tr>
                     <td align="top" valign="center" height="43mm">
                         <ul class="versement">
-                            @if(!empty($abo->abo->adresse))
-                                <li>{!! $abo->abo->adresse !!}</li>
+                            @if(!empty($abo->abo->bv))
+                                <li>{!! $abo->abo->bv !!}</li>
                             @elseif(!empty($versement))
                                 @foreach($versement as $line)
                                     <li>{!! $line !!}</li>
@@ -231,8 +223,8 @@
                 <tr>
                     <td align="top" valign="center" height="43mm">
                         <ul class="versement">
-                            @if(!empty($abo->abo->adresse))
-                                <li>{!! $abo->abo->adresse !!}</li>
+                            @if(!empty($abo->abo->bv))
+                                <li>{!! $abo->abo->bv !!}</li>
                             @elseif(!empty($versement))
                                 @foreach($versement as $line)
                                     <li>{!! $line !!}</li>
