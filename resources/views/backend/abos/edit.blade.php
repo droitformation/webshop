@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Compte pour BV</label>
                             <div class="col-sm-5 col-xs-6">
-                                <input type="text" class="form-control" name="compte" value="{{ $abo->compte }}" placeholder="facultatif">
+                                <input required type="text" class="form-control" name="compte" value="{{ $abo->compte }}" placeholder="facultatif">
                             </div>
                             <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">Par défaut le compte est celui indiqué dans la configuration des abos</p>
@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Adresse générale</label>
                             <div class="col-sm-5 col-xs-6">
-                                <textarea class="form-control redactorSimple" name="adresse">{{ $abo->adresse }}</textarea>
+                                <textarea required class="form-control redactorSimple" name="adresse">{{ $abo->adresse }}</textarea>
                             </div>
                             <div class="col-sm-4 col-xs-12">
                                 <p class="help-block">En haut de la facture</p>
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Adresse sur BV</label>
                             <div class="col-sm-5 col-xs-6">
-                                <textarea class="form-control redactorSimple" name="bv">{{ $abo->bv }}</textarea>
+                                <textarea required class="form-control redactorSimple" name="bv">{{ $abo->bv }}</textarea>
                             </div>
                         </div>
 
@@ -100,7 +100,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Récurrence</label>
                             <div class="col-sm-5 col-xs-6">
-                                <select class="form-control" name="plan">
+                                <select required class="form-control" name="plan">
                                     <option value=""></option>
                                     @foreach($plans as $name => $plan)
                                         <option {{ $name ==  $abo->plan ? 'selected' : '' }} value="{{ $name }}">{{ $plan }}</option>
