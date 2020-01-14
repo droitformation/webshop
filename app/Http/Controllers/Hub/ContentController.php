@@ -136,9 +136,7 @@ class ContentController extends Controller
 
     public function pdf($id,$site_id)
     {
-        if(
-            (($site_id == 4) && ($id <= 71)) || (($site_id == 5) && ($id <= 263))
-        ){
+        if( (($site_id == 4) && ($id <= 71)) || (($site_id == 5) && ($id <= 263)) ){
             $campagne = $this->worker->getCampagne($id, true);
         }
         else{
