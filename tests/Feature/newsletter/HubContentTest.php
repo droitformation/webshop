@@ -215,6 +215,8 @@ class HubContentTest extends TestCase
 
     public function testMajDateAfterSendCampagn()
     {
+        setMaj('2020-01-19','hub');
+
         $response = $this->call('GET', 'hub/maj');
         $response->assertStatus(200);
 
