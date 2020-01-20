@@ -63,6 +63,12 @@ class CampagneTest extends TestCase
      */
     public function testSendCampagne()
     {
+        setMaj('2020-01-19','hub');
+
+        $response = $this->call('GET', 'hub/maj');
+        $response->assertStatus(200);
+
+        $this->assertEquals('2020-01-19',$response->json('date'));
 
         $campagne = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
 
@@ -79,6 +85,10 @@ class CampagneTest extends TestCase
 
         $response->assertRedirect('build/newsletter');
 
+        $response = $this->call('GET', 'hub/maj');
+        $today = \Carbon\Carbon::now()->toDateString();
+
+        $this->assertEquals($today,$response->json('date'));
     }
 
     public function testSendCampagneFailedHtml()

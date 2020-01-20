@@ -82,7 +82,6 @@ class OrderController extends Controller {
 
         $orders = isset($data['order_no']) ? $this->order->search($data['order_no']) : $this->order->getPeriod($data);
 
-
         $cancelled = $this->order->getTrashed($data['period']);
 
         // filter invalid order beacuse no user adresse

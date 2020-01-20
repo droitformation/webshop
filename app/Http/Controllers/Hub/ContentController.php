@@ -19,6 +19,8 @@ class ContentController extends Controller
 
     public function __construct()
     {
+        //abort(500);
+
         setlocale(LC_ALL, 'fr_FR.UTF-8');
 
         $this->worker    = \App::make('App\Droit\Newsletter\Worker\CampagneInterface');
@@ -153,5 +155,16 @@ class ContentController extends Controller
         $pdf = $pdf->loadView('frontend.newsletter.pdf', ['campagne' => $campagne])->setPaper('a4');
 
         return $pdf->stream('newsletter_'.$campagne->id.'.pdf');
+    }
+
+    /*
+     * Indicate last time there was a Update
+     * */
+
+    public function maj()
+    {
+        $contents = getMaj('hub');
+
+        return response()->json(['date' => $contents], 200 );
     }
 }

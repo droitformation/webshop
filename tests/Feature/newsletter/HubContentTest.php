@@ -212,4 +212,12 @@ class HubContentTest extends TestCase
 
         $this->assertEquals($campagnes->count(), count($response->json('data')));
     }
+
+    public function testMajDateAfterSendCampagn()
+    {
+        $response = $this->call('GET', 'hub/maj');
+        $response->assertStatus(200);
+
+        $this->assertEquals('2020-01-19',$response->json('date'));
+    }
 }

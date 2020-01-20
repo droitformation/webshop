@@ -233,6 +233,7 @@ $factory->define(App\Droit\Profession\Entities\Profession::class, function (Fake
     ];
 });
 
+
 $profession = \App::make('App\Droit\Profession\Repo\ProfessionInterface');
 $canton     = \App::make('App\Droit\Canton\Repo\CantonInterface');
 $pays       = \App::make('App\Droit\Pays\Repo\PaysInterface');
