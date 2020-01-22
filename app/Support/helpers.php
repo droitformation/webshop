@@ -195,3 +195,13 @@ function validateListEmail($results){
         })->all();
     });
 }
+
+function setMaj($date,$what)
+{
+    return \Storage::disk('local')->put($what.'.txt', $date);
+}
+
+function getMaj($what)
+{
+    return \Storage::disk('local')->get($what.'.txt');
+}
