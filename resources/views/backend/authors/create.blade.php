@@ -60,6 +60,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Contributions aux sites</label>
+                    <div class="col-sm-5">
+                        @if(isset($sites) && !$sites->isEmpty())
+                            <select class="form-control" name="sites[]" multiple>
+                                @foreach($sites as $site)
+                                    <option value="{{ $site->id  }}">{{ $site->nom }}</option>
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
+                </div>
+
             </div>
             <div class="panel-footer mini-footer">
                 <div class="col-sm-3"></div>

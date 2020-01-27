@@ -50,6 +50,10 @@ class AuthorEloquent implements AuthorInterface{
             return false;
         }
 
+        if(isset($data['sites']) && !empty($data['sites'])){
+            $author->sites()->attach(array_filter($data['sites']));
+        }
+
         return $author;
 
     }
@@ -74,6 +78,10 @@ class AuthorEloquent implements AuthorInterface{
         }
 
         $author->save();
+
+        if(isset($data['sites']) && !empty($data['sites'])){
+            $author->sites()->sync(array_filter($data['sites']));
+        }
 
         return $author;
     }
