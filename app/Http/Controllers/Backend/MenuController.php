@@ -50,6 +50,8 @@ class MenuController extends Controller
     {
         $menu = $this->menu->create($request->all());
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Le menu a été crée')->success();
 
         return redirect('admin/menu/'.$menu->id);
@@ -77,6 +79,8 @@ class MenuController extends Controller
     public function update($id, Request $request)
     {
         $menu = $this->menu->update($request->all());
+
+        event(new \App\Events\ContentUpdated());
 
         flash('Le menu a été mis à jour')->success();
 

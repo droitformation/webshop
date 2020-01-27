@@ -75,6 +75,8 @@ class SeminaireController extends Controller {
 
         $seminaire = $this->seminaire->create($data);
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Seminaire crée')->success();
 
         return redirect('admin/seminaire/'.$seminaire->id);
@@ -108,13 +110,14 @@ class SeminaireController extends Controller {
         $data  = $request->except('file');
         $_file = $request->file('file',null);
 
-        if($_file)
-        {
+        if($_file) {
             $file = $this->upload->upload( $_file , public_path('files/seminaires') , 'product');
             $data['image'] = $file['name'];
         }
 
         $this->seminaire->update( $data );
+
+        event(new \App\Events\ContentUpdated());
 
         flash('Seminaire mise à jour')->success();
 

@@ -68,6 +68,8 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->create( $data );
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Contenu crée')->success();
 
         return redirect('admin/bloc/'.$bloc->id);
@@ -108,6 +110,8 @@ class BlocController extends Controller
         }
 
         $bloc = $this->bloc->update( $data );
+
+        event(new \App\Events\ContentUpdated());
 
         flash('Contenu mis à jour')->success();
 

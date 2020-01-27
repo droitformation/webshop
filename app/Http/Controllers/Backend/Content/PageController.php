@@ -63,6 +63,8 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
+        event(new \App\Events\ContentUpdated());
+
         flash('La page a été crée')->success();
 
         return redirect('admin/page/'.$page->id);
@@ -95,6 +97,8 @@ class PageController extends Controller
     public function update($id, Request $request)
     {
         $page = $this->page->update($request->all());
+
+        event(new \App\Events\ContentUpdated());
 
         flash('La page a été mise à jour')->success();
 

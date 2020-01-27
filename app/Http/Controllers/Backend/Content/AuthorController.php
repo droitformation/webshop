@@ -65,6 +65,8 @@ class AuthorController extends Controller
 
         $author = $this->author->create($all);
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Auteur crée')->success();
 
         return redirect('admin/author/'.$author->id);
@@ -94,13 +96,14 @@ class AuthorController extends Controller
         $all   = $request->all();
         $_file = $request->file('photo', null);
 
-        if($_file)
-        {
+        if($_file) {
             $photo = $this->upload->upload($_file, 'files/authors');
             $all['photo'] = $photo['name'];
         }
 
         $author = $this->author->update($all);
+
+        event(new \App\Events\ContentUpdated());
 
         flash('Auteur mis à jour')->success();
 

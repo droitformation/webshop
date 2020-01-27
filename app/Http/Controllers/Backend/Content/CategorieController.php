@@ -60,6 +60,8 @@ class CategorieController extends Controller {
 
         $categorie = $this->categorie->create( $data );
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Catégorie crée')->success();
 
         return redirect('admin/categorie/'.$categorie->id);
@@ -98,6 +100,8 @@ class CategorieController extends Controller {
         }
 
         $this->categorie->update( $data );
+
+        event(new \App\Events\ContentUpdated());
 
         flash('Catégorie mise à jour')->success();
 

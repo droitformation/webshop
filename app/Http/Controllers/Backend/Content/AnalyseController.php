@@ -131,6 +131,8 @@ class AnalyseController extends Controller {
 
         $analyse = $this->analyse->update($data);
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Analyse mise à jour')->success();
 
         return redirect('admin/analyse/'.$analyse->id);

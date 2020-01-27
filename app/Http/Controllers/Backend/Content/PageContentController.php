@@ -48,6 +48,8 @@ class PageContentController extends Controller
 
         $page = $this->page->find($content->page_id);
 
+        event(new \App\Events\ContentUpdated());
+
         return view('backend.pages.partials.list')->with(['page' => $page]);
     }
 
@@ -78,6 +80,8 @@ class PageContentController extends Controller
         $content = $this->content->update($data);
 
         $page = $this->page->find($content->page_id);
+
+        event(new \App\Events\ContentUpdated());
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
     }
