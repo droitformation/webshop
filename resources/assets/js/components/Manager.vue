@@ -36,16 +36,21 @@
                             <div class="col-md-10">
                                 <p class="loading" v-show="loading"><i class="fa fa-spinner fa-spin"></i></p>
                                 <div v-show="!loading" id="fileManager" data-path="files/uploads">
-                                    <p v-if="!files">Aucun fichier à ce niveau</p>
-                                    <ul v-if="files" id="gallery">
-                                        <li v-for="file in files" class="file-item">
-                                            <button @click="deleteFile(path + '/' + file)" class="btn btn-xs btn-danger">x</button>
 
-                                            <img v-if="isImage(file)" @click="chosenFile(path + '/' + file)" :src="path + displayPath + '/' + file" alt="image" />
-                                            <img v-if="!isImage(file)" @click="chosenFile(path + '/' + file)" src="images/text.svg" alt="image" />
-                                            <p v-if="!isImage(file)">{{ file }}</p>
-                                        </li>
-                                    </ul>
+                                    <p v-if="!files">Aucun fichier à ce niveau</p>
+
+                                    <div v-if="files" v-for="(row, index) in files">
+                                        <p class="mt-10"><strong>{{ index }}</strong></p>
+                                        <div class="gallery-wrapper">
+                                            <div class="file-item" v-for="file in row">
+                                                <button @click="deleteFile(path + '/' + file)" class="btn btn-xs btn-danger">x</button>
+                                                <img v-if="isImage(file)" @click="chosenFile(path + '/' + file)" :src="url + path + displayPath + '/' + file" alt="image" />
+                                                <img v-if="!isImage(file)" @click="chosenFile(path + '/' + file)" src="images/text.svg" alt="image" />
+                                                <p>{{ file }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -70,10 +75,69 @@
 </template>
 
 <style>
+
+    #fileManager {
+        overflow-y: auto;
+        max-height: 70vh;
+    }
    .loading{
         width:50px;
         margin:40px auto;
         font-size:30px;
+    }
+    .gallery-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        flex-wrap: wrap;
+    }
+   .file-item {
+       width: 130px;
+       height: 150px;
+       position: relative;
+       list-style: none;
+       margin: 5px;
+       padding: 5px;
+       background: #fff;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: space-between;
+       border: 5px solid transparent;
+       overflow-x: hidden;
+   }
+   .file-item img {
+       max-width: 130px;
+       max-height: 90px;
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       cursor: pointer;
+   }
+   .file-item p{
+       margin: 5px 0 0 0;
+       padding: 0;
+       text-align: center;
+       font-size: 12px;
+       line-height: 12px;
+       word-wrap: anywhere;
+   }
+   .file-item button {
+       position: absolute;
+       top: 2px;
+       right: 2px;
+   }
+    .tree ul button {
+        background-color: #428bca;
+        border: 1px solid #357ebd;
+        color: #ffffff;
+        cursor: pointer;
+        display: block;
+        line-height: 20px;
+        padding: 2px 0 2px 10px;
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
     }
 </style>
 <script>
@@ -81,10 +145,12 @@
 export default {
  props: ['name','thumbs', 'input','id'],
     data () {
+
         return {
            directories:[],
            path: 'files/uploads',
-           files: null,
+           url: location.protocol + "//" + location.host+"/",
+           files: [],
            chosen: false,
            filename: '',
            directory:'',

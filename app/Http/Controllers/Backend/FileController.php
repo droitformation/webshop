@@ -32,7 +32,7 @@ class FileController extends Controller
     
     public function getfiles(Request $request)
     {
-        $files  = $this->file->listDirectoryFiles($request->input('path'));
+        $files = $this->file->listDirectoryFiles($request->input('path'));
 
         return response()->json(['files' => $files]);
     }

@@ -13,5 +13,6 @@ return [
     'colloques',
     'shop',
     'import',
+    'imports',
     'sites'
 ];

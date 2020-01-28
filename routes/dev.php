@@ -1292,15 +1292,18 @@ Route::get('testproduct', function()
 Route::get('manager', function()
 {
 
-    echo '<pre>';
-    print_r(array_keys(config('sites')));
-    echo '</pre>';exit();
+
     $manager = App::make('App\Droit\Service\FileWorkerInterface');
-    $files   = $manager->dir_contains_children('files/pictos');
 
     echo '<pre>';
-    print_r($files);
-    echo '</pre>';exit;
+    print_r($manager->authorized());
+    echo '</pre>';
+    exit();
+    //$files   = $manager->dir_contains_children('files/pictos');
+
+    $files = $manager->listDirectoryFiles(public_path('files/uploads'));
+
+    return response()->json(['files' => $files]);
 
 });
 

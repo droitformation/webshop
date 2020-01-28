@@ -70,6 +70,8 @@ class UploadController extends Controller
                 'post'     => $request->all()
             ];
 
+            event(new \App\Events\FileUploaded());
+
             return response()->json($array);
         }
 

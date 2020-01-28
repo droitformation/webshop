@@ -61,11 +61,17 @@ class FileWorker implements FileWorkerInterface{
 
     public function listDirectoryFiles($dir)
     {
-        $tree = \File::allfiles($dir);
+        return \Cache::rememberForever('allfiles_'.$dir, function () use ($dir) {
+            $tree = \File::allfiles($dir);
 
-        return collect($tree)->map(function ($file) use ($dir) {
-            return $file->getFilename();
-        })->toArray();
+            return collect($tree)->groupBy(function ($file){
+                return \Carbon\Carbon::createFromTimestamp($file->getMTime())->toDateString();
+            })->map(function ($files) use ($dir) {
+                return $files->map(function ($file) use ($dir) {
+                    return $file->getFilename();
+                });
+            })->sortKeysDesc()->toArray();
+        });
     }
 
     public function listActionFiles($dir)
