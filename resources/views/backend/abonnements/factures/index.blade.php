@@ -92,6 +92,7 @@
                                         @else
                                             <p><span class="label label-warning">Duplicata</span></p>
                                         @endif
+                                        {!! $user && ($user->company != $user->name) ? '<p>'.$user->company.'</p>'  : '' !!}
                                     </td>
                                     <td>{{ $facture->created_at->formatLocalized('%d %B %Y') }}</td>
                                     <td>

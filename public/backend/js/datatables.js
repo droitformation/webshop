@@ -134,7 +134,16 @@ $(document).ready(function() {
         "columnDefs": [{
             "targets"  : 'no-sort',
             "orderable": false
-        }]
+        }],
+        'columns' : [
+            null,
+            null,
+            null,
+            { 'searchable': false },
+            null,
+            null,
+            null,
+        ]
     });
 
     $('.generic').DataTable({

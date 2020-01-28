@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Compte pour BV</label>
                             <div class="col-sm-5 col-xs-6">
-                                <input type="text" class="form-control" name="compte" value="{{ \Registry::get('abo.compte') }}">
+                                <input required type="text" class="form-control" name="compte" value="{{ \Registry::get('abo.compte') }}">
                             </div>
                             <div class="col-sm-3 col-xs-12">
                                 <p class="help-block">Par défaut le compte est celui indiqué dans la configuration des abos</p>
@@ -73,12 +73,19 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Adresse pour BV</label>
+                            <label class="col-sm-3 control-label">Adresse générale</label>
                             <div class="col-sm-5 col-xs-6">
-                                <textarea class="form-control redactorSimple" name="adresse">{{ \Registry::get('abo.infos.adresse') }}</textarea>
+                                <textarea required class="form-control redactorSimple" name="adresse"></textarea>
                             </div>
-                            <div class="col-sm-3 col-xs-12">
-                                <p class="help-block">Par défaut l'adresse est celle indiquée dans la configuration des abos</p>
+                            <div class="col-sm-4 col-xs-12">
+                                <p class="help-block">En haut de la facture</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Adresse sur BV</label>
+                            <div class="col-sm-5 col-xs-6">
+                                <textarea required class="form-control redactorSimple" name="bv"></textarea>
                             </div>
                         </div>
 

@@ -21,7 +21,7 @@ class Content extends JsonResource
             'url' => $this->url,
             'type' => $this->type,
             'style' => $this->style,
-            'image' => asset('files/uploads/'.$this->image, env('SECURE_ASSET')),
+            'image' => !empty($this->image) ? asset('files/uploads/'.$this->image, env('SECURE_ASSET')) : '#',
         ];
     }
 }

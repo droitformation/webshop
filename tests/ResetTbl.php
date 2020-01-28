@@ -7,6 +7,7 @@ trait ResetTbl
 
         \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
+        \DB::table('abos')->truncate();
         \DB::table('abo_factures')->truncate();
         \DB::table('abo_rappels')->truncate();
         \DB::table('abo_users')->truncate();

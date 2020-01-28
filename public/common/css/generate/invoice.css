@@ -73,8 +73,10 @@ h3{
     line-height: 13px;
 }
 
-#facdroit li{
+#facdroit p{
     font-size: 10px;
+    line-height: 12px;
+    margin-bottom: 8px;
 }
 
 .versement li{

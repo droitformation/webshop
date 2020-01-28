@@ -53,6 +53,7 @@ class AboEloquent implements AboInterface{
             'name'     => (isset($data['name']) ? $data['name']: null),
             'compte'   => (isset($data['compte']) ? $data['compte']: null),
             'adresse'  => (isset($data['adresse']) ? $data['adresse']: null),
+            'bv'       => (isset($data['bv']) ? $data['bv']: null),
             'email'    => isset($data['email']) ? $data['email'] : null,
             'remarque' => (isset($data['remarque']) ? $data['remarque']: null),
             'price'    => $data['price'] * 100,
@@ -110,6 +111,5 @@ class AboEloquent implements AboInterface{
         $abo = $this->abo->find($id);
 
         return $abo->delete();
-
     }
 }

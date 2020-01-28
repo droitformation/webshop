@@ -61,8 +61,7 @@ class AboController extends Controller {
         $data = $request->except('file');
         $file = $request->file('file',null);
 
-        if($file)
-        {
+        if($file) {
             $file = $this->upload->upload( $file , 'files/main');
             $data['logo'] = $file['name'];
         }

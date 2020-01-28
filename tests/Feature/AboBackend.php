@@ -33,6 +33,44 @@ class AboBackend extends TestCase
         parent::tearDown();
     }
 
+    public function testCreateNewMainAbo()
+    {
+        $product = factory(\App\Droit\Shop\Product\Entities\Product::class)->create();
+        $make    = new \tests\factories\ObjectFactory();
+        $product = $make->addAttributesAbo($product);
+
+        // $plans    = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
+        $adresse = '<p>Secrétariat - Formation<br>Université de Neuchâtel<br>Fbg de l’Hôpital 106<br>CH – 2000 Neuchâtel</p>';
+        $bv = '<p>Séminaire sur le droit du bail<br>Avenue du 1er-Mars 26<br>CH – 2000 Neuchâtel</p>';
+
+        $response = $this->call('POST', 'admin/abo', [
+            'title' => 'Mon bel abo',
+            'plan' => 'year',
+            'email' => 'droit.formation@unine.ch',
+            'name' => 'Secrétariat - Formation',
+            'compte' => '20-4130-2',
+            'adresse' => $adresse,
+            'bv' => $bv,
+            'price' => 35,
+            'shipping' => 10,
+            'remarque' => '<ul><li>Sauf avis contraire avant le 15 septembre de chaque année, l’abonnementest renouvelé sans formalité.</li></ul>',
+            'products_id' => [$product->id]
+        ]);
+
+        $this->assertDatabaseHas('abos', [
+            'title' => 'Mon bel abo',
+            'plan' => 'year',
+            'email' => 'droit.formation@unine.ch',
+            'name' => 'Secrétariat - Formation',
+            'compte' => '20-4130-2',
+            'adresse' => $adresse,
+            'bv' => $bv,
+            'price' => 3500,
+            'shipping' => 1000,
+            'remarque' => '<ul><li>Sauf avis contraire avant le 15 septembre de chaque année, l’abonnementest renouvelé sans formalité.</li></ul>',
+        ]);
+    }
+
     public function testCreateAboWithReferences()
     {
         $make = new \tests\factories\ObjectFactory();

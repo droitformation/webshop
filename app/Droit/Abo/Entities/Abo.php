@@ -9,13 +9,20 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = ['title','plan','logo','email','name','compte','adresse','price','shipping','remarque'];
+    protected $fillable = ['title','plan','logo','email','name','compte','adresse','bv','price','shipping','remarque'];
 
     public function getPlanFrAttribute()
     {
         $traduction = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
 
         return $traduction[$this->plan];
+    }
+
+    public function getDetailAdresseAttribute()
+    {
+        $html  = '<li>'.$this->adresse.'</li>';
+
+        return $html;
     }
 
     public function getLogoFileAttribute()
