@@ -34,6 +34,13 @@ Route::get('abos_test', function () {
     $abo     = $abos->find(2);
     $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
+    $abo_user = $abouser->find(843);
+
+    echo '<pre>';
+    print_r($abo_user->price_cents);
+    echo '</pre>';
+    exit();
+
     $files = $worker->prepareFiles($abonnes, $product);
     $files2 = $worker->prepareFiles2($abonnes, $product);
 

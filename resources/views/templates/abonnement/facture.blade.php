@@ -100,25 +100,26 @@
                 <td width="70%">{{ $abo->exemplaires }} exemplaire{{ ($abo->exemplaires > 1) ? 's' : '' }} du numéro {{ $facture->prod_edition }}</td>
                 <td width="30%"></td>
             </tr>
+
             @if($abo->exemplaires > 1)
                 <tr><td colspan="2" height="1">&nbsp;</td></tr>
                 <tr>
-                    <td width="70%">à CHF {{ $abo->abo->current_product->price_cents }}/pce</td>
+                    <td width="70%">à CHF {{ $abo->price_remise }}/pce</td>
                     <td width="30%"></td>
                 </tr>
             @endif
 
             <tr>
                 <td width="90%" class="pad-b" align="right">{{ $abo->exemplaires }}x &nbsp;&nbsp;</td>
-                <td width="10%" class="pad-b" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->abo->current_product->price_cents : '' }} CHF</strong></td>
+                <td width="10%" class="pad-b" align="right"><strong>{{ isset($abo->abo->current_product) ? $abo->price_remise : '' }} CHF</strong></td>
             </tr>
 
-            @if($generate->isTiers() && $abo->price_cents_remise)
+  {{--          @if($abo->price_cents_remise)
                 <tr>
                     <td class="pad-b" width="90%" align="right">Votre remise &nbsp;&nbsp;</td>
                     <td class="pad-b" width="10%" align="right"><strong>{{ $abo->price_cents_remise }} CHF</strong></td>
                 </tr>
-            @endif
+            @endif--}}
 
             @if($abo->abo->shipping)
                 <tr>
