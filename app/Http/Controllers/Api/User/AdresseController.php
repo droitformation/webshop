@@ -171,6 +171,8 @@ class AdresseController extends Controller {
     {
         $result = $this->adresse->delete($request->input('id'));
 
+        event(new \App\Events\AdresseTiersDeletedAbo($request->input('abo_id')));
+
         return response()->json(['result' => $result]);
     }
 

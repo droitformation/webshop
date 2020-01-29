@@ -2022,7 +2022,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['main', 'original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte', 'admin'],
+  props: ['main', 'original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte', 'admin', 'abo_id'],
   components: {},
   data: function data() {
     return {
@@ -2085,7 +2085,8 @@ __webpack_require__.r(__webpack_exports__);
     remove: function remove() {
       var self = this;
       axios.post(this.url + "vue/adresse/deleteAdresse", {
-        id: this.adresse_update.id
+        id: this.adresse_update.id,
+        abo_id: this.abo_id
       }).then(function (response) {
         if (response.data.result == true) {
           location.reload();

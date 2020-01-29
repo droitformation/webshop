@@ -9,6 +9,7 @@ interface AboUserInterface {
     public function allByAdresse($id);
     public function create(array $data);
     public function update(array $data);
+    public function changeStatus($data);
     public function restore($id);
     public function delete($id);
 }

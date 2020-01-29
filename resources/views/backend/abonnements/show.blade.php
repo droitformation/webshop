@@ -61,6 +61,7 @@
                                                              title=""
                                                              btn="btn-sm btn-info"
                                                              texte="Changer"
+                                                             abo_id="{{ $abonnement->id }}"
                                                              admin="1"
                                                              type="5"></adresse-update>
                                         </div>

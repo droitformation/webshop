@@ -113,7 +113,7 @@
 </style>
 <script>
     export default {
-        props: ['main','original','type','title','dir','hidden','btn','texte','admin'],
+        props: ['main','original','type','title','dir','hidden','btn','texte','admin','abo_id'],
         components: {},
         data () {
             return {
@@ -173,7 +173,7 @@
             },
             remove(){
                 let self = this;
-                axios.post(this.url + "vue/adresse/deleteAdresse", {id : this.adresse_update.id}).then(function (response) {
+                axios.post(this.url + "vue/adresse/deleteAdresse", {id : this.adresse_update.id, abo_id : this.abo_id}).then(function (response) {
 
                     if(response.data.result == true){
                         location.reload();
