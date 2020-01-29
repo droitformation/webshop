@@ -166,5 +166,13 @@ class AdresseController extends Controller {
 
         return redirect()->back();
     }
+
+    public function deleteAdresse(Request $request)
+    {
+        $result = $this->adresse->delete($request->input('id'));
+
+        return response()->json(['result' => $result]);
+    }
+
 }
 

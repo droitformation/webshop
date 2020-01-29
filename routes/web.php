@@ -629,6 +629,7 @@ Route::group(['prefix' => 'vue'], function () {
     Route::post('adresse/createOrUpdateFacturation', 'Api\User\AdresseController@createOrUpdateFacturation');
     Route::post('adresse/updateAdresse', 'Api\User\AdresseController@updateAdresse');
     Route::get('adresse/getAdresseDetail/{id}', 'Api\User\AdresseController@getAdresseDetail');
+    Route::post('adresse/deleteAdresse', 'Api\User\AdresseController@deleteAdresse');
 });
 
 Route::group(['prefix' => 'access' , 'middleware' => ['auth','access']], function () {

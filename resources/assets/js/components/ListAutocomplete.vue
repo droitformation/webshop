@@ -15,17 +15,21 @@
             <input :name="type" :value="chosen.user_id" type="hidden">
 
             <div class="panel panel-primary">
-                <div class="panel-body panel-colloque">
-                    <span class="no-adresse">{{ chosen.user_id }}</span>
+                <div class="panel-body panel-colloque" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 120px;">
+                    <div>
+                        <span class="no-adresse">{{ chosen.user_id }}</span>
 
-                    <span v-if="chosen.civilite">{{ chosen.civilite }}</span>
-                    <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</a></span>
-                    <span v-if="chosen.company && (chosen.company != chosen.name)">{{ chosen.company }}</span>
-                    <span v-if="chosen.cp">{{ chosen.cp }}</span>
-                    <span v-if="chosen.complement">{{ chosen.complement }}</span>
-                    <span>{{ chosen.adresse }}</span>
-                    <span>{{ chosen.npa }} {{ chosen.ville }}</span>
-                    <button type="button" class="btn btn-danger btn-xs pull-right" @click.prevent="remove">changer</button>
+                        <span v-if="chosen.civilite">{{ chosen.civilite }}</span>
+                        <span><a target="_blank" :href="'admin/user/' + chosen.user_id">{{ chosen.name }}</a></span>
+                        <span v-if="chosen.company && (chosen.company != chosen.name)">{{ chosen.company }}</span>
+                        <span v-if="chosen.cp">{{ chosen.cp }}</span>
+                        <span v-if="chosen.complement">{{ chosen.complement }}</span>
+                        <span>{{ chosen.adresse }}</span>
+                        <span>{{ chosen.npa }} {{ chosen.ville }}</span>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-warning btn-xs pull-right" @click.prevent="remove">changer</button>
+                    </div>
                 </div>
             </div>
 

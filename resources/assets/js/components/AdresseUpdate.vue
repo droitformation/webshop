@@ -8,6 +8,7 @@
 
         <div :class="'text-' + direction">
             <button type="button" @click="show" :class="'btn ' + btnClass">{{ btnText }}</button>
+            <button class="btn btn-danger btn-sm" v-on:click.prevent="remove" v-show="type == 5 && admin == 1">x</button>
         </div>
 
         <modal :name="'update-modal'+id" :adaptive="true" :scrollable="true" :reset="true" height="auto">
@@ -85,8 +86,8 @@
                             <button v-on:click.prevent="update" type="button" class="btn btn-primary">Mettre à jour</button>
                         </div>
                     </div>
-
                 </div>
+
             </div>
 
         </modal>
@@ -97,13 +98,22 @@
         padding: 0px;
         background: #fff;
     }
+
     .adresse-update-wrapper{
         padding: 35px;
     }
+
+    .adresse_update{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 120px;
+    }
+
 </style>
 <script>
     export default {
-        props: ['main','original','type','title','dir','hidden','btn','texte'],
+        props: ['main','original','type','title','dir','hidden','btn','texte','admin'],
         components: {},
         data () {
             return {
@@ -134,7 +144,7 @@
             },
             isDefault: function () {
                 return this.main.id == this.original.id;
-            },
+            }
         },
         methods: {
             show () {
@@ -160,7 +170,17 @@
                     self.hide();
 
                 }).catch(function (error) { console.log(error);});
-            }
+            },
+            remove(){
+                let self = this;
+                axios.post(this.url + "vue/adresse/deleteAdresse", {id : this.adresse_update.id}).then(function (response) {
+
+                    if(response.data.result == true){
+                        location.reload();
+                    }
+
+                }).catch(function (error) { console.log(error);});
+            },
         }
     }
 </script>

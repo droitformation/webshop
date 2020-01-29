@@ -43,14 +43,14 @@
                                 <list-autocomplete type="user_id" chosen_id="{{ $abonnement->user_id ? $abonnement->user_id : null }}"></list-autocomplete>
 
                                 @if(!$abonnement->isTiers)
-                                    <button class="btn btn-inverse btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample">
+                                    <button class="btn btn-inverse btn-sm" type="button" data-toggle="collapse" data-target="#collapseExampleAboTiers">
                                         Gérer tiers payant
                                     </button>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="collapse {{ $abonnement->isTiers ? 'in' :'' }}" id="collapseExample">
+                        <div class="collapse {{ $abonnement->isTiers ? 'in' :'' }}" id="collapseExampleAboTiers">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Adresse de facturation <small>(ex tiers payant)</small></label>
                                 <div class="col-sm-7 col-xs-5">
@@ -61,6 +61,7 @@
                                                              title=""
                                                              btn="btn-sm btn-info"
                                                              texte="Changer"
+                                                             admin="1"
                                                              type="5"></adresse-update>
                                         </div>
                                     </div>
