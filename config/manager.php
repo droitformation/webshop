@@ -14,5 +14,9 @@ return [
     'shop',
     'import',
     'imports',
-    'sites'
+    'sites',
+    'temp',
+    'thumbs',
+    'old',
+    'live'
 ];

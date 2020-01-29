@@ -61,6 +61,9 @@ Vue.use(VueFormWizard)
 import vmodal from 'vue-js-modal';
 Vue.use(vmodal);
 
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload)
+
 const app = new Vue({
     el: '#appComponent'
 });

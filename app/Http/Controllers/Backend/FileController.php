@@ -39,9 +39,7 @@ class FileController extends Controller
 
     public function gettree()
     {
-        $directories = \Cache::rememberForever('files', function () {
-            return $this->file->manager();
-        });
+        $directories = $this->file->manager();
 
         return response()->json(['directories' => $directories]);
     }

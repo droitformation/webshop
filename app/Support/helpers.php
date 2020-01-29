@@ -195,3 +195,25 @@ function validateListEmail($results){
         })->all();
     });
 }
+
+/**
+ * Remove any elements where the callback returns true
+ *
+ * @param  array    $array    the array to walk
+ * @param  callable $callback callback takes ($value, $key, $userdata)
+ * @param  mixed    $userdata additional data passed to the callback.
+ * @return array
+ */
+function array_walk_recursive_delete(array &$array, callable $callback, $userdata = null)
+{
+    foreach ($array as $key => &$value) {
+        if (is_array($value)) {
+            $value = array_walk_recursive_delete($value, $callback, $userdata);
+        }
+        if ($callback($value, $key, $userdata)) {
+            unset($array[$key]);
+        }
+    }
+
+    return $array;
+}

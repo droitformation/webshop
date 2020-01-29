@@ -1292,11 +1292,10 @@ Route::get('testproduct', function()
 Route::get('manager', function()
 {
 
-
     $manager = App::make('App\Droit\Service\FileWorkerInterface');
 
     echo '<pre>';
-    print_r($manager->authorized());
+    print_r($manager->manager());
     echo '</pre>';
     exit();
     //$files   = $manager->dir_contains_children('files/pictos');

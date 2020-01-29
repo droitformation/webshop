@@ -5,7 +5,7 @@
         <div class="modal fade" :id="'myModal_' + id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header manager-modal">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Choisir un fichier</h4>
                     </div>
@@ -43,10 +43,10 @@
                                         <p class="mt-10"><strong>{{ index }}</strong></p>
                                         <div class="gallery-wrapper">
                                             <div class="file-item" v-for="file in row">
-                                                <button @click="deleteFile(path + '/' + file)" class="btn btn-xs btn-danger">x</button>
-                                                <img v-if="isImage(file)" @click="chosenFile(path + '/' + file)" :src="url + path + displayPath + '/' + file" alt="image" />
-                                                <img v-if="!isImage(file)" @click="chosenFile(path + '/' + file)" src="images/text.svg" alt="image" />
-                                                <p>{{ file }}</p>
+                                                <button @click="deleteFile(file)" class="btn btn-xs btn-danger">x</button>
+                                                <img v-if="isImage(file)" @click="chosenFile(file)" :src="file" alt="image" />
+                                                <img v-if="!isImage(file)" @click="chosenFile(file)" src="images/text.svg" alt="image" />
+                                                <p>{{ nom(file) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -65,8 +65,8 @@
 
     <div v-if="chosen && filename" class="file-choosen-wrapper">
         <input class="file-choosen" type="hidden" :name="name" v-bind:value="filename">
-        <img v-if="isImage(filename)" class="file-choosen file-image thumbnail" :src="filename" alt="image" />
-        <a v-if="!isImage(filename)" target="_blank" class="file-choosen" :href="filename">{{ filename }}</a>
+        <img v-if="isImage(filename)" class="file-choosen file-image thumbnail" :href="root + filename" alt="image" />
+        <a v-if="!isImage(filename)" target="_blank" class="file-choosen" :href="root + filename">{{ filename }}</a>
         <button @click="removeFile()" class="btn btn-xs btn-danger">x</button>
     </div>
 
@@ -92,12 +92,12 @@
         flex-wrap: wrap;
     }
    .file-item {
-       width: 130px;
-       height: 150px;
+       width: 120px;
+       height: 135px;
        position: relative;
        list-style: none;
        margin: 5px;
-       padding: 5px;
+       padding: 20px 5px 5px 5px;
        background: #fff;
        display: flex;
        flex-direction: column;
@@ -107,7 +107,7 @@
        overflow-x: hidden;
    }
    .file-item img {
-       max-width: 130px;
+       max-width: 120px;
        max-height: 90px;
        background-position: center;
        background-repeat: no-repeat;
@@ -124,8 +124,9 @@
    }
    .file-item button {
        position: absolute;
-       top: 2px;
-       right: 2px;
+       top: 0;
+       right: 0;
+       padding: 0 5px 2px 5px;
    }
     .tree ul button {
         background-color: #428bca;
@@ -133,17 +134,27 @@
         color: #ffffff;
         cursor: pointer;
         display: block;
-        line-height: 20px;
-        padding: 2px 0 2px 10px;
+        line-height: 16px;
+        padding: 3px 0 3px 10px;
         width: 100%;
         border-collapse: collapse;
         text-align: left;
+    }
+
+    .modal-header.manager-modal {
+        padding:10px  15px;
+        border-bottom: 1px solid #e5e5e5;
+        min-height: 15px;
+    }
+
+    .modal-dialog {
+        margin-top: 95px;
     }
 </style>
 <script>
 
 export default {
- props: ['name','thumbs', 'input','id'],
+ props: ['name','thumbs', 'input','id','root'],
     data () {
 
         return {
@@ -243,6 +254,9 @@ export default {
             var exts    = ['jpg','jpeg','png','gif'];
 
             return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;
+        },
+        nom(fullPath){
+            return fullPath.replace(/^.*[\\\/]/, '')
         }
     }
 }

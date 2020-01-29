@@ -50,28 +50,29 @@ class FileWorker implements FileWorkerInterface{
 
     public function manager()
     {
-        $authorized = $this->authorized();
-
         $all = $this->tree('files',0,false,true);
 
-        return collect($all)->filter(function ($directorie, $key) use ($authorized) {
-            return in_array($key, $authorized);
-        })->toArray();
+        return array_walk_recursive_delete($all, function ($value, $key) {
+            return in_array($key,config('manager')) ? true : false;
+        });
+    }
+
+    public function isAuthorized($item, $key)
+    {
+        return $key;
     }
 
     public function listDirectoryFiles($dir)
     {
-        return \Cache::rememberForever('allfiles_'.$dir, function () use ($dir) {
-            $tree = \File::allfiles($dir);
+        $tree = \File::files($dir);
 
-            return collect($tree)->groupBy(function ($file){
-                return \Carbon\Carbon::createFromTimestamp($file->getMTime())->toDateString();
-            })->map(function ($files) use ($dir) {
-                return $files->map(function ($file) use ($dir) {
-                    return $file->getFilename();
-                });
-            })->sortKeysDesc()->toArray();
-        });
+        return collect($tree)->groupBy(function ($file){
+            return \Carbon\Carbon::createFromTimestamp($file->getMTime())->toDateString();
+        })->map(function ($files) use ($dir) {
+            return $files->map(function ($file) use ($dir) {
+                return $dir.'/'.$file->getFilename();
+            });
+        })->sortKeysDesc()->toArray();
     }
 
     public function listActionFiles($dir)
