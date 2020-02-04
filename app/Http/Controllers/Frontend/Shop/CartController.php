@@ -66,7 +66,7 @@ class CartController extends Controller {
         $coupon_global = $this->coupon->getGlobal();
 
         if($coupon_global){
-            $this->worker->reset()->setCoupon($coupon_global->title)->applyCoupon();
+            $this->worker->reset()->setCoupon($coupon_global->title, true)->applyCoupon();
         }
 
         $request->session()->flash('cartUpdated', 'Panier mis à jour');

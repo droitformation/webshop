@@ -40,7 +40,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
       * @return void
       * @throws \App\Exceptions\CouponException if coupon is not valid
       * */
-     public function setCoupon($coupon){
+     public function setCoupon($coupon, $global = null){
 
          $valide = $this->coupon->findByTitle($coupon);
 
@@ -50,7 +50,10 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
              $this->applyCoupon();
              session()->forget('coupon');
 
-             throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide');
+             if(!$global){
+                 throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide');
+             }
+             return $this;
          }
 
          $this->hasCoupon = $valide;
