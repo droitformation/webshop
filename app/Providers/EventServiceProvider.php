@@ -25,7 +25,8 @@ class EventServiceProvider extends ServiceProvider {
         'App\Events\SubscriberEmailUpdated' => ['App\Listeners\UpdateSubscriberEmail'],
         'App\Events\EmailAccountUpdated' => ['App\Listeners\UpdateEmailAccount'],
         'App\Events\OrderUpdated' => ['App\Listeners\NotifyOrderUpdated'],
-        'App\Events\AdresseTiersDeletedAbo' => ['App\Listeners\UpdateAbo']
+        'App\Events\AdresseTiersDeletedAbo' => ['App\Listeners\UpdateAbo'],
+        'App\Events\FileUploaded' => ['App\Listeners\FlushCacheFiles']
 	];
 
 	/**

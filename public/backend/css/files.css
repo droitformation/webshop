@@ -200,7 +200,7 @@
     list-style: none;
 }
 
-.file-item {
+#gallery .file-item {
     width: 120px;
     height: 120px;
     position: relative;
@@ -219,7 +219,7 @@
     overflow-x: hidden;
 }
 
-.file-item button{
+#gallery .file-item button{
     position: absolute;
     top: 5px;
     right: 5px;
@@ -318,7 +318,7 @@ FILE MANAGER
 #uploadModal .modal-body{
     min-height: 400px;
 }
-
+/*
 #fileManager img {
     max-width: 120px;
     max-height: 80px;
@@ -326,7 +326,7 @@ FILE MANAGER
     background-repeat:   no-repeat;
     background-size:     cover;
     cursor: pointer;
-}
+}*/
 
 .tree ul {
     list-style: none;

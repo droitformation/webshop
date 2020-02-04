@@ -19,7 +19,7 @@
             @endif
 
             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal_{{ $content->id }}">Choisir un fichier</button>
-            <manager :id="{{ $content->id }}" name="image" :thumbs="{{ json_encode(['products','uploads']) }}"></manager>
+            <manager :id="{{ $content->id }}" name="image" :thumbs="{{ json_encode(['products','uploads']) }}" root="{{ asset('/') }}"></manager>
         </div>
     @endif
 

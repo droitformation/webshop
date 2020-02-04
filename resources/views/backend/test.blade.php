@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 
-   <div class="row">
+   <div class="row" id="appComponent">
         <div class="col-md-12">
 
             <div class="panel panel-midnightblue">
@@ -17,6 +17,17 @@
 
                 </div>
             </div>
+
+            <div class="panel panel-midnightblue">
+                <div class="panel-body" id="appComponent">
+                    <div class="form-group">
+                        <label for="file" class="control-label">Image</label><br/>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal_0">Choisir un fichier</button>
+                        <manager id="0" name="image" :thumbs="{{ json_encode(['products','uploads']) }}" root="{{ asset('/') }}"></manager>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
