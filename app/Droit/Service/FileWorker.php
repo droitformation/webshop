@@ -54,9 +54,15 @@ class FileWorker implements FileWorkerInterface{
         return $key;
     }
 
-    public function listDirectoryFiles($dir)
+    public function listDirectoryFiles($dir, $flat = null)
     {
         $tree = \File::files($dir);
+
+        if($flat){
+            return collect($tree)->map(function ($file) use ($dir) {
+                return $file->getFilename();
+            })->toArray();
+        }
 
         return collect($tree)->groupBy(function ($file){
             return \Carbon\Carbon::createFromTimestamp($file->getMTime())->toDateString();

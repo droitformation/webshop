@@ -8,5 +8,5 @@ interface FileWorkerInterface{
     public function tree($source_dir, $directory_depth = 0, $hidden = FALSE);
     public function manager();
     public function listActionFiles($dir);
-    public function listDirectoryFiles($dir);
+    public function listDirectoryFiles($dir, $flat = null);
 }

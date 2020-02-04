@@ -16,20 +16,23 @@
                                 <div :id="'dropzone_' + id" class="dropzone"></div>
                             </div>
                             <div class="col-md-10">
-                               <div class="wrapper-gallery">
-                                   <ul v-if="files" class="gallery">
-                                       <li v-for="file in files">
-                                           <figure class="figure-file-item">
+                               <div class="build-manager">
+                                   <div v-if="files" class="build-wrapper-gallery">
+                                       <div v-for="file in files" class="file-item-build">
+
+                                           <div class="file-image-build">
                                                <img v-if="isImage(file)" :src="path + '/' + file" alt="image" />
                                                <img v-if="!isImage(file)" height="105px" src="images/text.svg" alt="image" />
-                                           </figure>
-                                           <div class="figure-file-item-label">
-                                               <p v-if="!isImage(file)">{{ file }}</p>
+                                           </div>
+
+                                           <div><p v-if="!isImage(file)">{{ file }}</p></div>
+
+                                           <div class="action-build">
                                                <button @click="chosenFile(path + '/' + file)" class="btn btn-xs btn-info btn-file-item">Choisir</button>
                                                <button @click="deleteFile(path + '/' + file)" class="btn btn-xs btn-danger">x</button>
                                            </div>
-                                       </li>
-                                   </ul>
+                                       </div>
+                                   </div>
                                    <p class="loading" v-show="loading"><i class="fa fa-spinner fa-spin"></i></p>
                                </div>
                             </div>
@@ -60,16 +63,70 @@
    .loading{
         width:50px;
         margin:40px auto;
-        font-size:30px;
+        font-size:50px;
     }
     .modal-dialog{
         width: 80%;
         min-width:860px;
     }
-    .gallery li{
-        width: 200px;
-        display: inline-block;
-    }
+
+   .build-manager {
+       overflow-y: auto;
+       max-height: 70vh;
+       width: 100%;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       align-content: center;
+   }
+
+   .build-wrapper-gallery{
+       display: flex;
+       flex-direction: row;
+       justify-content: start;
+       flex-wrap: wrap;
+   }
+
+   .file-item-build{
+       width: 90px;
+       height: 135px;
+       display: flex;
+       flex-direction: column;
+       justify-content: space-between;
+       position: relative;
+       margin: 15px;
+       padding:0;
+       background: #fff;
+       align-items: center;
+   }
+       .file-image-build{
+           width: 90px;
+           height: 130px;
+           overflow: hidden;
+       }
+
+           .file-item-build img {
+               width: 90px;
+               height: auto;
+           }
+
+       .file-item-build div p{
+           margin: 5px 0 0 0;
+           padding: 0;
+           text-align: center;
+           font-size: 12px;
+           line-height: 12px;
+           word-wrap: anywhere;
+       }
+
+   .file-item-build .action-build{
+       display: flex;
+       width: 100%;
+       flex-direction: row;
+       justify-content: space-between;
+       padding: 5px;
+       background: #f8f8f8;
+   }
 
 </style>
 <script>
@@ -124,7 +181,7 @@ export default {
             this.loading = true;
             var self = this;
 
-            axios.post('/admin/getfiles', { path : this.path }).then(function (response) {
+            axios.post('/admin/getfiles', { path : this.path, flat: true }).then(function (response) {
                 self.files = response.data.files;
                 self.loading = false;
             }).catch(function (error) { console.log(error);});

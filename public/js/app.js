@@ -4454,6 +4454,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['inputname', 'id', 'wrapper'],
   data: function data() {
@@ -4497,7 +4554,8 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       var self = this;
       axios.post('/admin/getfiles', {
-        path: this.path
+        path: this.path,
+        flat: true
       }).then(function (response) {
         self.files = response.data.files;
         self.loading = false;
@@ -6978,7 +7036,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n.modal-dialog{\n     width: 80%;\n     min-width:860px;\n}\n.gallery li{\n     width: 200px;\n     display: inline-block;\n}\n\n", ""]);
+exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:50px;\n}\n.modal-dialog{\n     width: 80%;\n     min-width:860px;\n}\n.build-manager {\n    overflow-y: auto;\n    max-height: 70vh;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    align-content: center;\n}\n.build-wrapper-gallery{\n    display: flex;\n    flex-direction: row;\n    justify-content: start;\n    flex-wrap: wrap;\n}\n.file-item-build{\n    width: 90px;\n    height: 135px;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    position: relative;\n    margin: 15px;\n    padding:0;\n    background: #fff;\n    align-items: center;\n}\n.file-image-build{\n        width: 90px;\n        height: 130px;\n        overflow: hidden;\n}\n.file-item-build img {\n            width: 90px;\n            height: auto;\n}\n.file-item-build div p{\n        margin: 5px 0 0 0;\n        padding: 0;\n        text-align: center;\n        font-size: 12px;\n        line-height: 12px;\n        word-wrap: anywhere;\n}\n.file-item-build .action-build{\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    justify-content: space-between;\n    padding: 5px;\n    background: #f8f8f8;\n}\n\n", ""]);
 
 // exports
 
@@ -37558,46 +37616,48 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-10" }, [
-                      _c("div", { staticClass: "wrapper-gallery" }, [
+                      _c("div", { staticClass: "build-manager" }, [
                         _vm.files
                           ? _c(
-                              "ul",
-                              { staticClass: "gallery" },
+                              "div",
+                              { staticClass: "build-wrapper-gallery" },
                               _vm._l(_vm.files, function(file) {
-                                return _c("li", [
-                                  _c(
-                                    "figure",
-                                    { staticClass: "figure-file-item" },
-                                    [
-                                      _vm.isImage(file)
-                                        ? _c("img", {
-                                            attrs: {
-                                              src: _vm.path + "/" + file,
-                                              alt: "image"
-                                            }
-                                          })
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      !_vm.isImage(file)
-                                        ? _c("img", {
-                                            attrs: {
-                                              height: "105px",
-                                              src: "images/text.svg",
-                                              alt: "image"
-                                            }
-                                          })
-                                        : _vm._e()
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "figure-file-item-label" },
-                                    [
+                                return _c(
+                                  "div",
+                                  { staticClass: "file-item-build" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "file-image-build" },
+                                      [
+                                        _vm.isImage(file)
+                                          ? _c("img", {
+                                              attrs: {
+                                                src: _vm.path + "/" + file,
+                                                alt: "image"
+                                              }
+                                            })
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        !_vm.isImage(file)
+                                          ? _c("img", {
+                                              attrs: {
+                                                height: "105px",
+                                                src: "images/text.svg",
+                                                alt: "image"
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", [
                                       !_vm.isImage(file)
                                         ? _c("p", [_vm._v(_vm._s(file))])
-                                        : _vm._e(),
-                                      _vm._v(" "),
+                                        : _vm._e()
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "action-build" }, [
                                       _c(
                                         "button",
                                         {
@@ -37628,9 +37688,9 @@ var render = function() {
                                         },
                                         [_vm._v("x")]
                                       )
-                                    ]
-                                  )
-                                ])
+                                    ])
+                                  ]
+                                )
                               }),
                               0
                             )
