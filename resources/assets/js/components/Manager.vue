@@ -65,7 +65,7 @@
 
     <div v-if="chosen && filename" class="file-choosen-wrapper">
         <input class="file-choosen" type="hidden" :name="name" v-bind:value="filename">
-        <img v-if="isImage(filename)" class="file-choosen file-image thumbnail" :href="root + filename" alt="image" />
+        <img v-if="isImage(filename)" class="file-choosen file-image thumbnail" :src="root + filename" alt="image" />
         <a v-if="!isImage(filename)" target="_blank" class="file-choosen" :href="root + filename">{{ filename }}</a>
         <button @click="removeFile()" class="btn btn-xs btn-danger">x</button>
     </div>

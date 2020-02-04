@@ -38478,7 +38478,7 @@ var render = function() {
           _vm.isImage(_vm.filename)
             ? _c("img", {
                 staticClass: "file-choosen file-image thumbnail",
-                attrs: { href: _vm.root + _vm.filename, alt: "image" }
+                attrs: { src: _vm.root + _vm.filename, alt: "image" }
               })
             : _vm._e(),
           _vm._v(" "),
