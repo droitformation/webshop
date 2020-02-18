@@ -202,18 +202,18 @@ Route::get('testing', function() {
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
 
-    $inscription = $model_inscriptions->find(20992);
+/*    $inscription = $model_inscriptions->find(20992);
 
     echo '<pre>';
     print_r($inscription->export_option_html);
     echo '</pre>';
     exit();
-
+*/
 
     $dispach = null;
     $list = [1,2];
 
-    $colloque   = $colloques->find(100);
+   /* $colloque   = $colloques->find(100);
     $occurences = $dispach ? $colloque->occurrences : $colloque->occurrences->whereIn('id',$list);
 
     $grouped = !$occurences->isEmpty() ? $occurences->mapToGroups(function ($occurence, $key) use ($colloque,$model_inscriptions) {
@@ -223,7 +223,7 @@ Route::get('testing', function() {
     echo '<pre>';
     print_r($grouped);
     echo '</pre>';
-    exit();
+    exit();*/
 
     $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $model = new \App\Droit\User\Entities\User();
@@ -242,7 +242,24 @@ Route::get('testing', function() {
     $abo_cindy = $abo_users->find(1049);
 
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $order = $model->find(4395);
+    $order = $model->find(4776);
+
+    $quantities = $order->products->groupBy('id')->map(function ($products,$product_id) {
+        return $products->count();
+    })->mapToGroups(function ($qty,$product_id) {
+        return ['products' => $product_id, 'qty' => $qty];
+    });
+
+    $quantities = $order->products->groupBy('id')->map(function ($products,$product_id) {
+        return $products->count();
+    });
+
+    echo '<pre>';
+    print_r($quantities->keys());
+    print_r($quantities->values());
+    echo '</pre>';
+    exit();
+
 
     $colloque = $colloques->find(100);
 

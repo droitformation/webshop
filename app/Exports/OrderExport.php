@@ -5,8 +5,10 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class OrderExport implements FromArray, WithHeadings, WithEvents
+class OrderExport implements FromArray, WithHeadings, WithEvents, WithColumnFormatting
 {
     use Exportable;
 
@@ -25,7 +27,10 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
         $this->details = $details;
 
         $money = new \App\Droit\Shop\Product\Entities\Money;
-        $this->total = $money->format($this->orders->sum('price_cents'));
+
+        $this->total = $sum = $this->orders->reduce(function ($carry, $item) {
+            return $carry + $item->amount;
+        },0);
     }
 
     public function headings(): array {
@@ -42,8 +47,10 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
         $header = $this->details ? array_merge($columns,$details) : $columns;
         $header = $this->columns ? array_merge($header,$this->columns) : $header;
 
-        $sum = $this->orders->sum('price_cents');
-        $sum = number_format((float)$sum, 2, ',', '');
+        $sum = $this->orders->reduce(function ($carry, $item) {
+            return $carry + $item->amount;
+        },0);
+       // $sum = number_format((float)$sum, 2, ',', '');
 
         return array_merge([[''],$header] ,$orders,[[''],['Total','',$sum]]);
     }
@@ -71,11 +78,9 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
 
             $user = [];
 
-            $montant = number_format((float)$order->total_with_shipping, 2, ',', '');
-
             $info['Numero']  = $order->order_no;
             $info['Date']    = $order->created_at->format('d.m.Y');
-            $info['Montant'] = $montant;
+            $info['Montant'] = $order->total_with_shipping;
             $info['Port']    = $order->total_shipping;
             $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
             $info['Status']  = $order->total_with_shipping > 0 ? $order->status_code['status']: 'Gratuit';
@@ -98,10 +103,10 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
                 foreach($grouped as $product) {
 
                     $prix = $product->first()->price_normal ? $product->first()->price_normal : null;
-                    $prix = $prix ? number_format((float)$prix, 2, ',', '') : '';
+                    //$prix = $prix ? number_format((float)$prix, 2, ',', '') : '';
 
                     $special = $product->first()->price_special ? $product->first()->price_special : null;
-                    $special = $special ? number_format((float)$special, 2, ',', '') : '';
+                    //$special = $special ? number_format((float)$special, 2, ',', '') : '';
 
                     $data['title']   = $product->first()->title;
                     $data['qty']     = $product->count();
@@ -119,5 +124,14 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
         } // end foreach
 
         return $converted;
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'C' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'I' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'J' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+        ];
     }
 }

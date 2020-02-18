@@ -2,8 +2,10 @@
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class InscriptionExport implements FromView
+class InscriptionExport implements FromView, WithColumnFormatting
 {
     protected $inscriptions;
     protected $colloque;
@@ -77,11 +79,9 @@ class InscriptionExport implements FromView
         $data = [];
         $user = $inscription->inscrit;
 
-        $price = number_format((float)$inscription->price_cents, 2, ',', '');
-
         $data['present']     = $inscription->present ? 'Oui' : '';
         $data['number']      = $inscription->inscription_no;
-        $data['prix']        = $price;
+        $data['prix']        = $inscription->price_cents;
         $data['status']      = $inscription->status_name['status'];
         $data['date']        = $inscription->created_at->format('m/d/Y');
         $data['participant'] = $inscription->group_id > 0 ? $inscription->participant->name : '';
@@ -125,5 +125,12 @@ class InscriptionExport implements FromView
                 $this->sorted[$value['option_id']][$value['groupe_id']][] = $data;
             }
         });
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'C' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+        ];
     }
 }
