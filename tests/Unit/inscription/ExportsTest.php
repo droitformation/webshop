@@ -122,7 +122,7 @@ class ExportsTest extends TestCase
             return [
                 'Numero'  => $order->order_no,
                 'Date'    => $order->created_at->format('d.m.Y'),
-                'Montant' => number_format((float)$order->total_with_shipping, 2, ',', ''),
+                'Montant' => $order->amount / 100,
                 'Port'    => $order->total_shipping,
                 'Paye'    => '',
                 'Status'  => $order->total_with_shipping > 0 ? $order->status_code['status']: 'Gratuit'
@@ -153,7 +153,7 @@ class ExportsTest extends TestCase
             return [
                 'Numero'  => $order->order_no,
                 'Date'    => $order->created_at->format('d.m.Y'),
-                'Montant' => number_format((float)$order->total_with_shipping, 2, ',', ''),
+                'Montant' => $order->amount / 100,
                 'Port'    => $order->total_shipping,
                 'Paye'    => '',
                 'Status'  => $order->total_with_shipping > 0 ? $order->status_code['status'] : 'Gratuit'
@@ -184,8 +184,9 @@ class ExportsTest extends TestCase
         \Excel::assertDownloaded($filename, function($export) use ($orders_array)  {
             // Assert that the correct export is downloaded.
             $data = $export->array();
+
             $data = array_slice($data, 2);
-            $data = array_slice($data, 0, -2);
+            $data = array_slice($data, 0, -3);
 
             return $data == $orders_array;
         });

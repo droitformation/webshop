@@ -48,11 +48,17 @@ class OrderExport implements FromArray, WithHeadings, WithEvents, WithColumnForm
         $header = $this->columns ? array_merge($header,$this->columns) : $header;
 
         $sum = $this->orders->reduce(function ($carry, $item) {
+            return $carry + $item->total_with_shipping;
+        },0);
+
+        $amount = $this->orders->reduce(function ($carry, $item) {
             return $carry + $item->amount;
         },0);
-       // $sum = number_format((float)$sum, 2, ',', '');
 
-        return array_merge([[''],$header] ,$orders,[[''],['Total','',$sum]]);
+        $sum = number_format((float)$sum, 2, ',', '');
+        $amount = number_format((float)$amount/100, 2, ',', '');
+
+        return array_merge([[''],$header] ,$orders,[[''],['Total avec port','',$sum],['Total sans port','',$amount]]);
     }
 
     /**
@@ -80,7 +86,7 @@ class OrderExport implements FromArray, WithHeadings, WithEvents, WithColumnForm
 
             $info['Numero']  = $order->order_no;
             $info['Date']    = $order->created_at->format('d.m.Y');
-            $info['Montant'] = $order->total_with_shipping;
+            $info['Montant'] = $order->amount /100;
             $info['Port']    = $order->total_shipping;
             $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
             $info['Status']  = $order->total_with_shipping > 0 ? $order->status_code['status']: 'Gratuit';
