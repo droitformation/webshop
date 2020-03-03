@@ -186,7 +186,7 @@ class ExportsTest extends TestCase
             $data = $export->array();
 
             $data = array_slice($data, 2);
-            $data = array_slice($data, 0, -3);
+            $data = array_slice($data, 0, -1);
 
             return $data == $orders_array;
         });
