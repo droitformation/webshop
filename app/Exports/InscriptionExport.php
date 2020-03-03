@@ -130,7 +130,7 @@ class InscriptionExport implements FromView, WithColumnFormatting
     public function columnFormats(): array
     {
         return [
-            'C' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            //'C' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
         ];
     }
 }

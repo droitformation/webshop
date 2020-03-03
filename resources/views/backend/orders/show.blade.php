@@ -201,7 +201,6 @@
                             </div>
                         </div>
 
-
                         <?php $messages = unserialize($order->comment); ?>
                         <?php $warning = isset($messages['warning']) ? $messages['warning'] : old('message.warning'); ?>
 

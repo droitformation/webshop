@@ -58,7 +58,7 @@ class OrderExport implements FromArray, WithHeadings, WithEvents, WithColumnForm
         $sum = number_format((float)$sum, 2, ',', '');
         $amount = number_format((float)$amount/100, 2, ',', '');
 
-        return array_merge([[''],$header] ,$orders,[[''],['Total avec port','',$sum],['Total sans port','',$amount]]);
+        return array_merge([[''],$header] ,$orders,[['']]);
     }
 
     /**
@@ -135,9 +135,9 @@ class OrderExport implements FromArray, WithHeadings, WithEvents, WithColumnForm
     public function columnFormats(): array
     {
         return [
-            'C' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'I' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
-            'J' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+       /*     'C' => NumberFormat::FORMAT_NUMBER_00,
+            'I' => NumberFormat::FORMAT_NUMBER_00,
+            'J' => NumberFormat::FORMAT_NUMBER_00,*/
         ];
     }
 }
