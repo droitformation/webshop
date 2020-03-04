@@ -85,6 +85,16 @@ class Order extends Model{
         return [$francs,$centimes];
     }
 
+    public function getAmountExplodeAttribute()
+    {
+        $float = number_format($this->amount/100, 2);
+        $price = explode('.',$float);
+        $francs   = isset($price[0]) ? $price[0] : 0;
+        $centimes = isset($price[1]) ? rtrim($price[1],0) : 0;
+
+        return [$francs,$centimes];
+    }
+
     public function getFactureAttribute()
     {
         $facture = public_path('files/shop/factures/facture_'.$this->order_no.'.pdf');

@@ -79,9 +79,13 @@ class InscriptionExport implements FromView, WithColumnFormatting
         $data = [];
         $user = $inscription->inscrit;
 
+        $montant = floatval(str_replace(",",".",$inscription->price_cents));
+
+        setlocale(LC_NUMERIC, 'en_US');
+
         $data['present']     = $inscription->present ? 'Oui' : '';
         $data['number']      = $inscription->inscription_no;
-        $data['prix']        = $inscription->price_cents;
+        $data['prix']        = $montant > 0 ? $montant : 0;
         $data['status']      = $inscription->status_name['status'];
         $data['date']        = $inscription->created_at->format('m/d/Y');
         $data['participant'] = $inscription->group_id > 0 ? $inscription->participant->name : '';
