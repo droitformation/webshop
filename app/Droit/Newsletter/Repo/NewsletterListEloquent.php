@@ -100,7 +100,9 @@ class NewsletterListEloquent implements NewsletterListInterface{
             $list->specialisations()->sync($data['specialisations']);
         }
 
-        return $list;
+        $list = $list->fresh();
+
+        return $list->load('emails');
     }
 
 	public function delete($id){
