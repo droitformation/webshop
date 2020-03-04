@@ -10,7 +10,6 @@ return array(
     'SimpleSoftwareIO\\QrCode\\' => array($vendorDir . '/simplesoftwareio/simple-qrcode/src'),
     'ShvetsGroup\\LaravelEmailDatabaseLog\\' => array($vendorDir . '/shvetsgroup/laravel-email-database-log/src'),
     'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
-    'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'PDFMerger' => array($vendorDir . '/rguedes/pdfmerger/Classes'),
     'Msurguy\\Honeypot\\' => array($vendorDir . '/msurguy/honeypot/src'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),

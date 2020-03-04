@@ -4,10 +4,10 @@ namespace Spatie\Honeypot;
 
 use Closure;
 use Exception;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 use Spatie\Honeypot\SpamResponder\SpamResponder;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProtectAgainstSpam
 {
@@ -56,7 +56,7 @@ class ProtectAgainstSpam
         return $next($request);
     }
 
-    private function getRandomizedNameFieldName($nameFieldName, $requestFields):?String
+    private function getRandomizedNameFieldName($nameFieldName, $requestFields): ?String
     {
         return collect($requestFields)->filter(function ($value, $key) use ($nameFieldName) {
             return Str::startsWith($key, $nameFieldName);

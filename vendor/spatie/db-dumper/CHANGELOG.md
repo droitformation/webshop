@@ -2,6 +2,18 @@
 
 All notable changes to `db-dumper` will be documented in this file
 
+## 2.15.3 - 2020-01-26
+
+- Fix incomplete credential guard (#126)
+
+## 2.15.2 - 2020-01-16
+
+- Fix sqlite3 dump on Windows
+
+## 2.15.1 - 2019-11-23
+
+- allow symfony 5 components
+
 ## 2.15.0 - 2019-11-11
 
 - add `doNotCreateTables` to Postgres driver (#116)
