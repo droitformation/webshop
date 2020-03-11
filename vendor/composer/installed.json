@@ -1776,17 +1776,17 @@
     },
     {
         "name": "laravel/framework",
-        "version": "v6.18.0",
-        "version_normalized": "6.18.0.0",
+        "version": "v6.18.1",
+        "version_normalized": "6.18.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/framework.git",
-            "reference": "077b895d935b7fbcfb1d1eb34217fa4f80a130d8"
+            "reference": "367c2c8dfdfe83cb2ddbc029c0222174098d093a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/077b895d935b7fbcfb1d1eb34217fa4f80a130d8",
-            "reference": "077b895d935b7fbcfb1d1eb34217fa4f80a130d8",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/367c2c8dfdfe83cb2ddbc029c0222174098d093a",
+            "reference": "367c2c8dfdfe83cb2ddbc029c0222174098d093a",
             "shasum": ""
         },
         "require": {
@@ -1888,7 +1888,7 @@
             "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^1.2).",
             "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
         },
-        "time": "2020-03-03T13:14:27+00:00",
+        "time": "2020-03-10T14:11:04+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2125,17 +2125,17 @@
     },
     {
         "name": "league/flysystem",
-        "version": "1.0.64",
-        "version_normalized": "1.0.64.0",
+        "version": "1.0.65",
+        "version_normalized": "1.0.65.0",
         "source": {
             "type": "git",
             "url": "https://github.com/thephpleague/flysystem.git",
-            "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
+            "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
-            "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
+            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
+            "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
             "shasum": ""
         },
         "require": {
@@ -2165,7 +2165,7 @@
             "spatie/flysystem-dropbox": "Allows you to use Dropbox storage",
             "srmklive/flysystem-dropbox-v2": "Allows you to use Dropbox storage for PHP 5 applications"
         },
-        "time": "2020-02-05T18:14:17+00:00",
+        "time": "2020-03-08T18:53:20+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2898,25 +2898,25 @@
         "source": {
             "type": "git",
             "url": "https://github.com/msurguy/Honeypot.git",
-            "reference": "16bba3255870fe272575fd3928d76a209ffec098"
+            "reference": "ac8c28d4bcd3c14657ddf772ffef05144da5f078"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/msurguy/Honeypot/zipball/16bba3255870fe272575fd3928d76a209ffec098",
-            "reference": "16bba3255870fe272575fd3928d76a209ffec098",
+            "url": "https://api.github.com/repos/msurguy/Honeypot/zipball/ac8c28d4bcd3c14657ddf772ffef05144da5f078",
+            "reference": "ac8c28d4bcd3c14657ddf772ffef05144da5f078",
             "shasum": ""
         },
         "require": {
-            "illuminate/config": "4.*|5.*|6.*",
-            "illuminate/support": "4.*|5.*|6.*",
-            "illuminate/translation": "4.*|5.*|6.*",
+            "illuminate/config": "4.*|5.*|6.*|7.*",
+            "illuminate/support": "4.*|5.*|6.*|7.*",
+            "illuminate/translation": "4.*|5.*|6.*|7.*",
             "php": ">=5.3.0"
         },
         "require-dev": {
             "mockery/mockery": "0.9.*",
             "phpunit/phpunit": "4.0.*"
         },
-        "time": "2020-02-15T20:16:56+00:00",
+        "time": "2020-03-09T22:04:13+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -4284,17 +4284,17 @@
     },
     {
         "name": "phpspec/prophecy",
-        "version": "v1.10.2",
-        "version_normalized": "1.10.2.0",
+        "version": "v1.10.3",
+        "version_normalized": "1.10.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpspec/prophecy.git",
-            "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9"
+            "reference": "451c3cd1418cf640de218914901e51b064abb093"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpspec/prophecy/zipball/b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
-            "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
+            "url": "https://api.github.com/repos/phpspec/prophecy/zipball/451c3cd1418cf640de218914901e51b064abb093",
+            "reference": "451c3cd1418cf640de218914901e51b064abb093",
             "shasum": ""
         },
         "require": {
@@ -4308,7 +4308,7 @@
             "phpspec/phpspec": "^2.5 || ^3.2",
             "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5 || ^7.1"
         },
-        "time": "2020-01-20T15:57:02+00:00",
+        "time": "2020-03-05T15:02:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4953,21 +4953,21 @@
     },
     {
         "name": "queueworker/sansdaemon",
-        "version": "v1.2.1",
-        "version_normalized": "1.2.1.0",
+        "version": "v1.2.2",
+        "version_normalized": "1.2.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/orobogenius/sansdaemon.git",
-            "reference": "4587600a25e94f2df3d780d9aa335c38d70951fb"
+            "reference": "66b5076edc7cd397f944fdbf6a0f2c2a15dc85ce"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/orobogenius/sansdaemon/zipball/4587600a25e94f2df3d780d9aa335c38d70951fb",
-            "reference": "4587600a25e94f2df3d780d9aa335c38d70951fb",
+            "url": "https://api.github.com/repos/orobogenius/sansdaemon/zipball/66b5076edc7cd397f944fdbf6a0f2c2a15dc85ce",
+            "reference": "66b5076edc7cd397f944fdbf6a0f2c2a15dc85ce",
             "shasum": ""
         },
         "require": {
-            "illuminate/support": "^6.0",
+            "illuminate/support": "^6.0|^7.0",
             "php": "^7.2"
         },
         "require-dev": {
@@ -4975,7 +4975,7 @@
             "orchestra/testbench": "^4.0",
             "phpunit/phpunit": "^8"
         },
-        "time": "2020-01-04T13:41:10+00:00",
+        "time": "2020-03-10T20:41:18+00:00",
         "type": "library",
         "extra": {
             "laravel": {

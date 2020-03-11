@@ -32,10 +32,10 @@
         </table>
     </div>
 
-    <h1 class="title blue">
+    <h4 class="title blue">
         <?php $rappel = (isset($rappel) ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'ème' : 'er').' Rappel</span>' : ''); ?>
         {!! $rappel !!} Facture
-    </h1>
+    </h4>
 
     <table class="content-table">
         <tr>
@@ -78,11 +78,11 @@
     <!-- Total calculations -->
     <div id="abo-table">
         <?php $traduction = ['year' => 'annuelle', 'semester' => 'semestrielle', 'month' => 'mensuelle']; ?>
-        <h2>Abonnement à la publication {{ $traduction[$abo->abo->plan] }} <strong>{{ $abo->abo->title }}</strong>
+        <h4 style="font-family: Arial, Helvetica, sans-serif !important;">Abonnement à la publication {{ $traduction[$abo->abo->plan] }} <strong>{{ $abo->abo->title }}</strong>
           @if($generate->isTiers())
             géré par vos soins :
           @endif
-        </h2>
+        </h4>
 
         <table class="content-table content-abo">
             @if($generate->isTiers())
