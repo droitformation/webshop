@@ -39,7 +39,7 @@
     </div>
 
     <div class="content">
-        <h1 class="title blue">BON DE PARTICIPATION <?php echo $generate->getNo(); ?></h1>
+        <h4 class="title blue">BON DE PARTICIPATION <?php echo $generate->getNo(); ?></h4>
         <p class="red"><small>A présenter lors de votre arrivée</small></p>
 
         <table class="content-table content-wide" valign="top">

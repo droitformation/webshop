@@ -5,9 +5,9 @@
 
         @include('templates.shop.partials.header')
 
-        <h1 class="title blue">
+        <h4 class="title blue">
             {!! isset($rappel) ? '<span class="red">'.$generate->order()->rappels->count().''.($generate->order()->rappels->count() > 1 ? 'ème' : 'er').' Rappel</span> Facture' : 'Facture' !!}
-        </h1>
+        </h4>
 
         <table class="content-table">
             <tr>

@@ -33,9 +33,9 @@
     <div class="content">
 
         <?php $rappel = (isset($rappel) && $rappel > 0 ? '<span class="red">'.$rappel.''.($rappel > 1 ? 'e' : 'er').' Rappel</span>' : ''); ?>
-        <h1 class="title blue">
+        <h4 class="title blue">
             {!! $rappel !!} Facture {{ !is_array($generate->getNo()) ? $generate->getNo() : '' }}
-        </h1>
+        </h4>
 
         @if($generate->getReferences())
             <table class="content-table content-wide" valign="top">
