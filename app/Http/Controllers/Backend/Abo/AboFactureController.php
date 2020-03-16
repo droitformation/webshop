@@ -41,7 +41,7 @@ class AboFactureController extends Controller {
         $product  = $this->product->find($id);
 
         $dir   = 'files/abos/bound/'.$abo->id;
-        $files = \File::exists($dir) ? \File::glob('files/abos/bound/'.$abo->id.'/*'.$product->edition_clean.'.pdf') : collect([]);
+        $files = \File::exists($dir) ? \File::glob('files/abos/bound/'.$abo->id.'/factures_*.pdf') : collect([]);
 
         return view('backend.abonnements.factures.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }

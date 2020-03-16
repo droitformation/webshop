@@ -217,3 +217,8 @@ function array_walk_recursive_delete(array &$array, callable $callback, $userdat
 
     return $array;
 }
+
+function makeDate($request){
+    $date = $request->input('date',date('Y-m-d'));
+    return \Carbon\Carbon::parse($date)->toDateTimeString();
+}

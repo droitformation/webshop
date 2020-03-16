@@ -12,15 +12,17 @@ class MakeRappelAbo extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $facture;
+    protected $options;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($facture)
+    public function __construct($facture, $options)
     {
-        $this->facture  = $facture;
+        $this->facture = $facture;
+        $this->options = $options;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -34,6 +36,9 @@ class MakeRappelAbo extends Job implements ShouldQueue
     {
         $worker = \App::make('App\Droit\Abo\Worker\AboRappelWorkerInterface');
 
-        $worker->makeRappel($this->facture);
+        $print = $this->options['print'] ?? null;
+        $new   = $this->options['new'] ?? null;
+
+        $worker->makeRappel($this->facture, $new, $print); // facture model, new , print
     }
 }

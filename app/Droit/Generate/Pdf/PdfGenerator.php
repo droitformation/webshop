@@ -125,6 +125,7 @@ class PdfGenerator implements PdfGeneratorInterface
                 'allow_self_signed'=> TRUE
             ]
         ]);
+
         $pdf = \App::make('dompdf.wrapper');
         $pdf->getDomPDF()->setHttpContext($context);
 

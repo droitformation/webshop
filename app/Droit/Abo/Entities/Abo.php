@@ -74,6 +74,10 @@ class Abo extends Model{
         return factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['image' => 'placeholder.jpg', 'title' => $this->title , 'id' => null]);
     }
 
+    public function getHasInvoiceAbosAttribute(){
+        return !$this->abonnements->isEmpty() ? $this->abonnements->whereIn('status',['abonne','tiers']) : null;
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Droit\Shop\Product\Entities\Product', 'abo_products', 'abo_id','product_id')

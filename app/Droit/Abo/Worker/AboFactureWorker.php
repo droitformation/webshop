@@ -29,38 +29,31 @@ class AboFactureWorker implements AboFactureWorkerInterface{
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
-    public function generate($product, $abo, $all = false, $date, $print = null)
+    public function generate($product, $abo, $options)
     {
-        // All abonnements for the product
-        if(!$abo->abonnements->isEmpty())
-        {
-            // Take only abonnes
-            $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
+        // $options = $all, $date, $print;
+        $product = $abo->products->first(function ($item, $key) use($product) {
+            return $item->id == $product->id;
+        });
 
+        // Throw exception if there is no product
+        if(!$product) { throw new \App\Exceptions\ProductNotFoundException('Product not found');}
+
+        // All abonnements for the product
+        if(!$abo->has_invoice_abos->isEmpty()) {
             // chunk for not to many
-            $chunks = $abonnes->chunk(15);
+            $chunks = $abo->has_invoice_abos->chunk(15);
 
             foreach($chunks as $chunk) {
                 // dispatch job to make 15 factures
-                $job = (new MakeFactureAbo($chunk, $product, $all, $date, $print));
-                $this->dispatch($job);
-            }
-
-            $product = $abo->products->first(function ($item, $key) use($product) {
-                return $item->id == $product->id;
-            });
-
-            // Throw exception if there is no product
-            if(!$product) {
-                throw new \App\Exceptions\ProductNotFoundException('Product not found');
+                $this->dispatch((new MakeFactureAbo($chunk, $product, $options)));
             }
 
             // dispatch types of abos ¯\_(ツ)_/¯
-            $status_files = $this->prepareFiles($abonnes, $product);
+            $status_files = $this->prepareFiles($abo->has_invoice_abos, $product);
 
             // Job for merging documents
-            $merge = (new MergeFactures($product, $abo, $status_files));
-            $this->dispatch($merge);
+            $this->dispatch((new MergeFactures($product, $abo, $status_files)));
 
             // Job notify merging is done
             $job = (new NotifyJobFinishedEmail('Les factures ont été crées Veuillez penser à les attacher. Nom du fichier: factures_'.$product->reference.'_'.$product->edition_clean));

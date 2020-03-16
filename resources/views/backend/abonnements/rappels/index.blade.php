@@ -32,8 +32,7 @@
                         <input type="hidden" name="worker" value="rappel">
 
                         <div class="input-group">
-                            <input type="text" class="form-control datePicker" name="date" placeholder="Date">
-                            <span class="input-group-btn"><button type="submit" class="btn btn-brown"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button></span>
+                            <button type="submit" class="btn btn-brown"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button>
                         </div>
                         <div class="form-group">
                             <div class="checkbox"><label><input checked="checked" type="checkbox" value="1" name="print"> ajouter Infos BV</label></div>
