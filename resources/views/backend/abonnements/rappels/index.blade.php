@@ -30,7 +30,15 @@
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="worker" value="rappel">
-                        <button type="submit" class="btn btn-brown"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control datePicker" name="date" placeholder="Date">
+                            <span class="input-group-btn"><button type="submit" class="btn btn-brown"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox"><label><input checked="checked" type="checkbox" value="1" name="print"> ajouter Infos BV</label></div>
+                        </div>
+
                     </form>
 
                 </div>
