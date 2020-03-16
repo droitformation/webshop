@@ -11,6 +11,7 @@
             <span class="h-line"></span>
         </div>
 
+        @include('frontend.pubdroit.partials.alert')
         @include('frontend.pubdroit.partials.cart')
         @include('frontend.pubdroit.partials.cart-total')
 

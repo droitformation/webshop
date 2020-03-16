@@ -1,0 +1,2 @@
+<div class="alert alert-info text-center" role="alert">Compte tenu des mesures mises en place pour contrer la propagation du Covid-19, nous ne pouvons pas vous garantir de livraison dans les délais habituels.</div>
+<br>

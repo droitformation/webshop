@@ -80,6 +80,8 @@
         <div class="alert alert-warning text-center" role="alert">Mode test</div>
     @endif
 
+	@include('frontend.pubdroit.partials.alert')
+
 		<!-- Start Main Wrapper -->
 		<div class="wrapper">
 			<!-- Start Main Header -->

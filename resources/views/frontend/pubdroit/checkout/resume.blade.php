@@ -11,6 +11,8 @@
             <span class="h-line"></span>
         </div>
 
+        @include('frontend.pubdroit.partials.alert')
+
         <div class="row">
             <div class="col-md-3">
                 <h4>Adresse de livraison</h4>
