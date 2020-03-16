@@ -50,6 +50,7 @@ class AboFileController extends Controller {
             'print' => $request->input('print') ? true : false,
             'date'  => makeDate($request),
             'all'   => $request->input('all'),
+            'new'   => $request->input('new'),
         ];
 
         $this->$worker->generate($product, $abo, array_filter($options));

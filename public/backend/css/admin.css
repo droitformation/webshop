@@ -1573,3 +1573,20 @@ span.avis-hidden-square{
     height: 20px;
     margin-right: 8px;
 }
+
+.flex{
+    display: flex;
+}
+.flex-row{
+    flex-direction: row;
+}
+.justify-between{
+    justify-content: space-between;
+}
+.border-left{
+    border-left: 1px solid #cecece;
+    padding-left: 10px;
+}
+.px-2{
+    padding: 0 20px;
+}
