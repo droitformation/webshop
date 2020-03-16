@@ -80,7 +80,7 @@
         <div class="alert alert-warning text-center" role="alert">Mode test</div>
     @endif
 
-	@include('frontend.pubdroit.partials.alert')
+	<div class="alert alert-info text-center" role="alert">Compte tenu des mesures mises en place pour contrer la propagation du Covid-19, nous ne pouvons pas vous garantir de livraison dans les délais habituels.</div>
 
 		<!-- Start Main Wrapper -->
 		<div class="wrapper">
