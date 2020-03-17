@@ -62,8 +62,7 @@ class AboRappelWorker implements AboRappelWorkerInterface{
         // what nth rappel
         $nbr = $facture->rappels->isEmpty() ? 1 : $facture->rappels->count();
 
-        if($facture->rappels->isEmpty() || $new)
-        {
+        if($facture->rappels->isEmpty() || $new) {
             if($print){
                 $this->generator->setPrint(true);
             }

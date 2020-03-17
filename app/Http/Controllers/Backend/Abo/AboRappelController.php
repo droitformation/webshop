@@ -39,8 +39,8 @@ class AboRappelController extends Controller {
         $abo      = $this->abo->findAboByProduct($id);
         $product  = $this->product->find($id);
 
-        $dir      = 'files/abos/bound/'.$abo->id.'/rappels_'.$product->reference.'_'.$product->edition_clean.'.pdf';
-        $files    = \File::exists($dir) ? \File::glob('files/abos/bound/'.$abo->id.'/rappels_*.pdf') : collect([]);
+        $dir      = 'files/abos/bound/'.$abo->id;
+        $files    = \File::exists($dir) ? \File::glob($dir.'/rappels_*'.$product->edition_clean.'*.pdf') : collect([]);
 
         return view('backend.abonnements.rappels.index')->with(['factures' => $factures, 'abo' => $abo, 'id' => $id, 'files' => $files, 'product' => $product ]);
     }
