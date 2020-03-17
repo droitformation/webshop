@@ -19,7 +19,7 @@ class AboRappelWorker implements AboRappelWorkerInterface{
 
     protected $facture;
     protected $rappel;
-    protected $generator;
+    public $generator;
 
     public function __construct(AboFactureInterface $facture, PdfGeneratorInterface $generator, AboRappelInterface $rappel)
     {

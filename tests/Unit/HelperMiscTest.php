@@ -218,4 +218,18 @@ class HelperMiscTest extends TestCase
 
         $this->assertEquals($expect,$actual);
     }
+
+    public function testMakeDateFromRequest()
+    {
+        $request = new \Illuminate\Http\Request;
+
+        $request->createFromBase(
+            \Symfony\Component\HttpFoundation\Request::create('/', 'get',['date' => '2020-03-17'], [], [], [], [])
+        );
+
+        $result = makeDate($request);
+
+        $expect = \Carbon\Carbon::createFromDate(2020,03,17)->startOfDay()->toDateTimeString();
+        $this->assertEquals($expect,$result);
+    }
 }

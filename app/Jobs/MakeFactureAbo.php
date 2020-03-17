@@ -42,7 +42,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
         $repo    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
         $print = $this->options['print'] ?? null;
-        $date  = $this->options['date'] ?? null;
+        $date  = $this->options['date'] ?? \Carbon\Carbon::today()->toDateString();
         $all   = $this->options['all'] ?? null;
 
         // All abonnements for the product
@@ -58,7 +58,7 @@ class MakeFactureAbo extends Job implements ShouldQueue
                         $facture = $this->facture->create([
                             'abo_user_id' => $abonnement->id,
                             'product_id'  => $this->product->id,
-                            'created_at'  => $this->date_creation
+                            'created_at'  => $date
                         ]);
                     }
 
