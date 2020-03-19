@@ -249,7 +249,7 @@ function couponCalcul($order,$product){
             }
         }
 
-        return $product->price_cents;
+        return ($product->price - ($product->price * ($order->coupon->value)/100)) / 100;
     }
 
     return $product->price_cents;
