@@ -223,7 +223,7 @@ class HelperMiscTest extends TestCase
     {
         $request = new \Illuminate\Http\Request;
 
-        $request->createFromBase(
+        $request = $request->createFromBase(
             \Symfony\Component\HttpFoundation\Request::create('/', 'get',['date' => '2020-03-17'], [], [], [], [])
         );
 

@@ -25,6 +25,19 @@ class Coupon extends Model{
         return $this->value.'%';
     }
 
+    public function getValeurAttribute()
+    {
+        if($this->type == 'price' || $this->type == 'priceshipping') {
+            return $this->value;
+        }
+
+        if($this->type == 'shipping'){
+            return '';
+        }
+
+        return $this->value.'%';
+    }
+
     public function getCouponTitleAttribute()
     {
         if($this->type == 'shipping')

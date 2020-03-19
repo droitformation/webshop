@@ -74,6 +74,25 @@ class Product extends Model{
         return null;
     }
 
+    public function getRabaisAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        if(isset($this->pivot) && $this->pivot->rabais) {
+            return $money->format($this->pivot->rabais/100);
+        }
+
+        if(isset($this->pivot) && $this->pivot->price) {
+            if($this->pivot->price / 100 == round($this->pivot->price / 100)) {
+                return $money->format($this->pivot->price / 100);
+            }
+
+            return $money->format($this->pivot->price / 100,3);
+        }
+
+        return null;
+    }
+
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;

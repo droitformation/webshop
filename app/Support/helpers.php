@@ -220,5 +220,37 @@ function array_walk_recursive_delete(array &$array, callable $callback, $userdat
 
 function makeDate($request){
     $date = $request->input('date',date('Y-m-d'));
+
     return \Carbon\Carbon::parse($date)->toDateTimeString();
+}
+
+function couponProductOrder($order,$product){
+
+    if(isset($order->coupon)){
+        if($order->coupon->products->contains($product->id)){
+            return $order->coupon->valeur;
+        }
+    }
+
+    return null;
+}
+function couponCalcul($order,$product){
+    if(isset($order->coupon)){
+        if($order->coupon->products->contains($product->id)){
+
+            $operand = ($order->coupon->type == 'product' ? 'percent' : 'minus');
+
+            if($operand == 'percent') {
+                return $product->price_cents - ($product->price_cents * ($order->coupon->value)/100);
+            }
+
+            if($operand == 'minus') {
+                return $product->price_cents - $order->coupon->value;
+            }
+        }
+
+        return $product->price_cents;
+    }
+
+    return $product->price_cents;
 }

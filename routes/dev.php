@@ -201,7 +201,13 @@ Route::get('testing', function() {
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
+    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order = $orders->find(4830);
 
+    echo '<pre>';
+    print_r($order);
+    echo '</pre>';
+    exit;
 /*    $inscription = $model_inscriptions->find(20992);
 
     echo '<pre>';
