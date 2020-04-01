@@ -184,6 +184,11 @@ class Adresse extends Model {
         if ($professions) $query->whereIn('profession_id', $professions);
     }
 
+    public function scopeSearchExclude($query, $exclude)
+    {
+        if ($exclude) $query->whereNotIn('profession_id', $exclude);
+    }
+
     public function scopeSearchMemberEach($query, $members)
     {
         if ($members) $query->whereHas('members', function ($query) use ($members)

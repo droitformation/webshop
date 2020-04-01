@@ -46,18 +46,33 @@
                                 <h4><i class="fa fa-tags"></i> &nbsp;Spécialisations</h4>
                                 @include('backend.export.partials.item', ['name' => 'specialisations[]', 'items' => $specialisations])
 
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label><input name="each" value="1" type="checkbox">  <strong>Afficher les résultats de tous les critères</strong></label>
+                                <fieldset class="container-export p-2">
+                                    <div class="flex flex-row mb-3">
+                                        <div>
+                                            <label><strong>Exclure les professions</strong></label>
+                                            <select class="form-control" multiple name="exclude[]">
+                                                @foreach($professions as $profession)
+                                                    <option value="{{ $profession->id }}">{{ $profession->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="pl-4">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label><input name="each" value="1" type="checkbox">  <strong>Afficher les résultats de tous les critères</strong></label>
+                                                </div>
+                                                <p class="help-block">Permet d'obtenir tous les utlisateurs et adresses qui ont tous les critères demandés sans recoupement.</p><br/>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="help-block">Permet d'obtenir tous les utlisateurs et adresses qui ont tous les critères demandés sans recoupement.</p><br/>
-                                </div>
+                                </fieldset>
 
                                 <button type="submit" class="btn btn-lg btn-info">Rechercher</button>
                             </form>
-                        </div>
+                        </fieldset>
                     </div>
                     <!-- END Export criteria -->
+
                     <!-- START results list -->
                     @if(isset($persones) && !$persones->isEmpty())
                         <div class="panel panel-midnightblue">

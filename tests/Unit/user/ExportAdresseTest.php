@@ -242,4 +242,28 @@ class ExportAdresseTest extends TestCase
         $this->assertEquals($expect, $converted[0]);
 
     }
+
+    public function testExcludeProfession()
+    {
+        $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        $repo = \App::make('App\Droit\Adresse\Repo\AdresseInterface');
+
+        $infos = [
+            ['canton' => 6, 'profession' => 1],
+            ['canton' => 6, 'profession' => 7], // => no
+            ['canton' => 8, 'profession' => 3],
+            ['canton' => 10, 'profession' => 1],
+            ['canton' => 10, 'profession' => 7], // => no
+            ['canton' => 10, 'profession' => 1]
+        ];
+
+        $users = $make->user($infos);
+
+        /******** Search with all cantons exclude **************/
+
+        $results = $repo->searchMultiple(['cantons' => [6,8,10], 'exclude' => [7]], true);
+        $this->assertEquals(4, $results->count());
+    }
 }

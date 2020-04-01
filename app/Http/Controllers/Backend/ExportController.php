@@ -51,13 +51,11 @@ class ExportController extends Controller
      */
     public function search(Request $request)
     {
-        if ($request->session()->has('terms'))
-        {
+        if ($request->session()->has('terms')) {
             $terms = $request->session()->get('terms');
             $each  = (isset($terms['each']) ? true : false);
         }
-        else
-        {
+        else {
             $terms = $request->all();
             $each  = $request->input('each', false);
             $request->session()->put('terms', $request->all());
