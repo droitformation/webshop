@@ -38,9 +38,14 @@ class NewsletterCampagneEloquent implements NewsletterCampagneInterface{
 
     public function getLastCampagneBySite($site_id)
     {
-        $campagne = $this->campagne->where('status','=','envoyé')->whereNull('hidden')->whereHas('newsletter', function ($query) use ($site_id){
-            $query->where('site_id', '=', $site_id);
-        })->orderBy('send_at','DESC')->get();
+        $campagne = $this->campagne->where('status','=','envoyé')
+            ->where(function ($query) {
+                $query->whereNull('hidden')->orWhere('hidden','=',0);
+            })
+            ->whereHas('newsletter', function ($query) use ($site_id){
+                $query->where('site_id', '=', $site_id);
+            })
+            ->orderBy('send_at','DESC')->get();
 
         return !$campagne->isEmpty() ? $campagne->first() : null;
     }
