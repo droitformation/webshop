@@ -51,6 +51,7 @@ Vue.component('facturation-adresse', require('./components/FacturationAdresse.vu
 Vue.component('adresse-update', require('./components/AdresseUpdate.vue').default);
 Vue.component('choix-duplicate', require('./components/ChoixDuplicate.vue').default);
 
+
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);
 
@@ -60,9 +61,6 @@ Vue.use(VueFormWizard)
 
 import vmodal from 'vue-js-modal';
 Vue.use(vmodal);
-
-import VueLazyload from 'vue-lazyload'
-Vue.use(VueLazyload)
 
 const app = new Vue({
     el: '#appComponent'

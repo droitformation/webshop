@@ -90,6 +90,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="<?php echo secure_asset('backend/plugins/form-datepicker/js/bootstrap-datepicker.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
+
 <!-- Layout and fixes plugins -->
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/layouts/enquire.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/jquery.cookie.js');?>"></script>

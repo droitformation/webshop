@@ -87,6 +87,7 @@ Route::group(['middleware' => ['site','impostor']], function () {
             Route::get('profil/colloques', 'Frontend\ProfileController@colloques');
             Route::get('profil/subscriptions', 'Frontend\ProfileController@subscriptions');
             Route::get('profil/abos', 'Frontend\ProfileController@abos');
+            Route::get('profil/book/{colloque_id}/{media_id}', 'Frontend\ProfileController@book');
             Route::get('profil/inscription/{id}', 'Frontend\ProfileController@inscription');
             Route::post('profil/account', 'Frontend\ProfileController@account')->middleware('account');
             
@@ -345,6 +346,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::get('slide/confirm/{colloque_id}', 'Backend\Colloque\SlideController@confirm');
         Route::post('slide/sorting', 'Backend\Colloque\SlideController@sorting');
         Route::resource('slide', 'Backend\Colloque\SlideController');
+
+        Route::resource('preview', 'Backend\Colloque\BookPreviewController');
 
         Route::post('price/change', 'Backend\Colloque\PriceController@change');
 

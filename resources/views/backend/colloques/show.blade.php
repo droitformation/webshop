@@ -271,8 +271,7 @@
             <div class="panel panel-midnightblue">
                 <div class="panel-body">
 
-                    <h4><i class="fa fa-file-text-o"></i> &nbsp;
-                        Slides
+                    <h4><i class="fa fa-file-text-o"></i> &nbsp;Slides
                         <div class="btn-group pull-right">
                             <a target="_blank" class="btn btn-default btn-sm" href="{{ url('preview/slides/'.$colloque->id) }}">Voir email</a>
                             <a class="btn btn-warning btn-sm" id="copyBtn" href="{{ url('pubdroit/documents/'.$colloque->id) }}">Copier lien</a>
@@ -289,6 +288,25 @@
                         <div class="sortslides" data-id="{{ $colloque->id }}">
                             @foreach($colloque->getMedia('slides') as $slide)
                                 @include('backend.colloques.partials.slides', ['colloque' => $colloque, 'slide' => $slide])
+                            @endforeach
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+
+            <div class="panel panel-warning">
+                <div class="panel-body">
+
+                    <h4><i class="fa fa-file-text-o"></i> &nbsp;Preview d'ouvrages</h4>
+
+                    @include('backend.colloques.partials.preview', ['colloque' => $colloque])
+
+                    @if(!$colloque->getMedia('preview')->isEmpty())
+                        <h5><b>Preview</b></h5>
+                        <div class="sortpreview" data-id="{{ $colloque->id }}">
+                            @foreach($colloque->getMedia('preview') as $preview)
+                                @include('backend.colloques.partials.preview', ['colloque' => $colloque, 'preview' => $preview])
                             @endforeach
                         </div>
                     @endif

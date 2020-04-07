@@ -67,6 +67,19 @@
                         </div>
                     @endif
 
+                    @if(!empty($inscription->colloque->getMedia('preview')))
+                        <h4>Ouvrages en consultation</h4>
+                        <div class="profil-info">
+                            @foreach($inscription->colloque->getMedia('preview') as $preview)
+                                <p>
+                                    <a data-fancybox data-type="iframe" data-src="{{ url('pubdroit/profil/book/'.$inscription->colloque->id.'/'.$preview->id) }}" href="javascript:;">
+                                        {{ $preview->getCustomProperty('title', '') }}
+                                    </a>
+                                </p>
+                            @endforeach
+                        </div>
+                    @endif
+
                     <h4>Vos choix</h4>
                     <?php setlocale(LC_ALL, 'fr_FR.UTF-8'); ?>
                     <div class="profil-info">
