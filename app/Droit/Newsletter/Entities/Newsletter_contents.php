@@ -49,8 +49,7 @@ class Newsletter_contents extends Model {
 
     public function getCleanContentAttribute()
     {
-	    return $this->contenu;
-        //return removeTag($this->contenu, 'a');
+        return removeTag($this->contenu, 'a');
     }
 
     public function getLinkOrUrlAttribute()
