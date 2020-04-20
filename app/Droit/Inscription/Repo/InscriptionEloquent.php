@@ -57,6 +57,14 @@ class InscriptionEloquent implements InscriptionInterface{
             ->orderBy('created_at','DESC')->get();
     }
 
+    public function getHasNoOccurences($id){
+        return $this->inscription
+            ->where('colloque_id','=',$id)
+            ->doesntHave('occurrences')
+            ->with(['user','user.adresses','price','user_options','colloque.options','occurrences'])
+            ->orderBy('created_at','DESC')->get();
+    }
+
     public function getByColloqueTrashed($id)
     {
         return $this->inscription->where('colloque_id','=',$id)->onlyTrashed()->groupBy('id')->get();
@@ -148,8 +156,7 @@ class InscriptionEloquent implements InscriptionInterface{
         $restore = $this->inscription->withTrashed()->find($id);
         $exist   = $this->isRegistered($restore->colloque_id,$restore->user_id);
         
-        if($exist)
-        {
+        if($exist) {
             throw new \App\Exceptions\InscriptionExistException('Impossible de restaurer une autre inscription pour cette personne existe déjà') ;
         }
 

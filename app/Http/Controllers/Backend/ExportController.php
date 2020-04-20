@@ -84,6 +84,15 @@ class ExportController extends Controller
             return [$occurence->title => $this->inscription->getByColloqueExport($colloque->id, [$occurence->id])];
         }) : collect([$this->inscription->getByColloqueExport($colloque->id)]);
 
+        if($colloque->occurrences->count() == 1){
+            $missing = $this->inscription->getHasNoOccurences($colloque->id);
+
+            $inscriptions = collect([
+                $inscriptions->keys()->first() => $inscriptions->first(),
+                'Pas de choix' => $missing,
+            ]);
+        }
+
         return \Excel::download(new \App\Exports\InscriptionExport($inscriptions,$colloque,$request->only(['sort','dispatch','occurrence','columns'])),'export_inscriptions.xlsx');
     }
 
