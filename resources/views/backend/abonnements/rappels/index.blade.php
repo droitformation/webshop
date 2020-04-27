@@ -7,13 +7,13 @@
         <div class="panel-body">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <img class="thumbnail" style="height: 40px; float:left; margin-right: 15px;padding: 2px;" src="{{ secure_asset('files/products/'.$product->image) }}" />
                     <h3 style="margin-bottom:0;line-height:20px;font-size: 18px;"><a href="{{ url('admin/abo/'.$abo->id) }}">{{ $abo->title }}</a></h3>
                     <p style="margin-bottom: 0;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-7">
 
                     <a href="{{ url('admin/rappel/confirmation/'.$product->id) }}" class="btn btn-inverse pull-right" >
                         <i class="fa fa-paper-plane"></i> &nbsp; Confirmer la liste et envoyer
@@ -30,7 +30,12 @@
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="worker" value="rappel">
-                        <button type="submit" class="btn btn-brown"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button>
+
+                        <div class="flex flex-row justify-between">
+                            <div class="px-2 border-left"><label><input name="new" value="1" type="checkbox"> &nbsp;<strong>Ajouter 1 rappel</strong> <br/>aux rappels existants</label></div>
+                            <div class="px-2"><label><input checked="checked" type="checkbox" value="1" name="print"> <strong>Ajouter</strong> <br/>Infos BV</label></div>
+                            <div><button type="submit" class="btn btn-brown"><i class="fa fa-file-o"></i> &nbsp;Générer tous les rappels</button></div>
+                        </div>
                     </form>
 
                 </div>

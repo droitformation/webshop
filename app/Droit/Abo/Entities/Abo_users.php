@@ -133,13 +133,23 @@ class Abo_users extends Model{
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
-        if($this->price && !empty($this->price))
-        {
+        $product = $this->abo->current_product;
+        $price   = ($this->price && !empty($this->price) ? $this->price : $product->price);
+
+        $price = $price / 100;
+        return $price > 0 ? $money->format($price) : '';
+    }
+
+    public function getRemiseAttribute()
+    {
+        $money = new \App\Droit\Shop\Product\Entities\Money;
+
+        if($this->price && $this->price > 0){
             $price = $this->price / 100;
             return $price > 0 ? $money->format($price) : '';
         }
 
-        return '';
+        return null;
     }
 
     public function getPriceCentsRemiseAttribute()

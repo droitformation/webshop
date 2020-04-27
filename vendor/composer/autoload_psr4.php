@@ -61,6 +61,7 @@ return array(
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
     'League\\Glide\\' => array($vendorDir . '/league/glide/src'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'League\\CommonMark\\' => array($vendorDir . '/league/commonmark/src'),
     'Kalnoy\\Nestedset\\' => array($vendorDir . '/kalnoy/nestedset/src'),
     'JakubOnderka\\PhpConsoleHighlighter\\' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),

@@ -17,27 +17,19 @@ class FileWorker implements FileWorkerInterface{
     {
         $authorized = $this->authorized();
 
-        if ($fp = @opendir($source_dir))
-        {
+        if ($fp = @opendir($source_dir)) {
             $filedata	= array();
             $new_depth	= $directory_depth - 1;
             $source_dir	= rtrim($source_dir, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
 
-            while (FALSE !== ($file = readdir($fp)))
-            {
+            while (FALSE !== ($file = readdir($fp))) {
                 // Remove '.', '..', and hidden files [optional]
-                if ( ! trim($file, '.') OR ($hidden == FALSE && $file[0] == '.'))
-                {
+                if ( ! trim($file, '.') OR ($hidden == FALSE && $file[0] == '.')) {
                     continue;
                 }
 
-                if (($directory_depth < 1 OR $new_depth > 0) && @is_dir($source_dir.$file))
-                {
+                if (($directory_depth < 1 OR $new_depth > 0) && @is_dir($source_dir.$file)) {
                     $filedata[$file] = $this->tree($source_dir.$file.DIRECTORY_SEPARATOR, $new_depth, $hidden);
-                }
-                else
-                {
-
                 }
             }
 
@@ -50,22 +42,35 @@ class FileWorker implements FileWorkerInterface{
 
     public function manager()
     {
-        $authorized = $this->authorized();
-
         $all = $this->tree('files',0,false,true);
 
-        return collect($all)->filter(function ($directorie, $key) use ($authorized) {
-            return in_array($key, $authorized);
-        })->toArray();
+        return array_walk_recursive_delete($all, function ($value, $key) {
+            return in_array($key,config('manager')) ? true : false;
+        });
     }
 
-    public function listDirectoryFiles($dir)
+    public function isAuthorized($item, $key)
     {
-        $tree = \File::allfiles($dir);
+        return $key;
+    }
 
-        return collect($tree)->map(function ($file) use ($dir) {
-            return $file->getFilename();
-        })->toArray();
+    public function listDirectoryFiles($dir, $flat = null)
+    {
+        $tree = \File::files($dir);
+
+        if($flat){
+            return collect($tree)->map(function ($file) use ($dir) {
+                return $file->getFilename();
+            })->toArray();
+        }
+
+        return collect($tree)->groupBy(function ($file){
+            return \Carbon\Carbon::createFromTimestamp($file->getMTime())->toDateString();
+        })->map(function ($files) use ($dir) {
+            return $files->map(function ($file) use ($dir) {
+                return $dir.'/'.$file->getFilename();
+            });
+        })->sortKeysDesc()->toArray();
     }
 
     public function listActionFiles($dir)

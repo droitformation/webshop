@@ -39,6 +39,10 @@ class AboWorker implements AboWorkerInterface{
         $outputDir =  public_path('files/abos/bound/'.$abo_id);
         $outputName = $outputDir.'/'.$name.'.pdf';
 
+        if(\File::exists($outputName)){
+            $outputName = $outputDir.'/'.$name.'_'.date('mY').'.pdf';
+        }
+
         // Create output directory if doesn't exist. Delete output file if exist
         if (!\File::exists($outputDir)) { \File::makeDirectory($outputDir); }
         if (\File::exists($outputName)) { \File::delete($outputName); }

@@ -1,35 +1,30 @@
-@if(!$orders->isEmpty())
+@if(!empty($orders))
     <table>
         <thead>
         <tr>
-            <th>Commande n°</th>
-            <th>Montant</th>
-            <th>Date</th>
-            <th>Payé le</th>
-            <th class="text-right">Statut</th>
-
-            @foreach($generator->columns as $columns)
-                <th>{{ $names[$columns] }}</th>
+            @foreach($columns as $column)
+                <th>{{ $column }}</th>
             @endforeach
         </tr>
         </thead>
         <tbody>
             @foreach($orders as $order)
                 <tr>
-                    <td>{{ $order->order_no }}</td>
-                    <td>{{ $order->total_with_shipping }} CHF</td>
-                    <td>{{ $order->created_at->formatLocalized('%d %B %Y') }}</td>
-                    <td>{{ $order->payed_at ? $order->payed_at->formatLocalized('%d %B %Y') : '' }}</td>
-                    <td>{{ $order->status_code['status'] }}</td>
-                    {!! $generator->toRowUser($order->user) !!}
+                    <td>{{ $order['Numero'] }}</td>
+                    <td>{{ $order['Date']}}</td>
+                    <td>{{ $order['Montant'] }}</td>
+                    <td>{{ $order['Port'] }}</td>
+                    <td>{{ $order['Paye'] }}</td>
+                    <td>{{ $order['Status'] }}</td>
+                    {!! isset($order['title']) ? '<td>'.$order['title'].'</td>' : '' !!}
+                    {!! isset($order['qty']) ? '<td>'.$order['qty'].'</td>' : '' !!}
+                    {!! isset($order['prix']) ? '<td>'.$order['prix'].'</td>' : '' !!}
+                    {!! isset($order['special']) ? '<td>'.$order['special'].'</td>' : '' !!}
+                    {!! isset($order['free']) ? '<td>'.$order['free'].'</td>' : '' !!}
+                    {!! isset($order['rabais']) ? '<td>'.$order['rabais'].'</td>' : '' !!}
                 </tr>
             @endforeach
         </tbody>
-    </table>
-    <table>
-        <tr>
-            <td><strong>Total:</strong></td>
-            <td>{{ $orders->sum('total_with_shipping') }} CHF</td>
-        </tr>
+
     </table>
 @endif

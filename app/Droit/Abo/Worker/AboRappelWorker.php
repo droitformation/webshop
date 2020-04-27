@@ -19,7 +19,7 @@ class AboRappelWorker implements AboRappelWorkerInterface{
 
     protected $facture;
     protected $rappel;
-    protected $generator;
+    public $generator;
 
     public function __construct(AboFactureInterface $facture, PdfGeneratorInterface $generator, AboRappelInterface $rappel)
     {
@@ -30,15 +30,15 @@ class AboRappelWorker implements AboRappelWorkerInterface{
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
 
-    public function generate($product, $abo)
+    public function generate($product, $abo, $options)
     {
         $factures = $this->facture->getRappels($product->id);
 
-        if(!$factures->isEmpty())
-        {
+        if(!$factures->isEmpty()) {
+
             foreach ($factures as $facture){
                 // Make the rappels
-                $job = (new MakeRappelAbo($facture));
+                $job = (new MakeRappelAbo($facture, $options));
                 $this->dispatch($job);
             }
 
@@ -50,10 +50,11 @@ class AboRappelWorker implements AboRappelWorkerInterface{
 
             $job = (new NotifyJobFinished('Les rappels ont été crées et attachés. Nom du fichier: <strong>factures_'.$product->reference.'_'.$product->edition_clean.'</strong>'));
             $this->dispatch($job);
+
         }
     }
     
-    public function make($rappel, $new = false)
+    public function make($rappel, $new = false, $print = null)
     {
         // get facture
         $facture = $rappel->facture;
@@ -61,26 +62,27 @@ class AboRappelWorker implements AboRappelWorkerInterface{
         // what nth rappel
         $nbr = $facture->rappels->isEmpty() ? 1 : $facture->rappels->count();
 
-        if($facture->rappels->isEmpty() || $new)
-        {
+        if($facture->rappels->isEmpty() || $new) {
+            if($print){
+                $this->generator->setPrint(true);
+            }
+
             $this->generator->makeAbo('rappel', $facture, $nbr, $rappel);
         }
     }
 
-    public function makeRappel($facture, $new = null)
+    public function makeRappel($facture, $new = null, $print = null)
     {
-        if($facture->rappels->isEmpty() || $new)
-        {
+        if($facture->rappels->isEmpty() || $new) {
             $nbr = $facture->rappels->isEmpty() ? 1 : $facture->rappels->count() + 1;
-
             $rappel = $this->rappel->create(['abo_facture_id' => $facture->id]);
         }
-        else
-        {
+        else {
             $nbr    = $facture->rappels->count();
             $rappel = $facture->rappels->sortBy('created_at')->last();
         }
 
+        $this->generator->setPrint($print ?? false);
         $this->generator->makeAbo('rappel', $facture, $nbr, $rappel);
     }
 

@@ -30,7 +30,9 @@
                 @endif
 
                 <p class="message">{{ $messages['remerciements'] }}</p><br/>
-                <p class="message">Neuchâtel, le <?php echo $date; ?></p>
+                <p class="message">
+                    Neuchâtel, le {{ isset($rappel) ? $rappel->created_at->formatLocalized('%d %B %Y') : $date }}
+                </p>
             </div>
 
         </td>

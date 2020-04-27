@@ -34,6 +34,13 @@ Route::get('abos_test', function () {
     $abo     = $abos->find(2);
     $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
 
+    $abo_user = $abouser->find(843);
+
+    echo '<pre>';
+    print_r($abo_user->price_cents);
+    echo '</pre>';
+    exit();
+
     $files = $worker->prepareFiles($abonnes, $product);
     $files2 = $worker->prepareFiles2($abonnes, $product);
 
@@ -194,19 +201,25 @@ Route::get('testing', function() {
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
 
+    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    $order = $orders->find(4830);
 
-    $inscription = $model_inscriptions->find(20992);
+    echo '<pre>';
+    print_r($order);
+    echo '</pre>';
+    exit;
+/*    $inscription = $model_inscriptions->find(20992);
 
     echo '<pre>';
     print_r($inscription->export_option_html);
     echo '</pre>';
     exit();
-
+*/
 
     $dispach = null;
     $list = [1,2];
 
-    $colloque   = $colloques->find(100);
+   /* $colloque   = $colloques->find(100);
     $occurences = $dispach ? $colloque->occurrences : $colloque->occurrences->whereIn('id',$list);
 
     $grouped = !$occurences->isEmpty() ? $occurences->mapToGroups(function ($occurence, $key) use ($colloque,$model_inscriptions) {
@@ -216,7 +229,7 @@ Route::get('testing', function() {
     echo '<pre>';
     print_r($grouped);
     echo '</pre>';
-    exit();
+    exit();*/
 
     $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     $model = new \App\Droit\User\Entities\User();
@@ -235,7 +248,24 @@ Route::get('testing', function() {
     $abo_cindy = $abo_users->find(1049);
 
     $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $order = $model->find(4395);
+    $order = $model->find(4776);
+
+    $quantities = $order->products->groupBy('id')->map(function ($products,$product_id) {
+        return $products->count();
+    })->mapToGroups(function ($qty,$product_id) {
+        return ['products' => $product_id, 'qty' => $qty];
+    });
+
+    $quantities = $order->products->groupBy('id')->map(function ($products,$product_id) {
+        return $products->count();
+    });
+
+    echo '<pre>';
+    print_r($quantities->keys());
+    print_r($quantities->values());
+    echo '</pre>';
+    exit();
+
 
     $colloque = $colloques->find(100);
 
@@ -1285,15 +1315,17 @@ Route::get('testproduct', function()
 Route::get('manager', function()
 {
 
-    echo '<pre>';
-    print_r(array_keys(config('sites')));
-    echo '</pre>';exit();
     $manager = App::make('App\Droit\Service\FileWorkerInterface');
-    $files   = $manager->dir_contains_children('files/pictos');
 
     echo '<pre>';
-    print_r($files);
-    echo '</pre>';exit;
+    print_r($manager->manager());
+    echo '</pre>';
+    exit();
+    //$files   = $manager->dir_contains_children('files/pictos');
+
+    $files = $manager->listDirectoryFiles(public_path('files/uploads'));
+
+    return response()->json(['files' => $files]);
 
 });
 

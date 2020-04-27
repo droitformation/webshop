@@ -1,7 +1,7 @@
 # Preventing spam submitted through forms
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-honeypot.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-honeypot)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-honeypot/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-honeypot)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/laravel-honeypot/run-tests?label=tests)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-honeypot.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-honeypot)
 [![StyleCI](https://github.styleci.io/repos/162617004/shield?branch=master)](https://github.styleci.io/repos/162617004)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-honeypot.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-honeypot)
@@ -9,7 +9,7 @@
 When adding a form to a public site, there's a risk that spam bots will try to submit it with fake values. Luckily, the majority of these bots are pretty dumb. You can thwart most of them by adding an invisible field to your form that should never contain a value when submitted. Such a field is called a honeypot. These spam bots will just fill all fields, including the honeypot.
 
 When a submission comes in with a filled honeypot field, this package will discard that request. 
-On top of that this package also check how long it took to submit the form. This is done using a timestamp in another invisible field. If the form was submitted in a ridiculously short time, the anti spam will also be triggered.
+On top of that this package also checks how long it took to submit the form. This is done using a timestamp in another invisible field. If the form was submitted in a ridiculously short time, the anti spam will also be triggered.
 
 After installing this package, all you need to do is to add a `@honeypot` Blade directive to your form.
 
@@ -19,6 +19,16 @@ After installing this package, all you need to do is to add a `@honeypot` Blade 
     <input name="myField" type="text">
 </form>
 ```
+
+## Video tutorial
+
+In [this video](https://vimeo.com/381197983), which is part of the [Mailcoach](https://mailcoach.app) video course, you can see how the package can be installed and used.
+
+## Support us
+
+We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us). 
+
+We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -40,36 +50,35 @@ This is the content of the config file that will be published at `config/honeypo
 use Spatie\Honeypot\SpamResponder\BlankPageResponder;
 
 return [
-
     /*
      * Here you can specify name of the honeypot field. Any requests that submit a non-empty
      * value for this name will be discarded. Make sure this name does not
      * collide with a form field that is actually used.
      */
-    'name_field_name' => 'my_name',
+    'name_field_name' => env('HONEYPOT_NAME', 'my_name'),
 
     /*
-    * When this is activated there will be a random string added
-    * to the name_field_name. This improves the
-    * protection against bots.
-    */
-    'randomize_name_field_name' => true,
+     * When this is activated there will be a random string added
+     * to the name_field_name. This improves the
+     * protection against bots.
+     */
+    'randomize_name_field_name' => env('HONEYPOT_RANDOMIZE', true),
 
     /*
-     * This field contains the name of a form field that will be use to verify
+     * This field contains the name of a form field that will be used to verify
      * if the form wasn't submitted too quickly. Make sure this name does not
      * collide with a form field that is actually used.
      */
-    'valid_from_field_name' => 'valid_from',
+    'valid_from_field_name' => env('HONEYPOT_VALID_FROM', 'valid_from'),
 
     /*
-     * If the form is submitted faster then this amout of seconds
+     * If the form is submitted faster than this amount of seconds
      * the form submission will be considered invalid.
      */
-    'amount_of_seconds' => 1,
+    'amount_of_seconds' => env('HONEYPOT_SECONDS', 1),
 
     /*
-     * This class is responsible for sending a response to request that
+     * This class is responsible for sending a response to requests that
      * are detected as being spammy. By default a blank page is shown.
      *
      * A valid responder is any class that implements
@@ -80,7 +89,7 @@ return [
     /*
      * This switch determines if the honeypot protection should be activated.
      */
-    'enabled' => true,
+    'enabled' => env('HONEYPOT_ENABLED', true),
 ];
 ```
   
@@ -106,6 +115,16 @@ use Spatie\Honeypot\ProtectAgainstSpam;
 Route::post([ContactFormSubmissionController::class, 'create'])->middleware(ProtectAgainstSpam::class);
 ```
 
+If you want to integrate the `Spatie\Honeypot\ProtectAgainstSpam` middleware with Laravel's built in authentication routes, wrap the `Auth::routes();` declaration with the appropriate middleware group (make sure to add the `@honeypot` directive to the authentication forms).
+
+```php
+use Spatie\Honeypot\ProtectAgainstSpam;
+
+Route::middleware(ProtectAgainstSpam::class)->group(function() {
+    Auth::routes();
+});
+```
+
 If your app has a lot of forms handled by many different controllers, you could opt to register it as global middleware.
 
 ```php
@@ -129,7 +148,7 @@ config()->set('honeypot.enabled', false)
 
 ### Customizing the response
 
-When a spammy submission is detected, the package will show a blank page by default. You can customize this behaviour by writing your own `SpamResponse` and specifying it's fully qualified class name in the `respond_to_spam_with` key of the `honeypot` config file.
+When a spammy submission is detected, the package will show a blank page by default. You can customize this behaviour by writing your own `SpamResponse` and specifying its fully qualified class name in the `respond_to_spam_with` key of the `honeypot` config file.
 
 A valid `SpamResponse` is any class that implements the `Spatie\Honeypot\SpamResponder\SpamResponder` interface. This is what that interface looks like:
 
@@ -145,7 +164,7 @@ interface SpamResponder
 }
 ```
 
-Even though a spam responders primary purpose is to respond to spammy requests, you could do other stuff there as well. You could for instance use the properties on `$request` to determine the source of the spam (maybe all requests come from the same IP) and put some logic to block that source altogether.
+Even though a spam responder's primary purpose is to respond to spammy requests, you could do other stuff there as well. You could for instance use the properties on `$request` to determine the source of the spam (maybe all requests come from the same IP) and put some logic to block that source altogether.
 
 If the package wrongly determined that the request is spammy, you can generate the default response by passing the `$request` to the `$next` closure, like you would in a middleware.
 
@@ -199,27 +218,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
 
-## Postcardware
-
-You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
-
 ## Credits
 
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
 
 This package was inspired by [the Honeypot package](https://github.com/msurguy/Honeypot) by [Maksim Surguy](https://github.com/msurguy).
-
-## Support us
-
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
-
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie). 
-All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
 

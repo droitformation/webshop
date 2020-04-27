@@ -51,13 +51,11 @@ class ExportController extends Controller
      */
     public function search(Request $request)
     {
-        if ($request->session()->has('terms'))
-        {
+        if ($request->session()->has('terms')) {
             $terms = $request->session()->get('terms');
             $each  = (isset($terms['each']) ? true : false);
         }
-        else
-        {
+        else {
             $terms = $request->all();
             $each  = $request->input('each', false);
             $request->session()->put('terms', $request->all());
@@ -85,6 +83,15 @@ class ExportController extends Controller
         $inscriptions = !$occurences->isEmpty() ? $occurences->mapWithKeys(function ($occurence, $key) use ($colloque) {
             return [$occurence->title => $this->inscription->getByColloqueExport($colloque->id, [$occurence->id])];
         }) : collect([$this->inscription->getByColloqueExport($colloque->id)]);
+
+        if($colloque->occurrences->count() == 1){
+            $missing = $this->inscription->getHasNoOccurences($colloque->id);
+
+            $inscriptions = collect([
+                $inscriptions->keys()->first() => $inscriptions->first(),
+                'Pas de choix' => $missing,
+            ]);
+        }
 
         return \Excel::download(new \App\Exports\InscriptionExport($inscriptions,$colloque,$request->only(['sort','dispatch','occurrence','columns'])),'export_inscriptions.xlsx');
     }

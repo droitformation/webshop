@@ -119,6 +119,18 @@ class AboUserEloquent implements AboUserInterface{
         return $abo_user;
     }
 
+    public function changeStatus($data)
+    {
+        $abo_user = $this->abo_user->findOrFail($data['id']);
+
+        if(!$abo_user) {return false;}
+
+        $abo_user->status = isset($data['status']) ? $data['status'] : $abo_user->status;
+        $abo_user->save();
+
+        return $abo_user;
+    }
+
     public function restore($id)
     {
         return $this->abo_user->withTrashed()->find($id)->restore();

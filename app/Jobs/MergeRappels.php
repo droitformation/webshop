@@ -37,8 +37,8 @@ class MergeRappels extends Job implements ShouldQueue
 
         $factures = $facture->getRappels($this->product->id);
 
-        if(!$factures->isEmpty())
-        {
+        if(!$factures->isEmpty()) {
+
             $factures = $factures->sortBy(function ($abo, $key) {
                 return $abo->abonnement->numero;
             });
@@ -62,10 +62,10 @@ class MergeRappels extends Job implements ShouldQueue
             $name  = 'rappels_'.$this->product->reference.'_'.$this->product->edition_clean;
 
             // Merge the files
-            if(!empty($files))
-            {
+            if(!empty($files)) {
                 $worker->merge($files, $name, $this->abo->id);
             }
+
         }
     }
 }

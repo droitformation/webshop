@@ -158,11 +158,11 @@
 
             <!-- Start Main Nav Bar -->
 
-            <nav id="nav">
+            <nav id="nav" style="margin-bottom: 0;">
                 <section class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="navbar">
+                            <div class="navbar" style="margin-bottom: 0;">
                                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#labels">
                                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                                 </button>
@@ -181,7 +181,9 @@
                 </section>
             </nav><!-- /.navbar -->
 
-            <!-- End Main Nav Bar -->
+			<div class="alert alert-info text-center" style="margin-bottom: 20px;" role="alert">Compte tenu des mesures mises en place pour contrer la propagation du Covid-19, nous ne pouvons pas vous garantir de livraison dans les délais habituels.</div>
+
+			<!-- End Main Nav Bar -->
 
 			<!-- Start Main Content Holder -->
 			<section id="content-holder" class="container">

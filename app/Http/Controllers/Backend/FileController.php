@@ -32,16 +32,14 @@ class FileController extends Controller
     
     public function getfiles(Request $request)
     {
-        $files  = $this->file->listDirectoryFiles($request->input('path'));
+        $files = $this->file->listDirectoryFiles($request->input('path'),$request->input('flat'));
 
         return response()->json(['files' => $files]);
     }
 
     public function gettree()
     {
-        $directories = \Cache::rememberForever('files', function () {
-            return $this->file->manager();
-        });
+        $directories = $this->file->manager();
 
         return response()->json(['directories' => $directories]);
     }

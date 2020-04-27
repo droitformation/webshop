@@ -9,13 +9,20 @@ class Abo extends Model{
 
     protected $table = 'abos';
 
-    protected $fillable = ['title','plan','logo','email','name','compte','adresse','price','shipping','remarque'];
+    protected $fillable = ['title','plan','logo','email','name','compte','adresse','bv','price','shipping','remarque'];
 
     public function getPlanFrAttribute()
     {
         $traduction = ['year' => 'Annuel', 'semester' => 'Semestriel', 'month' => 'Mensuel'];
 
         return $traduction[$this->plan];
+    }
+
+    public function getDetailAdresseAttribute()
+    {
+        $html  = '<li>'.$this->adresse.'</li>';
+
+        return $html;
     }
 
     public function getLogoFileAttribute()
@@ -65,6 +72,10 @@ class Abo extends Model{
         }
 
         return factory(\App\Droit\Shop\Product\Entities\Product::class)->make(['image' => 'placeholder.jpg', 'title' => $this->title , 'id' => null]);
+    }
+
+    public function getHasInvoiceAbosAttribute(){
+        return !$this->abonnements->isEmpty() ? $this->abonnements->whereIn('status',['abonne','tiers']) : null;
     }
 
     public function products()

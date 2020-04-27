@@ -5,7 +5,7 @@
         <div class="modal fade" :id="'myModal_' + id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header manager-modal">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Choisir un fichier</h4>
                     </div>
@@ -36,16 +36,21 @@
                             <div class="col-md-10">
                                 <p class="loading" v-show="loading"><i class="fa fa-spinner fa-spin"></i></p>
                                 <div v-show="!loading" id="fileManager" data-path="files/uploads">
-                                    <p v-if="!files">Aucun fichier à ce niveau</p>
-                                    <ul v-if="files" id="gallery">
-                                        <li v-for="file in files" class="file-item">
-                                            <button @click="deleteFile(path + '/' + file)" class="btn btn-xs btn-danger">x</button>
 
-                                            <img v-if="isImage(file)" @click="chosenFile(path + '/' + file)" :src="path + displayPath + '/' + file" alt="image" />
-                                            <img v-if="!isImage(file)" @click="chosenFile(path + '/' + file)" src="images/text.svg" alt="image" />
-                                            <p v-if="!isImage(file)">{{ file }}</p>
-                                        </li>
-                                    </ul>
+                                    <p v-if="!files">Aucun fichier à ce niveau</p>
+
+                                    <div v-if="files" v-for="(row, index) in files">
+                                        <p class="mt-10"><strong>{{ index }}</strong></p>
+                                        <div class="gallery-wrapper">
+                                            <div class="file-item" v-for="file in row">
+                                                <button @click="deleteFile(file)" class="btn btn-xs btn-danger">x</button>
+                                                <img v-if="isImage(file)" @click="chosenFile(file)" :src="file" alt="image" />
+                                                <img v-if="!isImage(file)" @click="chosenFile(file)" src="images/text.svg" alt="image" />
+                                                <p>{{ nom(file) }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -60,8 +65,8 @@
 
     <div v-if="chosen && filename" class="file-choosen-wrapper">
         <input class="file-choosen" type="hidden" :name="name" v-bind:value="filename">
-        <img v-if="isImage(filename)" class="file-choosen file-image thumbnail" :src="filename" alt="image" />
-        <a v-if="!isImage(filename)" target="_blank" class="file-choosen" :href="filename">{{ filename }}</a>
+        <img v-if="isImage(filename)" class="file-choosen file-image thumbnail" :src="root + filename" alt="image" />
+        <a v-if="!isImage(filename)" target="_blank" class="file-choosen" :href="root + filename">{{ filename }}</a>
         <button @click="removeFile()" class="btn btn-xs btn-danger">x</button>
     </div>
 
@@ -70,21 +75,93 @@
 </template>
 
 <style>
+
+    #fileManager {
+        overflow-y: auto;
+        max-height: 70vh;
+    }
    .loading{
         width:50px;
         margin:40px auto;
         font-size:30px;
     }
+    .gallery-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        flex-wrap: wrap;
+    }
+   .file-item {
+       width: 120px;
+       height: 135px;
+       position: relative;
+       list-style: none;
+       margin: 5px;
+       padding: 20px 5px 5px 5px;
+       background: #fff;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: space-between;
+       border: 5px solid transparent;
+       overflow-x: hidden;
+   }
+   .file-item img {
+       max-width: 120px;
+       max-height: 90px;
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       cursor: pointer;
+   }
+   .file-item p{
+       margin: 5px 0 0 0;
+       padding: 0;
+       text-align: center;
+       font-size: 12px;
+       line-height: 12px;
+       word-wrap: anywhere;
+   }
+   .file-item button {
+       position: absolute;
+       top: 0;
+       right: 0;
+       padding: 0 5px 2px 5px;
+   }
+    .tree ul button {
+        background-color: #428bca;
+        border: 1px solid #357ebd;
+        color: #ffffff;
+        cursor: pointer;
+        display: block;
+        line-height: 16px;
+        padding: 3px 0 3px 10px;
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .modal-header.manager-modal {
+        padding:10px  15px;
+        border-bottom: 1px solid #e5e5e5;
+        min-height: 15px;
+    }
+
+    .modal-dialog {
+        margin-top: 95px;
+    }
 </style>
 <script>
 
 export default {
- props: ['name','thumbs', 'input','id'],
+ props: ['name','thumbs', 'input','id','root'],
     data () {
+
         return {
            directories:[],
            path: 'files/uploads',
-           files: null,
+           url: location.protocol + "//" + location.host+"/",
+           files: [],
            chosen: false,
            filename: '',
            directory:'',
@@ -177,6 +254,9 @@ export default {
             var exts    = ['jpg','jpeg','png','gif'];
 
             return ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ) ? true : false;
+        },
+        nom(fullPath){
+            return fullPath.replace(/^.*[\\\/]/, '')
         }
     }
 }

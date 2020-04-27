@@ -196,6 +196,66 @@ function validateListEmail($results){
     });
 }
 
+
+/**
+ * Remove any elements where the callback returns true
+ *
+ * @param  array    $array    the array to walk
+ * @param  callable $callback callback takes ($value, $key, $userdata)
+ * @param  mixed    $userdata additional data passed to the callback.
+ * @return array
+ */
+function array_walk_recursive_delete(array &$array, callable $callback, $userdata = null)
+{
+    foreach ($array as $key => &$value) {
+        if (is_array($value)) {
+            $value = array_walk_recursive_delete($value, $callback, $userdata);
+        }
+        if ($callback($value, $key, $userdata)) {
+            unset($array[$key]);
+        }
+    }
+
+    return $array;
+}
+
+function makeDate($request){
+    $date = $request->input('date',date('Y-m-d'));
+
+    return \Carbon\Carbon::parse($date)->toDateTimeString();
+}
+
+function couponProductOrder($order,$product){
+
+    if(isset($order->coupon)){
+        if($order->coupon->products->contains($product->id)){
+            return $order->coupon->valeur;
+        }
+    }
+
+    return null;
+}
+function couponCalcul($order,$product){
+    if(isset($order->coupon)){
+        if($order->coupon->products->contains($product->id)){
+
+            $operand = ($order->coupon->type == 'product' ? 'percent' : 'minus');
+
+            if($operand == 'percent') {
+                return $product->price_cents - ($product->price_cents * ($order->coupon->value)/100);
+            }
+
+            if($operand == 'minus') {
+                return $product->price_cents - $order->coupon->value;
+            }
+        }
+
+        return ($product->price - ($product->price * ($order->coupon->value)/100)) / 100;
+    }
+
+    return $product->price_cents;
+}
+
 function setMaj($date,$what)
 {
     return \Storage::disk('local')->put($what.'.txt', $date);

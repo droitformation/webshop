@@ -12,25 +12,21 @@ class MakeFactureAbo extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $facture;
-    protected $all;
     protected $abos;
     protected $product;
-    protected $date_creation;
-    protected $print;
+    protected $options;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($abos, $product, $all, $date_creation, $print = null)
+    public function __construct($abos, $product, $options)
     {
         $this->facture       = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-        $this->all           = $all;
         $this->abos          = $abos;
         $this->product       = $product;
-        $this->print         = $print;
-        $this->date_creation = $date_creation;
+        $this->options       = $options;
 
         setlocale(LC_ALL, 'fr_FR.UTF-8');
     }
@@ -45,11 +41,13 @@ class MakeFactureAbo extends Job implements ShouldQueue
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         $repo    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
 
+        $print = $this->options['print'] ?? null;
+        $date  = $this->options['date'] ?? \Carbon\Carbon::today()->toDateString();
+        $all   = $this->options['all'] ?? null;
+
         // All abonnements for the product
-        if(!$this->abos->isEmpty())
-        {
-            foreach($this->abos as $abonnement)
-            {
+        if(!$this->abos->isEmpty()) {
+            foreach($this->abos as $abonnement) {
                 if(!$abonnement->deleted_at){
                     // Do we already have a facture in the DB?
                     $facture = $repo->findByUserAndProduct($abonnement->id,  $this->product->id);
@@ -60,20 +58,20 @@ class MakeFactureAbo extends Job implements ShouldQueue
                         $facture = $this->facture->create([
                             'abo_user_id' => $abonnement->id,
                             'product_id'  => $this->product->id,
-                            'created_at'  => $this->date_creation
+                            'created_at'  => $date
                         ]);
                     }
 
-                    $facture = $repo->update(['id' => $facture->id, 'created_at' => $this->date_creation]);
+                    $facture = $repo->update(['id' => $facture->id, 'created_at' => $date]);
 
                     // If we want all factures to be remade or made if none exist
                     // does an pdf already exist? if not make one
                     // All is for the controller otherwise for sending
-                    if($this->all || ($facture && !$facture->doc_facture)) {
+                    if($all || ($facture && !$facture->doc_facture)) {
 
                         if($facture->doc_facture){ \File::delete(public_path($facture->doc_facture)); }
 
-                        if($this->print){
+                        if($print){
                             $generator->setPrint(true);
                         }
 

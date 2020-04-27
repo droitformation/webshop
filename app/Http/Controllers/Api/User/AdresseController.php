@@ -166,5 +166,15 @@ class AdresseController extends Controller {
 
         return redirect()->back();
     }
+
+    public function deleteAdresse(Request $request)
+    {
+        $result = $this->adresse->delete($request->input('id'));
+
+        event(new \App\Events\AdresseTiersDeletedAbo($request->input('abo_id')));
+
+        return response()->json(['result' => $result]);
+    }
+
 }
 

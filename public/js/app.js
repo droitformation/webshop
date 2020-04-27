@@ -110,6 +110,7 @@ module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/li
 var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
 var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
 var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/axios/lib/core/buildFullPath.js");
 var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
 var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
 var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
@@ -132,7 +133,8 @@ module.exports = function xhrAdapter(config) {
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+    var fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
 
     // Set the request timeout in MS
     request.timeout = config.timeout;
@@ -193,7 +195,11 @@ module.exports = function xhrAdapter(config) {
 
     // Handle timeout
     request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+      var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED',
         request));
 
       // Clean up request
@@ -207,7 +213,7 @@ module.exports = function xhrAdapter(config) {
       var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
 
       // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
         cookies.read(config.xsrfCookieName) :
         undefined;
 
@@ -230,8 +236,8 @@ module.exports = function xhrAdapter(config) {
     }
 
     // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
     }
 
     // Add responseType to request if needed
@@ -510,7 +516,15 @@ Axios.prototype.request = function request(config) {
   }
 
   config = mergeConfig(this.defaults, config);
-  config.method = config.method ? config.method.toLowerCase() : 'get';
+
+  // Set config.method
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -627,6 +641,38 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
+/***/ "./node_modules/axios/lib/core/buildFullPath.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/core/buildFullPath.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/lib/core/createError.js":
 /*!****************************************************!*\
   !*** ./node_modules/axios/lib/core/createError.js ***!
@@ -671,8 +717,6 @@ var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/util
 var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/axios/lib/core/transformData.js");
 var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
 var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
-var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
-var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -692,11 +736,6 @@ function throwIfCancellationRequested(config) {
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
 
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
-
   // Ensure headers exist
   config.headers = config.headers || {};
 
@@ -711,7 +750,7 @@ module.exports = function dispatchRequest(config) {
   config.headers = utils.merge(
     config.headers.common || {},
     config.headers[config.method] || {},
-    config.headers || {}
+    config.headers
   );
 
   utils.forEach(
@@ -834,13 +873,23 @@ module.exports = function mergeConfig(config1, config2) {
   config2 = config2 || {};
   var config = {};
 
-  utils.forEach(['url', 'method', 'params', 'data'], function valueFromConfig2(prop) {
+  var valueFromConfig2Keys = ['url', 'method', 'params', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy'];
+  var defaultToConfig2Keys = [
+    'baseURL', 'url', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress',
+    'maxContentLength', 'validateStatus', 'maxRedirects', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath'
+  ];
+
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
     if (typeof config2[prop] !== 'undefined') {
       config[prop] = config2[prop];
     }
   });
 
-  utils.forEach(['headers', 'auth', 'proxy'], function mergeDeepProperties(prop) {
+  utils.forEach(mergeDeepPropertiesKeys, function mergeDeepProperties(prop) {
     if (utils.isObject(config2[prop])) {
       config[prop] = utils.deepMerge(config1[prop], config2[prop]);
     } else if (typeof config2[prop] !== 'undefined') {
@@ -852,13 +901,25 @@ module.exports = function mergeConfig(config1, config2) {
     }
   });
 
-  utils.forEach([
-    'baseURL', 'transformRequest', 'transformResponse', 'paramsSerializer',
-    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
-    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress', 'maxContentLength',
-    'validateStatus', 'maxRedirects', 'httpAgent', 'httpsAgent', 'cancelToken',
-    'socketPath'
-  ], function defaultToConfig2(prop) {
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  var axiosKeys = valueFromConfig2Keys
+    .concat(mergeDeepPropertiesKeys)
+    .concat(defaultToConfig2Keys);
+
+  var otherKeys = Object
+    .keys(config2)
+    .filter(function filterAxiosKeys(key) {
+      return axiosKeys.indexOf(key) === -1;
+    });
+
+  utils.forEach(otherKeys, function otherKeysDefaultToConfig2(prop) {
     if (typeof config2[prop] !== 'undefined') {
       config[prop] = config2[prop];
     } else if (typeof config1[prop] !== 'undefined') {
@@ -966,13 +1027,12 @@ function setContentTypeIfUnset(headers, value) {
 
 function getDefaultAdapter() {
   var adapter;
-  // Only Node.JS has a process variable that is of [[Class]] process
-  if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
-  } else if (typeof XMLHttpRequest !== 'undefined') {
+  if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
     adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
   }
   return adapter;
 }
@@ -1494,7 +1554,6 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1510,6 +1569,27 @@ var toString = Object.prototype.toString;
  */
 function isArray(val) {
   return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
+    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
 }
 
 /**
@@ -1566,16 +1646,6 @@ function isString(val) {
  */
 function isNumber(val) {
   return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
 }
 
 /**
@@ -1941,8 +2011,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['main', 'original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte'],
+  props: ['main', 'original', 'type', 'title', 'dir', 'hidden', 'btn', 'texte', 'admin', 'abo_id'],
   components: {},
   data: function data() {
     return {
@@ -1998,6 +2078,19 @@ __webpack_require__.r(__webpack_exports__);
         self.adresse_update = response.data;
         self.fetch(self.adresse_update.id);
         self.hide();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    remove: function remove() {
+      var self = this;
+      axios.post(this.url + "vue/adresse/deleteAdresse", {
+        id: this.adresse_update.id,
+        abo_id: this.abo_id
+      }).then(function (response) {
+        if (response.data.result == true) {
+          location.reload();
+        }
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4361,6 +4454,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['inputname', 'id', 'wrapper'],
   data: function data() {
@@ -4404,7 +4554,8 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       var self = this;
       axios.post('/admin/getfiles', {
-        path: this.path
+        path: this.path,
+        flat: true
       }).then(function (response) {
         self.files = response.data.files;
         self.loading = false;
@@ -4699,6 +4850,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['type', 'chosen_id'],
   data: function data() {
@@ -4893,13 +5048,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'thumbs', 'input', 'id'],
+  props: ['name', 'thumbs', 'input', 'id', 'root'],
   data: function data() {
     return {
       directories: [],
       path: 'files/uploads',
-      files: null,
+      url: location.protocol + "//" + location.host + "/",
+      files: [],
       chosen: false,
       filename: '',
       directory: '',
@@ -4991,6 +5222,9 @@ __webpack_require__.r(__webpack_exports__);
       var get_ext = filename.split('.').reverse();
       var exts = ['jpg', 'jpeg', 'png', 'gif'];
       return $.inArray(get_ext[0].toLowerCase(), exts) > -1 ? true : false;
+    },
+    nom: function nom(fullPath) {
+      return fullPath.replace(/^.*[\\\/]/, '');
     }
   }
 });
@@ -6593,7 +6827,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.adresse-update{\n    padding: 0px;\n    background: #fff;\n}\n.adresse-update-wrapper{\n    padding: 35px;\n}\n", ""]);
+exports.push([module.i, "\n.adresse-update{\n    padding: 0px;\n    background: #fff;\n}\n.adresse-update-wrapper{\n    padding: 35px;\n}\n.adresse_update{\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    min-height: 120px;\n}\n\n", ""]);
 
 // exports
 
@@ -6802,7 +7036,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n.modal-dialog{\n     width: 80%;\n     min-width:860px;\n}\n.gallery li{\n     width: 200px;\n     display: inline-block;\n}\n\n", ""]);
+exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:50px;\n}\n.modal-dialog{\n     width: 80%;\n     min-width:860px;\n}\n.build-manager {\n    overflow-y: auto;\n    max-height: 70vh;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    align-content: center;\n}\n.build-wrapper-gallery{\n    display: flex;\n    flex-direction: row;\n    justify-content: start;\n    flex-wrap: wrap;\n}\n.file-item-build{\n    width: 90px;\n    height: 135px;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    position: relative;\n    margin: 15px;\n    padding:0;\n    background: #fff;\n    align-items: center;\n}\n.file-image-build{\n        width: 90px;\n        height: 130px;\n        overflow: hidden;\n}\n.file-item-build img {\n            width: 90px;\n            height: auto;\n}\n.file-item-build div p{\n        margin: 5px 0 0 0;\n        padding: 0;\n        text-align: center;\n        font-size: 12px;\n        line-height: 12px;\n        word-wrap: anywhere;\n}\n.file-item-build .action-build{\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    justify-content: space-between;\n    padding: 5px;\n    background: #f8f8f8;\n}\n\n", ""]);
 
 // exports
 
@@ -6859,7 +7093,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n", ""]);
+exports.push([module.i, "\n#fileManager {\n     overflow-y: auto;\n     max-height: 70vh;\n}\n.loading{\n     width:50px;\n     margin:40px auto;\n     font-size:30px;\n}\n.gallery-wrapper{\n     display: flex;\n     flex-direction: row;\n     justify-content: start;\n     flex-wrap: wrap;\n}\n.file-item {\n    width: 120px;\n    height: 135px;\n    position: relative;\n    list-style: none;\n    margin: 5px;\n    padding: 20px 5px 5px 5px;\n    background: #fff;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: space-between;\n    border: 5px solid transparent;\n    overflow-x: hidden;\n}\n.file-item img {\n    max-width: 120px;\n    max-height: 90px;\n    background-position: center;\n    background-repeat: no-repeat;\n    background-size: cover;\n    cursor: pointer;\n}\n.file-item p{\n    margin: 5px 0 0 0;\n    padding: 0;\n    text-align: center;\n    font-size: 12px;\n    line-height: 12px;\n    word-wrap: anywhere;\n}\n.file-item button {\n    position: absolute;\n    top: 0;\n    right: 0;\n    padding: 0 5px 2px 5px;\n}\n.tree ul button {\n     background-color: #428bca;\n     border: 1px solid #357ebd;\n     color: #ffffff;\n     cursor: pointer;\n     display: block;\n     line-height: 16px;\n     padding: 3px 0 3px 10px;\n     width: 100%;\n     border-collapse: collapse;\n     text-align: left;\n}\n.modal-header.manager-modal {\n     padding:10px  15px;\n     border-bottom: 1px solid #e5e5e5;\n     min-height: 15px;\n}\n.modal-dialog {\n     margin-top: 95px;\n}\n", ""]);
 
 // exports
 
@@ -8246,28 +8480,6 @@ return Promise$1;
 //# sourceMappingURL=es6-promise.map
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
 
 /***/ }),
 
@@ -31187,6 +31399,1824 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/vue-lazyload/vue-lazyload.esm.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/vue-lazyload/vue-lazyload.esm.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/*!
+ * Vue-Lazyload.js v1.3.3
+ * (c) 2019 Awe <hilongjw@gmail.com>
+ * Released under the MIT License.
+ */
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+/*!
+ * is-primitive <https://github.com/jonschlinkert/is-primitive>
+ *
+ * Copyright (c) 2014-2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+// see http://jsperf.com/testing-value-is-primitive/7
+
+var isPrimitive = function isPrimitive(value) {
+  return value == null || typeof value !== 'function' && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object';
+};
+
+/*!
+ * assign-symbols <https://github.com/jonschlinkert/assign-symbols>
+ *
+ * Copyright (c) 2015, Jon Schlinkert.
+ * Licensed under the MIT License.
+ */
+
+var assignSymbols = function assignSymbols(receiver, objects) {
+  if (receiver === null || typeof receiver === 'undefined') {
+    throw new TypeError('expected first argument to be an object.');
+  }
+
+  if (typeof objects === 'undefined' || typeof Symbol === 'undefined') {
+    return receiver;
+  }
+
+  if (typeof Object.getOwnPropertySymbols !== 'function') {
+    return receiver;
+  }
+
+  var isEnumerable = Object.prototype.propertyIsEnumerable;
+  var target = Object(receiver);
+  var len = arguments.length,
+      i = 0;
+
+  while (++i < len) {
+    var provider = Object(arguments[i]);
+    var names = Object.getOwnPropertySymbols(provider);
+
+    for (var j = 0; j < names.length; j++) {
+      var key = names[j];
+
+      if (isEnumerable.call(provider, key)) {
+        target[key] = provider[key];
+      }
+    }
+  }
+  return target;
+};
+
+var toString = Object.prototype.toString;
+
+/**
+ * Get the native `typeof` a value.
+ *
+ * @param  {*} `val`
+ * @return {*} Native javascript type
+ */
+
+var kindOf = function kindOf(val) {
+  var type = typeof val === 'undefined' ? 'undefined' : _typeof(val);
+
+  // primitivies
+  if (type === 'undefined') {
+    return 'undefined';
+  }
+  if (val === null) {
+    return 'null';
+  }
+  if (val === true || val === false || val instanceof Boolean) {
+    return 'boolean';
+  }
+  if (type === 'string' || val instanceof String) {
+    return 'string';
+  }
+  if (type === 'number' || val instanceof Number) {
+    return 'number';
+  }
+
+  // functions
+  if (type === 'function' || val instanceof Function) {
+    if (typeof val.constructor.name !== 'undefined' && val.constructor.name.slice(0, 9) === 'Generator') {
+      return 'generatorfunction';
+    }
+    return 'function';
+  }
+
+  // array
+  if (typeof Array.isArray !== 'undefined' && Array.isArray(val)) {
+    return 'array';
+  }
+
+  // check for instances of RegExp and Date before calling `toString`
+  if (val instanceof RegExp) {
+    return 'regexp';
+  }
+  if (val instanceof Date) {
+    return 'date';
+  }
+
+  // other objects
+  type = toString.call(val);
+
+  if (type === '[object RegExp]') {
+    return 'regexp';
+  }
+  if (type === '[object Date]') {
+    return 'date';
+  }
+  if (type === '[object Arguments]') {
+    return 'arguments';
+  }
+  if (type === '[object Error]') {
+    return 'error';
+  }
+  if (type === '[object Promise]') {
+    return 'promise';
+  }
+
+  // buffer
+  if (isBuffer(val)) {
+    return 'buffer';
+  }
+
+  // es6: Map, WeakMap, Set, WeakSet
+  if (type === '[object Set]') {
+    return 'set';
+  }
+  if (type === '[object WeakSet]') {
+    return 'weakset';
+  }
+  if (type === '[object Map]') {
+    return 'map';
+  }
+  if (type === '[object WeakMap]') {
+    return 'weakmap';
+  }
+  if (type === '[object Symbol]') {
+    return 'symbol';
+  }
+
+  if (type === '[object Map Iterator]') {
+    return 'mapiterator';
+  }
+  if (type === '[object Set Iterator]') {
+    return 'setiterator';
+  }
+  if (type === '[object String Iterator]') {
+    return 'stringiterator';
+  }
+  if (type === '[object Array Iterator]') {
+    return 'arrayiterator';
+  }
+
+  // typed arrays
+  if (type === '[object Int8Array]') {
+    return 'int8array';
+  }
+  if (type === '[object Uint8Array]') {
+    return 'uint8array';
+  }
+  if (type === '[object Uint8ClampedArray]') {
+    return 'uint8clampedarray';
+  }
+  if (type === '[object Int16Array]') {
+    return 'int16array';
+  }
+  if (type === '[object Uint16Array]') {
+    return 'uint16array';
+  }
+  if (type === '[object Int32Array]') {
+    return 'int32array';
+  }
+  if (type === '[object Uint32Array]') {
+    return 'uint32array';
+  }
+  if (type === '[object Float32Array]') {
+    return 'float32array';
+  }
+  if (type === '[object Float64Array]') {
+    return 'float64array';
+  }
+
+  // must be a plain object
+  return 'object';
+};
+
+/**
+ * If you need to support Safari 5-7 (8-10 yr-old browser),
+ * take a look at https://github.com/feross/is-buffer
+ */
+
+function isBuffer(val) {
+  return val.constructor && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
+}
+
+function assign(target /*, objects*/) {
+  target = target || {};
+  var len = arguments.length,
+      i = 0;
+  if (len === 1) {
+    return target;
+  }
+  while (++i < len) {
+    var val = arguments[i];
+    if (isPrimitive(target)) {
+      target = val;
+    }
+    if (isObject$1(val)) {
+      extend(target, val);
+    }
+  }
+  return target;
+}
+
+/**
+ * Shallow extend
+ */
+
+function extend(target, obj) {
+  assignSymbols(target, obj);
+
+  for (var key in obj) {
+    if (key !== '__proto__' && hasOwn(obj, key)) {
+      var val = obj[key];
+      if (isObject$1(val)) {
+        if (kindOf(target[key]) === 'undefined' && kindOf(val) === 'function') {
+          target[key] = val;
+        }
+        target[key] = assign(target[key] || {}, val);
+      } else {
+        target[key] = val;
+      }
+    }
+  }
+  return target;
+}
+
+/**
+ * Returns true if the object is a plain object or a function.
+ */
+
+function isObject$1(obj) {
+  return kindOf(obj) === 'object' || kindOf(obj) === 'function';
+}
+
+/**
+ * Returns true if the given `key` is an own property of `obj`.
+ */
+
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+/**
+ * Expose `assign`
+ */
+
+var assignDeep = assign;
+
+var inBrowser = typeof window !== 'undefined';
+var hasIntersectionObserver = checkIntersectionObserver();
+
+function checkIntersectionObserver() {
+  if (inBrowser && 'IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+    // Minimal polyfill for Edge 15's lack of `isIntersecting`
+    // See: https://github.com/w3c/IntersectionObserver/issues/211
+    if (!('isIntersecting' in window.IntersectionObserverEntry.prototype)) {
+      Object.defineProperty(window.IntersectionObserverEntry.prototype, 'isIntersecting', {
+        get: function get$$1() {
+          return this.intersectionRatio > 0;
+        }
+      });
+    }
+    return true;
+  }
+  return false;
+}
+
+var modeType = {
+  event: 'event',
+  observer: 'observer'
+
+  // CustomEvent polyfill
+};var CustomEvent = function () {
+  if (!inBrowser) return;
+  if (typeof window.CustomEvent === 'function') return window.CustomEvent;
+  function CustomEvent(event, params) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+    return evt;
+  }
+  CustomEvent.prototype = window.Event.prototype;
+  return CustomEvent;
+}();
+
+function remove(arr, item) {
+  if (!arr.length) return;
+  var index = arr.indexOf(item);
+  if (index > -1) return arr.splice(index, 1);
+}
+
+function some(arr, fn) {
+  var has = false;
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (fn(arr[i])) {
+      has = true;
+      break;
+    }
+  }
+  return has;
+}
+
+function getBestSelectionFromSrcset(el, scale) {
+  if (el.tagName !== 'IMG' || !el.getAttribute('data-srcset')) return;
+
+  var options = el.getAttribute('data-srcset');
+  var result = [];
+  var container = el.parentNode;
+  var containerWidth = container.offsetWidth * scale;
+
+  var spaceIndex = void 0;
+  var tmpSrc = void 0;
+  var tmpWidth = void 0;
+
+  options = options.trim().split(',');
+
+  options.map(function (item) {
+    item = item.trim();
+    spaceIndex = item.lastIndexOf(' ');
+    if (spaceIndex === -1) {
+      tmpSrc = item;
+      tmpWidth = 999998;
+    } else {
+      tmpSrc = item.substr(0, spaceIndex);
+      tmpWidth = parseInt(item.substr(spaceIndex + 1, item.length - spaceIndex - 2), 10);
+    }
+    result.push([tmpWidth, tmpSrc]);
+  });
+
+  result.sort(function (a, b) {
+    if (a[0] < b[0]) {
+      return 1;
+    }
+    if (a[0] > b[0]) {
+      return -1;
+    }
+    if (a[0] === b[0]) {
+      if (b[1].indexOf('.webp', b[1].length - 5) !== -1) {
+        return 1;
+      }
+      if (a[1].indexOf('.webp', a[1].length - 5) !== -1) {
+        return -1;
+      }
+    }
+    return 0;
+  });
+  var bestSelectedSrc = '';
+  var tmpOption = void 0;
+
+  for (var i = 0; i < result.length; i++) {
+    tmpOption = result[i];
+    bestSelectedSrc = tmpOption[1];
+    var next = result[i + 1];
+    if (next && next[0] < containerWidth) {
+      bestSelectedSrc = tmpOption[1];
+      break;
+    } else if (!next) {
+      bestSelectedSrc = tmpOption[1];
+      break;
+    }
+  }
+
+  return bestSelectedSrc;
+}
+
+function find(arr, fn) {
+  var item = void 0;
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (fn(arr[i])) {
+      item = arr[i];
+      break;
+    }
+  }
+  return item;
+}
+
+var getDPR = function getDPR() {
+  var scale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  return inBrowser ? window.devicePixelRatio || scale : scale;
+};
+
+function supportWebp() {
+  if (!inBrowser) return false;
+
+  var support = true;
+  var d = document;
+
+  try {
+    var el = d.createElement('object');
+    el.type = 'image/webp';
+    el.style.visibility = 'hidden';
+    el.innerHTML = '!';
+    d.body.appendChild(el);
+    support = !el.offsetWidth;
+    d.body.removeChild(el);
+  } catch (err) {
+    support = false;
+  }
+
+  return support;
+}
+
+function throttle(action, delay) {
+  var timeout = null;
+  var lastRun = 0;
+  return function () {
+    if (timeout) {
+      return;
+    }
+    var elapsed = Date.now() - lastRun;
+    var context = this;
+    var args = arguments;
+    var runCallback = function runCallback() {
+      lastRun = Date.now();
+      timeout = false;
+      action.apply(context, args);
+    };
+    if (elapsed >= delay) {
+      runCallback();
+    } else {
+      timeout = setTimeout(runCallback, delay);
+    }
+  };
+}
+
+function testSupportsPassive() {
+  if (!inBrowser) return;
+  var support = false;
+  try {
+    var opts = Object.defineProperty({}, 'passive', {
+      get: function get$$1() {
+        support = true;
+      }
+    });
+    window.addEventListener('test', null, opts);
+  } catch (e) {}
+  return support;
+}
+
+var supportsPassive = testSupportsPassive();
+
+var _ = {
+  on: function on(el, type, func) {
+    var capture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+    if (supportsPassive) {
+      el.addEventListener(type, func, {
+        capture: capture,
+        passive: true
+      });
+    } else {
+      el.addEventListener(type, func, capture);
+    }
+  },
+  off: function off(el, type, func) {
+    var capture = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+    el.removeEventListener(type, func, capture);
+  }
+};
+
+var loadImageAsync = function loadImageAsync(item, resolve, reject) {
+  var image = new Image();
+  if (!item || !item.src) {
+    var err = new Error('image src is required');
+    return reject(err);
+  }
+
+  image.src = item.src;
+
+  image.onload = function () {
+    resolve({
+      naturalHeight: image.naturalHeight,
+      naturalWidth: image.naturalWidth,
+      src: image.src
+    });
+  };
+
+  image.onerror = function (e) {
+    reject(e);
+  };
+};
+
+var style = function style(el, prop) {
+  return typeof getComputedStyle !== 'undefined' ? getComputedStyle(el, null).getPropertyValue(prop) : el.style[prop];
+};
+
+var overflow = function overflow(el) {
+  return style(el, 'overflow') + style(el, 'overflow-y') + style(el, 'overflow-x');
+};
+
+var scrollParent = function scrollParent(el) {
+  if (!inBrowser) return;
+  if (!(el instanceof HTMLElement)) {
+    return window;
+  }
+
+  var parent = el;
+
+  while (parent) {
+    if (parent === document.body || parent === document.documentElement) {
+      break;
+    }
+
+    if (!parent.parentNode) {
+      break;
+    }
+
+    if (/(scroll|auto)/.test(overflow(parent))) {
+      return parent;
+    }
+
+    parent = parent.parentNode;
+  }
+
+  return window;
+};
+
+function isObject(obj) {
+  return obj !== null && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object';
+}
+
+function ObjectKeys(obj) {
+  if (!(obj instanceof Object)) return [];
+  if (Object.keys) {
+    return Object.keys(obj);
+  } else {
+    var keys = [];
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        keys.push(key);
+      }
+    }
+    return keys;
+  }
+}
+
+function ArrayFrom(arrLike) {
+  var len = arrLike.length;
+  var list = [];
+  for (var i = 0; i < len; i++) {
+    list.push(arrLike[i]);
+  }
+  return list;
+}
+
+function noop() {}
+
+var ImageCache = function () {
+  function ImageCache(_ref) {
+    var max = _ref.max;
+    classCallCheck(this, ImageCache);
+
+    this.options = {
+      max: max || 100
+    };
+    this._caches = [];
+  }
+
+  createClass(ImageCache, [{
+    key: 'has',
+    value: function has(key) {
+      return this._caches.indexOf(key) > -1;
+    }
+  }, {
+    key: 'add',
+    value: function add(key) {
+      if (this.has(key)) return;
+      this._caches.push(key);
+      if (this._caches.length > this.options.max) {
+        this.free();
+      }
+    }
+  }, {
+    key: 'free',
+    value: function free() {
+      this._caches.shift();
+    }
+  }]);
+  return ImageCache;
+}();
+
+// el: {
+//     state,
+//     src,
+//     error,
+//     loading
+// }
+
+var ReactiveListener = function () {
+  function ReactiveListener(_ref) {
+    var el = _ref.el,
+        src = _ref.src,
+        error = _ref.error,
+        loading = _ref.loading,
+        bindType = _ref.bindType,
+        $parent = _ref.$parent,
+        options = _ref.options,
+        elRenderer = _ref.elRenderer,
+        imageCache = _ref.imageCache;
+    classCallCheck(this, ReactiveListener);
+
+    this.el = el;
+    this.src = src;
+    this.error = error;
+    this.loading = loading;
+    this.bindType = bindType;
+    this.attempt = 0;
+
+    this.naturalHeight = 0;
+    this.naturalWidth = 0;
+
+    this.options = options;
+
+    this.rect = null;
+
+    this.$parent = $parent;
+    this.elRenderer = elRenderer;
+    this._imageCache = imageCache;
+    this.performanceData = {
+      init: Date.now(),
+      loadStart: 0,
+      loadEnd: 0
+    };
+
+    this.filter();
+    this.initState();
+    this.render('loading', false);
+  }
+
+  /*
+   * init listener state
+   * @return
+   */
+
+
+  createClass(ReactiveListener, [{
+    key: 'initState',
+    value: function initState() {
+      if ('dataset' in this.el) {
+        this.el.dataset.src = this.src;
+      } else {
+        this.el.setAttribute('data-src', this.src);
+      }
+
+      this.state = {
+        loading: false,
+        error: false,
+        loaded: false,
+        rendered: false
+      };
+    }
+
+    /*
+     * record performance
+     * @return
+     */
+
+  }, {
+    key: 'record',
+    value: function record(event) {
+      this.performanceData[event] = Date.now();
+    }
+
+    /*
+     * update image listener data
+     * @param  {String} image uri
+     * @param  {String} loading image uri
+     * @param  {String} error image uri
+     * @return
+     */
+
+  }, {
+    key: 'update',
+    value: function update(_ref2) {
+      var src = _ref2.src,
+          loading = _ref2.loading,
+          error = _ref2.error;
+
+      var oldSrc = this.src;
+      this.src = src;
+      this.loading = loading;
+      this.error = error;
+      this.filter();
+      if (oldSrc !== this.src) {
+        this.attempt = 0;
+        this.initState();
+      }
+    }
+
+    /*
+     * get el node rect
+     * @return
+     */
+
+  }, {
+    key: 'getRect',
+    value: function getRect() {
+      this.rect = this.el.getBoundingClientRect();
+    }
+
+    /*
+     *  check el is in view
+     * @return {Boolean} el is in view
+     */
+
+  }, {
+    key: 'checkInView',
+    value: function checkInView() {
+      this.getRect();
+      return this.rect.top < window.innerHeight * this.options.preLoad && this.rect.bottom > this.options.preLoadTop && this.rect.left < window.innerWidth * this.options.preLoad && this.rect.right > 0;
+    }
+
+    /*
+     * listener filter
+     */
+
+  }, {
+    key: 'filter',
+    value: function filter() {
+      var _this = this;
+
+      ObjectKeys(this.options.filter).map(function (key) {
+        _this.options.filter[key](_this, _this.options);
+      });
+    }
+
+    /*
+     * render loading first
+     * @params cb:Function
+     * @return
+     */
+
+  }, {
+    key: 'renderLoading',
+    value: function renderLoading(cb) {
+      var _this2 = this;
+
+      this.state.loading = true;
+      loadImageAsync({
+        src: this.loading
+      }, function (data) {
+        _this2.render('loading', false);
+        _this2.state.loading = false;
+        cb();
+      }, function () {
+        // handler `loading image` load failed
+        cb();
+        _this2.state.loading = false;
+        if (!_this2.options.silent) console.warn('VueLazyload log: load failed with loading image(' + _this2.loading + ')');
+      });
+    }
+
+    /*
+     * try load image and  render it
+     * @return
+     */
+
+  }, {
+    key: 'load',
+    value: function load() {
+      var _this3 = this;
+
+      var onFinish = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
+
+      if (this.attempt > this.options.attempt - 1 && this.state.error) {
+        if (!this.options.silent) console.log('VueLazyload log: ' + this.src + ' tried too more than ' + this.options.attempt + ' times');
+        onFinish();
+        return;
+      }
+      if (this.state.rendered && this.state.loaded) return;
+      if (this._imageCache.has(this.src)) {
+        this.state.loaded = true;
+        this.render('loaded', true);
+        this.state.rendered = true;
+        return onFinish();
+      }
+
+      this.renderLoading(function () {
+        _this3.attempt++;
+
+        _this3.options.adapter['beforeLoad'] && _this3.options.adapter['beforeLoad'](_this3, _this3.options);
+        _this3.record('loadStart');
+
+        loadImageAsync({
+          src: _this3.src
+        }, function (data) {
+          _this3.naturalHeight = data.naturalHeight;
+          _this3.naturalWidth = data.naturalWidth;
+          _this3.state.loaded = true;
+          _this3.state.error = false;
+          _this3.record('loadEnd');
+          _this3.render('loaded', false);
+          _this3.state.rendered = true;
+          _this3._imageCache.add(_this3.src);
+          onFinish();
+        }, function (err) {
+          !_this3.options.silent && console.error(err);
+          _this3.state.error = true;
+          _this3.state.loaded = false;
+          _this3.render('error', false);
+        });
+      });
+    }
+
+    /*
+     * render image
+     * @param  {String} state to render // ['loading', 'src', 'error']
+     * @param  {String} is form cache
+     * @return
+     */
+
+  }, {
+    key: 'render',
+    value: function render(state, cache) {
+      this.elRenderer(this, state, cache);
+    }
+
+    /*
+     * output performance data
+     * @return {Object} performance data
+     */
+
+  }, {
+    key: 'performance',
+    value: function performance() {
+      var state = 'loading';
+      var time = 0;
+
+      if (this.state.loaded) {
+        state = 'loaded';
+        time = (this.performanceData.loadEnd - this.performanceData.loadStart) / 1000;
+      }
+
+      if (this.state.error) state = 'error';
+
+      return {
+        src: this.src,
+        state: state,
+        time: time
+      };
+    }
+
+    /*
+     * $destroy
+     * @return
+     */
+
+  }, {
+    key: '$destroy',
+    value: function $destroy() {
+      this.el = null;
+      this.src = null;
+      this.error = null;
+      this.loading = null;
+      this.bindType = null;
+      this.attempt = 0;
+    }
+  }]);
+  return ReactiveListener;
+}();
+
+var DEFAULT_URL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+var DEFAULT_EVENTS = ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend', 'touchmove'];
+var DEFAULT_OBSERVER_OPTIONS = {
+  rootMargin: '0px',
+  threshold: 0
+};
+
+var Lazy = function (Vue) {
+  return function () {
+    function Lazy(_ref) {
+      var preLoad = _ref.preLoad,
+          error = _ref.error,
+          throttleWait = _ref.throttleWait,
+          preLoadTop = _ref.preLoadTop,
+          dispatchEvent = _ref.dispatchEvent,
+          loading = _ref.loading,
+          attempt = _ref.attempt,
+          _ref$silent = _ref.silent,
+          silent = _ref$silent === undefined ? true : _ref$silent,
+          scale = _ref.scale,
+          listenEvents = _ref.listenEvents,
+          hasbind = _ref.hasbind,
+          filter = _ref.filter,
+          adapter = _ref.adapter,
+          observer = _ref.observer,
+          observerOptions = _ref.observerOptions;
+      classCallCheck(this, Lazy);
+
+      this.version = '1.3.3';
+      this.mode = modeType.event;
+      this.ListenerQueue = [];
+      this.TargetIndex = 0;
+      this.TargetQueue = [];
+      this.options = {
+        silent: silent,
+        dispatchEvent: !!dispatchEvent,
+        throttleWait: throttleWait || 200,
+        preLoad: preLoad || 1.3,
+        preLoadTop: preLoadTop || 0,
+        error: error || DEFAULT_URL,
+        loading: loading || DEFAULT_URL,
+        attempt: attempt || 3,
+        scale: scale || getDPR(scale),
+        ListenEvents: listenEvents || DEFAULT_EVENTS,
+        hasbind: false,
+        supportWebp: supportWebp(),
+        filter: filter || {},
+        adapter: adapter || {},
+        observer: !!observer,
+        observerOptions: observerOptions || DEFAULT_OBSERVER_OPTIONS
+      };
+      this._initEvent();
+      this._imageCache = new ImageCache({ max: 200 });
+      this.lazyLoadHandler = throttle(this._lazyLoadHandler.bind(this), this.options.throttleWait);
+
+      this.setMode(this.options.observer ? modeType.observer : modeType.event);
+    }
+
+    /**
+     * update config
+     * @param  {Object} config params
+     * @return
+     */
+
+
+    createClass(Lazy, [{
+      key: 'config',
+      value: function config() {
+        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        assignDeep(this.options, options);
+      }
+
+      /**
+       * output listener's load performance
+       * @return {Array}
+       */
+
+    }, {
+      key: 'performance',
+      value: function performance() {
+        var list = [];
+
+        this.ListenerQueue.map(function (item) {
+          list.push(item.performance());
+        });
+
+        return list;
+      }
+
+      /*
+       * add lazy component to queue
+       * @param  {Vue} vm lazy component instance
+       * @return
+       */
+
+    }, {
+      key: 'addLazyBox',
+      value: function addLazyBox(vm) {
+        this.ListenerQueue.push(vm);
+        if (inBrowser) {
+          this._addListenerTarget(window);
+          this._observer && this._observer.observe(vm.el);
+          if (vm.$el && vm.$el.parentNode) {
+            this._addListenerTarget(vm.$el.parentNode);
+          }
+        }
+      }
+
+      /*
+       * add image listener to queue
+       * @param  {DOM} el
+       * @param  {object} binding vue directive binding
+       * @param  {vnode} vnode vue directive vnode
+       * @return
+       */
+
+    }, {
+      key: 'add',
+      value: function add(el, binding, vnode) {
+        var _this = this;
+
+        if (some(this.ListenerQueue, function (item) {
+          return item.el === el;
+        })) {
+          this.update(el, binding);
+          return Vue.nextTick(this.lazyLoadHandler);
+        }
+
+        var _valueFormatter2 = this._valueFormatter(binding.value),
+            src = _valueFormatter2.src,
+            loading = _valueFormatter2.loading,
+            error = _valueFormatter2.error;
+
+        Vue.nextTick(function () {
+          src = getBestSelectionFromSrcset(el, _this.options.scale) || src;
+          _this._observer && _this._observer.observe(el);
+
+          var container = Object.keys(binding.modifiers)[0];
+          var $parent = void 0;
+
+          if (container) {
+            $parent = vnode.context.$refs[container];
+            // if there is container passed in, try ref first, then fallback to getElementById to support the original usage
+            $parent = $parent ? $parent.$el || $parent : document.getElementById(container);
+          }
+
+          if (!$parent) {
+            $parent = scrollParent(el);
+          }
+
+          var newListener = new ReactiveListener({
+            bindType: binding.arg,
+            $parent: $parent,
+            el: el,
+            loading: loading,
+            error: error,
+            src: src,
+            elRenderer: _this._elRenderer.bind(_this),
+            options: _this.options,
+            imageCache: _this._imageCache
+          });
+
+          _this.ListenerQueue.push(newListener);
+
+          if (inBrowser) {
+            _this._addListenerTarget(window);
+            _this._addListenerTarget($parent);
+          }
+
+          _this.lazyLoadHandler();
+          Vue.nextTick(function () {
+            return _this.lazyLoadHandler();
+          });
+        });
+      }
+
+      /**
+      * update image src
+      * @param  {DOM} el
+      * @param  {object} vue directive binding
+      * @return
+      */
+
+    }, {
+      key: 'update',
+      value: function update(el, binding, vnode) {
+        var _this2 = this;
+
+        var _valueFormatter3 = this._valueFormatter(binding.value),
+            src = _valueFormatter3.src,
+            loading = _valueFormatter3.loading,
+            error = _valueFormatter3.error;
+
+        src = getBestSelectionFromSrcset(el, this.options.scale) || src;
+
+        var exist = find(this.ListenerQueue, function (item) {
+          return item.el === el;
+        });
+        if (!exist) {
+          this.add(el, binding, vnode);
+        } else {
+          exist.update({
+            src: src,
+            loading: loading,
+            error: error
+          });
+        }
+        if (this._observer) {
+          this._observer.unobserve(el);
+          this._observer.observe(el);
+        }
+        this.lazyLoadHandler();
+        Vue.nextTick(function () {
+          return _this2.lazyLoadHandler();
+        });
+      }
+
+      /**
+      * remove listener form list
+      * @param  {DOM} el
+      * @return
+      */
+
+    }, {
+      key: 'remove',
+      value: function remove$$1(el) {
+        if (!el) return;
+        this._observer && this._observer.unobserve(el);
+        var existItem = find(this.ListenerQueue, function (item) {
+          return item.el === el;
+        });
+        if (existItem) {
+          this._removeListenerTarget(existItem.$parent);
+          this._removeListenerTarget(window);
+          remove(this.ListenerQueue, existItem);
+          existItem.$destroy();
+        }
+      }
+
+      /*
+       * remove lazy components form list
+       * @param  {Vue} vm Vue instance
+       * @return
+       */
+
+    }, {
+      key: 'removeComponent',
+      value: function removeComponent(vm) {
+        if (!vm) return;
+        remove(this.ListenerQueue, vm);
+        this._observer && this._observer.unobserve(vm.el);
+        if (vm.$parent && vm.$el.parentNode) {
+          this._removeListenerTarget(vm.$el.parentNode);
+        }
+        this._removeListenerTarget(window);
+      }
+    }, {
+      key: 'setMode',
+      value: function setMode(mode) {
+        var _this3 = this;
+
+        if (!hasIntersectionObserver && mode === modeType.observer) {
+          mode = modeType.event;
+        }
+
+        this.mode = mode; // event or observer
+
+        if (mode === modeType.event) {
+          if (this._observer) {
+            this.ListenerQueue.forEach(function (listener) {
+              _this3._observer.unobserve(listener.el);
+            });
+            this._observer = null;
+          }
+
+          this.TargetQueue.forEach(function (target) {
+            _this3._initListen(target.el, true);
+          });
+        } else {
+          this.TargetQueue.forEach(function (target) {
+            _this3._initListen(target.el, false);
+          });
+          this._initIntersectionObserver();
+        }
+      }
+
+      /*
+      *** Private functions ***
+      */
+
+      /*
+       * add listener target
+       * @param  {DOM} el listener target
+       * @return
+       */
+
+    }, {
+      key: '_addListenerTarget',
+      value: function _addListenerTarget(el) {
+        if (!el) return;
+        var target = find(this.TargetQueue, function (target) {
+          return target.el === el;
+        });
+        if (!target) {
+          target = {
+            el: el,
+            id: ++this.TargetIndex,
+            childrenCount: 1,
+            listened: true
+          };
+          this.mode === modeType.event && this._initListen(target.el, true);
+          this.TargetQueue.push(target);
+        } else {
+          target.childrenCount++;
+        }
+        return this.TargetIndex;
+      }
+
+      /*
+       * remove listener target or reduce target childrenCount
+       * @param  {DOM} el or window
+       * @return
+       */
+
+    }, {
+      key: '_removeListenerTarget',
+      value: function _removeListenerTarget(el) {
+        var _this4 = this;
+
+        this.TargetQueue.forEach(function (target, index) {
+          if (target.el === el) {
+            target.childrenCount--;
+            if (!target.childrenCount) {
+              _this4._initListen(target.el, false);
+              _this4.TargetQueue.splice(index, 1);
+              target = null;
+            }
+          }
+        });
+      }
+
+      /*
+       * add or remove eventlistener
+       * @param  {DOM} el DOM or Window
+       * @param  {boolean} start flag
+       * @return
+       */
+
+    }, {
+      key: '_initListen',
+      value: function _initListen(el, start) {
+        var _this5 = this;
+
+        this.options.ListenEvents.forEach(function (evt) {
+          return _[start ? 'on' : 'off'](el, evt, _this5.lazyLoadHandler);
+        });
+      }
+    }, {
+      key: '_initEvent',
+      value: function _initEvent() {
+        var _this6 = this;
+
+        this.Event = {
+          listeners: {
+            loading: [],
+            loaded: [],
+            error: []
+          }
+        };
+
+        this.$on = function (event, func) {
+          if (!_this6.Event.listeners[event]) _this6.Event.listeners[event] = [];
+          _this6.Event.listeners[event].push(func);
+        };
+
+        this.$once = function (event, func) {
+          var vm = _this6;
+          function on() {
+            vm.$off(event, on);
+            func.apply(vm, arguments);
+          }
+          _this6.$on(event, on);
+        };
+
+        this.$off = function (event, func) {
+          if (!func) {
+            if (!_this6.Event.listeners[event]) return;
+            _this6.Event.listeners[event].length = 0;
+            return;
+          }
+          remove(_this6.Event.listeners[event], func);
+        };
+
+        this.$emit = function (event, context, inCache) {
+          if (!_this6.Event.listeners[event]) return;
+          _this6.Event.listeners[event].forEach(function (func) {
+            return func(context, inCache);
+          });
+        };
+      }
+
+      /**
+       * find nodes which in viewport and trigger load
+       * @return
+       */
+
+    }, {
+      key: '_lazyLoadHandler',
+      value: function _lazyLoadHandler() {
+        var _this7 = this;
+
+        var freeList = [];
+        this.ListenerQueue.forEach(function (listener, index) {
+          if (!listener.el || !listener.el.parentNode) {
+            freeList.push(listener);
+          }
+          var catIn = listener.checkInView();
+          if (!catIn) return;
+          listener.load();
+        });
+        freeList.forEach(function (item) {
+          remove(_this7.ListenerQueue, item);
+          item.$destroy();
+        });
+      }
+      /**
+      * init IntersectionObserver
+      * set mode to observer
+      * @return
+      */
+
+    }, {
+      key: '_initIntersectionObserver',
+      value: function _initIntersectionObserver() {
+        var _this8 = this;
+
+        if (!hasIntersectionObserver) return;
+        this._observer = new IntersectionObserver(this._observerHandler.bind(this), this.options.observerOptions);
+        if (this.ListenerQueue.length) {
+          this.ListenerQueue.forEach(function (listener) {
+            _this8._observer.observe(listener.el);
+          });
+        }
+      }
+
+      /**
+      * init IntersectionObserver
+      * @return
+      */
+
+    }, {
+      key: '_observerHandler',
+      value: function _observerHandler(entries, observer) {
+        var _this9 = this;
+
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            _this9.ListenerQueue.forEach(function (listener) {
+              if (listener.el === entry.target) {
+                if (listener.state.loaded) return _this9._observer.unobserve(listener.el);
+                listener.load();
+              }
+            });
+          }
+        });
+      }
+
+      /**
+      * set element attribute with image'url and state
+      * @param  {object} lazyload listener object
+      * @param  {string} state will be rendered
+      * @param  {bool} inCache  is rendered from cache
+      * @return
+      */
+
+    }, {
+      key: '_elRenderer',
+      value: function _elRenderer(listener, state, cache) {
+        if (!listener.el) return;
+        var el = listener.el,
+            bindType = listener.bindType;
+
+
+        var src = void 0;
+        switch (state) {
+          case 'loading':
+            src = listener.loading;
+            break;
+          case 'error':
+            src = listener.error;
+            break;
+          default:
+            src = listener.src;
+            break;
+        }
+
+        if (bindType) {
+          el.style[bindType] = 'url("' + src + '")';
+        } else if (el.getAttribute('src') !== src) {
+          el.setAttribute('src', src);
+        }
+
+        el.setAttribute('lazy', state);
+
+        this.$emit(state, listener, cache);
+        this.options.adapter[state] && this.options.adapter[state](listener, this.options);
+
+        if (this.options.dispatchEvent) {
+          var event = new CustomEvent(state, {
+            detail: listener
+          });
+          el.dispatchEvent(event);
+        }
+      }
+
+      /**
+      * generate loading loaded error image url
+      * @param {string} image's src
+      * @return {object} image's loading, loaded, error url
+      */
+
+    }, {
+      key: '_valueFormatter',
+      value: function _valueFormatter(value) {
+        var src = value;
+        var loading = this.options.loading;
+        var error = this.options.error;
+
+        // value is object
+        if (isObject(value)) {
+          if (!value.src && !this.options.silent) console.error('Vue Lazyload warning: miss src with ' + value);
+          src = value.src;
+          loading = value.loading || this.options.loading;
+          error = value.error || this.options.error;
+        }
+        return {
+          src: src,
+          loading: loading,
+          error: error
+        };
+      }
+    }]);
+    return Lazy;
+  }();
+};
+
+var LazyComponent = (function (lazy) {
+  return {
+    props: {
+      tag: {
+        type: String,
+        default: 'div'
+      }
+    },
+    render: function render(h) {
+      if (this.show === false) {
+        return h(this.tag);
+      }
+      return h(this.tag, null, this.$slots.default);
+    },
+    data: function data() {
+      return {
+        el: null,
+        state: {
+          loaded: false
+        },
+        rect: {},
+        show: false
+      };
+    },
+    mounted: function mounted() {
+      this.el = this.$el;
+      lazy.addLazyBox(this);
+      lazy.lazyLoadHandler();
+    },
+    beforeDestroy: function beforeDestroy() {
+      lazy.removeComponent(this);
+    },
+
+    methods: {
+      getRect: function getRect() {
+        this.rect = this.$el.getBoundingClientRect();
+      },
+      checkInView: function checkInView() {
+        this.getRect();
+        return inBrowser && this.rect.top < window.innerHeight * lazy.options.preLoad && this.rect.bottom > 0 && this.rect.left < window.innerWidth * lazy.options.preLoad && this.rect.right > 0;
+      },
+      load: function load() {
+        this.show = true;
+        this.state.loaded = true;
+        this.$emit('show', this);
+      },
+      destroy: function destroy() {
+        return this.$destroy;
+      }
+    }
+  };
+});
+
+var LazyContainerMananger = function () {
+  function LazyContainerMananger(_ref) {
+    var lazy = _ref.lazy;
+    classCallCheck(this, LazyContainerMananger);
+
+    this.lazy = lazy;
+    lazy.lazyContainerMananger = this;
+    this._queue = [];
+  }
+
+  createClass(LazyContainerMananger, [{
+    key: 'bind',
+    value: function bind(el, binding, vnode) {
+      var container = new LazyContainer$1({ el: el, binding: binding, vnode: vnode, lazy: this.lazy });
+      this._queue.push(container);
+    }
+  }, {
+    key: 'update',
+    value: function update(el, binding, vnode) {
+      var container = find(this._queue, function (item) {
+        return item.el === el;
+      });
+      if (!container) return;
+      container.update({ el: el, binding: binding, vnode: vnode });
+    }
+  }, {
+    key: 'unbind',
+    value: function unbind(el, binding, vnode) {
+      var container = find(this._queue, function (item) {
+        return item.el === el;
+      });
+      if (!container) return;
+      container.clear();
+      remove(this._queue, container);
+    }
+  }]);
+  return LazyContainerMananger;
+}();
+
+var defaultOptions = {
+  selector: 'img'
+};
+
+var LazyContainer$1 = function () {
+  function LazyContainer(_ref2) {
+    var el = _ref2.el,
+        binding = _ref2.binding,
+        vnode = _ref2.vnode,
+        lazy = _ref2.lazy;
+    classCallCheck(this, LazyContainer);
+
+    this.el = null;
+    this.vnode = vnode;
+    this.binding = binding;
+    this.options = {};
+    this.lazy = lazy;
+
+    this._queue = [];
+    this.update({ el: el, binding: binding });
+  }
+
+  createClass(LazyContainer, [{
+    key: 'update',
+    value: function update(_ref3) {
+      var _this = this;
+
+      var el = _ref3.el,
+          binding = _ref3.binding;
+
+      this.el = el;
+      this.options = assignDeep({}, defaultOptions, binding.value);
+
+      var imgs = this.getImgs();
+      imgs.forEach(function (el) {
+        _this.lazy.add(el, assignDeep({}, _this.binding, {
+          value: {
+            src: 'dataset' in el ? el.dataset.src : el.getAttribute('data-src'),
+            error: ('dataset' in el ? el.dataset.error : el.getAttribute('data-error')) || _this.options.error,
+            loading: ('dataset' in el ? el.dataset.loading : el.getAttribute('data-loading')) || _this.options.loading
+          }
+        }), _this.vnode);
+      });
+    }
+  }, {
+    key: 'getImgs',
+    value: function getImgs() {
+      return ArrayFrom(this.el.querySelectorAll(this.options.selector));
+    }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      var _this2 = this;
+
+      var imgs = this.getImgs();
+      imgs.forEach(function (el) {
+        return _this2.lazy.remove(el);
+      });
+
+      this.vnode = null;
+      this.binding = null;
+      this.lazy = null;
+    }
+  }]);
+  return LazyContainer;
+}();
+
+var LazyImage = (function (lazyManager) {
+  return {
+    props: {
+      src: [String, Object],
+      tag: {
+        type: String,
+        default: 'img'
+      }
+    },
+    render: function render(h) {
+      return h(this.tag, {
+        attrs: {
+          src: this.renderSrc
+        }
+      }, this.$slots.default);
+    },
+    data: function data() {
+      return {
+        el: null,
+        options: {
+          src: '',
+          error: '',
+          loading: '',
+          attempt: lazyManager.options.attempt
+        },
+        state: {
+          loaded: false,
+          error: false,
+          attempt: 0
+        },
+        rect: {},
+        renderSrc: ''
+      };
+    },
+
+    watch: {
+      src: function src() {
+        this.init();
+        lazyManager.addLazyBox(this);
+        lazyManager.lazyLoadHandler();
+      }
+    },
+    created: function created() {
+      this.init();
+      this.renderSrc = this.options.loading;
+    },
+    mounted: function mounted() {
+      this.el = this.$el;
+      lazyManager.addLazyBox(this);
+      lazyManager.lazyLoadHandler();
+    },
+    beforeDestroy: function beforeDestroy() {
+      lazyManager.removeComponent(this);
+    },
+
+    methods: {
+      init: function init() {
+        var _lazyManager$_valueFo = lazyManager._valueFormatter(this.src),
+            src = _lazyManager$_valueFo.src,
+            loading = _lazyManager$_valueFo.loading,
+            error = _lazyManager$_valueFo.error;
+
+        this.state.loaded = false;
+        this.options.src = src;
+        this.options.error = error;
+        this.options.loading = loading;
+        this.renderSrc = this.options.loading;
+      },
+      getRect: function getRect() {
+        this.rect = this.$el.getBoundingClientRect();
+      },
+      checkInView: function checkInView() {
+        this.getRect();
+        return inBrowser && this.rect.top < window.innerHeight * lazyManager.options.preLoad && this.rect.bottom > 0 && this.rect.left < window.innerWidth * lazyManager.options.preLoad && this.rect.right > 0;
+      },
+      load: function load() {
+        var _this = this;
+
+        var onFinish = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : noop;
+
+        if (this.state.attempt > this.options.attempt - 1 && this.state.error) {
+          if (!lazyManager.options.silent) console.log('VueLazyload log: ' + this.options.src + ' tried too more than ' + this.options.attempt + ' times');
+          onFinish();
+          return;
+        }
+        var src = this.options.src;
+        loadImageAsync({ src: src }, function (_ref) {
+          var src = _ref.src;
+
+          _this.renderSrc = src;
+          _this.state.loaded = true;
+        }, function (e) {
+          _this.state.attempt++;
+          _this.renderSrc = _this.options.error;
+          _this.state.error = true;
+        });
+      }
+    }
+  };
+});
+
+var index = {
+  /*
+  * install function
+  * @param  {Vue} Vue
+  * @param  {object} options  lazyload options
+  */
+  install: function install(Vue) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var LazyClass = Lazy(Vue);
+    var lazy = new LazyClass(options);
+    var lazyContainer = new LazyContainerMananger({ lazy: lazy });
+
+    var isVue2 = Vue.version.split('.')[0] === '2';
+
+    Vue.prototype.$Lazyload = lazy;
+
+    if (options.lazyComponent) {
+      Vue.component('lazy-component', LazyComponent(lazy));
+    }
+
+    if (options.lazyImage) {
+      Vue.component('lazy-image', LazyImage(lazy));
+    }
+
+    if (isVue2) {
+      Vue.directive('lazy', {
+        bind: lazy.add.bind(lazy),
+        update: lazy.update.bind(lazy),
+        componentUpdated: lazy.lazyLoadHandler.bind(lazy),
+        unbind: lazy.remove.bind(lazy)
+      });
+      Vue.directive('lazy-container', {
+        bind: lazyContainer.bind.bind(lazyContainer),
+        componentUpdated: lazyContainer.update.bind(lazyContainer),
+        unbind: lazyContainer.unbind.bind(lazyContainer)
+      });
+    } else {
+      Vue.directive('lazy', {
+        bind: lazy.lazyLoadHandler.bind(lazy),
+        update: function update(newValue, oldValue) {
+          assignDeep(this.vm.$refs, this.vm.$els);
+          lazy.add(this.el, {
+            modifiers: this.modifiers || {},
+            arg: this.arg,
+            value: newValue,
+            oldValue: oldValue
+          }, {
+            context: this.vm
+          });
+        },
+        unbind: function unbind() {
+          lazy.remove(this.el);
+        }
+      });
+
+      Vue.directive('lazy-container', {
+        update: function update(newValue, oldValue) {
+          lazyContainer.update(this.el, {
+            modifiers: this.modifiers || {},
+            arg: this.arg,
+            value: newValue,
+            oldValue: oldValue
+          }, {
+            context: this.vm
+          });
+        },
+        unbind: function unbind() {
+          lazyContainer.unbind(this.el);
+        }
+      });
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (index);
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/AdresseUpdate.vue?vue&type=template&id=44f721b1&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/AdresseUpdate.vue?vue&type=template&id=44f721b1& ***!
@@ -31230,6 +33260,28 @@ var render = function() {
             on: { click: _vm.show }
           },
           [_vm._v(_vm._s(_vm.btnText))]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.type == 5 && _vm.admin == 1,
+                expression: "type == 5 && admin == 1"
+              }
+            ],
+            staticClass: "btn btn-danger btn-sm",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.remove($event)
+              }
+            }
+          },
+          [_vm._v("x")]
         )
       ]),
       _vm._v(" "),
@@ -35564,46 +37616,48 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-10" }, [
-                      _c("div", { staticClass: "wrapper-gallery" }, [
+                      _c("div", { staticClass: "build-manager" }, [
                         _vm.files
                           ? _c(
-                              "ul",
-                              { staticClass: "gallery" },
+                              "div",
+                              { staticClass: "build-wrapper-gallery" },
                               _vm._l(_vm.files, function(file) {
-                                return _c("li", [
-                                  _c(
-                                    "figure",
-                                    { staticClass: "figure-file-item" },
-                                    [
-                                      _vm.isImage(file)
-                                        ? _c("img", {
-                                            attrs: {
-                                              src: _vm.path + "/" + file,
-                                              alt: "image"
-                                            }
-                                          })
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      !_vm.isImage(file)
-                                        ? _c("img", {
-                                            attrs: {
-                                              height: "105px",
-                                              src: "images/text.svg",
-                                              alt: "image"
-                                            }
-                                          })
-                                        : _vm._e()
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "figure-file-item-label" },
-                                    [
+                                return _c(
+                                  "div",
+                                  { staticClass: "file-item-build" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "file-image-build" },
+                                      [
+                                        _vm.isImage(file)
+                                          ? _c("img", {
+                                              attrs: {
+                                                src: _vm.path + "/" + file,
+                                                alt: "image"
+                                              }
+                                            })
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        !_vm.isImage(file)
+                                          ? _c("img", {
+                                              attrs: {
+                                                height: "105px",
+                                                src: "images/text.svg",
+                                                alt: "image"
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", [
                                       !_vm.isImage(file)
                                         ? _c("p", [_vm._v(_vm._s(file))])
-                                        : _vm._e(),
-                                      _vm._v(" "),
+                                        : _vm._e()
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "action-build" }, [
                                       _c(
                                         "button",
                                         {
@@ -35634,9 +37688,9 @@ var render = function() {
                                         },
                                         [_vm._v("x")]
                                       )
-                                    ]
-                                  )
-                                ])
+                                    ])
+                                  ]
+                                )
                               }),
                               0
                             )
@@ -36200,61 +38254,79 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", { staticClass: "panel panel-primary" }, [
-            _c("div", { staticClass: "panel-body panel-colloque" }, [
-              _c("span", { staticClass: "no-adresse" }, [
-                _vm._v(_vm._s(_vm.chosen.user_id))
-              ]),
-              _vm._v(" "),
-              _vm.chosen.civilite
-                ? _c("span", [_vm._v(_vm._s(_vm.chosen.civilite))])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("span", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      target: "_blank",
-                      href: "admin/user/" + _vm.chosen.user_id
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.chosen.name))]
-                )
-              ]),
-              _vm._v(" "),
-              _vm.chosen.company && _vm.chosen.company != _vm.chosen.name
-                ? _c("span", [_vm._v(_vm._s(_vm.chosen.company))])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.chosen.cp
-                ? _c("span", [_vm._v(_vm._s(_vm.chosen.cp))])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.chosen.complement
-                ? _c("span", [_vm._v(_vm._s(_vm.chosen.complement))])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("span", [_vm._v(_vm._s(_vm.chosen.adresse))]),
-              _vm._v(" "),
-              _c("span", [
-                _vm._v(_vm._s(_vm.chosen.npa) + " " + _vm._s(_vm.chosen.ville))
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger btn-xs pull-right",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.remove($event)
-                    }
-                  }
-                },
-                [_vm._v("changer")]
-              )
-            ])
+            _c(
+              "div",
+              {
+                staticClass: "panel-body panel-colloque",
+                staticStyle: {
+                  display: "flex",
+                  "flex-direction": "column",
+                  "justify-content": "space-between",
+                  "min-height": "120px"
+                }
+              },
+              [
+                _c("div", [
+                  _c("span", { staticClass: "no-adresse" }, [
+                    _vm._v(_vm._s(_vm.chosen.user_id))
+                  ]),
+                  _vm._v(" "),
+                  _vm.chosen.civilite
+                    ? _c("span", [_vm._v(_vm._s(_vm.chosen.civilite))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          target: "_blank",
+                          href: "admin/user/" + _vm.chosen.user_id
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.chosen.name))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.chosen.company && _vm.chosen.company != _vm.chosen.name
+                    ? _c("span", [_vm._v(_vm._s(_vm.chosen.company))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.chosen.cp
+                    ? _c("span", [_vm._v(_vm._s(_vm.chosen.cp))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.chosen.complement
+                    ? _c("span", [_vm._v(_vm._s(_vm.chosen.complement))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm.chosen.adresse))]),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v(
+                      _vm._s(_vm.chosen.npa) + " " + _vm._s(_vm.chosen.ville)
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-warning btn-xs pull-right",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.remove($event)
+                        }
+                      }
+                    },
+                    [_vm._v("changer")]
+                  )
+                ])
+              ]
+            )
           ])
         ])
       : _vm._e()
@@ -36439,76 +38511,76 @@ var render = function() {
                             ? _c("p", [_vm._v("Aucun fichier à ce niveau")])
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm.files
-                            ? _c(
-                                "ul",
-                                { attrs: { id: "gallery" } },
-                                _vm._l(_vm.files, function(file) {
-                                  return _c(
-                                    "li",
-                                    { staticClass: "file-item" },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-xs btn-danger",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.deleteFile(
-                                                _vm.path + "/" + file
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("x")]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm.isImage(file)
-                                        ? _c("img", {
-                                            attrs: {
-                                              src:
-                                                _vm.path +
-                                                _vm.displayPath +
-                                                "/" +
-                                                file,
-                                              alt: "image"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.chosenFile(
-                                                  _vm.path + "/" + file
-                                                )
+                          _vm._l(_vm.files, function(row, index) {
+                            return _vm.files
+                              ? _c("div", [
+                                  _c("p", { staticClass: "mt-10" }, [
+                                    _c("strong", [_vm._v(_vm._s(index))])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "gallery-wrapper" },
+                                    _vm._l(row, function(file) {
+                                      return _c(
+                                        "div",
+                                        { staticClass: "file-item" },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-xs btn-danger",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.deleteFile(file)
+                                                }
                                               }
-                                            }
-                                          })
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      !_vm.isImage(file)
-                                        ? _c("img", {
-                                            attrs: {
-                                              src: "images/text.svg",
-                                              alt: "image"
                                             },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.chosenFile(
-                                                  _vm.path + "/" + file
-                                                )
-                                              }
-                                            }
-                                          })
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      !_vm.isImage(file)
-                                        ? _c("p", [_vm._v(_vm._s(file))])
-                                        : _vm._e()
-                                    ]
+                                            [_vm._v("x")]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm.isImage(file)
+                                            ? _c("img", {
+                                                attrs: {
+                                                  src: file,
+                                                  alt: "image"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.chosenFile(file)
+                                                  }
+                                                }
+                                              })
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          !_vm.isImage(file)
+                                            ? _c("img", {
+                                                attrs: {
+                                                  src: "images/text.svg",
+                                                  alt: "image"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.chosenFile(file)
+                                                  }
+                                                }
+                                              })
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          _c("p", [
+                                            _vm._v(_vm._s(_vm.nom(file)))
+                                          ])
+                                        ]
+                                      )
+                                    }),
+                                    0
                                   )
-                                }),
-                                0
-                              )
-                            : _vm._e()
-                        ]
+                                ])
+                              : _vm._e()
+                          })
+                        ],
+                        2
                       )
                     ])
                   ])
@@ -36533,7 +38605,7 @@ var render = function() {
           _vm.isImage(_vm.filename)
             ? _c("img", {
                 staticClass: "file-choosen file-image thumbnail",
-                attrs: { src: _vm.filename, alt: "image" }
+                attrs: { src: _vm.root + _vm.filename, alt: "image" }
               })
             : _vm._e(),
           _vm._v(" "),
@@ -36542,7 +38614,7 @@ var render = function() {
                 "a",
                 {
                   staticClass: "file-choosen",
-                  attrs: { target: "_blank", href: _vm.filename }
+                  attrs: { target: "_blank", href: _vm.root + _vm.filename }
                 },
                 [_vm._v(_vm._s(_vm.filename))]
               )
@@ -36569,7 +38641,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header manager-modal" }, [
       _c(
         "button",
         {
@@ -39757,7 +41829,7 @@ function normalizeComponent (
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.10
+ * Vue.js v2.6.11
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -41723,7 +43795,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
   isUsingMicroTask = true;
 } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   // Fallback to setImmediate.
-  // Techinically it leverages the (macro) task queue,
+  // Technically it leverages the (macro) task queue,
   // but it is still a better choice than setTimeout.
   timerFunc = function () {
     setImmediate(flushCallbacks);
@@ -41812,7 +43884,7 @@ var initProxy;
     warn(
       "Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " +
       'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
-      'prevent conflicts with Vue internals' +
+      'prevent conflicts with Vue internals. ' +
       'See: https://vuejs.org/v2/api/#data',
       target
     );
@@ -42672,7 +44744,7 @@ function bindDynamicKeys (baseObj, values) {
     if (typeof key === 'string' && key) {
       baseObj[values[i]] = values[i + 1];
     } else if (key !== '' && key !== null) {
-      // null is a speical value for explicitly removing a binding
+      // null is a special value for explicitly removing a binding
       warn(
         ("Invalid value for dynamic directive argument (expected string or null): " + key),
         this
@@ -43167,6 +45239,12 @@ function _createElement (
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
+      if (isDef(data) && isDef(data.nativeOn)) {
+        warn(
+          ("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">."),
+          context
+        );
+      }
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
@@ -43292,7 +45370,7 @@ function renderMixin (Vue) {
     // render self
     var vnode;
     try {
-      // There's no need to maintain a stack becaues all render fns are called
+      // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm;
@@ -45191,7 +47269,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.10';
+Vue.version = '2.6.11';
 
 /*  */
 
@@ -45864,7 +47942,7 @@ function createPatchFunction (backend) {
     }
   }
 
-  function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
+  function removeVnodes (vnodes, startIdx, endIdx) {
     for (; startIdx <= endIdx; ++startIdx) {
       var ch = vnodes[startIdx];
       if (isDef(ch)) {
@@ -45975,7 +48053,7 @@ function createPatchFunction (backend) {
       refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
       addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
     } else if (newStartIdx > newEndIdx) {
-      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+      removeVnodes(oldCh, oldStartIdx, oldEndIdx);
     }
   }
 
@@ -46067,7 +48145,7 @@ function createPatchFunction (backend) {
         if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
       } else if (isDef(oldCh)) {
-        removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+        removeVnodes(oldCh, 0, oldCh.length - 1);
       } else if (isDef(oldVnode.text)) {
         nodeOps.setTextContent(elm, '');
       }
@@ -46296,7 +48374,7 @@ function createPatchFunction (backend) {
 
         // destroy old node
         if (isDef(parentElm)) {
-          removeVnodes(parentElm, [oldVnode], 0, 0);
+          removeVnodes([oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
           invokeDestroyHook(oldVnode);
         }
@@ -49002,7 +51080,7 @@ var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
 var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
-// #7298: escape - to avoid being pased as HTML comment when inlined in page
+// #7298: escape - to avoid being passed as HTML comment when inlined in page
 var comment = /^<!\--/;
 var conditionalComment = /^<!\[/;
 
@@ -49287,7 +51365,7 @@ function parseHTML (html, options) {
 /*  */
 
 var onRE = /^@|^v-on:/;
-var dirRE = /^v-|^@|^:/;
+var dirRE = /^v-|^@|^:|^#/;
 var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
 var stripParensRE = /^\(|\)$/g;
@@ -49911,7 +51989,7 @@ function processSlotContent (el) {
           if (el.parent && !maybeComponent(el.parent)) {
             warn$2(
               "<template v-slot> can only appear at the root level inside " +
-              "the receiving the component",
+              "the receiving component",
               el
             );
           }
@@ -50474,7 +52552,7 @@ function isDirectChildOfTemplateFor (node) {
 
 /*  */
 
-var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*(?:[\w$]+)?\s*\(/;
+var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function(?:\s+[\w$]+)?\s*\(/;
 var fnInvokeRE = /\([^)]*?\);*$/;
 var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
@@ -51243,6 +53321,8 @@ function checkNode (node, warn) {
           var range = node.rawAttrsMap[name];
           if (name === 'v-for') {
             checkFor(node, ("v-for=\"" + value + "\""), warn, range);
+          } else if (name === 'v-slot' || name[0] === '#') {
+            checkFunctionParameterExpression(value, (name + "=\"" + value + "\""), warn, range);
           } else if (onRE.test(name)) {
             checkEvent(value, (name + "=\"" + value + "\""), warn, range);
           } else {
@@ -51262,9 +53342,9 @@ function checkNode (node, warn) {
 }
 
 function checkEvent (exp, text, warn, range) {
-  var stipped = exp.replace(stripStringRE, '');
-  var keywordMatch = stipped.match(unaryOperatorsRE);
-  if (keywordMatch && stipped.charAt(keywordMatch.index - 1) !== '$') {
+  var stripped = exp.replace(stripStringRE, '');
+  var keywordMatch = stripped.match(unaryOperatorsRE);
+  if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
     warn(
       "avoid using JavaScript unary operator as property name: " +
       "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim()),
@@ -51316,6 +53396,19 @@ function checkExpression (exp, text, warn, range) {
         range
       );
     }
+  }
+}
+
+function checkFunctionParameterExpression (exp, text, warn, range) {
+  try {
+    new Function(exp, '');
+  } catch (e) {
+    warn(
+      "invalid function parameter expression: " + (e.message) + " in\n\n" +
+      "    " + exp + "\n\n" +
+      "  Raw expression: " + (text.trim()) + "\n",
+      range
+    );
   }
 }
 
@@ -55065,6 +57158,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-js-modal */ "./node_modules/vue-js-modal/dist/index.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_js_modal__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_lazyload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-lazyload */ "./node_modules/vue-lazyload/vue-lazyload.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -55117,6 +57211,8 @@ Vue.use(vue_drag_and_drop_list__WEBPACK_IMPORTED_MODULE_0___default.a);
 Vue.use(vue_form_wizard__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 Vue.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+Vue.use(vue_lazyload__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var app = new Vue({
   el: '#appComponent'
 });

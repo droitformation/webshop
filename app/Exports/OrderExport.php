@@ -5,8 +5,13 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class OrderExport implements FromArray, WithHeadings, WithEvents
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+
+class OrderExport implements FromArray, WithHeadings, WithEvents, WithColumnFormatting
 {
     use Exportable;
 
@@ -24,8 +29,9 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
         $this->title   = $title;
         $this->details = $details;
 
-        $money = new \App\Droit\Shop\Product\Entities\Money;
-        $this->total = $money->format($this->orders->sum('price_cents'));
+   /*     $this->total = $sum = $this->orders->reduce(function ($carry, $item) {
+            return $carry + $item->amount;
+        },0);*/
     }
 
     public function headings(): array {
@@ -36,16 +42,13 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
     {
         $orders  = $this->prepareOrder($this->orders);
 
-        $columns = ['Numero','Date','Montant','Port','Paye','Status'];
-        $details = ['Titre','Quantité','Prix','Special','Gratuit','Rabais'];
+        $columns = ['Numero','Date','Prix','Port','Total','Paye','Status'];
+        $details = ['Titre','Quantité','Prix normal','Prix','Gratuit','Rabais'];
 
         $header = $this->details ? array_merge($columns,$details) : $columns;
         $header = $this->columns ? array_merge($header,$this->columns) : $header;
 
-        $sum = $this->orders->sum('price_cents');
-        $sum = number_format((float)$sum, 2, ',', '');
-
-        return array_merge([[''],$header] ,$orders,[[''],['Total','',$sum]]);
+        return array_merge([[''],$header] ,$orders,[['']]);
     }
 
     /**
@@ -71,12 +74,16 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
 
             $user = [];
 
-            $montant = number_format((float)$order->total_with_shipping, 2, ',', '');
+            $montant = $order->amount > 0 ? round($order->amount/100,2) : 0;
+            $montant = floatval(str_replace(",",".",$montant));
+
+            setlocale(LC_NUMERIC, 'en_US');
 
             $info['Numero']  = $order->order_no;
             $info['Date']    = $order->created_at->format('d.m.Y');
-            $info['Montant'] = $montant;
+            $info['Prix']    = $montant > 0 ? $montant : '0';
             $info['Port']    = $order->total_shipping;
+            $info['Total']   = $order->total_with_shipping;
             $info['Paye']    = $order->payed_at ? $order->payed_at->format('d.m.Y') : '';
             $info['Status']  = $order->total_with_shipping > 0 ? $order->status_code['status']: 'Gratuit';
 
@@ -96,19 +103,17 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
                 });
 
                 foreach($grouped as $product) {
+                    $original = $product->first()->price_normal ? $product->first()->price_normal : null;
+                    $special  = couponCalcul($order,$product->first());
 
-                    $prix = $product->first()->price_normal ? $product->first()->price_normal : null;
-                    $prix = $prix ? number_format((float)$prix, 2, ',', '') : '';
+                    $rabais = couponProductOrder($order,$product->first());
 
-                    $special = $product->first()->price_special ? $product->first()->price_special : null;
-                    $special = $special ? number_format((float)$special, 2, ',', '') : '';
-
-                    $data['title']   = $product->first()->title;
-                    $data['qty']     = $product->count();
-                    $data['prix']    = $prix;
-                    $data['special'] = $special;
-                    $data['free']    = $product->first()->pivot->isFree ? 'Oui' : '';
-                    $data['rabais']  = $product->first()->pivot->rabais ? ceil($product->first()->pivot->rabais).'%' : '';
+                    $data['title']    = $product->first()->title;
+                    $data['qty']      = $product->count();
+                    $data['original'] = $original;
+                    $data['prix']     = $special > 0 ? $special : '0';
+                    $data['free']     = $product->first()->pivot->isFree ? 'Oui' : '';
+                    $data['rabais']   = $rabais;
 
                     $converted[] = $info + $data + $user;
                 }
@@ -119,5 +124,17 @@ class OrderExport implements FromArray, WithHeadings, WithEvents
         } // end foreach
 
         return $converted;
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            /*  */
+            'C' => NumberFormat::FORMAT_GENERAL,
+            'E' => NumberFormat::FORMAT_GENERAL,
+            //'I' => '0.00',
+            //'J' => '0.00',
+
+        ];
     }
 }

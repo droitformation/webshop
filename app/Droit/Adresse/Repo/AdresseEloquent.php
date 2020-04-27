@@ -46,23 +46,23 @@ class AdresseEloquent implements AdresseInterface{
 			})
 			->where(function ($query) use ($terms,$columns) {
 
-			foreach($columns['adresse'] as $column){
-				foreach($terms as $term){
-					$query->orWhere($column,'LIKE','%'.$term.'%');
-				}
-			}
+                foreach($columns['adresse'] as $column){
+                    foreach($terms as $term){
+                        $query->orWhere($column,'LIKE','%'.$term.'%');
+                    }
+                }
 
-			$query->orWhereHas('user', function ($query) use($terms,$columns) {
-				$query->where(function ($q) use ($columns,$terms) {
-					foreach($columns['user'] as $column){
-						foreach($terms as $term){
-							$q->orWhere($column,'LIKE','%'.$term.'%');
-						}
-					}
-				});
-			});
+                $query->orWhereHas('user', function ($query) use($terms,$columns) {
+                    $query->where(function ($q) use ($columns,$terms) {
+                        foreach($columns['user'] as $column){
+                            foreach($terms as $term){
+                                $q->orWhere($column,'LIKE','%'.$term.'%');
+                            }
+                        }
+                    });
+                });
 
-		})->get();
+            })->get();
 
     }
 
@@ -107,6 +107,7 @@ class AdresseEloquent implements AdresseInterface{
         $pays            = (isset($terms['pays']) ? $terms['pays'] : null);
         $specialisations = (isset($terms['specialisations']) ? $terms['specialisations'] : null);
         $members         = (isset($terms['members']) ? $terms['members'] : null);
+        $exclude         = (isset($terms['exclude']) ? $terms['exclude'] : null);
 
         $searchSpecialisation = ($each ? 'searchSpecialisationEach' : 'searchSpecialisation');
         $searchMember         = ($each ? 'searchMemberEach' : 'searchMember');
@@ -122,6 +123,7 @@ class AdresseEloquent implements AdresseInterface{
 			->searchPays($pays)
             ->searchCanton($cantons)
             ->searchProfession($professions)
+            ->searchExclude($exclude)
 			->$searchSpecialisation($specialisations)
 			->$searchMember($members);
 

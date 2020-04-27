@@ -1,6 +1,6 @@
 <tr valign="top">
     <td valign="top">
-        <h2><?php echo $colloque->titre; ?></h2>
+        <h4 style="font-size: 17px;"><?php echo $colloque->titre; ?></h4>
         <h3><?php echo $colloque->soustitre; ?></h3>
     </td>
 </tr>

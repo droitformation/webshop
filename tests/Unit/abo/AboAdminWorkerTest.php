@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Jobs\MakeFactureAbo;
+use App\Jobs\MergeFactures;
+use App\Jobs\NotifyJobFinishedEmail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
@@ -35,6 +38,23 @@ class AboAdminWorkerTest extends TestCase
         parent::tearDown();
     }
 
+    public function testMakeFacture()
+    {
+        \Bus::fake();
+
+        $worker = \App::make('App\Droit\Abo\Worker\AboFactureWorkerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeUserAbonnement($abo, null, true);
+
+        $worker->generate($abo_user->abo->current_product, $abo, []);
+
+        \Bus::assertDispatched(\App\Jobs\MakeFactureAbo::class);
+        \Bus::assertDispatched(\App\Jobs\MergeFactures::class);
+        \Bus::assertDispatched(\App\Jobs\NotifyJobFinishedEmail::class);
+    }
+
     public function testMakeRappel()
     {
         $worker = \App::make('App\Droit\Abo\Worker\AboRappelWorkerInterface');
@@ -66,6 +86,25 @@ class AboAdminWorkerTest extends TestCase
         $abo_facture->load('rappels');
 
         $this->assertEquals(2, $abo_facture->rappels->count());
+    }
+
+    public function testPrintRappelWithBV()
+    {
+        $worker = \App::make('App\Droit\Abo\Worker\AboRappelWorkerInterface');
+        $make  = new \tests\factories\ObjectFactory();
+
+        $abo         = $make->makeAbo();
+        $abo_user    = $make->makeUserAbonnement($abo);
+        $abo_facture = factory(\App\Droit\Abo\Entities\Abo_factures::class)->create(['abo_user_id' => $abo_user->id ,'product_id' => $abo->current_product->id]);
+
+        $worker->makeRappel($abo_facture,null,true);
+
+        $this->assertTrue($worker->generator->toPrint);
+
+        $worker->makeRappel($abo_facture,null);
+
+        $this->assertFalse($worker->generator->toPrint);
+
     }
 
     public function testBindFactures()

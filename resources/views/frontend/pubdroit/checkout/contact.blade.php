@@ -69,7 +69,7 @@
                         </li>
                         <li class="form-group">
                             <div class="col-md-4">
-                                <label class="control-label" for="">CP</label>
+                                <label class="control-label" for="">Case postale</label>
                                 <input class="form-control" name="cp" value="{{ $adresse ? $adresse->cp : '' }}" type="text">
                             </div>
                             <div class="col-md-8">

@@ -36,7 +36,7 @@
 
                 <div class="form-group-sondage">
                     @if($avis->type == 'chapitre')
-                        <h4 class="label-chapitre"><strong>{!! strip_tags($avis->question) !!}</strong></h4>
+                        <h4 class="label-chapitre"><strong>{!! strip_tags($avis->question,'<a><br><blockquote>') !!}</strong></h4>
 
                     @elseif($avis->type == 'text')
                         <label for="message" class="control-label label-question">{!! $avis->question !!}</label>
