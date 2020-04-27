@@ -65,6 +65,9 @@ class AuthorController extends Controller
 
         $author = $this->author->create($all);
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('Auteur crée')->success();
 
         return redirect('admin/author/'.$author->id);
@@ -102,6 +105,9 @@ class AuthorController extends Controller
 
         $author = $this->author->update($all);
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('Auteur mis à jour')->success();
 
         return redirect('admin/author/'.$author->id);
@@ -116,6 +122,9 @@ class AuthorController extends Controller
     public function destroy($id)
     {
         $this->author->delete($id);
+
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
 
         flash('Auteur supprimé')->success();
 

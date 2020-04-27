@@ -117,6 +117,9 @@ class ArretController extends Controller {
         
         $arret = $this->arret->update( $data );
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('Arrêt mis à jour')->success();
 
         return redirect('admin/arret/'.$arret->id);

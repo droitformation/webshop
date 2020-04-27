@@ -68,6 +68,9 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->create( $data );
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('Contenu crée')->success();
 
         return redirect('admin/bloc/'.$bloc->id);
@@ -109,6 +112,9 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->update( $data );
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('Contenu mis à jour')->success();
 
         return redirect('admin/bloc/'.$bloc->id);
@@ -123,6 +129,9 @@ class BlocController extends Controller
     public function destroy($id)
     {
         $this->bloc->delete($id);
+
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
 
         flash('Contenu supprimée')->success();
 

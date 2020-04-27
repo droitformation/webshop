@@ -63,6 +63,9 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('La page a été crée')->success();
 
         return redirect('admin/page/'.$page->id);
@@ -96,6 +99,9 @@ class PageController extends Controller
     {
         $page = $this->page->update($request->all());
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('La page a été mise à jour')->success();
 
         return redirect('admin/page/'.$page->id);
@@ -113,6 +119,9 @@ class PageController extends Controller
 
         $this->page->delete($id);
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('La page a été supprimé')->success();
 
         return redirect()->back();
@@ -123,6 +132,9 @@ class PageController extends Controller
         $data = $request->all();
 
         $pages = $this->page->updateSorting($data['page_rang']);
+
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
         
         echo 'ok';die();
     }

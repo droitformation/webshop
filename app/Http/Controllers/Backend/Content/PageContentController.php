@@ -46,6 +46,9 @@ class PageContentController extends Controller
 
         $content = $this->content->create($data);
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         $page = $this->page->find($content->page_id);
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
@@ -77,6 +80,9 @@ class PageContentController extends Controller
 
         $content = $this->content->update($data);
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         $page = $this->page->find($content->page_id);
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
@@ -102,6 +108,9 @@ class PageContentController extends Controller
         $this->content->delete($id);
 
         $page = $this->page->find($request->page_id);
+
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
 
         echo view('backend.pages.partials.list')->with(['page' => $page]);
     }

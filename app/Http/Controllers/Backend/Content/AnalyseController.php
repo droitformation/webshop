@@ -131,6 +131,9 @@ class AnalyseController extends Controller {
 
         $analyse = $this->analyse->update($data);
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+
         flash('Analyse mise à jour')->success();
 
         return redirect('admin/analyse/'.$analyse->id);

@@ -110,6 +110,9 @@ class ColloqueController extends Controller
             $this->document->updateColloqueDoc($colloque->id, ['illustration' => $file['name']]);
         }
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'colloque');
+
         flash('Le colloque a été crée')->success();
 
         return redirect('admin/colloque/'.$colloque->id);
@@ -153,6 +156,9 @@ class ColloqueController extends Controller
             $this->document->updateColloqueDoc($id, ['illustration' => $illustration]);
         }
 
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'colloque');
+
         flash('Le colloque a été mis à jour')->success();
 
         return redirect('admin/colloque/'.$colloque->id);
@@ -167,6 +173,9 @@ class ColloqueController extends Controller
     public function destroy($id)
     {
         $this->colloque->delete($id);
+
+        // Update date new content
+        setMaj(\Carbon\Carbon::today()->toDateString(),'colloque');
 
         flash('Le colloque supprimé')->success();
 
