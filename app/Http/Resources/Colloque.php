@@ -20,6 +20,7 @@ class Colloque extends JsonResource
             'date' => $this->event_date,
             'location' =>  $this->location ? $this->location->name : '',
             'image' => $this->frontend_illustration,
+            'link'   => $this->url ? $this->url : url('http://publications-droit.ch/pubdroit/colloque/'.$this->id),
         ];
     }
 }

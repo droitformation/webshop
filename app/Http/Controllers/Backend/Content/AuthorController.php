@@ -65,8 +65,7 @@ class AuthorController extends Controller
 
         $author = $this->author->create($all);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Auteur crée')->success();
 
@@ -97,16 +96,14 @@ class AuthorController extends Controller
         $all   = $request->all();
         $_file = $request->file('photo', null);
 
-        if($_file)
-        {
+        if($_file) {
             $photo = $this->upload->upload($_file, 'files/authors');
             $all['photo'] = $photo['name'];
         }
 
         $author = $this->author->update($all);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Auteur mis à jour')->success();
 
@@ -123,8 +120,7 @@ class AuthorController extends Controller
     {
         $this->author->delete($id);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Auteur supprimé')->success();
 

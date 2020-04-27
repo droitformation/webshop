@@ -176,6 +176,8 @@ class CampagneController extends Controller
     {
         $campagne = $this->campagne->update($request->all());
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Campagne édité')->success();
 
         return redirect()->back();

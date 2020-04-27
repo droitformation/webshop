@@ -32,6 +32,7 @@ class Campagne extends JsonResource
             'categorie'    => isset($this->categorie) ? (new Categorie($this->categorie)) : null,
             'product'      => isset($this->product) ? (new Product($this->product)) : null,
             'colloque'     => isset($this->colloque) ? (new Colloque($this->colloque)) : null,
+            'colloque_id'  => $this->colloque_id,
             'categorie_id' => $this->categorie_id,
             'rang'         => $this->rang,
             'groupe_id'    => $this->groupe_id,

@@ -46,10 +46,9 @@ class PageContentController extends Controller
 
         $content = $this->content->create($data);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
-
         $page = $this->page->find($content->page_id);
+
+        event(new \App\Events\ContentUpdated());
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
     }
@@ -79,11 +78,9 @@ class PageContentController extends Controller
         $data = $request->input('data');
 
         $content = $this->content->update($data);
-
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
-
         $page = $this->page->find($content->page_id);
+
+        event(new \App\Events\ContentUpdated());
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
     }
@@ -93,6 +90,8 @@ class PageContentController extends Controller
         $data = $request->all();
 
         $content = $this->content->updateSorting($data['page_rang']);
+
+        event(new \App\Events\ContentUpdated());
 
         echo 'ok';die();
     }
@@ -109,8 +108,7 @@ class PageContentController extends Controller
 
         $page = $this->page->find($request->page_id);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         echo view('backend.pages.partials.list')->with(['page' => $page]);
     }

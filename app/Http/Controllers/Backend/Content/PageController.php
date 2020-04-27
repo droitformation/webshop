@@ -63,8 +63,7 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('La page a été crée')->success();
 
@@ -85,8 +84,7 @@ class PageController extends Controller
         
         $types = config('columns.types');
 
-        return view('backend.pages.show')
-            ->with(['page' => $page, 'menus' => $menus, 'current_site' => $page->site_id, 'categories' => $site->categories, 'types' => $types]);
+        return view('backend.pages.show')->with(['page' => $page, 'menus' => $menus, 'current_site' => $page->site_id, 'categories' => $site->categories, 'types' => $types]);
     }
 
     /**
@@ -99,8 +97,7 @@ class PageController extends Controller
     {
         $page = $this->page->update($request->all());
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('La page a été mise à jour')->success();
 
@@ -119,8 +116,7 @@ class PageController extends Controller
 
         $this->page->delete($id);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('La page a été supprimé')->success();
 
@@ -133,8 +129,7 @@ class PageController extends Controller
 
         $pages = $this->page->updateSorting($data['page_rang']);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
         
         echo 'ok';die();
     }

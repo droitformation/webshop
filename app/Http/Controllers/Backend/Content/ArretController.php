@@ -92,6 +92,8 @@ class ArretController extends Controller {
         
         $arret = $this->arret->create( $data );
 
+        event(new \App\Events\ContentUpdated());
+
         flash('Arrêt crée')->success();
 
         return redirect('admin/arret/'.$arret->id);
@@ -118,7 +120,7 @@ class ArretController extends Controller {
         $arret = $this->arret->update( $data );
 
         // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Arrêt mis à jour')->success();
 

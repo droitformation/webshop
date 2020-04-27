@@ -68,8 +68,7 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->create( $data );
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Contenu crée')->success();
 
@@ -112,8 +111,7 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->update( $data );
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Contenu mis à jour')->success();
 
@@ -130,8 +128,7 @@ class BlocController extends Controller
     {
         $this->bloc->delete($id);
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Contenu supprimée')->success();
 

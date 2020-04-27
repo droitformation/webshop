@@ -60,8 +60,7 @@ class CategorieController extends Controller {
 
         $categorie = $this->categorie->create( $data );
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Catégorie crée')->success();
 
@@ -102,8 +101,7 @@ class CategorieController extends Controller {
 
         $this->categorie->update( $data );
 
-        // Update date new content
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
+        event(new \App\Events\ContentUpdated());
 
         flash('Catégorie mise à jour')->success();
 
@@ -120,6 +118,8 @@ class CategorieController extends Controller {
 	public function destroy($id)
 	{
         $this->categorie->delete($id);
+
+        event(new \App\Events\ContentUpdated());
 
         flash('Catégorie supprimée')->success();
 
