@@ -71,7 +71,7 @@ class PageEloquent implements PageInterface{
             return false;
         }
 
-        if($data['parent_id'] && $data['parent_id'] > 0)
+        if(isset($data['parent_id']) && $data['parent_id'] > 0)
         {
             $parent = $this->page->findOrFail($data['parent_id']);
             $page->appendToNode($parent)->save();
@@ -92,7 +92,7 @@ class PageEloquent implements PageInterface{
 
         $page->fill($data);
 
-        if(empty($data['parent_id']))
+        if(isset($data['parent_id']) && empty($data['parent_id']))
         {
             $page->parent_id = null;
         }
@@ -103,7 +103,7 @@ class PageEloquent implements PageInterface{
 
         $page->save();
         
-        if($data['parent_id'] > 0 && $data['parent_id'] != null)
+        if(isset($data['parent_id']) && $data['parent_id'] > 0 && $data['parent_id'] != null)
         {
             $parent = $this->page->find($data['parent_id']);
             if($parent){

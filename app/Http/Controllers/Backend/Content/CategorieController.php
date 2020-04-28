@@ -60,7 +60,7 @@ class CategorieController extends Controller {
 
         $categorie = $this->categorie->create( $data );
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Catégorie crée')->success();
 
@@ -101,7 +101,7 @@ class CategorieController extends Controller {
 
         $this->categorie->update( $data );
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Catégorie mise à jour')->success();
 
@@ -119,7 +119,7 @@ class CategorieController extends Controller {
 	{
         $this->categorie->delete($id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Catégorie supprimée')->success();
 

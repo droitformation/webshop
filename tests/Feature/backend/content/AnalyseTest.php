@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\HubDate;
 
 class AnalyseTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,HubDate;
 
     public function setUp(): void
     {
@@ -75,16 +76,19 @@ class AnalyseTest extends TestCase
 
     public function testUpdateAnalyse()
     {
-        $analyse = factory(\App\Droit\Analyse\Entities\Analyse::class)->create();
+        $this->setDate('hub');
 
-        $author1  = factory(\App\Droit\Author\Entities\Author::class)->create();
-        $author2  = factory(\App\Droit\Author\Entities\Author::class)->create();
+        $analyse = factory(\App\Droit\Analyse\Entities\Analyse::class)->create();
+        $author1 = factory(\App\Droit\Author\Entities\Author::class)->create();
+        $author2 = factory(\App\Droit\Author\Entities\Author::class)->create();
 
         $analyse->authors()->attach([$author1->id]);
 
         $this->assertEquals(1, $analyse->authors->count());
 
         $response = $this->call('PUT', '/admin/analyse/'.$analyse->id, ['id' => $analyse->id, 'site_id' => 2, 'author_id' => [$author1->id, $author2->id]]);
+
+        $this->isDate('hub');
 
         $this->assertDatabaseHas('analyses', [
             'id'      => $analyse->id,
@@ -109,9 +113,13 @@ class AnalyseTest extends TestCase
 
     public function testDeleteAnalyse()
     {
+        $this->setDate('hub');
+
         $analyse = factory(\App\Droit\Analyse\Entities\Analyse::class)->create();
 
         $response = $this->call('DELETE','admin/analyse/'.$analyse->id);
+
+        $this->isDate('hub');
 
         $this->assertDatabaseMissing('analyses', [
             'id' => $analyse->id,

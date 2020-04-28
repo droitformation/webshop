@@ -68,7 +68,7 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->create( $data );
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Contenu crée')->success();
 
@@ -111,7 +111,7 @@ class BlocController extends Controller
 
         $bloc = $this->bloc->update( $data );
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Contenu mis à jour')->success();
 
@@ -128,7 +128,7 @@ class BlocController extends Controller
     {
         $this->bloc->delete($id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Contenu supprimée')->success();
 

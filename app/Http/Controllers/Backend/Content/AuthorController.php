@@ -65,7 +65,7 @@ class AuthorController extends Controller
 
         $author = $this->author->create($all);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Auteur crée')->success();
 
@@ -103,7 +103,7 @@ class AuthorController extends Controller
 
         $author = $this->author->update($all);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Auteur mis à jour')->success();
 
@@ -120,7 +120,7 @@ class AuthorController extends Controller
     {
         $this->author->delete($id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Auteur supprimé')->success();
 

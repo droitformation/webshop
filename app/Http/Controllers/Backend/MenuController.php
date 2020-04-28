@@ -50,7 +50,7 @@ class MenuController extends Controller
     {
         $menu = $this->menu->create($request->all());
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Le menu a été crée')->success();
 
@@ -80,7 +80,7 @@ class MenuController extends Controller
     {
         $menu = $this->menu->update($request->all());
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Le menu a été mis à jour')->success();
 
@@ -97,7 +97,7 @@ class MenuController extends Controller
     {
         $this->menu->delete($id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Le menu a été supprimé')->success();
 

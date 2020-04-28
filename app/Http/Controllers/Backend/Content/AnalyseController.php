@@ -104,8 +104,6 @@ class AnalyseController extends Controller {
 
         $analyse = $this->analyse->create( $data );
 
-        event(new \App\Events\ContentUpdated());
-
         flash('Analyse crée')->success();
 
         return redirect('admin/analyse/'.$analyse->id);
@@ -133,7 +131,7 @@ class AnalyseController extends Controller {
 
         $analyse = $this->analyse->update($data);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Analyse mise à jour')->success();
 
@@ -151,7 +149,7 @@ class AnalyseController extends Controller {
     {
         $this->analyse->delete($id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Analyse supprimée')->success();
 

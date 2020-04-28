@@ -63,7 +63,7 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('La page a été crée')->success();
 
@@ -97,7 +97,7 @@ class PageController extends Controller
     {
         $page = $this->page->update($request->all());
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('La page a été mise à jour')->success();
 
@@ -116,7 +116,7 @@ class PageController extends Controller
 
         $this->page->delete($id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('La page a été supprimé')->success();
 
@@ -129,7 +129,7 @@ class PageController extends Controller
 
         $pages = $this->page->updateSorting($data['page_rang']);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
         
         echo 'ok';die();
     }

@@ -25,9 +25,6 @@ class UpdateContentDate
      */
     public function handle($event)
     {
-        setMaj(\Carbon\Carbon::today()->toDateString(),'hub');
-        setMaj(\Carbon\Carbon::today()->toDateString(),'colloque');
-
-        \Log::info('current:'.\Carbon\Carbon::today()->toDateString());
+        setMaj(\Carbon\Carbon::today()->toDateString(),$event->what);
     }
 }

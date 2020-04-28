@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\HubDate;
 
 class ArretTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,HubDate;
 
     public function setUp(): void
     {
@@ -75,9 +76,13 @@ class ArretTest extends TestCase
 
     public function testUpdateArret()
     {
+        $this->setDate('hub');
+
         $arret = factory(\App\Droit\Arret\Entities\Arret::class)->create();
 
         $response = $this->call('PUT', '/admin/arret/'.$arret->id, ['id' => $arret->id, 'dumois' => 1]);
+
+        $this->isDate('hub');
 
         $this->assertDatabaseHas('arrets', [
             'id'     => $arret->id,
@@ -87,9 +92,13 @@ class ArretTest extends TestCase
 
     public function testDeleteArret()
     {
+        $this->setDate('hub');
+
         $arret = factory(\App\Droit\Arret\Entities\Arret::class)->create();
 
         $response = $this->call('DELETE','admin/arret/'.$arret->id, [] ,['id' => $arret->id]);
+
+        $this->isDate('hub');
 
         $this->assertDatabaseMissing('arrets', [
             'id'         => $arret->id,

@@ -14,13 +14,17 @@ class ContentUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $what;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function   __construct(){}
+    public function  __construct($what){
+        $this->what = $what;
+    }
+
     /**
      * Get the channels the event should broadcast on.
      *

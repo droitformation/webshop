@@ -104,13 +104,10 @@ class ColloqueController extends Controller
         $_file    = $request->file('file');
 
         // illustration
-        if($_file)
-        {
+        if($_file) {
             $file = $this->upload->upload( $request->file('file') , 'files/colloques/illustration');
             $this->document->updateColloqueDoc($colloque->id, ['illustration' => $file['name']]);
         }
-
-        event(new \App\Events\ContentUpdated());
 
         flash('Le colloque a été crée')->success();
 
@@ -150,12 +147,9 @@ class ColloqueController extends Controller
         $colloque     = $this->colloque->update(['id' => $id] + $request->only('visible'));
         $illustration = $request->input('illustration',null);
 
-        if($illustration && !empty($illustration))
-        {
+        if($illustration && !empty($illustration)) {
             $this->document->updateColloqueDoc($id, ['illustration' => $illustration]);
         }
-
-        event(new \App\Events\ContentUpdated());
 
         flash('Le colloque a été mis à jour')->success();
 
@@ -171,8 +165,6 @@ class ColloqueController extends Controller
     public function destroy($id)
     {
         $this->colloque->delete($id);
-
-        event(new \App\Events\ContentUpdated());
 
         flash('Le colloque supprimé')->success();
 

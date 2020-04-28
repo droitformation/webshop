@@ -44,6 +44,8 @@ class PageContentController extends Controller
     {
         $content = $this->content->create($request->all());
 
+        event(new \App\Events\ContentUpdated('content'));
+
         flash('Le bloc a été ajouté')->success();
 
         return redirect()->back();
@@ -73,6 +75,8 @@ class PageContentController extends Controller
     {
         $content = $this->content->update($request->all());
 
+        event(new \App\Events\ContentUpdated('content'));
+
         flash('Le bloc a été mis à jour')->success();
 
         return redirect()->back();
@@ -83,6 +87,8 @@ class PageContentController extends Controller
         $data = $request->all();
 
         $content = $this->content->updateSorting($data['page_rang']);
+
+        event(new \App\Events\ContentUpdated('content'));
 
         echo 'ok';die();
     }
@@ -96,6 +102,8 @@ class PageContentController extends Controller
     public function destroy($id, Request $request)
     {
         $this->content->delete($id);
+
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Le bloc a été supprimé')->success();
 

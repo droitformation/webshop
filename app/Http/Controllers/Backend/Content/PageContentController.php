@@ -48,7 +48,7 @@ class PageContentController extends Controller
 
         $page = $this->page->find($content->page_id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
     }
@@ -80,7 +80,7 @@ class PageContentController extends Controller
         $content = $this->content->update($data);
         $page = $this->page->find($content->page_id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         return view('backend.pages.partials.list')->with(['page' => $page]);
     }
@@ -91,7 +91,7 @@ class PageContentController extends Controller
 
         $content = $this->content->updateSorting($data['page_rang']);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         echo 'ok';die();
     }
@@ -108,7 +108,7 @@ class PageContentController extends Controller
 
         $page = $this->page->find($request->page_id);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         echo view('backend.pages.partials.list')->with(['page' => $page]);
     }
