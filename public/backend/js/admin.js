@@ -242,6 +242,20 @@ $( function() {
 
     $('#typeSelect').change(function() { isProductCoupon(); });
 
+    $('#rabaisSelect').change(function() {
+
+        var $select = $('#colloqueSelect');
+        var value   = $('#rabaisSelect').val();
+
+        if(value == 'colloque') {
+            $select.show();
+        }
+        else{
+            $select.hide();
+        }
+
+    });
+
     $('.customCollapse').on('shown.bs.collapse', function () {
         var $row = $(this).closest('tr');
         var $prev = $row.prev();

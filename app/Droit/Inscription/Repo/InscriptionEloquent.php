@@ -200,6 +200,7 @@ class InscriptionEloquent implements InscriptionInterface{
             'colloque_id'     => $data['colloque_id'],
             'user_id'         => (isset($data['user_id']) ? $data['user_id'] : null),
             'group_id'        => (isset($data['group_id']) ? $data['group_id'] : null),
+            'rabais_id'       => $data['rabais_id'] ?? null,
             'inscription_no'  => $data['inscription_no'],
             'price_id'        => $data['price_id'],
             'created_at'      => \Carbon\Carbon::now(),

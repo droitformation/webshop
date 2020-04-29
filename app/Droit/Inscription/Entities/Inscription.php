@@ -40,6 +40,7 @@ class Inscription extends Model
 
     public function getPriceCentsAttribute()
     {
+        // TODO
         $money = new \App\Droit\Shop\Product\Entities\Money;
         $price = $this->price->price / 100;
 

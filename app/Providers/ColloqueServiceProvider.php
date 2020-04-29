@@ -38,6 +38,7 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->registerGroupOptionService();
         $this->registerPriceService();
         $this->registerOccurrenceService();
+        $this->registerRabaisService();
 
         $this->registerSondageService();
         $this->registerAvisService();
@@ -214,6 +215,17 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Occurrence\Repo\OccurrenceInterface', function()
         {
             return new \App\Droit\Occurrence\Repo\OccurrenceEloquent(new \App\Droit\Occurrence\Entities\Occurrence());
+        });
+    }
+
+    /**
+     * Rabais
+     */
+    protected function registerRabaisService(){
+
+        $this->app->singleton('App\Droit\Inscription\Repo\RabaisInterface', function()
+        {
+            return new \App\Droit\Inscription\Repo\RabaisEloquent(new \App\Droit\Inscription\Entities\Rabais());
         });
     }
 

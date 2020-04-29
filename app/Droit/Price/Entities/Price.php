@@ -8,7 +8,7 @@ class Price extends Model{
 
     protected $dates = ['end_at'];
 
-    protected $fillable = ['colloque_id','price','type','description','rang','remarque','end_at'];
+    protected $fillable = ['colloque_id','price','type','description','rang','remarque','end_at','main'];
 
     public $timestamps = false;
 

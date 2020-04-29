@@ -68,8 +68,7 @@ class Groupe extends Model
         $path = config('documents.colloque.facture');
         $file = $path.'facture_'.$this->colloque_id.'-'.$this->id.'-'.$this->user_id.'.pdf';
 
-        if (\File::exists(public_path($file)))
-        {
+        if (\File::exists(public_path($file))) {
             return $file;
         }
 
@@ -81,8 +80,7 @@ class Groupe extends Model
         $path = config('documents.colloque.bv');
         $file = $path.'bv_'.$this->colloque_id.'-'.$this->id.'-'.$this->user_id.'.pdf';
 
-        if (\File::exists(public_path($file)))
-        {
+        if (\File::exists(public_path($file))) {
             return $file;
         }
 
@@ -91,17 +89,12 @@ class Groupe extends Model
 
     public function getPriceCentsAttribute()
     {
+        // TODO
         $this->load('inscriptions');
 
-        $somme = 0;
-
-        if(!$this->inscriptions->isEmpty())
-        {
-            foreach($this->inscriptions as $inscription)
-            {
-                $somme += $inscription->price_cents;
-            }
-        }
+        $somme = !$this->inscriptions->isEmpty() ? $this->inscriptions->reduce(function ($carry, $inscription) {
+            return $carry + $inscription->price_cents;
+        },0) :collect([]);
 
         $money = new \App\Droit\Shop\Product\Entities\Money;
 

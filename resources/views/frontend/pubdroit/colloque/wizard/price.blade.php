@@ -13,6 +13,8 @@
                 </label>
             </div>
         @endforeach
+
+        <rabais colloque_id="{{ $colloque->id }}"></rabais>
     </div>
     <hr/>
 @endif

@@ -136,6 +136,7 @@ class Generate{
 
     public function getPrice()
     {
+        // TODO
         return $this->getType() == 'group' ? $this->model->price_cents : $this->model->price->price_cents;
     }
 
