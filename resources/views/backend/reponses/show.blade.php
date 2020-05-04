@@ -71,6 +71,7 @@
                                         <div class="row" style="page-break-after: always;">
                                             <div class="col-md-12">
                                                 @foreach($reponses as $avis)
+
                                                     <div class="question-reponse">
                                                         @if(isset($avis['title']))
                                                             <div style="padding: 5px 0;">{!! $avis['title'] !!}</div>
@@ -83,7 +84,7 @@
 
                                                     @if(isset($avis['reponses']) && !$avis['reponses']->isEmpty())
                                                         @if($avis['type'] != 'text')
-                                                        <dl class="dl-horizontal dl-sondage">
+                                                        <dl class="dl-horizontal dl-sondage {{ $avis['isTest'] ? 'sondage-reponse-istest' : '' }}">
                                                             <?php
                                                                 $reponses = $avis['reponses'];
                                                                 $reponses = sortArrayByArray($reponses->toArray(), ['Excellente','Excellent','Bon','Satisfaisant','Insatisfaisant']);
@@ -94,7 +95,7 @@
                                                             @endforeach
                                                         </dl>
                                                         @else
-                                                            <ul>
+                                                            <ul class="{{ $avis['isTest'] ? 'sondage-reponse-istest' : '' }}">
                                                                 @foreach($avis['reponses'] as $note)
                                                                     <li>{{ $note }}</li>
                                                                 @endforeach

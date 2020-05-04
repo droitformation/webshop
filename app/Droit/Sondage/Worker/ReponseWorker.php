@@ -66,6 +66,7 @@ class ReponseWorker
                     'title'    => $item->question,
                     'reponses' => $item->type != 'chapitre' ?  $answers : null,
                     'type'     => $item->type,
+                    'isTest'   => $reponses->first()->response->isTest
                 ]
             ];
         });
