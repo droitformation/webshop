@@ -22,9 +22,11 @@ class ReponseController extends Controller
         $this->worker  = $worker;
     }
 
-    public function index()
+    public function index($sondage_id = null)
     {
-        return view('sondages.index');
+        $sondage = $sondage_id ? $this->sondage->find($sondage_id) : null;
+
+        return view('sondages.index')->with(['sondage' => $sondage]);
     }
 
     public function create($token)
@@ -50,6 +52,6 @@ class ReponseController extends Controller
 
         flash('Merci pour votre participation au sondage!')->success();
 
-        return redirect('reponse');
+        return redirect('reponse/'.$reponse->sondage->id);
     }
 }
