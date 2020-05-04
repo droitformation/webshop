@@ -23,6 +23,6 @@ class Rabais extends Model
 
     public function inscriptions()
     {
-        return $this->hasMany('App\Droit\Shop\Inscription\Entities\Inscription','rabais_id');
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription','rabais_id');
     }
 }

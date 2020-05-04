@@ -22,6 +22,12 @@ class ConferenceTest extends TestCase
         $this->actingAs($user);
     }
 
+    public function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     public function testCreateConference()
     {
         $data       = ['title' => 'Test 123', 'date' => date('Y-m-d'),'places' => 25, 'comment' => 'test'];

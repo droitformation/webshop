@@ -200,12 +200,14 @@ Route::get('testing', function() {
     $generator   = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
+    $rabais   = App::make('App\Droit\Inscription\Repo\RabaisInterface');
 
-    $orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
-    $order = $orders->find(4830);
+    //$orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
+    //$order = $orders->find(4830);
+    $all = $rabais->byColloque(164);
 
     echo '<pre>';
-    print_r($order);
+    print_r($all);
     echo '</pre>';
     exit;
 /*    $inscription = $model_inscriptions->find(20992);

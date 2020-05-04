@@ -89,7 +89,6 @@ class Groupe extends Model
 
     public function getPriceCentsAttribute()
     {
-        // TODO
         $this->load('inscriptions');
 
         $somme = !$this->inscriptions->isEmpty() ? $this->inscriptions->reduce(function ($carry, $inscription) {

@@ -179,8 +179,7 @@ class InscriptionEloquent implements InscriptionInterface{
                 })->orWhere('user_id','=',$user_id);
             });
 
-        if($days > 0)
-        {
+        if($days > 0) {
             $notpayed->where('created_at','<=',$today);
         }
 

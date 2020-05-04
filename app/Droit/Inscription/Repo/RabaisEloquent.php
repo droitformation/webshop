@@ -17,6 +17,12 @@ class RabaisEloquent implements RabaisInterface{
         return $this->rabais->with(['colloques'])->get();
     }
 
+    public function byColloque($id){
+        return $this->rabais->whereHas('colloques', function ($query) use ($id) {
+            $query->where('colloque_id', '=', $id);
+        })->orDoesntHave('colloques')->get();
+    }
+
     public function find($id){
 
         return $this->rabais->with(['colloques'])->find($id);

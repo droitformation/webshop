@@ -43,6 +43,14 @@ $factory->define(App\Droit\Inscription\Entities\Inscription::class, function (Fa
     ];
 });
 
+$factory->define(App\Droit\Inscription\Entities\Rabais::class, function (Faker\Generator $faker) {
+    return [
+        'value'     => $faker->numberBetween(200,300),
+        'title'     => $faker->name,
+        'expire_at' => \Carbon\Carbon::now()->addDay()
+    ];
+});
+
 $factory->define(App\Droit\Calculette\Entities\Calculette_ipc::class, function (Faker\Generator $faker) {
     
     $date = \Carbon\Carbon::now()->addMonth()->format('Y-m-d');

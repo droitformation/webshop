@@ -1,4 +1,4 @@
-<div>
+<div class="invoice_reference">
     <h4><strong>Références:</strong></h4>
     <div class="input-group">
         <span class="input-group-addon">N° référence</span>
