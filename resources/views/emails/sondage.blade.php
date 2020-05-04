@@ -1,9 +1,17 @@
 @extends('emails.layouts.notification')
 @section('content')
 
-    <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
-        <img width="max-width:100%;" src="{{ secure_asset('images/pubdroit/header_email.png') }}" alt="{{ config('app.name') }}">
-    </a>
+    @if($sondage->marketing && $sondage->image)
+        <a style="{{ $fontFamily }} display:block; max-width:600px;" href="#" target="_blank">
+            <img style="max-width:600px;" src="{{ secure_asset('files/uploads/'.$sondage->image) }}" alt="{{ $sondage->title }}">
+        </a>
+    @else
+        <a style="{{ $fontFamily }} display:block; height: 115px;" href="{{ url('pubdroit') }}" target="_blank">
+            <img style="max-width:100%;" src="{{ secure_asset('images/pubdroit/header_email.png') }}" alt="{{ config('app.name') }}">
+        </a>
+    @endif
+
+
     <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
         <tr>
             <td style="{{ $fontFamily }} {{ $style['email-body_cell_header'] }}">

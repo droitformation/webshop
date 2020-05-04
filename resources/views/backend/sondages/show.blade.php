@@ -57,6 +57,7 @@
                                         <div class="list-group-item text-center">
                                             <a href="#"><img style="max-width: 100%" src="{!! secure_asset('files/uploads/'.$sondage->image) !!}" alt="{{ $sondage->title }}" /></a>
                                         </div>
+                                        <input type="hidden" name="image" value="{{ $sondage->image }}">
                                     </div>
                                 </div>
                             </div>
