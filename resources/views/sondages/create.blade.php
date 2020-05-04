@@ -2,13 +2,15 @@
 @section('content')
 
     @if($isTest)
-        <div class="alert alert-warning">Ceci est un sondage test</div>
+        <div class="alert alert-warning" style="margin-bottom: 20px;">Ceci est un sondage test</div>
     @endif
 
-    @if($sondage->marketing)
-        <h3>{{ $sondage->title }}</h3>
-        {!! $sondage->description !!}
-    @else
+        @if($sondage->marketing)
+            <h3>{{ $sondage->title }}</h3>
+            <div id="sondage-description">
+                {!! $sondage->description !!}
+            </div>
+        @else
 
         <div class="media media-sondage">
             <div class="media-left">

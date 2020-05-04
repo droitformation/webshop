@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-md-9">
 
-        <form action="{{ url('admin/sondage/'.$sondage->id) }}" method="POST" class="form-horizontal">
+        <form action="{{ url('admin/sondage/'.$sondage->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
             <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
 
             <div class="panel panel-midnightblue">
@@ -48,10 +48,41 @@
                                 <input type="text" name="title" value="{{ $sondage->title }}" class="form-control">
                             </div>
                         </div>
+
+                        @if(!empty($sondage->image ))
+                            <div class="form-group">
+                                <label for="file" class="col-sm-3 control-label">Bannière</label>
+                                <div class="col-sm-3">
+                                    <div class="list-group">
+                                        <div class="list-group-item text-center">
+                                            <a href="#"><img style="max-width: 100%" src="{!! secure_asset('files/uploads/'.$sondage->image) !!}" alt="{{ $sondage->title }}" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="form-group">
+                            <label for="file" class="col-sm-3 control-label">Changer la bannière<br><small>(max 910px85px)</small></label>
+                            <div class="col-sm-7">
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        {!! Form::file('file') !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="message" class="col-sm-3 control-label">Description du sondage marketing</label>
                             <div class="col-sm-6">
                                 <textarea name="description" class="form-control redactorSimple">{{ $sondage->description }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Signature</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="signature" value="{{ $sondage->signature }}" placeholder="Le secrétariat de la Faculté de droit" class="form-control">
                             </div>
                         </div>
                     </div>

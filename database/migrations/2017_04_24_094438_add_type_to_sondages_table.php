@@ -17,6 +17,8 @@ class AddTypeToSondagesTable extends Migration
             $table->integer('colloque_id')->nullable()->change();
             $table->tinyInteger('marketing')->nullable();
             $table->string('title')->nullable();
+            $table->string('image')->nullable();
+            $table->string('signature')->nullable();
             $table->text('description')->nullable();
         });
     }

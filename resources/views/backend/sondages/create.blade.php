@@ -13,7 +13,7 @@
         <div class="panel panel-midnightblue">
 
             <!-- form start -->
-            <form action="{{ url('admin/sondage') }}" method="POST" class="validate-form form-horizontal" data-validate="parsley">{!! csrf_field() !!}
+            <form action="{{ url('admin/sondage') }}" method="POST" enctype="multipart/form-data" class="validate-form form-horizontal" data-validate="parsley">{!! csrf_field() !!}
 
                 <div class="panel panel-midnightblue">
                     <div class="panel-body">
@@ -50,9 +50,25 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="file" class="col-sm-3 control-label">Bannière image <br><small>(max 910px85px)</small></label>
+                                <div class="col-sm-6">
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            {!!  Form::file('file')!!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="message" class="col-sm-3 control-label">Description du sondage marketing</label>
                                 <div class="col-sm-6">
                                     <textarea name="description" class="form-control redactorSimple"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Signature</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="signature" value="" placeholder="Le secrétariat de la Faculté de droit" class="form-control">
                                 </div>
                             </div>
                         </div>

@@ -26,6 +26,8 @@ class SondageEloquent implements SondageInterface{
     {
         $sondage = $this->sondage->create(array(
             'marketing'   => isset($data['marketing']) && !empty($data['marketing']) ? 1 : null,
+            'image'       => $data['image'] ?? null,
+            'signature'   => $data['signature'] ?? null,
             'colloque_id' => isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null,
             'title'       => isset($data['title']) && !empty($data['title']) ? $data['title'] : null,
             'description' => isset($data['description']) && !empty($data['description']) ? $data['description'] : null,
@@ -48,6 +50,8 @@ class SondageEloquent implements SondageInterface{
         }
 
         $sondage->marketing   = isset($data['marketing']) && !empty($data['marketing']) ? 1 : null;
+        $sondage->image       = $data['image'] ?? null;
+        $sondage->signature   = $data['signature'] ?? null;
         $sondage->colloque_id = isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null;
         $sondage->title       = isset($data['title']) && !empty($data['title']) ? $data['title'] : null;
         $sondage->description = isset($data['description']) && !empty($data['description']) ? $data['description'] : null;

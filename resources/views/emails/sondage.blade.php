@@ -29,7 +29,7 @@
                         <td align="center">
                             <a href="{{ secure_url('reponse/create/'.$url) }}"
                                style="{{ $fontFamily }} {{ $style['button'] }} {{ $style['button--blue'] }}"
-                               class="button" target="_blank">Lien vers le formulaire
+                               class="button" target="_blank">Lien vers le sondage
                             </a>
                         </td>
                     </tr>
@@ -39,7 +39,12 @@
                 @if(!$sondage->marketing)
                     <p style="{{ $style['paragraph'] }}">Nous vous remercions pour votre participation.</p>
                 @endif
-                <p style="{{ $style['paragraph'] }}"><strong>Le secrétariat de la Faculté de droit</strong></p>
+
+                @if($sondage->signature)
+                    <p style="{{ $style['paragraph'] }}"><strong>{{ $sondage->signature }}</strong></p>
+                @else
+                    <p style="{{ $style['paragraph'] }}"><strong>Le secrétariat de la Faculté de droit</strong></p>
+                @endif
 
             </td>
         </tr>
