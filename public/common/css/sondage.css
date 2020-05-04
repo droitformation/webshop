@@ -101,6 +101,7 @@ textarea.sondage{
 
 .label-question p{
     margin-bottom: 2px;
+    font-weight: 550;
 }
 
 .label-question p strong{
