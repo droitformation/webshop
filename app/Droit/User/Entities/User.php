@@ -293,6 +293,11 @@ class User extends Authenticatable {
         return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation', 'specialisations_access', 'user_id', 'specialisation_id');
     }
 
+    public function rabais()
+    {
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->whereNull('inscription_id');
+    }
+
     public function subscriptions()
     {
         return $this->hasMany('App\Droit\Newsletter\Entities\Newsletter_subscriptions', 'user_id', 'id');
