@@ -49,6 +49,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Organisateur</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="organisateur" value="{{ $sondage->organisateur }}" class="form-control">
+                            </div>
+                        </div>
+
                         @if(!empty($sondage->image ))
                             <div class="form-group">
                                 <label for="file" class="col-sm-3 control-label">Bannière</label>
@@ -77,6 +84,13 @@
                             <label for="message" class="col-sm-3 control-label">Description du sondage marketing</label>
                             <div class="col-sm-6">
                                 <textarea name="description" class="form-control redactorSimple">{{ $sondage->description }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label">Texte de l'email<br><small>Si vide la description est prise.</small></label>
+                            <div class="col-sm-6">
+                                <textarea name="email" class="form-control redactorSimple">{{ $sondage->email }}</textarea>
                             </div>
                         </div>
 

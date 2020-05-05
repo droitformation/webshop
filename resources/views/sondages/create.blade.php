@@ -65,9 +65,10 @@
                 </div>
             @endforeach
             <hr class="sondage"/>
+
             <div class="remerciements sondage">
                 <h3> <strong>Merci d'avoir participé</strong></h3>
-                <button type="submit" class="btn btn-primary">Envoyer le sondage</button>
+                <button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
             </div>
 
         @endif

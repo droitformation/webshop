@@ -50,6 +50,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Organisateur</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="organisateur" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="file" class="col-sm-3 control-label">Bannière image <br><small>(max 910px85px)</small></label>
                                 <div class="col-sm-6">
                                     <div class="list-group">
@@ -61,6 +67,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="message" class="col-sm-3 control-label">Description du sondage marketing</label>
+                                <div class="col-sm-6">
+                                    <textarea name="description" class="form-control redactorSimple"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="col-sm-3 control-label">Texte de l'email<br><small>Si vide la description est prise.</small></label>
                                 <div class="col-sm-6">
                                     <textarea name="description" class="form-control redactorSimple"></textarea>
                                 </div>

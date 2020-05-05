@@ -39,7 +39,7 @@
             @if(!$colloque->slides->isEmpty())
                 @if(date('Y-m-d') >= $colloque->start_at->subDays(15)->toDateString() )
                     <h4>Documents en téléchargement</h4><br/>
-                    <div class="well">
+                    <div class="well text-left">
                         @foreach($colloque->slides as $slide)
                             <p>
                                 <a target="_blank" href="{{ $slide->getUrl() }}" class="btn btn-primary">
