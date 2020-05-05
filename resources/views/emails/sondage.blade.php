@@ -18,7 +18,11 @@
                 <!-- Greeting -->
                 @if($sondage->marketing)
                     <h1 style="{{ $style['header-1'] }}">{{ $sondage->title }}</h1>
-                    <div style="text-align: left;">{!! $sondage->description !!}</div>
+                    @if($sondage->email)
+                        <div style="text-align: left;">{!! $sondage->email !!}</div>
+                    @else
+                        <div style="text-align: left;">{!! $sondage->description !!}</div>
+                    @endif
                 @else
                     <h1 style="{{ $style['header-1'] }}">Formulaire d'évaluation</h1>
                     <p style="{{ $style['paragraph'] }}">Votre avis nous intéresse !</p>
