@@ -24,7 +24,7 @@
 
 <script>
     export default {
-        props: ['colloque_id'],
+        props: ['colloque_id','user'],
         data () {
             return {
                 searchQuery: "",
@@ -47,7 +47,7 @@
 
                 let self = this;
 
-                axios.get(this.url + 'vue/rabais/' + this.searchQuery + '/' + this.colloque_id).then(response => {
+                axios.get(this.url + 'vue/rabais/' + this.user.id + '/' + this.colloque_id).then(response => {
                     self.searchResult = response.data;
                     self.message = self.searchResult.message;
                     self.value   = self.searchResult.value;

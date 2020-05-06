@@ -139,6 +139,13 @@ class User extends Authenticatable {
         }, '');
     }
 
+    public function getRabaisListAttribute()
+    {
+        return $this->rabais->reduce(function ($carry, $item) {
+            return $carry.'<li>'.$item->title.'</li>';
+        }, '');
+    }
+
     public function getAdresseMembresAttribute()
     {
         if(isset($this->adresses))
@@ -296,6 +303,11 @@ class User extends Authenticatable {
     public function rabais()
     {
         return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->whereNull('inscription_id');
+    }
+
+    public function used_rabais()
+    {
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->whereNotNull('inscription_id');
     }
 
     public function subscriptions()

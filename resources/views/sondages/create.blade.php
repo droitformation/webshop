@@ -2,12 +2,14 @@
 @section('content')
 
     @if($isTest)
-        <div class="alert alert-warning">Ceci est un sondage test</div>
+        <div class="alert alert-warning" style="margin-bottom: 20px;">Ceci est un sondage test</div>
     @endif
 
     @if($sondage->marketing)
         <h3>{{ $sondage->title }}</h3>
-        {!! $sondage->description !!}
+        <div id="sondage-description">
+            {!! $sondage->description !!}
+        </div>
     @else
 
         <div class="media media-sondage">
@@ -63,9 +65,10 @@
                 </div>
             @endforeach
             <hr class="sondage"/>
+
             <div class="remerciements sondage">
                 <h3> <strong>Merci d'avoir participé</strong></h3>
-                <button type="submit" class="btn btn-primary">Envoyer le sondage</button>
+                <button type="submit" class="btn btn-primary btn-lg">Envoyer</button>
             </div>
 
         @endif

@@ -14,7 +14,7 @@
             </div>
         @endforeach
 
-        <rabais colloque_id="{{ $colloque->id }}"></rabais>
+        <rabais colloque_id="{{ $colloque->id }}" :user="{{ \Auth::user() }}"></rabais>
     </div>
     <hr/>
 @endif

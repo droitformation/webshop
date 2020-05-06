@@ -25,11 +25,15 @@ class SondageEloquent implements SondageInterface{
     public function create(array $data)
     {
         $sondage = $this->sondage->create(array(
-            'marketing'   => isset($data['marketing']) && !empty($data['marketing']) ? 1 : null,
-            'colloque_id' => isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null,
-            'title'       => isset($data['title']) && !empty($data['title']) ? $data['title'] : null,
-            'description' => isset($data['description']) && !empty($data['description']) ? $data['description'] : null,
-            'valid_at'    => $data['valid_at']
+            'marketing'    => isset($data['marketing']) && !empty($data['marketing']) ? 1 : null,
+            'image'        => $data['image'] ?? null,
+            'signature'    => $data['signature'] ?? null,
+            'organisateur' => $data['organisateur'] ?? null,
+            'email'        => $data['email'] ?? null,
+            'colloque_id'  => isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null,
+            'title'        => isset($data['title']) && !empty($data['title']) ? $data['title'] : null,
+            'description'  => isset($data['description']) && !empty($data['description']) ? $data['description'] : null,
+            'valid_at'     => $data['valid_at']
         ));
 
         if(!$sondage) {
@@ -47,11 +51,15 @@ class SondageEloquent implements SondageInterface{
             return false;
         }
 
-        $sondage->marketing   = isset($data['marketing']) && !empty($data['marketing']) ? 1 : null;
-        $sondage->colloque_id = isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null;
-        $sondage->title       = isset($data['title']) && !empty($data['title']) ? $data['title'] : null;
-        $sondage->description = isset($data['description']) && !empty($data['description']) ? $data['description'] : null;
-        $sondage->valid_at    = $data['valid_at'];
+        $sondage->marketing    = isset($data['marketing']) && !empty($data['marketing']) ? 1 : null;
+        $sondage->image        = $data['image'] ?? null;
+        $sondage->signature    = $data['signature'] ?? null;
+        $sondage->organisateur = $data['organisateur'] ?? null;
+        $sondage->email        = $data['email'] ?? null;
+        $sondage->colloque_id  = isset($data['colloque_id']) && !empty($data['colloque_id']) ? $data['colloque_id'] : null;
+        $sondage->title        = isset($data['title']) && !empty($data['title']) ? $data['title'] : null;
+        $sondage->description  = isset($data['description']) && !empty($data['description']) ? $data['description'] : null;
+        $sondage->valid_at     = $data['valid_at'];
 
         $sondage->save();
 

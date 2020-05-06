@@ -6,21 +6,32 @@ use App\Http\Controllers\Controller;
 
 use App\Droit\Inscription\Repo\RabaisInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\User\Repo\UserInterface;
 
 class RabaisController extends Controller
 {
     protected $rabais;
     protected $colloque;
+    protected $user;
 
-    public function __construct( RabaisInterface $rabais, ColloqueInterface $colloque )
+    public function __construct( RabaisInterface $rabais, ColloqueInterface $colloque, UserInterface $user)
     {
         $this->rabais   = $rabais;
         $this->colloque = $colloque;
+        $this->user     = $user;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $rabais  = $this->rabais->getAll();
+
+        $data = $rabais->map(function ($item, $key) {
+            return $item->title;
+        })->all();
+
+        if($request->ajax()) {
+            return response()->json( $data, 200 );
+        }
 
         return view('backend.rabais.index')->with(['rabais' => $rabais]);
     }
@@ -68,9 +79,9 @@ class RabaisController extends Controller
         return redirect()->back();
     }
 
-    public function search($term,$colloque_id)
+    public function search($user_id,$colloque_id)
     {
-        $result = $this->rabais->search($term);
+       /* $result = $this->rabais->search($term);
         $rabais = $result ? $result->id : null;
 
         $valid   = $result ? true : false;
@@ -80,9 +91,62 @@ class RabaisController extends Controller
         if($result && $result->type == 'colloque' && !$result->colloques->isEmpty()){
             $valid   = $result->colloques->contains('id', $colloque_id) ? true : false;
             $message = !$valid ? 'Ce rabais n\'est pas valide pour ce colloque' : $message;
-        }
+        }*/
 
-        return response()->json(['result' => $valid, 'message' => $message, 'value' => $value, 'rabais' => $rabais]);
+        //return response()->json(['value' => $value, 'rabais' => $rabais]);
     }
 
+    public function all(Request $request)
+    {
+        $user = $this->user->find($request->input('id'));
+
+        $rabais = $this->rabais->getAll();
+        $data   = $rabais->reject(function ($value, $key) use($user){
+            return $user->used_rabais->contains('title',$value->title);
+        })->map(function ($item, $key) {
+            return $item->title;
+        })->all();
+
+        return response()->json( $data, 200 );
+    }
+
+    public function has(Request $request)
+    {
+        $user = $this->user->find($request->input('id'));
+        $has  = $user->used_rabais->contains('title',$request->input('title'));
+
+        $result = $has ? 'A déjà obtenu ce rabais' : null;
+
+        return response()->json(['result' => $result ? true : null, 'message' => $result], 200 );
+    }
+
+    public function add(Request $request)
+    {
+        $user = $this->user->find($request->input('id'));
+
+        $exist = $this->rabais->search($request->input('title'));
+        $find  = $exist ? $exist : $this->rabais->create(['title' => $request->input('title')]);
+        $has   = $user->used_rabais->contains('title',$request->input('title'));
+
+        if($exist && !$has){
+            $user->rabais()->attach($find->id);
+
+            return response()->json(['result' => null], 200 );
+        }
+
+        return response()->json(['result' => false], 200 );
+    }
+
+    public function remove(Request $request)
+    {
+        $user = $this->user->find($request->input('id'));
+        $find = $this->rabais->search($request->input('title'));
+
+        if($find){
+            $user->rabais()->detach($find->id);
+            return response()->json( 'ok', 200 );
+        }
+
+        return response()->json( 'ok', 200 );
+    }
 }

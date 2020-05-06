@@ -44,7 +44,7 @@ Route::post('check/name', 'Api\ValidationController@name');
 | Sondages routes
 |--------------------------------------------------------------------------
 */
-Route::get('reponse', 'ReponseController@index');
+Route::get('reponse/{sondage_id}', 'ReponseController@index');
 Route::get('reponse/create/{token}', 'ReponseController@create');
 Route::post('reponse', 'ReponseController@store');
 
@@ -355,6 +355,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('compte', 'Backend\Colloque\CompteController');
         Route::resource('rabais', 'Backend\Colloque\RabaisController');
 
+        Route::get('rabais/all/{id}','Backend\Colloque\RabaisController@all');
+        Route::post('rabais/has','Backend\Colloque\RabaisController@has');
+        Route::post('rabais/add','Backend\Colloque\RabaisController@add');
+        Route::post('rabais/remove','Backend\Colloque\RabaisController@remove');
+
         Route::get('document/{colloque_id}/{doc}', 'Backend\Colloque\DocumentController@show');
         Route::resource('document', 'Backend\Colloque\DocumentController');
 
@@ -616,7 +621,7 @@ Route::group(['prefix' => 'vue'], function () {
     Route::put('occurrence/{id}','Api\OccurrenceController@update');
     Route::delete('occurrence/{id}','Api\OccurrenceController@destroy');
 
-    Route::get('rabais/{term}/{colloque_id}', 'Backend\Colloque\RabaisController@search');
+    Route::get('rabais/{user_id}/{colloque_id}', 'Backend\Colloque\RabaisController@search');
 
     Route::post('price','Api\PriceController@store');
     Route::put('price/{id}','Api\PriceController@update');

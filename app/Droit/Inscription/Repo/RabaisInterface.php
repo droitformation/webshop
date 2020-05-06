@@ -2,6 +2,7 @@
 
 interface RabaisInterface {
     public function getAll();
+    public function notUsed($user_id);
     public function find($id);
     public function byColloque($id);
     public function search($term);
