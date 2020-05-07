@@ -39,13 +39,15 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/fastselect.min.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/selectize.bootstrap3.css');?>" media="screen" />
 
 
-    @if(isset($isNewsletter))
+@if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <base href="/">
 
     <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.fancybox.min.js');?>"></script>
@@ -156,6 +158,8 @@
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/fastselect.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/selectize.min.js');?>"></script>
 
 <script type='text/javascript' src="<?php echo secure_asset('backend/js/dragdrop/dragula.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/js/dragdrop/dragdrop.js');?>"></script>
@@ -211,6 +215,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/jQuery.print.js');?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/admin.js');?>"></script>
 <script type="text/javascript" src="{{ secure_asset('js/app.js') }}?{{ rand(123,12345) }}"></script>
 

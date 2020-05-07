@@ -112,12 +112,9 @@ class RabaisController extends Controller
 
     public function has(Request $request)
     {
-        $user = $this->user->find($request->input('id'));
-        $has  = $user->used_rabais->contains('title',$request->input('title'));
+        $exist = $this->rabais->search($request->input('title'));
 
-        $result = $has ? 'A déjà obtenu ce rabais' : null;
-
-        return response()->json(['result' => $result ? true : null, 'message' => $result], 200 );
+        return response()->json(['result' => $exist ? true : null], 200);
     }
 
     public function add(Request $request)

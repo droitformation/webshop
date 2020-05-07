@@ -83,16 +83,7 @@ $( function() {
                         async:false,
                         data: { id : id, title : title , _token: $("meta[name='_token']").attr('content') },
                         success: function( data ) {
-                            console.log(data);
-
-                            if(!data.result){
-                                result = true;
-                            }
-                            else{
-                                result = false;
-                               // $('#tagused').show()
-                               // setTimeout(() =>  $('#tagused').hide(), 4000);
-                            }
+                            result = data.result ? false : true;
                         },
                         error: function(data) { return false; }
                     });

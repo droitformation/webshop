@@ -112,12 +112,16 @@
 
                                   <div class="form-group">
                                       <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
-                                      <div id="rabais_tags" class="well well-sm">
-                                          <ul id="rabais" data-id="{{ $user->id }}">
-                                              {!! $user->rabais_list !!}
-                                          </ul>
-                                      </div>
-                                      <p id="tagused" class="text-danger" style="display: none;">A déjà obtenu et utilisé ce rabais</p>
+                                      @if(!$rabais->isEmpty())
+                                          <select name="rabais" class="form-control tagselect">
+                                              @foreach($rabais as $r)
+                                                  <option value="{{ $r->title }}">{{ $r->title }}</option>
+                                              @endforeach
+                                          </select>
+
+                                          <tags :tags="{{ $rabais }}"></tags>
+
+                                      @endif
                                   </div>
                               </div>
                           </div>

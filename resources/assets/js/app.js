@@ -51,6 +51,7 @@ Vue.component('facturation-adresse', require('./components/FacturationAdresse.vu
 Vue.component('adresse-update', require('./components/AdresseUpdate.vue').default);
 Vue.component('choix-duplicate', require('./components/ChoixDuplicate.vue').default);
 Vue.component('rabais', require('./components/Rabais.vue').default);
+Vue.component('tags', require('./components/Tags.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);
