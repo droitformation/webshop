@@ -37,7 +37,7 @@ class RabaisEloquent implements RabaisInterface{
 
     public function search($term){
 
-        return $this->rabais->where('title','LIKE',$term)->first();
+        return $this->rabais->where('title','LIKE', $term.'%')->first();
     }
 
     public function create(array $data){

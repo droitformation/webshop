@@ -103,25 +103,51 @@
                               <div class="collapse" id="collapseRabais">
 
                                   @if(!$user->used_rabais->isEmpty())
-                                      <ul>
+                                      <label class="control-label"><h4>Rabais utilisés</h4></label>&nbsp;
+                                      <ul class="rabaisListe">
                                           @foreach($user->used_rabais as $used)
-                                              <li>{{ $used->title }}</li>
+                                              <li class="used">{{ $used->title }} {{ $user->inscriptions->find($used->pivot->inscription_id)->inscription_no }}</li>
                                           @endforeach
                                       </ul>
                                   @endif
 
-                                  <div class="form-group">
+                                  @if(!$user->rabais->isEmpty())
+                                      <label class="control-label"><h4>Rabais</h4></label>&nbsp;
+                                      <ul class="rabaisListe">
+                                          @foreach($user->rabais as $active)
+                                              <li class="active">
+                                                  <div>{{ $active->title }}</div>
+                                                  <form action="{{ url('admin/rabaisuser/remove') }}" method="POST">{!! csrf_field() !!}
+                                                      <input value="{{ $user->id }}" type="hidden" name="id">
+                                                      <input value="{{ $used->id }}" type="hidden" name="rabais_id">
+                                                      <button id="deleteRabais_{{ $active->id }}" data-what="Supprimer" data-action="{{ $active->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                  </form>
+                                              </li>
+                                          @endforeach
+                                      </ul>
+                                  @endif
+
+                                  <div class="form-group" id="rabaisSelect" data-id="{{ $user->id }}" data-rabais="{{ json_encode($user->has_rabais) }}">
                                       <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
-                                      @if(!$rabais->isEmpty())
-                                          <select name="rabais" class="form-control tagselect">
-                                              @foreach($rabais as $r)
-                                                  <option value="{{ $r->title }}">{{ $r->title }}</option>
-                                              @endforeach
-                                          </select>
 
-                                          <tags :tags="{{ $rabais }}"></tags>
+                                      @if(!$account->rabais()->isEmpty())
+                                          <form action="{{ url('admin/rabaisuser/add') }}" method="POST">{!! csrf_field() !!}
+                                              <input value="{{ $user->id }}" type="hidden" name="id">
 
+                                              <div class="input-group">
+                                                  <select class="custom-select" name="rabais_id">
+                                                      <option selected>Choose...</option>
+                                                      @foreach($account->rabais() as $r)
+                                                          <option value="{{ $r->id }}">{{ $r->title }}</option>
+                                                      @endforeach
+                                                  </select>
+                                                  <div class="input-group-append">
+                                                      <button class="btn btn-outline-secondary" type="submit">Ajouter</button>
+                                                  </div>
+                                              </div>
+                                          </form>
                                       @endif
+
                                   </div>
                               </div>
                           </div>

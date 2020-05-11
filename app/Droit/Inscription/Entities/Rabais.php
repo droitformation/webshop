@@ -14,7 +14,7 @@ class Rabais extends Model
     protected $dates = ['deleted_at','expire_at'];
     protected $table = 'inscription_rabais';
 
-    protected $fillable = ['value', 'title','expire_at'];
+    protected $fillable = ['value', 'title','expire_at','type'];
 
     public function colloques()
     {

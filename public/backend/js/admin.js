@@ -460,25 +460,6 @@ $( function() {
         });
     }
 
-
-    let $select = $('.tagselect');
-
-    // Run, fire and forget
-    $select.fastselect();
-
-  /*  let options = {
-        plugins: ['restore_on_backspace'],
-        delimiter: ',',
-        persist: false,
-        create: function(input) {
-            return {
-                value: input,
-                text: input
-            }
-        }
-    };
-    $('.tagselect').selectize(options);*/
-
 });
 
 $(document).ready(ajustamodal);

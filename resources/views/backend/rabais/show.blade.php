@@ -28,7 +28,7 @@
 
                         <?php $choices = $rabais->colloques->pluck('id')->all(); ?>
 
-                        <div class="form-group" id="colloqueSelect" {{ ($rabais->type == 'colloque' ? 'style="display:block;"' : 'style="display:none;"') }}>
+                        <div class="form-group" id="colloqueSelect" style="{{ ($rabais->type == 'colloque' ? 'display:block;' : 'display:none;') }}">
                             <label class="col-sm-3 control-label">Choix des colloques</label>
                             <div class="col-sm-9 col-xs-12">
                                 @if(!$colloques->isEmpty())

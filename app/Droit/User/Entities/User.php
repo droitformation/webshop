@@ -146,6 +146,11 @@ class User extends Authenticatable {
         }, '');
     }
 
+    public function getHasRabaisAttribute()
+    {
+        return $this->rabais->pluck('title')->all();
+    }
+
     public function getAdresseMembresAttribute()
     {
         if(isset($this->adresses))
@@ -307,7 +312,8 @@ class User extends Authenticatable {
 
     public function used_rabais()
     {
-        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->whereNotNull('inscription_id');
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->withPivot('inscription_id')
+            ->whereNotNull('inscription_id');
     }
 
     public function subscriptions()

@@ -39,11 +39,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css');?>">
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/fastselect.min.css');?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/selectize.bootstrap3.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/plugins/form-select2/select2.css');?>" media="screen" />
 
-
-@if(isset($isNewsletter))
+    @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif
 
@@ -158,8 +156,9 @@
 <!-- Filter plugin -->
 <script type="text/javascript" src="<?php echo secure_asset('common/js/chosen.jquery.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/vendor/jquery/tag-it.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo secure_asset('backend/js/fastselect.min.js');?>"></script>
-<script type="text/javascript" src="<?php echo secure_asset('backend/js/selectize.min.js');?>"></script>
+
+<script type="text/javascript" src="<?php echo secure_asset('backend/plugins/form-select2/select2.full.min.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/plugins/form-select2/fr.js');?>"></script>
 
 <script type='text/javascript' src="<?php echo secure_asset('backend/js/dragdrop/dragula.js');?>"></script>
 <script type='text/javascript' src="<?php echo secure_asset('backend/js/dragdrop/dragdrop.js');?>"></script>
@@ -204,6 +203,7 @@
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/blocs.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/sondage.js');?>"></script>
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/deleteadresse.js');?>"></script>
+<script type="text/javascript" src="<?php echo secure_asset('backend/js/rabais.js');?>"></script>
 
 <!-- Upload plugins -->
 <script type="text/javascript" src="<?php echo secure_asset('backend/js/manager/isotope.pkgd.min.js');?>"></script>

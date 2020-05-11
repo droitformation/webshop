@@ -1623,3 +1623,73 @@ span.avis-hidden-square{
 .px-2{
     padding: 0 20px;
 }
+
+.input-group {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group > .custom-select:not(:last-child), .input-group > .form-control:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.input-group > .custom-file, .input-group > .custom-select, .input-group > .form-control, .input-group > .form-control-plaintext {
+    position: relative;
+    -ms-flex: 1 1 0%;
+    flex: 1 1 0%;
+    min-width: 0;
+    margin-bottom: 0;
+}
+.custom-control-label::before, .custom-file-label, .custom-select {
+    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.custom-select {
+    display: inline-block;
+    width: 100%;
+    height: 34px;
+    padding: .375rem 1.75rem .375rem .75rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.rabaisListe{
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.rabaisListe li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #ced4da;
+    padding: 3px 5px;
+}
+
+.rabaisListe li button{
+    padding:1px 5px;
+}
+
+.rabaisListe li.active{
+    background: #e9f8ed;
+}
+
+.rabaisListe li.used{
+    background: #f5e2e2;
+}

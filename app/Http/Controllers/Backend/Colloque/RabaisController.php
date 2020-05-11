@@ -69,7 +69,6 @@ class RabaisController extends Controller
         return redirect('admin/rabais/'.$id);
     }
 
-
     public function destroy($id)
     {
         $this->rabais->delete($id);
@@ -79,9 +78,9 @@ class RabaisController extends Controller
         return redirect()->back();
     }
 
-    public function search($user_id,$colloque_id)
+    public function search(Request $request)
     {
-       /* $result = $this->rabais->search($term);
+        $result = $this->rabais->search($request->input('title'));
         $rabais = $result ? $result->id : null;
 
         $valid   = $result ? true : false;
@@ -91,23 +90,31 @@ class RabaisController extends Controller
         if($result && $result->type == 'colloque' && !$result->colloques->isEmpty()){
             $valid   = $result->colloques->contains('id', $colloque_id) ? true : false;
             $message = !$valid ? 'Ce rabais n\'est pas valide pour ce colloque' : $message;
-        }*/
+        }
 
         //return response()->json(['value' => $value, 'rabais' => $rabais]);
     }
 
     public function all(Request $request)
     {
-        $user = $this->user->find($request->input('id'));
+        $user   = $this->user->find($request->input('user'));
+        $result = $this->rabais->search($request->input('title'));
 
-        $rabais = $this->rabais->getAll();
-        $data   = $rabais->reject(function ($value, $key) use($user){
+  /*      $data   = $rabais->reject(function ($value, $key) use ($user){
             return $user->used_rabais->contains('title',$value->title);
         })->map(function ($item, $key) {
-            return $item->title;
-        })->all();
+            return ['id' => $item->id, 'text' => $item->title];
+        });*/
 
-        return response()->json( $data, 200 );
+        $has = $user->used_rabais->contains('id',$request->input('id'));
+
+        if($result && !$has){
+            $data = $result ? ['id' => $result->id, 'text' => $result->title] : [];
+
+            return response()->json([$data], 200 );
+        }
+
+        return response()->json([], 200 );
     }
 
     public function has(Request $request)
@@ -119,16 +126,15 @@ class RabaisController extends Controller
 
     public function add(Request $request)
     {
-        $user = $this->user->find($request->input('id'));
+        $user = $this->user->find($request->input('user'));
 
-        $exist = $this->rabais->search($request->input('title'));
-        $find  = $exist ? $exist : $this->rabais->create(['title' => $request->input('title')]);
-        $has   = $user->used_rabais->contains('title',$request->input('title'));
+        $exist = $this->rabais->find($request->input('id'));
+        $has   = $user->used_rabais->contains('id',$request->input('id'));
 
         if($exist && !$has){
-            $user->rabais()->attach($find->id);
+            $user->rabais()->attach($exist->id);
 
-            return response()->json(['result' => null], 200 );
+            return response()->json(['result' => true], 200 );
         }
 
         return response()->json(['result' => false], 200 );
@@ -136,14 +142,14 @@ class RabaisController extends Controller
 
     public function remove(Request $request)
     {
-        $user = $this->user->find($request->input('id'));
-        $find = $this->rabais->search($request->input('title'));
+        $user = $this->user->find($request->input('user'));
+        $find = $this->rabais->find($request->input('id'));
 
         if($find){
             $user->rabais()->detach($find->id);
-            return response()->json( 'ok', 200 );
+            return response()->json(['result' => true], 200 );
         }
 
-        return response()->json( 'ok', 200 );
+        return response()->json(['result' => false], 200 );
     }
 }

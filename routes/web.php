@@ -256,6 +256,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('user/unsubscribe','Backend\User\UserController@unsubscribe');
         Route::resource('user', 'Backend\User\UserController');
 
+        Route::post('rabaisuser/add','Backend\User\RabaisUserController@add');
+        Route::post('rabaisuser/remove','Backend\User\RabaisUserController@remove');
+
         Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
         Route::resource('duplicate', 'Backend\User\DuplicateController');
 
@@ -353,12 +356,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('groupoption', 'Backend\Colloque\GroupOptionController');
         Route::resource('occurrence', 'Backend\Colloque\OccurrenceController');
         Route::resource('compte', 'Backend\Colloque\CompteController');
-        Route::resource('rabais', 'Backend\Colloque\RabaisController');
 
-        Route::get('rabais/all/{id}','Backend\Colloque\RabaisController@all');
+        Route::get('rabais/all','Backend\Colloque\RabaisController@all');
         Route::post('rabais/has','Backend\Colloque\RabaisController@has');
-        Route::post('rabais/add','Backend\Colloque\RabaisController@add');
-        Route::post('rabais/remove','Backend\Colloque\RabaisController@remove');
+        Route::resource('rabais', 'Backend\Colloque\RabaisController');
 
         Route::get('document/{colloque_id}/{doc}', 'Backend\Colloque\DocumentController@show');
         Route::resource('document', 'Backend\Colloque\DocumentController');
