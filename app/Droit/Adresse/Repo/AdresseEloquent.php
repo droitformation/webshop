@@ -120,6 +120,7 @@ class AdresseEloquent implements AdresseInterface{
 					$query->orWhereNotNull('user_id')->has('user');
 				});
 			})
+            ->where('type','=',1)
 			->searchPays($pays)
             ->searchCanton($cantons)
             ->searchProfession($professions)

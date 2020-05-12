@@ -2,7 +2,9 @@
 @section('content')
 
     @if($isTest)
-        <div class="alert alert-warning" style="margin-bottom: 20px;">Ceci est un sondage test</div>
+        @if($email != 'user@publications-droit.ch')
+            <div class="alert alert-warning" style="margin-bottom: 20px;">Ceci est un sondage test</div>
+        @endif
     @endif
 
     @if($sondage->marketing)
