@@ -42,8 +42,6 @@ class InscriptionController extends Controller
 
         $inscription = $this->register->register($request->all(), $request->input('colloque_id'), true);
 
-        \Log::info('IP:'.\Request::ip().' time: '.\Carbon\Carbon::now());
-
         event(new InscriptionWasRegistered($inscription));
         
         $request->session()->flash('InscriptionConfirmation', 'Ok');

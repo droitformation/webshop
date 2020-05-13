@@ -33,8 +33,7 @@ class ColloqueController extends Controller
     {
         $colloques = $this->colloque->getCurrent(true);
 
-        if ($request->ajax())
-        {
+        if ($request->ajax()) {
             $colloques = $colloques->toArray();
 
             return response()->json($colloques);
@@ -75,7 +74,13 @@ class ColloqueController extends Controller
             return view('colloques.partials.details')->with(['colloque' => $colloque]);
         }
 
-        return view('frontend.pubdroit.colloque.show')->with(['colloque' => $colloque, 'registered' => $registered, 'pending' => $pending, 'user' => \Auth::user()]);
+        return view('frontend.pubdroit.colloque.show')->with([
+            'colloque' => $colloque,
+            'registered' => $registered,
+            'pending' => $pending,
+            'user' => \Auth::user(),
+            'account' => new \App\Droit\User\Entities\Account(\Auth::user())
+        ]);
     }
 
     /**

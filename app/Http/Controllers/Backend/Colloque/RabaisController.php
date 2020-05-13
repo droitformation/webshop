@@ -7,17 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Droit\Inscription\Repo\RabaisInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\User\Repo\UserInterface;
+use App\Droit\Compte\Repo\CompteInterface;
 
 class RabaisController extends Controller
 {
     protected $rabais;
     protected $colloque;
+    protected $compte;
     protected $user;
 
-    public function __construct( RabaisInterface $rabais, ColloqueInterface $colloque, UserInterface $user)
+    public function __construct( RabaisInterface $rabais, CompteInterface $compte, ColloqueInterface $colloque, UserInterface $user)
     {
         $this->rabais   = $rabais;
         $this->colloque = $colloque;
+        $this->compte   = $compte;
         $this->user     = $user;
     }
 
@@ -39,8 +42,9 @@ class RabaisController extends Controller
     public function create()
     {
         $colloques = $this->colloque->getCurrent(true,false);
+        $comptes = $this->compte->getAll();
 
-        return view('backend.rabais.create')->with(['colloques' => $colloques]);
+        return view('backend.rabais.create')->with(['comptes' => $comptes]);
     }
 
     public function store(Request $request)
@@ -55,9 +59,10 @@ class RabaisController extends Controller
     public function show($id)
     {
         $colloques = $this->colloque->getCurrent(true,false);
+        $comptes   = $this->compte->getAll();
         $rabais    = $this->rabais->find($id);
 
-        return view('backend.rabais.show')->with(['rabais' => $rabais, 'colloques' => $colloques]);
+        return view('backend.rabais.show')->with(['rabais' => $rabais, 'colloques' => $colloques, 'comptes' => $comptes]);
     }
 
     public function update($id,Request $request)
@@ -78,7 +83,7 @@ class RabaisController extends Controller
         return redirect()->back();
     }
 
-    public function search(Request $request)
+    /*public function search(Request $request)
     {
         $result = $this->rabais->search($request->input('title'));
         $rabais = $result ? $result->id : null;
@@ -100,19 +105,13 @@ class RabaisController extends Controller
         $user   = $this->user->find($request->input('user'));
         $result = $this->rabais->search($request->input('title'));
 
-  /*      $data   = $rabais->reject(function ($value, $key) use ($user){
+       $data   = $rabais->reject(function ($value, $key) use ($user){
             return $user->used_rabais->contains('title',$value->title);
         })->map(function ($item, $key) {
             return ['id' => $item->id, 'text' => $item->title];
-        });*/
+        });
 
-        $has = $user->used_rabais->contains('id',$request->input('id'));
 
-        if($result && !$has){
-            $data = $result ? ['id' => $result->id, 'text' => $result->title] : [];
-
-            return response()->json([$data], 200 );
-        }
 
         return response()->json([], 200 );
     }
@@ -140,6 +139,7 @@ class RabaisController extends Controller
         return response()->json(['result' => false], 200 );
     }
 
+    /*
     public function remove(Request $request)
     {
         $user = $this->user->find($request->input('user'));
@@ -151,5 +151,5 @@ class RabaisController extends Controller
         }
 
         return response()->json(['result' => false], 200 );
-    }
+    }*/
 }

@@ -102,24 +102,24 @@
                               </h3>
                               <div class="collapse" id="collapseRabais">
 
-                                  @if(!$user->used_rabais->isEmpty())
+                                  @if(!$account->used()->isEmpty())
                                       <label class="control-label"><h4>Rabais utilisés</h4></label>&nbsp;
                                       <ul class="rabaisListe">
-                                          @foreach($user->used_rabais as $used)
-                                              <li class="used">{{ $used->title }} {{ $user->inscriptions->find($used->pivot->inscription_id)->inscription_no }}</li>
+                                          @foreach($account->used() as $used)
+                                              <li class="used">{{ $used->title }}</li>
                                           @endforeach
                                       </ul>
                                   @endif
 
-                                  @if(!$user->rabais->isEmpty())
-                                      <label class="control-label"><h4>Rabais</h4></label>&nbsp;
+                                  @if(!$account->active()->isEmpty())
+                                      <label class="control-label"><h4>Rabais actif</h4></label>&nbsp;
                                       <ul class="rabaisListe">
-                                          @foreach($user->rabais as $active)
+                                          @foreach($account->active() as $active)
                                               <li class="active">
                                                   <div>{{ $active->title }}</div>
                                                   <form action="{{ url('admin/rabaisuser/remove') }}" method="POST">{!! csrf_field() !!}
                                                       <input value="{{ $user->id }}" type="hidden" name="id">
-                                                      <input value="{{ $used->id }}" type="hidden" name="rabais_id">
+                                                      <input value="{{ $active->id }}" type="hidden" name="rabais_id">
                                                       <button id="deleteRabais_{{ $active->id }}" data-what="Supprimer" data-action="{{ $active->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
                                                   </form>
                                               </li>
@@ -127,13 +127,11 @@
                                       </ul>
                                   @endif
 
-                                  <div class="form-group" id="rabaisSelect" data-id="{{ $user->id }}" data-rabais="{{ json_encode($user->has_rabais) }}">
-                                      <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
-
-                                      @if(!$account->rabais()->isEmpty())
+                                  @if(!$account->rabais()->isEmpty())
+                                      <div class="form-group" id="rabaisSelect" data-id="{{ $user->id }}" data-rabais="{{ json_encode($user->has_rabais) }}">
+                                          <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
                                           <form action="{{ url('admin/rabaisuser/add') }}" method="POST">{!! csrf_field() !!}
                                               <input value="{{ $user->id }}" type="hidden" name="id">
-
                                               <div class="input-group">
                                                   <select class="custom-select" name="rabais_id">
                                                       <option selected>Choose...</option>
@@ -146,9 +144,9 @@
                                                   </div>
                                               </div>
                                           </form>
-                                      @endif
+                                      </div>
+                                   @endif
 
-                                  </div>
                               </div>
                           </div>
                       </div>

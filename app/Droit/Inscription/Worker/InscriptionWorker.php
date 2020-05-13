@@ -62,6 +62,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // Prepare data
         $data = $data + ['inscription_no' => $inscription_no];
 
+        // Register
         $inscription = $this->inscription->create($data);
 
         // Attach references if any

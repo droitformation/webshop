@@ -27,28 +27,27 @@ class CompteEloquent implements CompteInterface{
         $compte = $this->compte->create(array(
             'motif'   => $data['motif'],
             'adresse' => $data['adresse'],
+            'centre'  => str_replace(' ', '', $data['centre']),
             'compte'  => $data['compte']
         ));
 
-        if( ! $compte )
-        {
+        if( ! $compte ) {
             return false;
         }
 
         return $compte;
-
     }
 
     public function update(array $data){
 
         $compte = $this->compte->findOrFail($data['id']);
 
-        if( ! $compte )
-        {
+        if( ! $compte ) {
             return false;
         }
 
         $compte->fill($data);
+        $compte->centre = str_replace(' ', '', $data['centre']);
 
         $compte->save();
 

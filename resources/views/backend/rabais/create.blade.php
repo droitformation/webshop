@@ -21,18 +21,18 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option value="global">Sur n'importe quel colloque</option>
-                                    <option value="colloque">Colloques choisi</option>
+                                    <option selected value="colloque">Compte choisi</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group" id="colloqueSelect" style="display:none;">
-                            <label class="col-sm-3 control-label">Choix des colloques concernés (optionnel)</label>
+                        <div class="form-group" id="colloqueSelect" style="display:block;">
+                            <label class="col-sm-3 control-label">Choix des comptes concernés (optionnel)</label>
                             <div class="col-sm-9 col-xs-12">
-                                @if(!$colloques->isEmpty())
-                                    <select name="colloque_id[]" multiple="multiple" id="multi-select">
-                                        @foreach($colloques as $colloques)
-                                            <option value="{{ $colloques->id }}">{{ $colloques->title }}</option>
+                                @if(!$comptes->isEmpty())
+                                    <select name="compte_id[]" multiple="multiple" id="multi-select">
+                                        @foreach($comptes as $compte)
+                                            <option value="{{ $compte->id }}">{{ $compte->centre }}</option>
                                         @endforeach
                                     </select>
                                 @endif
@@ -43,6 +43,13 @@
                             <label class="col-sm-3 control-label">Titre</label>
                             <div class="col-sm-5 col-xs-6">
                                 <input type="text" class="form-control" name="title">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contenu" class="col-sm-3 control-label">Description</label>
+                            <div class="col-sm-7">
+                                <textarea name="description" class="form-control"></textarea>
                             </div>
                         </div>
 

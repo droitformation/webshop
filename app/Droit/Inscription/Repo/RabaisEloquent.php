@@ -14,25 +14,25 @@ class RabaisEloquent implements RabaisInterface{
 
     public function getAll(){
 
-        return $this->rabais->with(['colloques'])->get();
+        return $this->rabais->with(['comptes'])->get();
     }
 
-    public function notUsed($user_id){
+    public function notUsed($id){
 
-        return $this->rabais->whereHas('colloques', function ($query) use ($id) {
-            $query->where('colloque_id', '=', $id);
+        return $this->rabais->whereHas('comptes', function ($query) use ($id) {
+            $query->where('compte_id', '=', $id);
         })->get();
     }
 
-    public function byColloque($id){
-        return $this->rabais->whereHas('colloques', function ($query) use ($id) {
-            $query->where('colloque_id', '=', $id);
-        })->orDoesntHave('colloques')->get();
+    public function byCompte($id){
+        return $this->rabais->whereHas('comptes', function ($query) use ($id) {
+            $query->where('compte_id', '=', $id);
+        })->orDoesntHave('comptes')->get();
     }
 
     public function find($id){
 
-        return $this->rabais->with(['colloques'])->find($id);
+        return $this->rabais->with(['comptes'])->find($id);
     }
 
     public function search($term){
@@ -46,6 +46,7 @@ class RabaisEloquent implements RabaisInterface{
             'value'     => $data['value'],
             'title'     => $data['title'],
             'type'      => $data['type'],
+            'description' => $data['description'] ?? null,
             'expire_at' => $data['expire_at'] ?? null,
         ));
 
@@ -53,8 +54,8 @@ class RabaisEloquent implements RabaisInterface{
             return false;
         }
 
-        if(isset($data['colloque_id'])){
-            $rabais->colloques()->attach($data['colloque_id']);
+        if(isset($data['compte_id'])){
+            $rabais->comptes()->attach($data['compte_id']);
         }
 
         return $rabais;
@@ -72,10 +73,10 @@ class RabaisEloquent implements RabaisInterface{
         $rabais->fill($data);
         $rabais->save();
 
-        $rabais->colloques()->detach();
+        $rabais->comptes()->detach();
 
-        if(isset($data['colloque_id'])){
-            $rabais->colloques()->attach($data['colloque_id']);
+        if(isset($data['compte_id'])){
+            $rabais->comptes()->attach($data['compte_id']);
         }
 
         return $rabais;

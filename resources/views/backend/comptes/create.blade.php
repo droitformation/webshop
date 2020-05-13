@@ -34,6 +34,12 @@
                             <input type="text" name="compte" value="" class="form-control" required>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Centre de coûts <br> N° Fonds de tiers <br> Identifiant unique</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="centre" value="" class="form-control" required>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="panel-footer mini-footer">

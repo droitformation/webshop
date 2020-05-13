@@ -18,6 +18,7 @@ class CreateInscriptionRabaisTable extends Migration
             $table->string('value');
             $table->string('type');
             $table->string('title');
+            $table->text('description')->nullable();
             $table->dateTime('expire_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

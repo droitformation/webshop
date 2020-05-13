@@ -21,20 +21,20 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option {{ ($rabais->type == 'global' ? 'selected' : '') }} value="global">Sur n'importe quel colloque</option>
-                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Colloques choisi</option>
+                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte choisi</option>
                                 </select>
                             </div>
                         </div>
 
-                        <?php $choices = $rabais->colloques->pluck('id')->all(); ?>
+                        <?php $choices = $rabais->comptes->pluck('id')->all(); ?>
 
                         <div class="form-group" id="colloqueSelect" style="{{ ($rabais->type == 'colloque' ? 'display:block;' : 'display:none;') }}">
-                            <label class="col-sm-3 control-label">Choix des colloques</label>
+                            <label class="col-sm-3 control-label">Choix des comptes concernés (optionnel)</label>
                             <div class="col-sm-9 col-xs-12">
-                                @if(!$colloques->isEmpty())
-                                    <select name="colloque_id[]" multiple="multiple" id="multi-select">
-                                        @foreach($colloques as $colloque)
-                                            <option {{ (in_array($colloque->id,$choices) ? 'selected' : '') }} value="{{ $colloque->id }}">{{ $colloque->title }}</option>
+                                @if(!$comptes->isEmpty())
+                                    <select name="compte_id[]" multiple="multiple" id="multi-select">
+                                        @foreach($comptes as $compte)
+                                            <option {{ (in_array($compte->id,$choices) ? 'selected' : '') }} value="{{ $compte->id }}">{{ $compte->centre }}</option>
                                         @endforeach
                                     </select>
                                 @endif
@@ -45,6 +45,13 @@
                             <label class="col-sm-3 control-label">Titre</label>
                             <div class="col-sm-5 col-xs-8">
                                 <input type="text" class="form-control" value="{{ $rabais->title }}" name="title">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contenu" class="col-sm-3 control-label">Description</label>
+                            <div class="col-sm-7">
+                                <textarea name="description" class="form-control">{!! $rabais->description !!}</textarea>
                             </div>
                         </div>
 

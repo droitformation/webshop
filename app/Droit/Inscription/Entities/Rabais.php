@@ -14,11 +14,11 @@ class Rabais extends Model
     protected $dates = ['deleted_at','expire_at'];
     protected $table = 'inscription_rabais';
 
-    protected $fillable = ['value', 'title','expire_at','type'];
+    protected $fillable = ['value', 'title','expire_at','type','description'];
 
-    public function colloques()
+    public function comptes()
     {
-        return $this->belongsToMany('App\Droit\Colloque\Entities\Colloque' , 'inscription_rabais_colloques', 'rabais_id', 'colloque_id');
+        return $this->belongsToMany('App\Droit\Compte\Entities\Compte' , 'inscription_rabais_comptes', 'rabais_id', 'compte_id');
     }
 
     public function inscriptions()

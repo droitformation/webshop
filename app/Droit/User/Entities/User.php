@@ -307,7 +307,7 @@ class User extends Authenticatable {
 
     public function rabais()
     {
-        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->whereNull('inscription_id');
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id');
     }
 
     public function used_rabais()

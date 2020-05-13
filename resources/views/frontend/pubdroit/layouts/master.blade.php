@@ -33,8 +33,7 @@
 
 	<!-- All css -->
 	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/bs.css');?>">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/style.css');?>">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/style.css');?>">
 
 	<!-- Css Files Start -->
 	<link rel="stylesheet" href="<?php echo secure_asset('frontend/pubdroit/css/skins/red.css');?>">
@@ -256,7 +255,7 @@
 		<!-- End Main Wrapper -->
 		<!-- Javascript Files
     	================================================== -->
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
         <script src="<?php echo secure_asset('common/js/jquery.selectric.js');?>"></script>
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/readmore.min.js');?>"></script>
 		<script src="<?php echo secure_asset('frontend/pubdroit/js/sweetalert.min.js');?>"></script>

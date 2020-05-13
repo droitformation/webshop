@@ -42,7 +42,7 @@ class Inscription extends Model
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
-        if($this->rabais){
+        if(isset($this->rabais)){
             $price = ($this->price->price / 100) - $this->rabais->value;
         }
         else{

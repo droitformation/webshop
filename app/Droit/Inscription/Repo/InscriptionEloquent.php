@@ -206,8 +206,7 @@ class InscriptionEloquent implements InscriptionInterface{
             'updated_at'      => \Carbon\Carbon::now()
         ));
 
-        if( ! $inscription )
-        {
+        if( ! $inscription ) {
             return false;
         }
 
