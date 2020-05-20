@@ -40,7 +40,10 @@ class ReponseController extends Controller
         $sort   = $request->input('sort',null) ? $request->input('sort') : 'avis_id';
         
         $reponses = !$isTest ? $sondage->reponses_no_test : $sondage->reponses;
-        $reponses = $sort == 'reponse_id' ? $this->worker->sortByPerson($reponses) : $this->worker->sortByQuestion($sondage);
+
+        if(!$reponses->isEmpty()){
+            $reponses = $sort == 'reponse_id' ? $this->worker->sortByPerson($reponses) : $this->worker->sortByQuestion($sondage);
+        }
 
         return view('backend.reponses.show')->with(['sondage' => $sondage, 'reponses' => $reponses, 'sort' => $sort, 'isTest' => $isTest]);
     }

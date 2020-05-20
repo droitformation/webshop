@@ -32,9 +32,13 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 h4.label-chapitre{
-    font-size: 15px;
+    font-size: 17px;
     color: #000;
     font-weight: bold;
+}
+
+h4.label-chapitre blockquote{
+   margin-top: 10px;
 }
 
 textarea.sondage{
@@ -45,11 +49,24 @@ textarea.sondage{
 .imgSondage{
     margin-top : 10px;
 }
-li{
-    display: inline-block;
-}
+
 .form-group-sondage{
     margin: 8px 0 5px 0;
+}
+
+.question-checkbox li{
+    display: block;
+    padding: 3px 0;
+}
+
+.form-sondage ul{
+    display: inline-block;
+    margin:0px;
+    padding: 0px 0px 2px 0px;
+}
+
+.form-sondage ul li{
+    display: inline-block;
 }
 
 .form-group-sondage ul{
@@ -80,31 +97,23 @@ li{
 
 .label-question{
     margin-bottom: 0;
+    font-weight: 550;
 }
 
 .label-question p{
     margin-bottom: 2px;
+    font-weight: 550;
 }
 
 .label-question p strong{
     font-weight: bold;
 }
 
-
 .question-checkbox{
     margin: 20px 0;
 }
 
-.question-checkbox li{
-    display: block;
-    padding: 3px 0;
-}
 
-ul{
-    display: inline-block;
-    margin:0px;
-    padding: 0px 0px 2px 0px;
-}
 .remerciements{
     text-align: center;
 }
@@ -126,4 +135,19 @@ ul{
     .sondage-logo a img{
         max-width: 100%;
     }
+}
+
+#sondage-description{
+    margin-bottom: 20px;
+}
+
+#sondage-description ul li,
+#sondage-description p{
+    font-size: 15px;
+}
+
+#sondage-description ul{
+    margin:0 0 10px 15px;
+    padding: 0px 0px 0px 10px;
+    list-style: disc;
 }

@@ -35,14 +35,25 @@
 
                 <div class="panel panel-default panel-sondage">
                    <div class="panel-body">
-                       <h1 class="sondage-logo text-right">
-                           <a class="text-inverse" href="{{ url('/') }}">
-                               <img style="max-height: 100px;" src="{{ secure_asset('emails/logos/pubdroit.png') }}" alt="{{ url('/pubdroit') }}">
-                           </a>
-                       </h1>
+
+                       @if(isset($sondage) && $sondage->image)
+                           <h1 class="sondage-logo text-right">
+                               <a class="text-inverse" href="#">
+                                   <img src="{{ secure_asset('files/uploads/'.$sondage->image) }}" alt="">
+                               </a>
+                           </h1>
+                       @else
+                           <h1 class="sondage-logo text-right">
+                               <a class="text-inverse" href="{{ url('/') }}">
+                                   <img style="max-height: 100px;" src="{{ secure_asset('emails/logos/pubdroit.png') }}" alt="{{ url('/pubdroit') }}">
+                               </a>
+                           </h1>
+                       @endif
+
                        <!-- Contenu -->
                        @yield('content')
                        <!-- Fin contenu -->
+
                    </div>
                 </div>
             </div>

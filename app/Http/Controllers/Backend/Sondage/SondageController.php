@@ -13,6 +13,7 @@ use App\Droit\Sondage\Repo\AvisInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Sondage\Repo\ReponseInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
+use App\Droit\Service\UploadInterface;
 
 class SondageController extends Controller
 {
@@ -21,14 +22,16 @@ class SondageController extends Controller
     protected $avis;
     protected $colloque;
     protected $list;
+    protected $upload;
 
-    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque, ReponseInterface $reponse, NewsletterListInterface $list)
+    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque, ReponseInterface $reponse, NewsletterListInterface $list, UploadInterface $upload)
     {
         $this->sondage  = $sondage;
         $this->avis     = $avis;
         $this->colloque = $colloque;
         $this->reponse  = $reponse;
         $this->list     = $list;
+        $this->upload   = $upload;
     }
 
     /**
@@ -62,7 +65,15 @@ class SondageController extends Controller
      */
     public function store(SondageRequest $request)
     {
-        $sondage = $this->sondage->create($request->all());
+        $all   = $request->all();
+        $_file = $request->file('file', null);
+
+        if($_file) {
+            $image = $this->upload->upload($_file, 'files/uploads');
+            $all['image'] = $image['name'];
+        }
+
+        $sondage = $this->sondage->create($all);
 
         if($sondage->colloque_id){
             $worker = new \App\Droit\Sondage\Worker\SondageWorker();
@@ -104,7 +115,15 @@ class SondageController extends Controller
      */
     public function update($id, SondageRequest $request)
     {
-        $sondage = $this->sondage->update($request->all());
+        $all   = $request->all();
+        $_file = $request->file('file', null);
+
+        if($_file) {
+            $image = $this->upload->upload($_file, 'files/uploads');
+            $all['image'] = $image['name'];
+        }
+
+        $sondage = $this->sondage->update($all);
 
         if($sondage->colloque_id){
             $worker = new \App\Droit\Sondage\Worker\SondageWorker();

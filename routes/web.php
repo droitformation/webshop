@@ -44,7 +44,7 @@ Route::post('check/name', 'Api\ValidationController@name');
 | Sondages routes
 |--------------------------------------------------------------------------
 */
-Route::get('reponse', 'ReponseController@index');
+Route::get('reponse/{sondage_id}', 'ReponseController@index');
 Route::get('reponse/create/{token}', 'ReponseController@create');
 Route::post('reponse', 'ReponseController@store');
 
