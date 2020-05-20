@@ -39,14 +39,19 @@ class Preview
         $rabais = $this->data['rabais_id'] ?? null;
         $prix   = $price->price_cents;
 
+        $this->html .= '<dl style="padding-right:20px;">';
+
         if($rabais){
             $model = $this->repo_rabais->find($rabais);
             $prix  = $prix - $model->value;
+
+            $this->html .= '<dt style="padding-bottom: 8px;display: block;line-height: 18px;">'.$price->description.'</dt><dd>Prix avec rabais <strong>'.$prix.' CHF</strong></dd>';
+            $this->html .= $rabais ? '<dd class="text-muted" style="margin-top: 5px;">Prix original '.$price->price_cents.' CHF</dd>' : '';
+        }
+        else{
+            $this->html .= '<dt style="padding-bottom: 8px;display: block;line-height: 18px;">'.$price->description.'</dt><dd>Prix '.$prix.' CHF</dd>';
         }
 
-        $this->html .= '<dl>';
-        $this->html .= '<dt>Prix</dt><dd>'.$prix.' CHF  - '.$price->description.'</dd>';
-        $this->html .= $rabais ? '<dd class="text-muted">Prix original '.$price->price_cents.' CHF</dd>' : '';
         $this->html .= '</dl>';
 
         return $this;

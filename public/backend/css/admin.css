@@ -370,8 +370,9 @@ a:hover, a:active, a:focus {
 }
 
 .input-group-addon {
-    min-width: 30px;
+    min-width: 74px;
     padding: 7px 4px;
+    width: auto;
 }
 
 .input-group-addon.bg-success{
@@ -1603,6 +1604,29 @@ span.avis-hidden-square{
 
 .justify-around{
     justify-content: space-around;
+}
+
+.justify-end{
+    justify-content: end;
+}
+
+.block{
+    display: block;
+}
+
+.filter-inscriptions .block{
+    margin: 0 2px;
+}
+
+.filter-inscriptions .block .input-group-addon,
+.filter-inscriptions .block .input-group-btn {
+    width:auto ;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.filter-inscriptions .block .input-group input{
+    width: 280px;
 }
 
 .mb-3{

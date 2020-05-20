@@ -11,16 +11,17 @@ class RabaisTest extends TestCase
 {
     use RefreshDatabase,ResetTbl;
 
+    protected $user;
+
     public function setUp(): void
     {
         parent::setUp();
         $this->app['config']->set('database.default','testing');
         $this->reset_all();
 
-        $user = factory(\App\Droit\User\Entities\User::class)->create();
+        $this->user = factory(\App\Droit\User\Entities\User::class)->create();
 
-        $user->roles()->attach(1);
-        $this->actingAs($user);
+        $this->actingAs($this->user);
     }
 
     public function tearDown(): void
@@ -31,9 +32,7 @@ class RabaisTest extends TestCase
 
     public function testFrontendRabais()
     {
-        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create([
-            'value' => 10
-        ]);
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10]);
 
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
@@ -64,7 +63,6 @@ class RabaisTest extends TestCase
         $inscription = \App\Droit\Inscription\Entities\Inscription::orderBy('id','DESC')->get()->first();
 
         $this->assertEquals($price_rabais,$inscription->price_cents);
-
     }
 
     public function testMultipleInscriptionRabais()
@@ -109,5 +107,61 @@ class RabaisTest extends TestCase
 
         $this->assertEquals($price_rabais,$group->price_cents);
 
+    }
+
+    public function testFrontendRegisterRabaisGlobal()
+    {
+        $make   = new \tests\factories\ObjectFactory();
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10, 'type' => 'global', 'description' => 'Un rabais pour colloque']);
+
+        $this->user->rabais()->attach($rabais->id);
+
+        $colloque = $make->colloque();
+        $price    = $colloque->prices->first()->price_cents;
+
+        $response = $this->get('/pubdroit/colloque/'.$colloque->id);
+
+        $response->assertSee($price.' CHF');
+        $response->assertSee($rabais->description);
+    }
+
+    public function testFrontendRegisterRabaisColloque()
+    {
+        $make   = new \tests\factories\ObjectFactory();
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10, 'type' => 'colloque', 'description' => 'Un rabais pour colloque']);
+        $compte = factory(\App\Droit\Compte\Entities\Compte::class)->create(['centre' => 'U.12345']);
+
+        $rabais->comptes()->attach($compte->id);
+        $this->user->rabais()->attach($rabais->id);
+
+        $colloque = $make->colloque();
+        $colloque->compte_id = $compte->id;
+        $colloque->save();
+
+        $price    = $colloque->prices->first()->price_cents;
+
+        $response = $this->get('/pubdroit/colloque/'.$colloque->id);
+
+        $response->assertSee($price.' CHF');
+        $response->assertSee($rabais->description);
+    }
+
+    public function testFrontendRegisterRabaisNotColloque()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10, 'type' => 'colloque', 'description' => 'Un rabais pour colloque']);
+        $compte = factory(\App\Droit\Compte\Entities\Compte::class)->create(['centre' => 'U.12345']);
+
+        $rabais->comptes()->attach($compte->id);
+        $this->user->rabais()->attach($rabais->id);
+
+        $price    = $colloque->prices->first()->price_cents;
+
+        $response = $this->get('/pubdroit/colloque/'.$colloque->id);
+
+        $response->assertSee($price.' CHF');
+        $response->assertDontSee($rabais->description);
     }
 }

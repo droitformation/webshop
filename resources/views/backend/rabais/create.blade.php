@@ -32,7 +32,9 @@
                                 @if(!$comptes->isEmpty())
                                     <select name="compte_id[]" multiple="multiple" id="multi-select">
                                         @foreach($comptes as $compte)
-                                            <option value="{{ $compte->id }}">{{ $compte->centre }}</option>
+                                            <option value="{{ $compte->id }}">
+                                                {{ $compte->motif }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 @endif

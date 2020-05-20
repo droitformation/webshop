@@ -12,6 +12,9 @@
                     <h4 class="modal-title">Editer {{ $inscription->inscription_no }}</h4>
                 </div>
                 <div class="modal-body">
+
+                    <?php $user = ($inscription->group_id ? 'group_id' : 'user_id'); ?>
+
                     <fieldset>
                         @if($inscription->group_id)
                             <div class="form-group participant">
@@ -26,7 +29,7 @@
                         @endif
 
                         @if(!$inscription->colloque->prices->isEmpty())
-                            @include('backend.inscriptions.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price->id, 'colloque' => $inscription->colloque])
+                            @include('backend.inscriptions.partials.prices', ['select' => 'price_id', 'price_current' => $inscription->price_id, 'colloque' => $inscription->colloque])
                         @endif
 
                         <!-- Occurence if any -->
@@ -41,6 +44,23 @@
                             <div class="inscription_set">
                                 <h4>Options</h4>
                                 @include('backend.inscriptions.partials.options', ['select' => 'groupes', 'colloque' => $inscription->colloque, 'inscription' => $inscription])
+                            </div>
+                        @endif
+
+                        <?php $account = new \App\Droit\User\Entities\Account($inscription->inscrit); ?>
+
+                        @if(!$account->coupons($inscription->colloque->compte_id)->isEmpty())
+                            <h4>Choix du rabais</h4>
+                            <div class="form-group">
+                                <!-- Only public prices -->
+                                <select name="rabais_id" class="form-control">
+                                    <option value="">Choix</option>
+                                    @foreach($account->coupons($inscription->colloque->compte_id) as $rabais)
+                                        <option value="{{ $rabais->id }}" {{ $inscription->rabais_id == $rabais->id ? 'selected' : '' }}>
+                                            {{ $rabais->title }} | {{ $rabais->description }} | {{ $rabais->value }} CHF
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         @endif
 
@@ -62,8 +82,6 @@
                                 </div>
                             </div>
                         @endif
-
-                        <?php $user = ($inscription->group_id ? 'group_id' : 'user_id'); ?>
 
                         <input name="{{ $user }}" value="{{ $inscription->$user }}" type="hidden">
                         <input name="colloque_id" value="{{ $inscription->colloque->id }}" type="hidden">

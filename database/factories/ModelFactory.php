@@ -479,6 +479,7 @@ $factory->define(App\Droit\Compte\Entities\Compte::class, function (Faker\Genera
     return [
         'motif'   => 'Payement',
         'adresse' => 'Université de Neuchâtel<br/>Service des fonds de tiers<br/>2000 Neuchâtel',
+        'centre'  => 'U.12345',
         'compte'  => '20-4130-2',
     ];
 });

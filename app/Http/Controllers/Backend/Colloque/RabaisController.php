@@ -22,6 +22,8 @@ class RabaisController extends Controller
         $this->colloque = $colloque;
         $this->compte   = $compte;
         $this->user     = $user;
+
+        setlocale(LC_ALL, 'fr_FR');
     }
 
     public function index(Request $request)
@@ -49,17 +51,17 @@ class RabaisController extends Controller
 
     public function store(Request $request)
     {
-        $rabai = $this->rabais->create( $request->all() );
+        $rabais = $this->rabais->create( $request->all() );
 
         flash('Rabais crée')->success();
 
-        return redirect('admin/rabais/'.$rabai->id);
+        return redirect('admin/rabais/'.$rabais->id);
     }
     
     public function show($id)
     {
         $colloques = $this->colloque->getCurrent(true,false);
-        $comptes   = $this->compte->getAll();
+        $comptes = $this->compte->getAll();
         $rabais    = $this->rabais->find($id);
 
         return view('backend.rabais.show')->with(['rabais' => $rabais, 'colloques' => $colloques, 'comptes' => $comptes]);

@@ -26,8 +26,9 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">Action</th>
-                            <th class="col-sm-3">Motif</th>
-                            <th class="col-sm-3">Adresse</th>
+                            <th class="col-sm-2">Motif</th>
+                            <th class="col-sm-2">Identifiant unique</th>
+                            <th class="col-sm-2">Compte</th>
                             <th class="col-sm-2">Compte</th>
                             <th class="col-sm-1 no-sort"></th>
                         </tr>
@@ -37,6 +38,7 @@
                                 <tr>
                                     <td><a class="btn btn-sky btn-sm" href="{{ url('admin/compte/'.$compte->id) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><strong>{!! $compte->motif !!}</strong></td>
+                                    <td><strong>{!! $compte->centre !!}</strong></td>
                                     <td><strong>{!! $compte->adresse !!}</strong></td>
                                     <td><strong>{{ $compte->compte }}</strong></td>
                                     <td class="text-right">
