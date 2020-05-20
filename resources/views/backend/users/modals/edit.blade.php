@@ -49,13 +49,13 @@
 
                         <?php $account = new \App\Droit\User\Entities\Account($inscription->inscrit); ?>
 
-                        @if(!$account->coupons($inscription->colloque->compte_id)->isEmpty())
+                        @if(!$account->couponsSelect($inscription->colloque->compte_id)->isEmpty())
                             <h4>Choix du rabais</h4>
                             <div class="form-group">
                                 <!-- Only public prices -->
                                 <select name="rabais_id" class="form-control">
                                     <option value="">Choix</option>
-                                    @foreach($account->coupons($inscription->colloque->compte_id) as $rabais)
+                                    @foreach($account->couponsSelect($inscription->colloque->compte_id) as $rabais)
                                         <option value="{{ $rabais->id }}" {{ $inscription->rabais_id == $rabais->id ? 'selected' : '' }}>
                                             {{ $rabais->title }} | {{ $rabais->description }} | {{ $rabais->value }} CHF
                                         </option>

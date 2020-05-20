@@ -45,6 +45,17 @@ class Account{
         });
     }
 
+    public function couponsSelect($compte_id)
+    {
+        return $this->user->rabais->filter(function ($rabais, $key) use ($compte_id) {
+            if($rabais->type == 'colloque'){
+                return $rabais->comptes->contains('id',$compte_id);
+            }
+
+            return true;
+        });
+    }
+
     public function used()
     {
         $used = $this->user->inscriptions->pluck('rabais_id');
