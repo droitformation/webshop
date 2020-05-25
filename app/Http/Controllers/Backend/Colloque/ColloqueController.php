@@ -124,8 +124,14 @@ class ColloqueController extends Controller
     public function show($id,Request $request)
     {
         $colloque = $this->colloque->find($id);
+        $colloques = $this->colloque->getCurrent();
+        $colloques = $colloques->filter(function ($colloque) use ($id) {
+            return $colloque->id != $id;
+        })->map(function ($colloque, $key) {
+            return ['id' => $colloque->id, 'text' => $colloque->title];
+        })->values();
 
-        return view('backend.colloques.show')->with(['colloque' => $colloque]);
+        return view('backend.colloques.show')->with(['colloque' => $colloque, 'colloques' => $colloques]);
     }
 
     /**

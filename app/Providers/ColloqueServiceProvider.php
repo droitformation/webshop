@@ -37,6 +37,7 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->registerOptionService();
         $this->registerGroupOptionService();
         $this->registerPriceService();
+        $this->registerPriceLinkService();
         $this->registerOccurrenceService();
         $this->registerRabaisService();
 
@@ -182,6 +183,17 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Price\Repo\PriceInterface', function()
         {
             return new \App\Droit\Price\Repo\PriceEloquent(new \App\Droit\Price\Entities\Price);
+        });
+    }
+
+    /**
+     * PriceLink
+     */
+    protected function registerPriceLinkService(){
+
+        $this->app->singleton('App\Droit\PriceLink\Repo\PriceLinkInterface', function()
+        {
+            return new \App\Droit\PriceLink\Repo\PriceLinkEloquent(new \App\Droit\PriceLink\Entities\PriceLink);
         });
     }
 

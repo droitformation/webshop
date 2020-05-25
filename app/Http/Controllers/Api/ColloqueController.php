@@ -27,7 +27,7 @@ class ColloqueController extends Controller {
 
         return response()->json( $colloques , 200 );
 	}
-    
+
     public function show($id)
     {
         $colloque = $this->colloque->find($id);

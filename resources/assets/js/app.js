@@ -26,6 +26,7 @@ Vue.component('endroit', require('./components/Endroit.vue').default);
 Vue.component('jurisprudence', require('./components/Jurisprudence.vue').default);
 Vue.component('occurrence', require('./components/Occurrence.vue').default);
 Vue.component('price', require('./components/Price.vue').default);
+Vue.component('price-link', require('./components/PriceLink.vue').default);
 Vue.component('option-groupe', require('./components/OptionGroupe.vue').default);
 Vue.component('detenteur', require('./components/Detenteur.vue').default);
 

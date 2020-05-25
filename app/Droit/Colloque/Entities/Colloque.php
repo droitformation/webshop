@@ -28,8 +28,7 @@ class Colloque extends Model implements HasMedia
 
     public function getIllustrationAttribute()
     {
-        if(isset($this->documents))
-        {
+        if(isset($this->documents)) {
             $illustration = $this->documents->filter(function ($item){
                 return $item->type == 'illustration';
             });
@@ -202,6 +201,29 @@ class Colloque extends Model implements HasMedia
         });
     }
 
+    public function getPriceLinkDisplayAttribute()
+    {
+        return $this->price_link->groupBy('type')->flatten(1)->mapWithKeys_v2(function ($price) {
+            return [$price->id => [
+                'id'             => $price->id,
+                'colloques'      => $price->colloques->map(function ($colloque, $key) {
+                                        return ['id' => $colloque->id, 'text' => $colloque->title];
+                                    })->values(),
+                'linked'         => $price->colloques->filter(function ($colloque) {
+                                    return $colloque->id != $this->id;
+                                })->map(function ($colloque, $key) {
+                                    return ['id' => $colloque->id, 'text' => $colloque->title];
+                                })->values(),
+                'description'    => $price->description,
+                'price'          => $price->price_cents,
+                'type'           => $price->type,
+                'remarque'       => $price->remarque,
+                'rang'           => $price->rang,
+                'state'          => false,
+            ]];
+        });
+    }
+
     public function getOptionDisplayAttribute()
     {
         $choix = ['checkbox' => 'Case à cocher', 'choix' => 'Choix multiple', 'text' => 'Texte'];
@@ -340,6 +362,11 @@ class Colloque extends Model implements HasMedia
     public function prices()
     {
         return $this->hasMany('App\Droit\Price\Entities\Price');
+    }
+
+    public function price_link()
+    {
+        return $this->belongsToMany('App\Droit\PriceLink\Entities\PriceLink','price_link_colloques','colloque_id','price_link_id');
     }
 
     public function documents()

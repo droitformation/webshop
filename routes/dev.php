@@ -193,7 +193,7 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abo_users       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
+    $prices      = \App::make('App\Droit\Price\Repo\PriceLinkInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
     $rappels       = \App::make('App\Droit\Inscription\Repo\RappelInterface');

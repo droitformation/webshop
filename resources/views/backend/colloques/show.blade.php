@@ -159,6 +159,14 @@
                                 </div>
                             </div>
 
+                            <legend>Prix lié colloques</legend>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Prix</label>
+                                <div class="col-sm-8">
+                                    <price-link :prices="{{ $colloque->price_link_display }}" :colloque="{{ $colloque->id }}" :all="{{ $colloques }}"></price-link>
+                                </div>
+                            </div>
+
                             <legend>Conférences</legend>
 
                             <div class="form-group">

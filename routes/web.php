@@ -628,6 +628,12 @@ Route::group(['prefix' => 'vue'], function () {
     Route::put('price/{id}','Api\PriceController@update');
     Route::delete('price/{id}','Api\PriceController@destroy');
 
+    Route::post('price_link','Api\PriceLinkController@store');
+    Route::put('price_link/{id}','Api\PriceLinkController@update');
+    Route::delete('price_link/{id}','Api\PriceLinkController@destroy');
+    Route::get('colloques','Api\ColloqueController@all');
+
+
     Route::post('option','Api\OptionController@store');
     Route::put('option/{id}','Api\OptionController@update');
     Route::delete('option/{id}','Api\OptionController@destroy');

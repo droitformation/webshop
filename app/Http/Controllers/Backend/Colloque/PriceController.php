@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Droit\Price\Repo\PriceInterface;
+use App\Droit\Price\Repo\PriceLinkInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 
 class PriceController extends Controller {
@@ -13,7 +13,7 @@ class PriceController extends Controller {
 	protected $price;
     protected $colloque;
 
-    public function __construct(PriceInterface $price, ColloqueInterface $colloque)
+    public function __construct(PriceLinkInterface $price, ColloqueInterface $colloque)
     {
         $this->price    = $price;
         $this->colloque = $colloque;

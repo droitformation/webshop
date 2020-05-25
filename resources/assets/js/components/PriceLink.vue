@@ -31,20 +31,12 @@
                        </dl>
                    </div>
                </div>
-               <div class="row">
-                   <div class="col-md-7">
-                       <dl class="dl-horizontal price-list">
-                           <dt style="width:200px;">Cacher le prix à partir du:</dt>
-                           <dd style="margin-left:220px;"><input class="form-control datePickerNew" name="end_at" type="text" v-model="nouveau.end_at"></dd>
-                       </dl>
+
+               <div class="row choix_colloques_wrapper">
+                   <div class="col-md-12">
+                       <label class="choix_colloques"><strong>Choix des colloques lié</strong></label>
+                       <select class="chosen-select-colloque form-control" multiple="multiple"></select>
                    </div>
-                   <dl class="dl-horizontal price-list">
-                       <dd>
-                           <div class="checkbox">
-                               <label><input type="checkbox" name="main" v-model="nouveau.main">Principal</label>
-                           </div>
-                       </dd>
-                   </dl>
                </div>
 
                <p class="text-right margBottom"><a @click="ajouterPrice" class="btn btn-sm btn-primary">Envoyer</a></p>
@@ -98,29 +90,15 @@
                    </div>
                </div>
 
-               <div class="row">
-                   <div class="col-md-7">
-                       <dl class="dl-horizontal price-list" style="display: flex;flex-direction: row;">
-                           <dt style="width: 200px !important;flex:2;">Cacher à partir du:</dt>
-                           <dd style="width: 160px;margin-left:0;" v-if="!price.state">{{ price.end_at }}</dd>
-                           <dd style="width: 160px;margin-left:0;" v-if="price.state">
-                               <input style="" class="form-control datePickerPrices" name="end_at" type="text" v-model="price.end_at">
-                           </dd>
-                       </dl>
-                   </div>
-                   <div class="col-md-5">
-                       <dl class="dl-horizontal price-list">
-                           <dd v-if="!price.state">
-                               <div v-if="price.main">
-                                   <strong> Principal</strong>
-                               </div>
-                           </dd>
-                           <dd v-if="price.state">
-                               <div class="checkbox">
-                                   <label><input type="checkbox" name="main" v-model="price.main">Principal</label>
-                               </div>
-                           </dd>
-                       </dl>
+               <div class="row choix_colloques_wrapper">
+                   <div class="col-md-12">
+                       <label class="choix_colloques"><strong>Choix des colloques liés</strong></label>
+                       <div v-show="price.state">
+                           <select class="chosen-select-colloque-edit form-control" multiple="multiple"></select>
+                       </div>
+                       <div v-show="!price.state">
+                           <p v-for="colloque in price.linked">{{ colloque.text }}</p>
+                       </div>
                    </div>
                </div>
 
@@ -145,85 +123,80 @@
     .price-list dd {
         margin-left: 100px;
     }
-
+    .choix_colloques{
+        width: 100%;
+        margin-bottom:20px;
+    }
+    .choix_colloques_wrapper{
+        margin-bottom:20px;
+    }
 </style>
 <script>
 
 export default {
 
-    props: ['colloque','prices','occurrences'],
+    props: ['colloque','prices','all'],
     data () {
         return {
-            list: [],
-            list_occurrences: [],
+            list:this.prices,
+            current:[],
             nouveau:{
                 description: '',
                 price: '',
                 type: 'public',
                 rang: '',
                 remarque: '',
-                end_at:'',
-                colloque_id: this.colloque,
-                main:''
+                colloques: [],
             },
-            add : false
+            add : false,
+            url: location.protocol + "//" + location.host+"/",
         }
     },
-    beforeMount: function () {
-        this.getData();
+    computed: {
+        relations: function () {
+            var colloques = this.nouveau.colloques;
+            colloques.push(this.colloque);
+
+            return colloques;
+        },
+        choosen: function () {
+            var colloques = this.current;
+            colloques.push(this.colloque);
+
+            return this.current;
+        },
+    },
+    mounted: function ()  {
+        let self = this;
+        this.$nextTick(function() {
+            let select = $('.chosen-select-colloque').select2({width:'100%', data: self.all});
+            select.on('select2:select', function (e) {
+                self.nouveau.colloques = select.select2('data').map(function(elem){return elem.id});
+            });
+            select.on('select2:unselect', function (e) {
+                self.nouveau.colloques = select.select2('data').map(function(elem){return elem.id});
+            });
+
+            let edit = $('.chosen-select-colloque-edit').select2({width:'100%', data: self.all});
+            edit.on('select2:select', function (e) {
+                self.current = edit.select2('data').map(function(elem){return elem.id});
+            });
+            edit.on('select2:unselect', function (e) {
+                self.current = edit.select2('data').map(function(elem){return elem.id});
+            });
+        });
     },
     methods: {
-        getData : function(){
-             this.list = _.orderBy(this.prices, ['type'],['desc']);
-             this.list_occurrences = this.occurrences;
-
-             this.$nextTick(function(){
-
-               $.fn.datepicker.dates['fr'] = {
-                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
-                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
-                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
-                    today: "Aujourd'hui",
-                    clear: "Clear"
-                };
-
-                var self = this;
-
-                $('.datePickerNew').datepicker({
-                    format: 'yyyy-mm-dd',
-                    language: 'fr'
-                }).on('changeDate', function(ev){
-                   self.nouveau.end_at = ev.target.value;
-                });
-            });
+        ajouter:function(){
+            this.add = true;
         },
         editPrice : function(price){
             price.state = true;
-
-            this.$nextTick(function(){
-                 $.fn.datepicker.dates['fr'] = {
-                    days: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
-                    daysShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
-                    daysMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
-                    months: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-                    monthsShort: ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'],
-                    today: "Aujourd'hui",
-                    clear: "Clear"
-                };
-
-                $('.datePickerPrices').datepicker({
-                    format: 'yyyy-mm-dd',
-                    language: 'fr'
-                }).on('changeDate', function(ev){
-                   price.end_at = ev.target.value;
-                });
-            });
-
+            this.select(price);
         },
-        ajouter:function(){
-            this.add = true;
+        select(price){
+            this.current = _.map(price.linked, 'id');
+            $('.chosen-select-colloque-edit').val(_.map(price.linked, 'id')).trigger('change');
         },
         resetform :function(){
             this.add = false;
@@ -233,31 +206,26 @@ export default {
                 type: '',
                 rang: '',
                 remarque: '',
-                colloque_id: this.colloque,
-                main:''
+                colloques: [],
             };
         },
         ajouterPrice:function(){
-
             var self = this;
-            axios.post('/vue/price', { price : this.nouveau }).then(function (response) {
-                self.list = _.orderBy(response.data.prices, ['type'],['desc']);
+            axios.post('/vue/price_link', {price: this.nouveau, relations: this.relations, colloque_id : this.colloque }).then(function (response) {
+                self.list = response.data.prices;
                 self.resetform();
             }).catch(function (error) { console.log(error);});
         },
         savePrice : function(price){
-
             var self = this;
-            axios.post('/vue/price/' + price.id, { price, '_method' : 'put' }).then(function (response) {
-               self.list = _.orderBy(response.data.prices, ['type'],['desc']);
+            axios.post('/vue/price_link/' + price.id, {price, colloque_id: this.colloque, relations: this.choosen, '_method' : 'put'}).then(function (response) {
+                self.list = response.data.prices;
             }).catch(function (error) { console.log(error);});
-
         },
         deletePrice :function(price){
-
             var self = this;
-            axios.post('/vue/price/' + price.id, { '_method' : 'DELETE' }).then(function (response) {
-                self.list = _.orderBy(response.data.prices, ['type'],['desc']);
+            axios.post('/vue/price_link/' + price.id, {'_method' : 'DELETE'}).then(function (response) {
+                self.list = response.data.prices;
             }).catch(function (error) { console.log(error);});
         }
     }

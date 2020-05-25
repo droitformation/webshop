@@ -1,9 +1,9 @@
 <?php namespace App\Droit\Price\Repo;
 
-use App\Droit\Price\Repo\PriceInterface;
+use App\Droit\Price\Repo\PriceLinkInterface;
 use App\Droit\Price\Entities\Price as M;
 
-class PriceEloquent implements PriceInterface{
+class PriceLinkEloquent implements PriceLinkInterface{
 
     protected $price;
 
