@@ -29,21 +29,18 @@ class PriceLinkController extends Controller {
         return response()->json(['prices' => $colloque->price_link_display]);
     }
 
-    /**
-     * @return Response
-     */
     public function update($id,Request $request)
     {
         $data = $request->input('price');
 
         $price_link = $this->price_link->update([
-            'id'    => $id,
-            'price' => $data['price'],
-            'type'  => $data['type'],
-            'description' => $data['description'],
-            'rang'      => $data['rang'],
-            'remarque'  => $data['remarque'],
-            'colloques' => $request->input('relations')
+            'id'          => $id,
+            'price'       => $data['price'],
+            'type'        => $data['type'],
+            'description' => $data['description'] ?? null,
+            'rang'        => $data['rang'] ?? 1,
+            'remarque'    => $data['remarque'] ?? nul,
+            'colloques'   => $request->input('relations')
         ]);
 
         $colloque = $this->colloque->find($request->input('colloque_id'));
@@ -56,7 +53,7 @@ class PriceLinkController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id,$colloque_id)
     {
         $price_link = $this->price_link->find($id);
 
@@ -64,10 +61,11 @@ class PriceLinkController extends Controller {
             return response('ERROR', 400);
         }
 
+        $price_link->colloques()->detach();
         $this->price_link->delete($id);
-        $colloque = $this->colloque->find($price_link->colloque_id);
 
-        return response()->json(['prices' => $colloque->price_display]);
+        $colloque = $this->colloque->find($colloque_id);
+
+        return response()->json(['prices' => $colloque->price_link_display]);
     }
-
 }

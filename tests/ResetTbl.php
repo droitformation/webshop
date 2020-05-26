@@ -78,6 +78,8 @@ trait ResetTbl
         \DB::table('transaction_references')->truncate();
         \DB::table('users')->truncate();
         \DB::table('inscription_rabais')->truncate();
+        \DB::table('price_link')->truncate();
+        \DB::table('price_link_colloques')->truncate();
 
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 

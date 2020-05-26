@@ -1561,7 +1561,21 @@ span.avis-hidden-square{
 .invoice_for{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 10px 15px 20px 15px;
+    background: #f7f7f7;
+    border: 1px solid #efefef;
+    margin-bottom: 30px;
+}
+
+.list_prices{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.list_prices .form-group{
+    width: 48%;
 }
 
 .invoice_for address {
@@ -1569,8 +1583,8 @@ span.avis-hidden-square{
 }
 
 .invoice_reference{
-    width: 35%;
-    padding-right:5%;
+    width: 40%;
+    padding-right:1%;
 }
 
 .invoice_rabais{

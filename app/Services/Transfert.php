@@ -1,4 +1,4 @@
-<?php namespace App\Droit\Services;
+<?php namespace App\Services;
 
 class Transfert
 {

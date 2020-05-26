@@ -37,16 +37,20 @@ class Inscription extends Model
             return $value->starting_at > \Carbon\Carbon::today();
         }) : null;
     }
+    public function getMainPriceAttribute()
+    {
+        return $this->price ?? $this->price_link;
+    }
 
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
 
         if(isset($this->rabais)){
-            $price = ($this->price->price / 100) - $this->rabais->value;
+            $price = ($this->main_price->price / 100) - $this->rabais->value;
         }
         else{
-            $price = $this->price->price / 100;
+            $price = $this->main_price->price / 100;
         }
 
         return $money->format($price);
@@ -414,6 +418,11 @@ class Inscription extends Model
     public function price()
     {
         return $this->belongsTo('App\Droit\Price\Entities\Price');
+    }
+
+    public function price_link()
+    {
+        return $this->belongsTo('App\Droit\PriceLink\Entities\PriceLink','price_link_id');
     }
 
     public function rabais()

@@ -25,11 +25,13 @@ class OptionController extends Controller {
         $this->helper  = new \App\Droit\Helper\Helper();
     }
 
-    /**
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    public function index($colloque)
+    {
+        $colloque = $this->colloque->find($colloque);
+
+        return response()->json($colloque->option_display);
+    }
+
     public function store(Request $request)
     {
         $data = $request->input('option');

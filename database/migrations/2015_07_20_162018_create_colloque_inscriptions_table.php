@@ -23,7 +23,7 @@ class CreateColloqueInscriptionsTable extends Migration
             $table->integer('price_id');
             $table->date('payed_at')->nullable();
             $table->date('send_at')->nullable();
-            $table->enum('status', ['pending', 'payed', 'free'])->default('pending');
+            $table->string('status')->default('pending');
             $table->tinyInteger('admin')->nullable();
             $table->tinyInteger('present')->nullable();
             $table->softDeletes();

@@ -84,9 +84,10 @@ class Cart
      * @param int|float $qty
      * @param float     $price
      * @param array     $options
+     * @param float     $taxrate
      * @return \Gloudemans\Shoppingcart\CartItem
      */
-    public function add($id, $name = null, $qty = null, $price = null, array $options = [])
+    public function add($id, $name = null, $qty = null, $price = null, array $options = [], $taxrate = null)
     {
         if ($this->isMulti($id)) {
             return array_map(function ($item) {
@@ -97,7 +98,7 @@ class Cart
         if ($id instanceof CartItem) {
             $cartItem = $id;
         } else {
-            $cartItem = $this->createCartItem($id, $name, $qty, $price, $options);
+            $cartItem = $this->createCartItem($id, $name, $qty, $price, $options, $taxrate);
         }
 
         $content = $this->getContent();
@@ -358,6 +359,7 @@ class Cart
         $this->getConnection()
              ->table($this->getTableName())
              ->where('identifier', $identifier)
+             ->where('instance', $this->currentInstance())
              ->delete();
 
 
@@ -384,6 +386,7 @@ class Cart
         }
 
         $stored = $this->getConnection()->table($this->getTableName())
+            ->where('instance', $this->currentInstance())
             ->where('identifier', $identifier)->first();
 
         $storedContent = unserialize($stored->content);
@@ -467,9 +470,10 @@ class Cart
      * @param int|float $qty
      * @param float     $price
      * @param array     $options
+     * @param float     $taxrate
      * @return \Gloudemans\Shoppingcart\CartItem
      */
-    private function createCartItem($id, $name, $qty, $price, array $options)
+    private function createCartItem($id, $name, $qty, $price, array $options, $taxrate)
     {
         if ($id instanceof Buyable) {
             $cartItem = CartItem::fromBuyable($id, $qty ?: []);
@@ -483,7 +487,11 @@ class Cart
             $cartItem->setQuantity($qty);
         }
 
-        $cartItem->setTaxRate(config('cart.tax'));
+        if($taxrate) {
+            $cartItem->setTaxRate($taxrate);
+        } else {
+            $cartItem->setTaxRate(config('cart.tax'));
+        }
 
         return $cartItem;
     }
@@ -507,7 +515,7 @@ class Cart
      */
     protected function storedCartWithIdentifierExists($identifier)
     {
-        return $this->getConnection()->table($this->getTableName())->where('identifier', $identifier)->exists();
+        return $this->getConnection()->table($this->getTableName())->where('identifier', $identifier)->where('instance', $this->currentInstance())->exists();
     }
 
     /**

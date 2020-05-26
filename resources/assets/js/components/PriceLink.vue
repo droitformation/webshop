@@ -176,14 +176,6 @@ export default {
             select.on('select2:unselect', function (e) {
                 self.nouveau.colloques = select.select2('data').map(function(elem){return elem.id});
             });
-
-            let edit = $('.chosen-select-colloque-edit').select2({width:'100%', data: self.all});
-            edit.on('select2:select', function (e) {
-                self.current = edit.select2('data').map(function(elem){return elem.id});
-            });
-            edit.on('select2:unselect', function (e) {
-                self.current = edit.select2('data').map(function(elem){return elem.id});
-            });
         });
     },
     methods: {
@@ -196,7 +188,21 @@ export default {
         },
         select(price){
             this.current = _.map(price.linked, 'id');
-            $('.chosen-select-colloque-edit').val(_.map(price.linked, 'id')).trigger('change');
+
+
+            let self = this;
+            this.$nextTick(function() {
+                let edit = $('.chosen-select-colloque-edit').select2({width:'100%', data: self.all});
+                edit.on('select2:select', function (e) {
+                    self.current = edit.select2('data').map(function(elem){return elem.id});
+                });
+                edit.on('select2:unselect', function (e) {
+                    self.current = edit.select2('data').map(function(elem){return elem.id});
+                });
+                edit.val(this.choosen).trigger('change');
+            });
+
+            console.log(this.choosen);
         },
         resetform :function(){
             this.add = false;
@@ -224,7 +230,7 @@ export default {
         },
         deletePrice :function(price){
             var self = this;
-            axios.post('/vue/price_link/' + price.id, {'_method' : 'DELETE'}).then(function (response) {
+            axios.post('/vue/price_link/' + price.id + '/' + this.colloque, {'_method' : 'DELETE'}).then(function (response) {
                 self.list = response.data.prices;
             }).catch(function (error) { console.log(error);});
         }

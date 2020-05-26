@@ -22,11 +22,6 @@ class Price extends Model{
 
     public function getOccurrenceListAttribute()
     {
-        /*   
-          return [
-              'list'   => $this->occurrences->pluck('id')->all(),
-              'titles' => $this->occurrences->pluck('title')->all(),
-            */
           return $this->occurrences->mapWithKeys_v2(function ($occurrence) {
               return [$occurrence->id => [
                   'id'         => $occurrence->id,

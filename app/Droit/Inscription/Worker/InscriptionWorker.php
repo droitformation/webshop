@@ -35,13 +35,14 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         collect($data['participant'])->map(function ($register,$key) use ($data) {
             return array_filter([
-                'participant' => $data['participant'][$key],
-                'email'       => $data['email'][$key],
-                'price_id'    => isset($data['price_id'][$key]) ? $data['price_id'][$key] : null,
-                'rabais_id'   => isset($data['rabais_id'][$key]) ? $data['rabais_id'][$key] : null,
-                'occurrences' => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
-                'options'     => isset($data['options'][$key]) ? $data['options'][$key] : null,
-                'groupes'     => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
+                'participant'   => $data['participant'][$key],
+                'email'         => $data['email'][$key],
+                'price_id'      => isset($data['price_id'][$key]) ? $data['price_id'][$key] : null,
+                'price_link_id' => isset($data['price_link_id'][$key]) ? $data['price_link_id'][$key] : null,
+                'rabais_id'     => isset($data['rabais_id'][$key]) ? $data['rabais_id'][$key] : null,
+                'occurrences'   => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
+                'options'       => isset($data['options'][$key]) ? $data['options'][$key] : null,
+                'groupes'       => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
             ]);
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;

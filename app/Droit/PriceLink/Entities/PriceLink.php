@@ -22,4 +22,9 @@ class PriceLink extends Model{
     {
         return $this->belongsToMany('App\Droit\Colloque\Entities\Colloque','price_link_colloques','price_link_id','colloque_id');
     }
+
+    public function inscriptions()
+    {
+        return $this->hasMany('App\Droit\Inscription\Entities\Inscription', 'price_link_id');
+    }
 }

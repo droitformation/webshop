@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Droit\Abo\Worker;
+namespace App\Droit\Shop\Rappel\Worker;
 
 use App\Droit\Shop\Rappel\Worker\RappelWorkerInterface;
 

@@ -129,6 +129,15 @@ $factory->define(App\Droit\Price\Entities\Price::class, function (Faker\Generato
     ];
 });
 
+$factory->define(App\Droit\PriceLink\Entities\PriceLink::class, function (Faker\Generator $faker) {
+    return [
+        'price'       => 4000,
+        'type'        => 'public',
+        'description' => 'test',
+        'rang'        => 1,
+        'remarque'    => 'test',
+    ];
+});
 
 $factory->define(App\Droit\Location\Entities\Location::class, function (Faker\Generator $faker) {
     return [

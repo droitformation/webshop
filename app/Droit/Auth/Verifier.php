@@ -1,5 +1,5 @@
 <?php
-namespace App\Hub\Auth;
+namespace App\Droit\Auth;
 
 use Auth;
 

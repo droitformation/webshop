@@ -40,14 +40,12 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/plugins/form-select2/select2.css');?>" media="screen" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
     @endif
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <base href="/">
 
     <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.fancybox.min.js');?>"></script>

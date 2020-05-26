@@ -43,7 +43,7 @@ class ColloquePricesTest extends TestCase
 
         $data = ['price' => $prices];
 
-        $this->json('POST', '/vue/price', $data)->assertJsonFragment($prices);
+        $response = $this->json('POST', '/vue/price', $data)->assertJsonFragment($prices);
 
         $this->assertDatabaseHas('colloque_prices', [
             'colloque_id' => $colloque->id,
