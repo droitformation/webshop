@@ -1572,10 +1572,16 @@ span.avis-hidden-square{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-content: center;
+    align-items: center;
 }
 
-.list_prices .form-group{
-    width: 48%;
+.list_prices .form-group:first-child{
+    padding: 0 0 0 5%;
+}
+
+.list_prices .form-group:last-child{
+    padding: 0 5% 0 0;
 }
 
 .invoice_for address {

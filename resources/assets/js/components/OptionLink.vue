@@ -2,21 +2,29 @@
     <div>
         <h4>Choix du prix applicable</h4>
         <div class="list_prices">
-            <div class="form-group" v-if="prices.length != 0">
-                <label><strong>Prix normal</strong></label>
-                <select name="price_id" class="form-control">
-                    <option>Choix</option>
-                    <option v-for="price in prices" :value="price.id" >{{ price.description }} | {{ price.price_cents }} CHF</option>
-                </select>
+
+            <div id="pricenormalid" class="price-select">
+                <div class="form-group" v-if="prices.length != 0">
+                    <label><strong>Prix normal</strong></label>
+                    <select name="price_id" class="form-control"  @click="select('pricenormalid')">
+                        <option value="">Choix</option>
+                        <option v-for="price in prices" :value="price.id" >{{ price.description }} | {{ price.price_cents }} CHF</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="form-group" v-if="pricelinks.length != 0">
-                <label><strong>Prix liés</strong></label>
-                <select name="price_link_id" class="form-control">
-                    <option>Choix</option>
-                    <option v-for="pricelink in pricelinks" :value="pricelink.id" >{{ pricelink.description }} | {{ pricelink.price_cents }} CHF</option>
-                </select>
+            <div id="pricelinkid" class="price-select">
+                <div class="form-group" v-if="pricelinks.length != 0">
+                    <label><strong>Prix liés</strong></label>
+                    <select name="price_link_id" class="form-control price-select" @click="select('pricelinkid')">
+                        <option value="">Choix</option>
+                        <option v-for="pricelink in pricelinks" :value="pricelink.id" >{{ pricelink.description }} | {{ pricelink.price_cents }} CHF</option>
+                    </select>
+                </div>
             </div>
+
+            <a href="#" class="text-danger" @click.prevent="show" type="button" v-if="chosed">changer</a>
+
         </div>
 
         <h4>Merci de préciser</h4>
@@ -43,19 +51,33 @@
         </div>
     </div>
 </template>
-
+<style>
+    .price-select{
+        width: 100%;
+    }
+</style>
 <script>
     export default {
         props: ['colloque','prices','pricelinks'],
         data () {
             return {
-                options:[]
+                options:[],
+                chosed:false
             }
         },
         mounted: function () {
             this.getAll();
         },
         methods: {
+            show(){
+                $('div[class="price-select"]').val('');
+                $('div[class="price-select"]').show();
+                this.chosed = false;
+            },
+            select(id){
+                $('div[class="price-select"]:not(#'+id+')').hide();
+                this.chosed = true;
+            },
             getAll:function(){
                 var self = this;
                 axios.get('/vue/options/' + this.colloque, {}).then(function (response) {
