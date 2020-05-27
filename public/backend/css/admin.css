@@ -1026,11 +1026,12 @@ label.error{
 }
 
 .ui-widget-content li a {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 16px;
+    line-height: 18px;
     display: block;
     padding: 3px;
+    color: #000;
 }
 
 .ui-state-hover,
@@ -1043,11 +1044,14 @@ label.error{
 }
 
 .ui-widget-content li a:hover {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 16px;
+    line-height: 18px;
+    display: block;
     padding: 3px;
+    color: #000;
     background: #f8f8f8;
+    text-decoration: none;
 }
 
 

@@ -19,23 +19,25 @@
         @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[0]'])
     @endif
 
-    @if(!$colloque->prices->isEmpty() || !$colloque->price_link->isEmpty())
+{{--    @if(!$colloque->prices->isEmpty() || !$colloque->price_link->isEmpty())
         @include('backend.inscriptions.partials.prices')
     @endif
 
     @if(!$colloque->options->isEmpty())
         <h4>Merci de préciser</h4>
         @include('backend.inscriptions.partials.options', ['select' => 'groupes'])
-    @endif
+    @endif--}}
 
-    <option-link colloque="{{ $colloque->id }}" :prices="{{ $colloque->price_display }}" :pricelinks="{{ $colloque->price_link_display }}"></option-link>
+    <option-link
+            form="simple"
+            :colloque="{{ $colloque }}"
+            :prices="{{ $colloque->price_display }}"
+            :pricelinks="{{ $colloque->price_link_display }}"
+    ></option-link>
 
     <input name="user_id" value="{{ $user->id }}" type="hidden">
     <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
     <input name="type" value="{{ $type }}" type="hidden">
 
-    <div class="form-group">
-        <br><button id="makeInscription" class="btn btn-danger pull-right" type="submit">Inscrire</button>
-    </div>
 </fieldset>
 <!-- END Inscriptions -->

@@ -189,7 +189,6 @@ export default {
         select(price){
             this.current = _.map(price.linked, 'id');
 
-
             let self = this;
             this.$nextTick(function() {
                 let edit = $('.chosen-select-colloque-edit').select2({width:'100%', data: self.all});

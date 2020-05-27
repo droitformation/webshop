@@ -1,53 +1,43 @@
 <template>
     <div>
+
         <h4>Choix du prix applicable</h4>
+        {{ form }}
         <div class="list_prices">
 
-            <div id="pricenormalid" class="price-select">
+            <div v-show="!linked" class="price-select">
                 <div class="form-group" v-if="prices.length != 0">
                     <label><strong>Prix normal</strong></label>
-                    <select name="price_id" class="form-control"  @click="select('pricenormalid')">
+                    <select name="price_id" class="form-control select-price" @change="select" v-model="normal">
                         <option value="">Choix</option>
-                        <option v-for="price in prices" :value="price.id" >{{ price.description }} | {{ price.price_cents }} CHF</option>
+                        <option v-for="price in prices" :value="price.id" >{{ price.description }} | {{ price.price }} CHF</option>
                     </select>
                 </div>
             </div>
 
-            <div id="pricelinkid" class="price-select">
+            <div v-show="!normal"  class="price-select">
                 <div class="form-group" v-if="pricelinks.length != 0">
                     <label><strong>Prix liés</strong></label>
-                    <select name="price_link_id" class="form-control price-select" @click="select('pricelinkid')">
+                    <select name="price_link_id" class="form-control select-price" @change="select" v-model="linked">
                         <option value="">Choix</option>
-                        <option v-for="pricelink in pricelinks" :value="pricelink.id" >{{ pricelink.description }} | {{ pricelink.price_cents }} CHF</option>
+                        <option v-for="pricelink in pricelinks" :value="pricelink.id" >{{ pricelink.description }} | {{ pricelink.price }} CHF</option>
                     </select>
                 </div>
             </div>
 
             <a href="#" class="text-danger" @click.prevent="show" type="button" v-if="chosed">changer</a>
-
         </div>
 
-        <h4>Merci de préciser</h4>
-        <div v-for="(option,index) in options">
-            <div v-if="option.type == 'checkbox'">
-                <div class="form-group type-choix" >
-                    <input type="checkbox" class="option-input" :name="option.type == 'multiple' ? 'options[0][]':'options['+index+']' " :value="option.id" /> &nbsp;{{ option.title }}
-                </div>
-            </div>
-            <div v-if="option.type == 'choix'">
-                <div class="form-group group-choix type-choix">
-                    <label class="control-label"><strong>{{ option.title }}</strong></label>
-                    <div v-if="option.groupe.length != 0" class="radio" v-for="groupe in option.groupe">
-                        <label><input type="radio" required class="group-input" :name="'groupes['+ option.id +']'" :value="groupe.id">{{ groupe.text }}</label>
-                    </div>
-                </div>
-            </div>
-            <div v-if="option.type == 'text'">
-                <div class="form-group type-choix">
-                    <label><strong>{{ option.title }}</strong></label>
-                    <textarea class="form-control text-input" :name="'options[]['+ option +']'"></textarea>
-                </div>
-            </div>
+        <h4>Merci de préciser les options</h4>
+
+        <option-list :typeform="typeform" type="normal" :colloque="colloque" :inValidation="inValidation" @validated="handleValidated" :options="options"></option-list>
+
+        <div v-if="priceoptions.length != 0" v-for="priceoption in priceoptions">
+            <option-list :typeform="typeform" type="link" :colloque="priceoption.colloque" :inValidation="inValidation" @validated="handleValidated" :options="priceoption.options"></option-list>
+        </div>
+
+        <div class="form-group" v-if="form == 'simple'">
+            <br><button id="makeInscription" class="btn btn-danger pull-right" @click="validate($event)" type="submit">Inscrire</button>
         </div>
     </div>
 </template>
@@ -57,33 +47,72 @@
     }
 </style>
 <script>
+    import OptionList from './OptionList.vue';
+
     export default {
-        props: ['colloque','prices','pricelinks'],
+        props: ['colloque','prices','pricelinks','colloques','form'],
+        components:{
+            'option-list' : OptionList
+        },
         data () {
             return {
                 options:[],
-                chosed:false
+                priceoptions:[],
+                chosed:false,
+                linked:'',
+                normal:'',
+                inValidation:false,
+                isValid:false,
+                typeform: this.form == 'multiple' ? 'multiple' : 'simple'
             }
         },
         mounted: function () {
             this.getAll();
         },
+        watch: {
+            linked: function (id) {
+                this.getOptions(id);
+            },
+        },
         methods: {
             show(){
-                $('div[class="price-select"]').val('');
+                this.linked = '';
+                this.normal = '';
+
                 $('div[class="price-select"]').show();
                 this.chosed = false;
             },
-            select(id){
-                $('div[class="price-select"]:not(#'+id+')').hide();
+            getOptions(id){
+                var self = this;
+                axios.get('/vue/priceoptions/' + id + '/' + this.colloque.id, {}).then(function (response) {
+                    self.priceoptions = response.data;
+                }).catch(function (error) { console.log(error);});
+            },
+            select(){
                 this.chosed = true;
             },
             getAll:function(){
                 var self = this;
-                axios.get('/vue/options/' + this.colloque, {}).then(function (response) {
+                axios.get('/vue/options/' + this.colloque.id, {}).then(function (response) {
                     self.options = response.data;
                 }).catch(function (error) { console.log(error);});
             },
+            validate(event){
+                this.inValidation = true;
+
+                if(!this.linked && !this.normal){
+                    event.preventDefault();
+                    alert('Merci de choisir un prix');
+                }
+
+                if(!this.isValid){
+                    event.preventDefault();
+                    alert('Merci de choisir une option');
+                }
+            },
+            handleValidated(event){
+                this.isValid = event;
+            }
         }
     }
 </script>

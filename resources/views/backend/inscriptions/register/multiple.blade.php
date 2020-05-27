@@ -22,6 +22,14 @@
     </div>
 </div>
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+<participant
+        form="multiple"
+        :colloque="{{ $colloque }}"
+        :prices="{{ $colloque->price_display }}"
+        :pricelinks="{{ $colloque->price_link_display }}"></participant>
+
+{{--
 <p><a href="#" class="btn btn-sm btn-info" id="cloneBtn"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
 <div id="wrapper_clone">
     <fieldset class="field_clone" id="fieldset_clone">
@@ -54,6 +62,7 @@
 
     </fieldset>
 </div>
+--}}
 
 <input name="user_id" value="{{ $user->id }}" type="hidden">
 <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">

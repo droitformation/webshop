@@ -8,19 +8,22 @@ use App\Http\Controllers\Controller;
 use App\Droit\Option\Repo\OptionInterface;
 use App\Droit\Option\Repo\GroupOptionInterface;
 use App\Droit\Colloque\Repo\ColloqueInterface;
+use App\Droit\PriceLink\Repo\PriceLinkInterface;
 
 class OptionController extends Controller {
 
     protected $option;
     protected $group;
     protected $colloque;
+    protected $pricelink;
     protected $helper;
 
-    public function __construct(OptionInterface $option, GroupOptionInterface $group, ColloqueInterface $colloque)
+    public function __construct(OptionInterface $option, GroupOptionInterface $group, ColloqueInterface $colloque, PriceLinkInterface $pricelink)
     {
-        $this->option   = $option;
-        $this->group    = $group;
-        $this->colloque = $colloque;
+        $this->option    = $option;
+        $this->group     = $group;
+        $this->colloque  = $colloque;
+        $this->pricelink = $pricelink;
 
         $this->helper  = new \App\Droit\Helper\Helper();
     }
@@ -30,6 +33,20 @@ class OptionController extends Controller {
         $colloque = $this->colloque->find($colloque);
 
         return response()->json($colloque->option_display);
+    }
+
+    public function priceoptions($price_link_id,$colloque_id)
+    {
+        $price_link = $this->pricelink->find($price_link_id);
+        $colloques  = $price_link->colloques->whereNotIn('id',[$colloque_id]);
+        $options    = $colloques->map(function ($colloque) {
+            return [
+                'colloque' => ['id' => $colloque->id, 'titre' => $colloque->titre],
+                'options'  => $colloque->option_display
+            ];
+        });
+
+        return response()->json($options);
     }
 
     public function store(Request $request)
@@ -42,9 +59,6 @@ class OptionController extends Controller {
         return response()->json(['options' => $colloque->option_display]);
     }
 
-    /**
-     * @return Response
-     */
     public function update($id,Request $request)
     {
         $data = $request->input('option');
@@ -61,11 +75,6 @@ class OptionController extends Controller {
         return response()->json(['options' => $colloque->option_display]);
     }
 
-    /**
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         $option = $this->option->find($id);

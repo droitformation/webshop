@@ -132,8 +132,13 @@ class InscriptionController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(InscriptionCreateRequest $request)
-    {
+    public function store(Request $request){
+    //public function store(InscriptionCreateRequest $request){
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';
+        exit;
+
         session()->put('reference_no', $request->input('reference_no',null));
         session()->put('transaction_no', $request->input('transaction_no',null));
 
@@ -146,6 +151,7 @@ class InscriptionController extends Controller
         }
 
         $reference = \App\Droit\Transaction\Reference::make($model);
+
         $this->register->makeDocuments($model, true);
 
         flash('L\'inscription à bien été crée')->success();

@@ -54,6 +54,7 @@ Vue.component('choix-duplicate', require('./components/ChoixDuplicate.vue').defa
 Vue.component('rabais', require('./components/Rabais.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);
 Vue.component('option-link', require('./components/OptionLink.vue').default);
+Vue.component('participant', require('./components/Participant.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);
