@@ -1,7 +1,7 @@
 <template>
     <div>
-
         <p><a class="btn btn-sm btn-info" @click="add"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
+
         <div v-for="participant in participants">
             <fieldset class="field_clone">
                 <div class="form-group">
@@ -16,6 +16,7 @@
                 </div>
 
                 <option-link
+                        :optionLinkValidate="inValidation" @validated="handleValidated"
                         :form="form"
                         :colloque="colloque"
                         :prices="prices"
@@ -23,6 +24,8 @@
             </fieldset>
         </div>
 
+        <div class="clearfix"></div><br/>
+        <button class="btn btn-danger" id="submitAll" @click="validate($event)" type="submit">Inscrire</button>
     </div>
 </template>
 
@@ -33,7 +36,8 @@
         props: ['colloque','prices','pricelinks','form'],
         data() {
             return {
-                participants:[{'email' : ''}]
+                participants:[{'email' : ''}],
+                inValidation:false,
             }
         },
         components:{
@@ -44,6 +48,14 @@
         methods: {
             add(){
                 this.participants.push({'email' : ''});
+            },
+            validate(event){
+                this.inValidation = true;
+
+                //event.preventDefault();
+            },
+            handleValidated(event){
+                //alert('ok ' + event);
             }
         }
     }

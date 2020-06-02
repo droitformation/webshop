@@ -634,6 +634,7 @@ Route::group(['prefix' => 'vue'], function () {
     Route::get('colloques','Api\ColloqueController@all');
 
     Route::get('options/{colloque}','Api\OptionController@index');
+    Route::post('colloqueoptions','Api\OptionController@colloqueoptions');
     Route::get('priceoptions/{price_link_id}/{colloque_id}','Api\OptionController@priceoptions');
     Route::post('option','Api\OptionController@store');
     Route::put('option/{id}','Api\OptionController@update');

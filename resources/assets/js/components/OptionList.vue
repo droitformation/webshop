@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ typeform }}
+        validation: {{ inValidation }}?
         <p class="option-title">{{ colloque.titre }}</p>
         <div v-for="(option,index) in options">
             <div v-if="option.type == 'checkbox'">
@@ -27,10 +27,10 @@
 </template>
 <script>
     export default {
-        props: ['options', 'colloque', 'inValidation', 'type', 'typeform'],
+        props: ['options', 'colloque', 'optionListValidation', 'type', 'typeform'],
         data() {
             return {
-                isValide:false
+                isValide:false,
             }
         },
         mounted: function () {},
@@ -41,9 +41,14 @@
                 }
             },
         },
+        computed: {
+            inValidation () {
+                return this.optionListValidation
+            }
+        },
         methods: {
             checkbox: function (index) {
-                return this.isValide == 'multiple' ? 'colloque['+this.this.colloque.id+'][][options][0][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
+                return this.isValide == 'multiple' ? 'colloque['+this.thiinss.colloque.id+'][][options][0][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
             },
             radio: function (option) {
                 return this.isValide == 'multiple' ? 'colloque['+this.colloque.id+'][][groupes][0]['+ option.id +']' : 'colloque['+this.colloque.id+'][groupes]['+ option.id +']';
@@ -56,7 +61,8 @@
                 let data = [];
 
                 $radios.each(function(groupe){
-                    data.push($(this).find('input[type="radio"]:checked').length > 0);
+                    let checked = $(this).find('input[type="radio"]:checked').val();
+                    if(checked){data.push(checked);}
                 });
 
                 if(data.length == $radios.length){

@@ -2,7 +2,7 @@
     <div>
 
         <h4>Choix du prix applicable</h4>
-        {{ form }}
+        in options validation {{ inValidation }}
         <div class="list_prices">
 
             <div v-show="!linked" class="price-select">
@@ -30,10 +30,10 @@
 
         <h4>Merci de préciser les options</h4>
 
-        <option-list :typeform="typeform" type="normal" :colloque="colloque" :inValidation="inValidation" @validated="handleValidated" :options="options"></option-list>
+        <option-list :typeform="typeform" type="normal" :colloque="colloque" :optionListValidation="inValidation" @validated="handleValidated" :options="options"></option-list>
 
         <div v-if="priceoptions.length != 0" v-for="priceoption in priceoptions">
-            <option-list :typeform="typeform" type="link" :colloque="priceoption.colloque" :inValidation="inValidation" @validated="handleValidated" :options="priceoption.options"></option-list>
+            <option-list :typeform="typeform" type="link" :colloque="priceoption.colloque" :optionListValidation="inValidation" @validated="handleValidated" :options="priceoption.options"></option-list>
         </div>
 
         <div class="form-group" v-if="form == 'simple'">
@@ -50,7 +50,7 @@
     import OptionList from './OptionList.vue';
 
     export default {
-        props: ['colloque','prices','pricelinks','colloques','form'],
+        props: ['colloque','prices','pricelinks','colloques','form','optionLinkValidate'],
         components:{
             'option-list' : OptionList
         },
@@ -61,13 +61,17 @@
                 chosed:false,
                 linked:'',
                 normal:'',
-                inValidation:false,
                 isValid:false,
                 typeform: this.form == 'multiple' ? 'multiple' : 'simple'
             }
         },
         mounted: function () {
             this.getAll();
+        },
+        computed: {
+            inValidation () {
+                return this.optionLinkValidate
+            }
         },
         watch: {
             linked: function (id) {
@@ -98,7 +102,7 @@
                 }).catch(function (error) { console.log(error);});
             },
             validate(event){
-                this.inValidation = true;
+                this.makeValidation = true;
 
                 if(!this.linked && !this.normal){
                     event.preventDefault();
@@ -111,7 +115,32 @@
                 }
             },
             handleValidated(event){
+
+                let dataValidation = [];
                 this.isValid = event;
+
+                if(this.linked.length){
+                    dataValidation.push(this.linked);
+                }
+
+                if(this.normal.length){
+                    dataValidation.push(this.normal);
+                }
+
+                if(this.isValid){
+                    dataValidation.push(this.normal);
+                }
+
+                console.log(dataValidation);
+
+                if(dataValidation.length === 3){
+                    this.$emit('validated',true);
+                }
+                else{
+                   // alert('Merci de choisir un prix et les options');
+                    this.$emit('validated',false);
+                }
+
             }
         }
     }

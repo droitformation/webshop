@@ -21,18 +21,20 @@
         </div>
     </div>
 </div>
-<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-<participant
+<input name="user_id" value="{{ $user->id }}" type="hidden">
+<input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
+<input name="type" value="{{ $type }}" type="hidden">
+
+{{--<participant
         form="multiple"
         :colloque="{{ $colloque }}"
         :prices="{{ $colloque->price_display }}"
-        :pricelinks="{{ $colloque->price_link_display }}"></participant>
+        :pricelinks="{{ $colloque->price_link_display }}"></participant>--}}
 
-{{--
 <p><a href="#" class="btn btn-sm btn-info" id="cloneBtn"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
 <div id="wrapper_clone">
-    <fieldset class="field_clone" id="fieldset_clone">
+    <fieldset class="field_clone" id="fieldset_clone" data-index="0">
 
         <div class="form-group">
             <label>Nom du participant</label>
@@ -52,24 +54,18 @@
         <!-- Occurence if any -->
         @if(!$colloque->occurrences->isEmpty())
             <h4>Conférences</h4>
-            @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[0]'])
+            @include('backend.inscriptions.partials.occurrences', ['select' => 'occurrences[0]'])
         @endif
 
         @if(!$colloque->options->isEmpty())
             <h4>Merci de préciser</h4>
-            @include('backend.inscriptions..partials.options', ['select' => 'groupes[0]'])
+            @include('backend.inscriptions.partials.options', ['select' => 'groupes[0]'])
         @endif
 
     </fieldset>
 </div>
---}}
 
-<input name="user_id" value="{{ $user->id }}" type="hidden">
-<input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
-<input name="type" value="{{ $type }}" type="hidden">
-
-<div class="clearfix"></div><br/>
-<button class="btn btn-danger" type="submit">Inscrire</button>
-
-
+<div class="form-group">
+    <br><button id="makeInscription" class="btn btn-danger pull-right" type="submit">Inscrire</button>
+</div>
 <!-- END Inscriptions -->

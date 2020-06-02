@@ -5840,7 +5840,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['colloque', 'prices', 'pricelinks', 'colloques', 'form'],
+  props: ['colloque', 'prices', 'pricelinks', 'colloques', 'form', 'optionLinkValidate'],
   components: {
     'option-list': _OptionList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -5851,13 +5851,17 @@ __webpack_require__.r(__webpack_exports__);
       chosed: false,
       linked: '',
       normal: '',
-      inValidation: false,
       isValid: false,
       typeform: this.form == 'multiple' ? 'multiple' : 'simple'
     };
   },
   mounted: function mounted() {
     this.getAll();
+  },
+  computed: {
+    inValidation: function inValidation() {
+      return this.optionLinkValidate;
+    }
   },
   watch: {
     linked: function linked(id) {
@@ -5891,7 +5895,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     validate: function validate(event) {
-      this.inValidation = true;
+      this.makeValidation = true;
 
       if (!this.linked && !this.normal) {
         event.preventDefault();
@@ -5904,7 +5908,29 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     handleValidated: function handleValidated(event) {
+      var dataValidation = [];
       this.isValid = event;
+
+      if (this.linked.length) {
+        dataValidation.push(this.linked);
+      }
+
+      if (this.normal.length) {
+        dataValidation.push(this.normal);
+      }
+
+      if (this.isValid) {
+        dataValidation.push(this.normal);
+      }
+
+      console.log(dataValidation);
+
+      if (dataValidation.length === 3) {
+        this.$emit('validated', true);
+      } else {
+        // alert('Merci de choisir un prix et les options');
+        this.$emit('validated', false);
+      }
     }
   }
 });
@@ -5948,7 +5974,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['options', 'colloque', 'inValidation', 'type', 'typeform'],
+  props: ['options', 'colloque', 'optionListValidation', 'type', 'typeform'],
   data: function data() {
     return {
       isValide: false
@@ -5962,9 +5988,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  computed: {
+    inValidation: function inValidation() {
+      return this.optionListValidation;
+    }
+  },
   methods: {
     checkbox: function checkbox(index) {
-      return this.isValide == 'multiple' ? 'colloque[' + this["this"].colloque.id + '][][options][0][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
+      return this.isValide == 'multiple' ? 'colloque[' + this.thiinss.colloque.id + '][][options][0][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
     },
     radio: function radio(option) {
       return this.isValide == 'multiple' ? 'colloque[' + this.colloque.id + '][][groupes][0][' + option.id + ']' : 'colloque[' + this.colloque.id + '][groupes][' + option.id + ']';
@@ -5976,7 +6007,11 @@ __webpack_require__.r(__webpack_exports__);
       var $radios = $('div.group-choix');
       var data = [];
       $radios.each(function (groupe) {
-        data.push($(this).find('input[type="radio"]:checked').length > 0);
+        var checked = $(this).find('input[type="radio"]:checked').val();
+
+        if (checked) {
+          data.push(checked);
+        }
       });
 
       if (data.length == $radios.length) {
@@ -6108,6 +6143,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'form'],
@@ -6115,7 +6153,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       participants: [{
         'email': ''
-      }]
+      }],
+      inValidation: false
     };
   },
   components: {
@@ -6128,6 +6167,11 @@ __webpack_require__.r(__webpack_exports__);
       this.participants.push({
         'email': ''
       });
+    },
+    validate: function validate(event) {
+      this.inValidation = true; //event.preventDefault();
+    },
+    handleValidated: function handleValidated(event) {//alert('ok ' + event);
     }
   }
 });
@@ -40827,7 +40871,9 @@ var render = function() {
     "div",
     [
       _c("h4", [_vm._v("Choix du prix applicable")]),
-      _vm._v("\n    " + _vm._s(_vm.form) + "\n    "),
+      _vm._v(
+        "\n    in options validation " + _vm._s(_vm.inValidation) + "\n    "
+      ),
       _c("div", { staticClass: "list_prices" }, [
         _c(
           "div",
@@ -41000,7 +41046,7 @@ var render = function() {
           typeform: _vm.typeform,
           type: "normal",
           colloque: _vm.colloque,
-          inValidation: _vm.inValidation,
+          optionListValidation: _vm.inValidation,
           options: _vm.options
         },
         on: { validated: _vm.handleValidated }
@@ -41016,7 +41062,7 @@ var render = function() {
                     typeform: _vm.typeform,
                     type: "link",
                     colloque: priceoption.colloque,
-                    inValidation: _vm.inValidation,
+                    optionListValidation: _vm.inValidation,
                     options: priceoption.options
                   },
                   on: { validated: _vm.handleValidated }
@@ -41087,7 +41133,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._v("\n    " + _vm._s(_vm.typeform) + "\n    "),
+      _vm._v("\n    validation: " + _vm._s(_vm.inValidation) + "?\n    "),
       _c("p", { staticClass: "option-title" }, [
         _vm._v(_vm._s(_vm.colloque.titre))
       ]),
@@ -41322,17 +41368,36 @@ var render = function() {
               _vm._v(" "),
               _c("option-link", {
                 attrs: {
+                  optionLinkValidate: _vm.inValidation,
                   form: _vm.form,
                   colloque: _vm.colloque,
                   prices: _vm.prices,
                   pricelinks: _vm.pricelinks
-                }
+                },
+                on: { validated: _vm.handleValidated }
               })
             ],
             1
           )
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { id: "submitAll", type: "submit" },
+          on: {
+            click: function($event) {
+              return _vm.validate($event)
+            }
+          }
+        },
+        [_vm._v("Inscrire")]
+      )
     ],
     2
   )

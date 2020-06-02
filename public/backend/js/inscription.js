@@ -1,4 +1,6 @@
 $( function() {
+
+    let base_url = location.protocol + "//" + location.host+"/";
     /*
      * Inscription form clones
      */
@@ -16,6 +18,8 @@ $( function() {
         var $texts       = clone.find('.text-input');
         var $occurrences = clone.find('.occurrence-input');
         var $radios      = clone.find('.group-input');
+
+        clone.find('.options-liste-multiple').remove();
 
         $radios.each(function(){
             var name = $(this).attr('name');
@@ -44,13 +48,13 @@ $( function() {
         });
 
         clone.attr('id', '');
+        clone.find('.price_type').attr('data-index', length);
         clone.prepend('<a href="#" class="remove">x</a>');
         clone.appendTo($wrapper_clone);
     });
 
     $('body').on("click", '.remove' ,function(e) {
         e.preventDefault(); e.stopPropagation();
-
         $(this).closest('fieldset').remove();
     });
 
@@ -58,6 +62,33 @@ $( function() {
         var val = $(this).val();
         if( !val.includes(',') ){
             alert('Vérifier que le nom et prénom sont séparés par une virgule');
+        }
+    });
+
+    $('body').on("change", '.price_type' ,function(e) {
+
+        let $fieldset_clone = $(this).closest('.field_clone');
+
+        let colloque = $(this).data('colloque');
+        let type     = $(this).find(':selected').data('type');
+        let price    = $(this).find(':selected').val();
+        let index    = $(this).data('index');
+
+        if(type == 'price_link_id'){
+
+            $.ajax({
+                type : "POST",
+                url  : base_url + 'vue/colloqueoptions',
+                data : { colloque : colloque, index : index ,price : price , _token: $("meta[name='_token']").attr('content') },
+                success: function(html) {
+                    $fieldset_clone.append(html);
+                },
+                error: function(){alert('problème');}
+            });
+
+        }
+        else{
+            $fieldset_clone.find('.options-liste-multiple').remove();
         }
     });
 
