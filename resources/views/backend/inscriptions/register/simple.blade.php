@@ -1,7 +1,7 @@
 <!-- Inscription simple -->
 <div class="clearfix"></div><hr>
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-<fieldset>
+<fieldset id="main_fieldset">
 
     <div class="invoice_for">
         <address>
@@ -19,25 +19,29 @@
         @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[0]'])
     @endif
 
-{{--    @if(!$colloque->prices->isEmpty() || !$colloque->price_link->isEmpty())
-        @include('backend.inscriptions.partials.prices')
+    @if(!$colloque->prices->isEmpty() || !$colloque->price_link->isEmpty())
+        @include('backend.inscriptions.partials.prices',['form' => 'simple'])
     @endif
 
-    @if(!$colloque->options->isEmpty())
-        <h4>Merci de préciser</h4>
-        @include('backend.inscriptions.partials.options', ['select' => 'groupes'])
-    @endif--}}
+    <div class="optionscolloques">
+        @if(!$colloque->options->isEmpty())
+            <h4>Merci de préciser</h4>
+            @include('backend.inscriptions.partials.options', ['select' => 'groupes'])
+        @endif
+    </div>
 
-    <option-link
+ {{--   <option-link
             form="simple"
             :colloque="{{ $colloque }}"
             :prices="{{ $colloque->price_display }}"
             :pricelinks="{{ $colloque->price_link_display }}"
-    ></option-link>
+    ></option-link>--}}
 
     <input name="user_id" value="{{ $user->id }}" type="hidden">
     <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
     <input name="type" value="{{ $type }}" type="hidden">
+
+    <br><button id="makeInscription" class="btn btn-danger pull-right" type="submit">Inscrire</button>
 
 </fieldset>
 <!-- END Inscriptions -->

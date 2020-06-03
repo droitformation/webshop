@@ -66,8 +66,15 @@ $( function() {
     });
 
     $('body').on("change", '.price_type' ,function(e) {
+        let $wrapper;
+        let form = $(this).data('form');
 
-        let $fieldset_clone = $(this).closest('.field_clone');
+        if(form == 'multiple'){
+            $wrapper = $(this).closest('.field_clone');
+        }
+        else{
+            $wrapper = $(this).closest('#main_fieldset').find('.optionscolloques');
+        }
 
         let colloque = $(this).data('colloque');
         let type     = $(this).find(':selected').data('type');
@@ -75,20 +82,18 @@ $( function() {
         let index    = $(this).data('index');
 
         if(type == 'price_link_id'){
-
             $.ajax({
                 type : "POST",
                 url  : base_url + 'vue/colloqueoptions',
                 data : { colloque : colloque, index : index ,price : price , _token: $("meta[name='_token']").attr('content') },
                 success: function(html) {
-                    $fieldset_clone.append(html);
+                    $wrapper.append(html);
                 },
                 error: function(){alert('problème');}
             });
-
         }
         else{
-            $fieldset_clone.find('.options-liste-multiple').remove();
+            $wrapper.find('.options-liste-multiple').remove();
         }
     });
 

@@ -15,7 +15,7 @@
                 <p><a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/create') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour</a></p>
                 <h3>Créer une inscription {{ $type }}</h3>
 
-                <form id="formInscription" class="validate-form" data-validate="parsley" action="{{ url('admin/inscription') }}" method="post">
+                <form id="formInscription" class="validate-form" action="{{ url('admin/inscription') }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <h4><strong>Colloque:</strong> {{ $colloque->titre }}</h4>
                     {!! isset($form) ? $form : '' !!}

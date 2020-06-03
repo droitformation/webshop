@@ -11,7 +11,10 @@
             @if($input == 'checkbox')
                 @foreach($options as $i => $option)
                     <div class="form-group type-choix">
+                        <input type="checkbox" class="option-input" name="colloque[{{ $colloque->id }}][options][{{ $index }}][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+{{--
                         <input type="checkbox" class="option-input" name="colloque[{{ $colloque->id }}][options][{{ $index }}][{{ $i }}]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+--}}
                     </div>
                 @endforeach
             @endif
@@ -21,7 +24,7 @@
                     <div class="form-group type-choix">
                         @foreach($options as $option)
                             <label>{{ $option->title }}</label>
-                            <textarea class="form-control text-input" name="colloque[{{ $colloque->id }}][options][{{ $index }}][{{ $i }}][{{ $option->id }}]">{{ $reponse }}</textarea>
+                            <textarea class="form-control text-input" name="colloque[{{ $colloque->id }}][options][{{ $index }}][{{ $option->id }}][]"></textarea>
                         @endforeach
                     </div>
                 @endforeach

@@ -48,7 +48,7 @@
         </div>
 
         @if(!$colloque->prices->isEmpty())
-            @include('backend.inscriptions.partials.prices', ['select' => 'price_id[]'])
+            @include('backend.inscriptions.partials.prices', ['select' => 'price_id[]', 'form' => 'multiple'])
         @endif
 
         <!-- Occurence if any -->

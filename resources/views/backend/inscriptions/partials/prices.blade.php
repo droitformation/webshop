@@ -3,7 +3,7 @@
 
     <div class="form-group">
         <label><strong>Prix normal</strong></label>
-        <select data-colloque="{{ $colloque->id }}" data-index="0" required name="price" class="form-control price_type">
+        <select data-colloque="{{ $colloque->id }}" data-index="0" data-form="{{ $form }}" required name="price" class="form-control price_type">
             <option>Choix</option>
             @foreach($colloque->prices as $price)
                 <option data-type="price_id" value="price_id:{{ $price->id }}" {{ isset($price_current) && $price_current == $price->id ? 'selected' : '' }}>

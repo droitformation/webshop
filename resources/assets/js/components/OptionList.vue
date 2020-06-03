@@ -1,6 +1,5 @@
 <template>
     <div>
-        validation: {{ inValidation }}?
         <p class="option-title">{{ colloque.titre }}</p>
         <div v-for="(option,index) in options">
             <div v-if="option.type == 'checkbox'">
@@ -12,7 +11,7 @@
                 <div class="form-group group-choix type-choix">
                     <label class="control-label"><strong>{{ option.title }}</strong></label>
                     <div v-if="option.groupe.length != 0" class="radio" v-for="groupe in option.groupe">
-                        <label><input type="radio" @change="validate" required class="group-input" :name="radio(option)" :value="groupe.id">{{ groupe.text }}</label>
+                        <label><input type="radio" required class="group-input" :name="radio(option)" :value="groupe.id">{{ groupe.text }}</label>
                     </div>
                 </div>
             </div>
@@ -27,7 +26,7 @@
 </template>
 <script>
     export default {
-        props: ['options', 'colloque', 'optionListValidation', 'type', 'typeform'],
+        props: ['options', 'colloque', 'type', 'typeform'],
         data() {
             return {
                 isValide:false,
@@ -48,7 +47,7 @@
         },
         methods: {
             checkbox: function (index) {
-                return this.isValide == 'multiple' ? 'colloque['+this.thiinss.colloque.id+'][][options][0][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
+                return this.isValide == 'multiple' ? 'colloque['+this.colloque.id+'][][options][0][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
             },
             radio: function (option) {
                 return this.isValide == 'multiple' ? 'colloque['+this.colloque.id+'][][groupes][0]['+ option.id +']' : 'colloque['+this.colloque.id+'][groupes]['+ option.id +']';
@@ -68,8 +67,6 @@
                 if(data.length == $radios.length){
                     this.isValide = true;
                 }
-
-                this.$emit('validated',this.isValide);
             }
         }
     }
