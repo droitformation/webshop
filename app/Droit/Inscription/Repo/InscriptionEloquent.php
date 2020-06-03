@@ -211,12 +211,9 @@ class InscriptionEloquent implements InscriptionInterface{
         }
 
         // Options
-        if(isset($data['options']))
-        {
-            foreach($data['options'] as $option)
-            {
-                if(is_array($option))
-                {
+        if(isset($data['options'])) {
+            foreach($data['options'] as $option) {
+                if(is_array($option)) {
                     $id = key($option);
                     $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
                 }
@@ -227,19 +224,16 @@ class InscriptionEloquent implements InscriptionInterface{
         }
 
         // Occurrences
-        if(isset($data['occurrences']))
-        {
-            foreach($data['occurrences'] as $occurrence)
-            {
+        if(isset($data['occurrences'])) {
+            foreach($data['occurrences'] as $occurrence) {
                 $inscription->occurrences()->attach($occurrence, ['inscription_id' => $inscription->id]);
             }
         }
 
         // Options groupes
-        if(isset($data['groupes']))
-        {
-            foreach($data['groupes'] as $option_id => $groupe_id)
-            {
+        // [$option_id => $groupe_id]
+        if(isset($data['groupes'])) {
+            foreach($data['groupes'] as $option_id => $groupe_id) {
                 $inscription->options()->attach($option_id, ['groupe_id' => $groupe_id, 'inscription_id' => $inscription->id]);
             }
         }

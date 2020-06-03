@@ -117,6 +117,8 @@ class ArretController extends Controller {
         
         $arret = $this->arret->update( $data );
 
+        event(new \App\Events\ContentUpdated('hub'));
+
         flash('Arrêt mis à jour')->success();
 
         return redirect('admin/arret/'.$arret->id);
@@ -132,6 +134,8 @@ class ArretController extends Controller {
     public function destroy($id)
     {
         $this->arret->delete($id);
+
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Arrêt supprimée')->success();
 

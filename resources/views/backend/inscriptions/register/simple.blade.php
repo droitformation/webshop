@@ -20,7 +20,7 @@
     @endif
 
     @if(!$colloque->prices->isEmpty() || !$colloque->price_link->isEmpty())
-        @include('backend.inscriptions.partials.prices',['form' => 'simple'])
+        @include('backend.inscriptions.partials.prices',['select' => 'price_id', 'form' => 'simple'])
     @endif
 
     <div class="optionscolloques">

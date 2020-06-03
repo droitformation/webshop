@@ -196,6 +196,7 @@ function validateListEmail($results){
     });
 }
 
+
 /**
  * Remove any elements where the callback returns true
  *
@@ -253,4 +254,14 @@ function couponCalcul($order,$product){
     }
 
     return $product->price_cents;
+}
+
+function setMaj($date,$what)
+{
+    return \Storage::disk('local')->put($what.'.txt', $date);
+}
+
+function getMaj($what)
+{
+    return \Storage::disk('local')->get($what.'.txt');
 }

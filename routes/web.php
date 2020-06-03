@@ -179,6 +179,7 @@ Route::group(['prefix' => 'hub'], function () {
     Route::post('menu','Hub\ContentController@menu');
     Route::post('page','Hub\ContentController@page');
     Route::get('pdf/{id}/{site_id}','Hub\ContentController@pdf');
+    Route::get('maj','Hub\ContentController@maj');
 });
 
 /* *

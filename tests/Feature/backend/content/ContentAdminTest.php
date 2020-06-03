@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\HubDate;
 
 class ContentAdminTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,HubDate;
 
     public function setUp(): void
     {
@@ -30,6 +31,8 @@ class ContentAdminTest extends TestCase
 
     public function testCreateBloc()
     {
+        $this->setDate('content');
+
         $page = factory(\App\Droit\Page\Entities\Page::class)->create();
 
         $response = $this->call('POST', 'admin/bloc', [
@@ -40,8 +43,9 @@ class ContentAdminTest extends TestCase
             'content'  => '<p>Une Adresse</p>'
         ]);
 
-        $this->assertDatabaseHas('blocs', [
+        $this->isDate('content');
 
+        $this->assertDatabaseHas('blocs', [
             'title'    => 'Un bloc',
             'type'     => 'pub',
             'position' => 'sidebar',
@@ -51,6 +55,8 @@ class ContentAdminTest extends TestCase
 
     public function testUpdateBloc()
     {
+        $this->setDate('content');
+
         $bloc = factory(\App\Droit\Bloc\Entities\Bloc::class)->create();
 
         $response = $this->call('PUT', 'admin/bloc/'.$bloc->id, [
@@ -58,6 +64,8 @@ class ContentAdminTest extends TestCase
             'title'    => 'Un autre bloc',
             'content'  => '<p>Autre Adresse</p>'
         ]);
+
+        $this->isDate('content');
 
         $this->assertDatabaseHas('blocs', [
             'id'       => $bloc->id,
@@ -68,9 +76,13 @@ class ContentAdminTest extends TestCase
 
     public function testDeleteBloc()
     {
+        $this->setDate('content');
+
         $bloc = factory(\App\Droit\Bloc\Entities\Bloc::class)->create();
 
         $response = $this->call('DELETE','admin/bloc/'.$bloc->id);
+
+        $this->isDate('content');
 
         $this->assertDatabaseMissing('blocs', [
             'id' => $bloc->id,
@@ -80,6 +92,8 @@ class ContentAdminTest extends TestCase
 
     public function testPageCreate()
     {
+        $this->setDate('content');
+
         $menu = factory(\App\Droit\Menu\Entities\Menu::class)->create();
 
         $response = $this->call('POST', 'admin/page', [
@@ -91,6 +105,8 @@ class ContentAdminTest extends TestCase
             'rang'       => 1,
             'site_id'    => 2,
         ]);
+
+        $this->isDate('content');
 
         $this->assertDatabaseHas('pages', [
             'title'      => 'Lorem ipsum',
@@ -105,6 +121,8 @@ class ContentAdminTest extends TestCase
 
     public function testUpdatePage()
     {
+        $this->setDate('content');
+
         $page = factory(\App\Droit\Page\Entities\Page::class)->create();
 
         $response = $this->call('PUT', 'admin/page/'.$page->id, [
@@ -113,6 +131,8 @@ class ContentAdminTest extends TestCase
             'content' => '<p>Autre contenu</p>',
             'hidden'  => 1
         ]);
+
+        $this->isDate('content');
 
         $this->assertDatabaseHas('pages', [
             'id'       => $page->id,
@@ -136,9 +156,13 @@ class ContentAdminTest extends TestCase
 
     public function testDeletePage()
     {
+        $this->setDate('content');
+
         $page = factory(\App\Droit\Page\Entities\Page::class)->create();
 
         $response = $this->call('DELETE','admin/page/'.$page->id);
+
+        $this->isDate('content');
 
         $this->assertDatabaseMissing('pages', [
             'id' => $page->id,
@@ -148,6 +172,8 @@ class ContentAdminTest extends TestCase
 
     public function testAddBlocContent()
     {
+        $this->setDate('content');
+
         $page = factory(\App\Droit\Page\Entities\Page::class)->create();
 
         $data = [
@@ -158,6 +184,8 @@ class ContentAdminTest extends TestCase
         ];
 
         $this->call('POST', 'admin/pagecontent', $data);
+
+        $this->isDate('content');
 
         $this->assertDatabaseHas('contents', [
             'title'    => 'Un titre bloc',
@@ -170,6 +198,8 @@ class ContentAdminTest extends TestCase
 
     public function testMenuCreate()
     {
+        $this->setDate('content');
+
         $data = [
             'title'    => 'Un menu',
             'position' => 'main',
@@ -177,6 +207,8 @@ class ContentAdminTest extends TestCase
         ];
 
         $this->call('POST', 'admin/menu', $data);
+
+        $this->isDate('content');
 
         $this->assertDatabaseHas('menus', [
             'title'       => 'Un menu',
@@ -187,6 +219,8 @@ class ContentAdminTest extends TestCase
 
     public function testUpdateMenu()
     {
+        $this->setDate('content');
+
         $menu = factory(\App\Droit\Menu\Entities\Menu::class)->create();
 
         $data = [
@@ -196,6 +230,8 @@ class ContentAdminTest extends TestCase
         ];
 
         $this->call('PUT', 'admin/menu/'.$menu->id, $data);
+
+        $this->isDate('content');
 
         $this->assertDatabaseHas('menus', [
             'id'          => $menu->id,
@@ -207,9 +243,13 @@ class ContentAdminTest extends TestCase
 
     public function testDeleteMenu()
     {
+        $this->setDate('content');
+
         $menu = factory(\App\Droit\Menu\Entities\Menu::class)->create();
 
         $response = $this->call('DELETE','admin/menu/'.$menu->id);
+
+        $this->isDate('content');
 
         $this->assertDatabaseMissing('menus', [
             'id' => $menu->id,
@@ -218,6 +258,8 @@ class ContentAdminTest extends TestCase
 
     public function testAuthorCreate()
     {
+        $this->setDate('hub');
+
         $data = [
             'first_name' => 'Cindy',
             'last_name'  => 'Leschaud',
@@ -226,6 +268,8 @@ class ContentAdminTest extends TestCase
         ];
 
         $this->call('POST', 'admin/author', $data);
+
+        $this->isDate('hub');
 
         $this->assertDatabaseHas('authors', [
             'first_name' => 'Cindy',
@@ -237,6 +281,8 @@ class ContentAdminTest extends TestCase
 
     public function testAuthorUpdate()
     {
+        $this->setDate('hub');
+
         $author = factory(\App\Droit\Author\Entities\Author::class)->create();
 
         $nbr = rand(1,5);
@@ -249,6 +295,8 @@ class ContentAdminTest extends TestCase
 
         $this->call('PUT', 'admin/author/'.$author->id, $data);
 
+        $this->isDate('hub');
+
         $this->assertDatabaseHas('authors', [
             'first_name' => $author->first_name,
             'last_name'  => $author->last_name,
@@ -259,9 +307,13 @@ class ContentAdminTest extends TestCase
 
     public function testAuthorDelete()
     {
+        $this->setDate('hub');
+
         $author = factory(\App\Droit\Author\Entities\Author::class)->create();
 
         $response = $this->call('DELETE','admin/author/'.$author->id);
+
+        $this->isDate('hub');
 
         $this->assertDatabaseMissing('authors', ['id' => $author->id]);
     }

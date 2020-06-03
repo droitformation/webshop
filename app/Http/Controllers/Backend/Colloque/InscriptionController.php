@@ -134,8 +134,11 @@ class InscriptionController extends Controller
      */
     public function store(Request $request){
     //public function store(InscriptionCreateRequest $request){
+        $register = new \App\Droit\Inscription\Entities\Register($request->all());
+
         echo '<pre>';
         print_r($request->all());
+        print_r($register->general());
         echo '</pre>';
         exit;
 
@@ -144,7 +147,7 @@ class InscriptionController extends Controller
 
         // if type simple
         if($request->input('type') == 'simple') {
-            $model = $this->register->register($request->all(), true);
+            $model = $this->register->register($register->general(), true);
         }
         else {
             $model = $this->register->register($request->except(['type','_token']));

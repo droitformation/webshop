@@ -94,7 +94,7 @@ return [
     'pdf' => env('PDF_MAKE', false),
 
     /*
-      * List id in db (publications, bail, matrimonial, pi2)
+      * List id in db (publications, bail, matrimonial, pi2, ddt, rca)
       * */
 
     'lists' => [1,2,3,10,16,17],

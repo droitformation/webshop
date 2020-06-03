@@ -119,7 +119,7 @@
                                                     </h4>
                                                 </div>
                                                 <div class="col-md-8">
-                                                    @foreach($response as $avis)
+                                                    @foreach($response->sortByDesc('avis_id') as $avis)
                                                         <div class="question-title">{!! $avis->avis->question !!}</div>
                                                         <div class="question-reponse">{!! $avis->reponse !!}</div>
                                                     @endforeach

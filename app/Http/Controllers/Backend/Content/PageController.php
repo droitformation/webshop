@@ -63,6 +63,8 @@ class PageController extends Controller
     {
         $page = $this->page->create($request->all());
 
+        event(new \App\Events\ContentUpdated('content'));
+
         flash('La page a été crée')->success();
 
         return redirect('admin/page/'.$page->id);
@@ -82,8 +84,7 @@ class PageController extends Controller
         
         $types = config('columns.types');
 
-        return view('backend.pages.show')
-            ->with(['page' => $page, 'menus' => $menus, 'current_site' => $page->site_id, 'categories' => $site->categories, 'types' => $types]);
+        return view('backend.pages.show')->with(['page' => $page, 'menus' => $menus, 'current_site' => $page->site_id, 'categories' => $site->categories, 'types' => $types]);
     }
 
     /**
@@ -95,6 +96,8 @@ class PageController extends Controller
     public function update($id, Request $request)
     {
         $page = $this->page->update($request->all());
+
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('La page a été mise à jour')->success();
 
@@ -113,6 +116,8 @@ class PageController extends Controller
 
         $this->page->delete($id);
 
+        event(new \App\Events\ContentUpdated('content'));
+
         flash('La page a été supprimé')->success();
 
         return redirect()->back();
@@ -123,6 +128,8 @@ class PageController extends Controller
         $data = $request->all();
 
         $pages = $this->page->updateSorting($data['page_rang']);
+
+        event(new \App\Events\ContentUpdated('content'));
         
         echo 'ok';die();
     }

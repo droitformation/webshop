@@ -12,9 +12,6 @@
                 @foreach($options as $i => $option)
                     <div class="form-group type-choix">
                         <input type="checkbox" class="option-input" name="colloque[{{ $colloque->id }}][options][{{ $index }}][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
-{{--
-                        <input type="checkbox" class="option-input" name="colloque[{{ $colloque->id }}][options][{{ $index }}][{{ $i }}]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
---}}
                     </div>
                 @endforeach
             @endif

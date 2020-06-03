@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider {
         view()->composer([
             'backend.partials.sites',
             'backend.menus.*',
+            'backend.authors.*',
             'backend.pages.*',
             'backend.bloc.*',
             'backend.arrets.*',

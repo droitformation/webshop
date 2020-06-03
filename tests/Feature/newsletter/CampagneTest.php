@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
+use Tests\HubDate;
 
 class CampagneTest extends TestCase
 {
-    use RefreshDatabase,ResetTbl;
+    use RefreshDatabase,ResetTbl,HubDate;
     
     protected $mock;
     protected $worker;
@@ -63,6 +64,10 @@ class CampagneTest extends TestCase
      */
     public function testSendCampagne()
     {
+        $this->setDate('hub');
+
+        $response = $this->call('GET', 'hub/maj');
+        $response->assertStatus(200);
 
         $campagne = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->make();
 
@@ -77,8 +82,9 @@ class CampagneTest extends TestCase
 
         $response = $this->call('POST', 'build/send/campagne', ['id' => '1']);
 
-        $response->assertRedirect('build/newsletter');
+        $this->isDate('hub');
 
+        $response->assertRedirect('build/newsletter');
     }
 
     public function testSendCampagneFailedHtml()

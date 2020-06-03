@@ -47,8 +47,7 @@ class SendController extends Controller
         $update   = $this->mailjet->updateSubject($campagne->api_campagne_id,$campagne->sujet);
         $response = $this->mailjet->setHtml($html, $campagne->api_campagne_id);
 
-        if(!$response || !$update)
-        {
+        if(!$response || !$update) {
             throw new \App\Exceptions\CampagneUpdateException('Problème avec la préparation du contenu');
         }
 
@@ -58,13 +57,14 @@ class SendController extends Controller
         $toSend = $date ? \Carbon\Carbon::parse($date) : \Carbon\Carbon::now()->addMinutes(15);
         $result = $this->mailjet->sendCampagne($campagne->api_campagne_id, $toSend->toIso8601String());
 
-        if(!$result['success'])
-        {
+        if(!$result['success']) {
             throw new \App\Exceptions\CampagneSendException('Problème avec l\'envoi '.$result['info']['ErrorMessage'].'; Code: '.$result['info']['StatusCode']);
         }
 
         // Update campagne status
         $this->campagne->update(['id' => $campagne->id, 'status' => 'envoyé', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => $toSend]);
+
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Campagne envoyé!')->success();
 

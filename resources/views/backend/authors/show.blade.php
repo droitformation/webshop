@@ -71,7 +71,20 @@
                 <div class="form-group">
                     <label for="message" class="col-sm-3 control-label">Biographie</label>
                     <div class="col-sm-7">
-                        {!! Form::textarea('bio', $author->bio , array('class' => 'form-control redactor', 'cols' => '50' , 'rows' => '4' ))  !!}
+                        {!! Form::textarea('bio', $author->bio , array('class' => 'form-control redactor', 'cols' => '20' , 'rows' => '4' ))  !!}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="col-sm-3 control-label">Contributions aux sites</label>
+                    <div class="col-sm-5">
+                        @if(isset($sites) && !$sites->isEmpty())
+                            <select class="form-control" name="sites[]" multiple>
+                                @foreach($sites as $site)
+                                    <option {{ $author->sites->contains('id',$site->id) ? 'selected' : '' }} value="{{ $site->id  }}">{{ $site->nom }}</option>
+                                @endforeach
+                            </select>
+                        @endif
                     </div>
                 </div>
 

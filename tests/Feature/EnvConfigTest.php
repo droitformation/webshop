@@ -58,5 +58,4 @@ class EnvConfigTest extends TestCase
 
         $mailgun->send($data);
     }*/
-
 }
