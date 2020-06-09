@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('send/list', 'Backend\Newsletter\ListController@send');
         Route::get('send/confirmation/{id}', 'Backend\Newsletter\ListController@confirmation');
         Route::post('export', 'Backend\Newsletter\ListController@export');
+        Route::post('liste/purge', 'Backend\Newsletter\ListController@purge');
         Route::resource('liste', 'Backend\Newsletter\ListController');
 
         Route::get('tracking/stats/{id}', 'Backend\Newsletter\TrackingController@stats');
