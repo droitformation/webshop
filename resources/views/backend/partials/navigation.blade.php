@@ -135,13 +135,20 @@
 
         <li class="nav-title">Envois</li>
 
-        <li class="<?php echo (Request::is('build/newsletter/*') || Request::is('build/campagne/*') || Request::is('build/subscriber/*') ? 'active' : '' ); ?>">
+        <li class="<?php echo (Request::is('build/newsletter/*')
+            || Request::is('build/campagne/*')
+            || Request::is('build/subscriber/*')
+            || Request::is('build/import/*')
+            || Request::is('build/liste/*')
+            || Request::is('build/purge/*')
+            ? 'active' : '' ); ?>">
             <a href="javascript:;"><i class="fa fa-envelope"></i><span>Newsletters</span></a>
             <ul class="acc-menu">
                 <li class="<?php echo (Request::is('build/newsletter/*') ? 'active' : '' ); ?>"><a href="{{ url('build/newsletter')  }}">Liste des campagnes</a></li>
                 <li class="<?php echo (Request::is('build/subscriber/*') ? 'active' : '' ); ?>"><a href="{{ url('build/subscriber')  }}">Abonnés</a></li>
                 <li class="<?php echo (Request::is('build/import') ? 'active' : '' ); ?>"><a href="{{ url('build/import')  }}">Importer une liste</a></li>
                 <li class="<?php echo (Request::is('build/liste') ? 'active' : '' ); ?>"><a href="{{ url('build/liste')  }}">Liste hors campagnes</a></li>
+                <li class="<?php echo (Request::is('build/purge') ? 'active' : '' ); ?>"><a href="{{ url('build/purge')  }}">Nettoyage</a></li>
             </ul>
         </li>
 

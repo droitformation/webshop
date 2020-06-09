@@ -163,23 +163,4 @@ class ListController extends Controller
 
         return \Excel::download(new \App\Exports\ListExport($list), 'Export_liste_'.$list->title.'.xlsx');
     }
-
-    /*
-     * Unsubscribe in bulk from multiple lists
-     * */
-    public function purge(Request $request)
-    {
-        $emails = $this->import->setFile($request->file('file'))->uploadAndRead();
-        $lists  = $request->input('list_id');
-
-        $Contacts = $emails->flatten()->map(function ($email) {
-            return ['Email' => $email];
-        });
-
-        $ContactsLists = collect($request->input('list_id'))->map(function ($id) {
-            return ['Action' => "remove", 'ListID' => $id];
-        });
-
-
-    }
 }
