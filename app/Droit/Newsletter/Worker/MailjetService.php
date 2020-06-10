@@ -389,19 +389,7 @@ class MailjetService implements MailjetServiceInterface{
 
     public function unsubscribeBulk($Contacts,$ContactsLists){
 
-        $body = [
-            'Contacts' => [
-                [
-                    'Email' => "passenger@mailjet.com"
-                ]
-            ],
-            'ContactsLists' => [
-                [
-                    'Action' => "remove",
-                    'ListID' => "987654321"
-                ],
-            ]
-        ];
+        $body = [$Contacts, $ContactsLists];
 
         $response = $this->mailjet->post(Resources::$ContactManagemanycontacts, ['body' => $body]);
 

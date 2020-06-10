@@ -11,7 +11,7 @@
         <div class="col-md-6">
 
             <div class="panel panel-primary">
-                <form action="{{ url('liste/purge') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
+                <form action="{{ url('build/purge') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
 
                     <div class="panel-body">
                         <h4>Choisir une liste d'email invalides</h4><br>
@@ -27,7 +27,7 @@
                             <label class="col-md-3 control-label">Listes</label>
                             <div class="col-sm-8">
                                 @if(!$newsletters->isEmpty())
-                                    <select name="newsletter_id" class="form-control" multiple>
+                                    <select name="newsletter_id[]" class="form-control" multiple>
                                         @foreach($newsletters as $newsletter)
                                             <option value="{{ $newsletter->id }}">{{ $newsletter->titre }}</option>
                                         @endforeach

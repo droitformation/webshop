@@ -9,22 +9,21 @@ use App\Http\Controllers\Controller;
 use App\Droit\Newsletter\Repo\NewsletterInterface;
 use App\Droit\Newsletter\Worker\MailjetServiceInterface;
 use App\Droit\Newsletter\Worker\ImportWorkerInterface;
-
-use App\Droit\Service\UploadInterface;
+use App\Droit\Newsletter\Worker\SubscriptionWorkerInterface;
 
 class PurgeController extends Controller
 {
     protected $newsletter;
     protected $mailjet;
     protected $import;
-    protected $upload;
+    protected $worker;
 
-    public function __construct(NewsletterInterface $newsletter, MailjetServiceInterface $mailjet, ImportWorkerInterface $import, UploadInterface $upload)
+    public function __construct(NewsletterInterface $newsletter, MailjetServiceInterface $mailjet, ImportWorkerInterface $import, SubscriptionWorkerInterface $worker)
     {
         $this->newsletter = $newsletter;
         $this->mailjet    = $mailjet;
         $this->import     = $import;
-        $this->upload     = $upload;
+        $this->worker     = $worker;
 
         view()->share('isNewsletter',true);
     }
@@ -44,15 +43,18 @@ class PurgeController extends Controller
     public function store(Request $request)
     {
         $emails = $this->import->setFile($request->file('file'))->uploadAndRead();
-        $lists  = $request->input('newsletter_id');
 
-        $Contacts = $emails->flatten()->map(function ($email) {
-            return ['Email' => $email];
+        $ids = $request->input('newsletter_id');
+
+        $results = $emails->flatten()->map(function ($email) use ($ids) {
+
+            $subscription = $this->worker->exist($email);
+
+            if($subscription){
+                $this->worker->unsubscribe($subscription,$ids);
+            }
         });
 
-        $ContactsLists = collect($request->input('list_id'))->map(function ($id) {
-            return ['Action' => "remove", 'ListID' => $id];
-        });
-
+        return redirect()->back();
     }
 }
