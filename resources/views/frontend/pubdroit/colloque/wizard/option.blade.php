@@ -1,4 +1,7 @@
 <div class="options-list">
+
+    <h4>Merci de préciser pour {{ $colloque->titre }}</h4>
+
     <?php $types = $colloque->options->groupBy('type'); ?>
 
     @if(!$types->isEmpty())
@@ -9,7 +12,7 @@
                 <div class='wrapper'>
                     @foreach($options as $option)
                         <div class="item_wrapper">
-                            <input class="options" type="checkbox" id="option_{{ $option->id }}" name="options[]" value="{{ $option->id }}">
+                            <input class="options" type="checkbox" id="option_{{ $option->id }}" name="colloque[{{ $colloque->id }}][options][]" value="{{ $option->id }}">
                             <label for="option_{{ $option->id }}">
                                 <div class='package'><div class='name option_name'>{{ $option->title }}</div></div>
                             </label>
@@ -26,7 +29,7 @@
                             <label for="option_{{ $option->id }}">
                                 <div class='package'><div class='name option_name'>{{ $option->title }}</div></div>
                             </label>
-                            <textarea class="form-control" id="option_{{ $option->id }}" name="options[][{{ $option->id }}]"></textarea>
+                            <textarea class="form-control" id="option_{{ $option->id }}" name="colloque[{{ $colloque->id }}][options][][{{ $option->id }}]"></textarea>
                         </div>
                     @endforeach
                 </div>
@@ -40,7 +43,7 @@
                     <div class='wrapper'>
                         @foreach($option->groupe as $group)
                             <div class="item_wrapper">
-                                <input class="options" type="radio" required id="group_{{ $group->id }}" name="groupes[{{ $option->id }}]" value="{{ $group->id }}">
+                                <input class="options" type="radio" required id="group_{{ $group->id }}" name="colloque[{{ $colloque->id }}][groupes][{{ $option->id }}]" value="{{ $group->id }}">
                                 <label for="group_{{ $group->id }}">
                                     <div class='package'><div class='name option_name'>{{ $group->text }}</div></div>
                                 </label>
@@ -52,4 +55,5 @@
 
         @endforeach
     @endif
+
 </div>

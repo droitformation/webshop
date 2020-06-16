@@ -45,7 +45,6 @@ class Preview
     public function getHtml()
     {
         $this->html .= $this->price();
-        $this->html .= $this->options($this->colloque,array_only($this->data,['options','groupes']));
         $this->html .= $this->occurrences($this->colloque,array_only($this->data,['occurrences']));
         $this->html .= $this->linkoptions(array_only($this->data,['colloque']));
 

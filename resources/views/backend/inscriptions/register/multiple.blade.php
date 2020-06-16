@@ -51,16 +51,15 @@
             @include('backend.inscriptions.partials.prices', ['select' => 'price_id[]', 'form' => 'multiple'])
         @endif
 
-        <!-- Occurence if any -->
+        <!-- Occurrence if any -->
         @if(!$colloque->occurrences->isEmpty())
             <h4>Conférences</h4>
             @include('backend.inscriptions.partials.occurrences', ['select' => 'occurrences[0]'])
         @endif
 
-        @if(!$colloque->options->isEmpty())
-            <h4>Merci de préciser</h4>
-            @include('backend.inscriptions.partials.options', ['select' => 'groupes[0]'])
-        @endif
+        @include('backend.inscriptions.partials.options', ['select' => 'groupes[0]', 'colloque' => $colloque, 'index' => 0])
+
+        <div class="options-liste-box"></div>
 
     </fieldset>
 </div>

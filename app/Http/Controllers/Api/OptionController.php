@@ -87,19 +87,20 @@ class OptionController extends Controller {
 
     public function colloqueoptions(Request $request)
     {
-        $current = $this->colloque->find($request->input('colloque'));
-        $price = explode(':',$request->input('price'))[1];
-        $price = $this->pricelink->find($price);
+        $current   = $this->colloque->find($request->input('colloque'));
+        $pricelink = explode(':',$request->input('price'))[1];
+        $pricelink = $this->pricelink->find($pricelink);
 
-        $colloques = $price->colloques->filter(function ($colloque) use ($current) {
+        return $pricelink->colloques->filter(function ($colloque) use ($current) {
             return $colloque->id != $current->id;
-        });
-
-        return view('backend.inscriptions.partials.linkoptions')->with([
-            'type'      => 'multiple',
-            'index'     => $request->input('index'),
-            'select'    => 'groupes['.$request->input('index').']',
-            'colloques' => $colloques
-        ])->render();
+        })->reduce(function ($carry, $colloque) use ($request) {
+            $html = view('backend.inscriptions.partials.options')->with([
+                'select'   => 'groupes',
+                'colloque' => $colloque,
+                'form'     => $request->input('form'),
+                'index'    => $request->input('index')
+            ])->render();
+            return $carry .= $html;
+        }, '');
     }
 }

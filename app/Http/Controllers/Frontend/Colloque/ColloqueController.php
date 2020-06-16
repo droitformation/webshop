@@ -105,11 +105,12 @@ class ColloqueController extends Controller
         $current    = $this->colloque->find($request->input('colloque_id'));
         $price_link = $this->price_link->find($request->input('price_link_id'));
 
-        $colloques = $price_link->colloques->filter(function ($colloque) use ($current) {
+        return $price_link->colloques->filter(function ($colloque) use ($current) {
             return $colloque->id != $current->id;
-        });
-
-        return view('frontend.pubdroit.colloque.wizard.linkoptions')->with(['colloques' => $colloques])->render();
+        })->reduce(function ($carry, $colloque) {
+            $html = view('frontend.pubdroit.colloque.wizard.option')->with(['colloque' => $colloque])->render();
+            return $carry .= $html;
+        }, '');
     }
 
     public function documents($id)

@@ -16,7 +16,7 @@
                 </tab-content>
 
                 <tab-content title="Options" :before-change="beforeTabSwitch">
-                    @include('frontend.pubdroit.colloque.wizard.option')
+                    @include('frontend.pubdroit.colloque.wizard.option',['colloque' => $colloque])
 
                     <div id="colloque_options_wrapper"></div>
                 </tab-content>

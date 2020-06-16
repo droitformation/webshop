@@ -37,6 +37,10 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionRequest $request)
     {
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';
+        exit;
         session()->put('reference_no', $request->input('reference_no',null));
         session()->put('transaction_no', $request->input('transaction_no',null));
 

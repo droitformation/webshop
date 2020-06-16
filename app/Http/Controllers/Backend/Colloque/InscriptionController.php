@@ -135,23 +135,18 @@ class InscriptionController extends Controller
     public function store(Request $request){
     //public function store(InscriptionCreateRequest $request){
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
-        /*
-               echo '<pre>';
-                print_r($request->all());
-                print_r($register->general());
-                echo '</pre>';
-                exit; */
+
+        /**/ echo '<pre>';
+          //print_r($request->all());
+          print_r($register->general());
+          echo '</pre>';
+          exit;
 
         session()->put('reference_no', $request->input('reference_no',null));
         session()->put('transaction_no', $request->input('transaction_no',null));
 
-        // if type simple
-        if($request->input('type') == 'simple') {
-            $model = $this->register->register($register->general(), true);
-        }
-        else {
-            $model = $this->register->register($request->except(['type','_token']));
-        }
+        $simple = $request->input('type') == 'simple' ? true : null;
+        $model  = $this->register->register($register->general(), $simple);
 
         $reference = \App\Droit\Transaction\Reference::make($model);
 
