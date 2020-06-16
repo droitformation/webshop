@@ -103,7 +103,7 @@ class Preview
 
         if(isset($data['options']) && !empty($data['options'])){
 
-            $html .= '<dl><dt>Choix Options</dt>';
+            $html .= '<dl class="options-wizard"><dt>Choix Options</dt>';
                 foreach ($data['options'] as $option_id){
                     $option = getOption($option_id,$colloque);
 
@@ -140,7 +140,7 @@ class Preview
         if(isset($data['colloque']) && !empty($data['colloque'])){
             foreach ($data['colloque'] as $colloque_id => $options){
                 $colloque  = $this->repo_colloque->find($colloque_id);
-                $html .= '<dl class="link"><dt><strong>'.$colloque->titre.'</strong></dt>';
+                $html .= '<dl class="link"><dt class="heading"><strong>'.$colloque->titre.'</strong></dt>';
                 $html .= $this->options($colloque,$options);
                 $html .= '</dl>';
             }

@@ -444,11 +444,12 @@ input[type="checkbox"]:checked.options + label{
     margin-top: 10px;
 }
 
-#resumeWrapper dl.link dl{
+#resumeWrapper dl.link dl,
+#resumeWrapper dl.options-wizard{
     width: 100%;
 }
 
-#resumeWrapper dl.link dt strong{
+#resumeWrapper dl.link dt.heading{
     font-size: 17px;
     margin-bottom: 15px;
 }
