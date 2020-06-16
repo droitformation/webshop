@@ -9,6 +9,24 @@ class Preview
     protected $html = '';
 
     protected $repo_rabais;
+    protected $repo_colloque;
+
+    /*
+        price_id  "price_link_id:1"
+
+        options[]	"259"  => simple
+        groupes[268]	"150" => group choix options
+        options[][269]	"sdcfghj"  => text option
+
+        colloque[164][options][]	"259" => simple
+        colloque[164][groupes][268]	"150" => group choix options
+        colloque[164][options][][269] "qwert" => text option
+
+        reference_no	""
+        transaction_no	""
+        user_id	"710"
+        colloque_id	"164"
+      */
 
     /**
      * Create a new controller instance.
@@ -21,11 +39,15 @@ class Preview
         $this->data = $data;
 
         $this->repo_rabais = \App::make('App\Droit\Inscription\Repo\RabaisInterface');
+        $this->repo_colloque = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     }
 
     public function getHtml()
     {
-        $this->price()->options()->occurrences();
+        $this->html .= $this->price();
+        $this->html .= $this->options($this->colloque,array_only($this->data,['options','groupes']));
+        $this->html .= $this->occurrences($this->colloque,array_only($this->data,['occurrences']));
+        $this->html .= $this->linkoptions(array_only($this->data,['colloque']));
 
         $this->html .= isset($this->data['reference_no']) && !empty($this->data['reference_no']) ? '<dl class="ref"><dt>Votre référence</dt><dd><i>'.$this->data['reference_no'].'</i></dd></dl>' : '';
         $this->html .= isset($this->data['transaction_no']) && !empty($this->data['transaction_no']) ? '<dl class="ref"><dt>Votre N° commande</dt><dd><i>'.$this->data['transaction_no'].'</i></dd></dl>' : '';
@@ -35,67 +57,96 @@ class Preview
 
     public function price()
     {
-        $price  = $this->colloque->prices->find($this->data['price_id']);
+        $price  = explode(':',$this->data['price_id']);
+        $relation = $price[0];
+        $price_id = $price[1];
+
+        $relation = $relation == 'price_id' ? 'prices' : 'price_link';
+
+        $price  = $this->colloque->$relation->find($price_id);
+
         $rabais = $this->data['rabais_id'] ?? null;
         $prix   = $price->price_cents;
 
-        $this->html .= '<dl style="padding-right:20px;">';
+        $html = '<dl style="padding-right:20px;width: 35%;">';
 
         if($rabais){
             $model = $this->repo_rabais->find($rabais);
             $prix  = $prix - $model->value;
 
-            $this->html .= '<dt style="padding-bottom: 8px;display: block;line-height: 18px;">'.$price->description.'</dt><dd>Prix avec rabais <strong>'.$prix.' CHF</strong></dd>';
-            $this->html .= $rabais ? '<dd class="text-muted" style="margin-top: 5px;">Prix original '.$price->price_cents.' CHF</dd>' : '';
+            $html .= '<dt>'.$price->description.'</dt><dd>Prix avec rabais <strong>'.$prix.' CHF</strong></dd>';
+            $html .= $rabais ? '<dd class="text-muted" style="margin-top: 5px;">Prix original '.$price->price_cents.' CHF</dd>' : '';
         }
         else{
-            $this->html .= '<dt style="padding-bottom: 8px;display: block;line-height: 18px;">'.$price->description.'</dt><dd>Prix '.$prix.' CHF</dd>';
+            $html .= '<dt>'.$price->description.'</dt><dd>Prix '.$prix.' CHF</dd>';
         }
 
-        $this->html .= '</dl>';
+        $html .= '</dl>';
 
-        return $this;
+        return $html;
     }
 
-    public function options()
+    public function options($colloque,$data)
     {
-        if(isset($this->data['groupes']) && !empty($this->data['groupes'])){
-            $this->html .= '<dl>';
-                foreach ($this->data['groupes'] as $option_id => $group_id){
-                    $option = $this->colloque->options->find($option_id);
-                    $option = $option->load('groupe');
-                    $groupe = $option->groupe->find($group_id);
+        $html = '';
 
-                    $this->html .= '<dt>'.$option->title.'</dt>';
-                    $this->html .= '<dd>'.$groupe->text.'</dd>';
+        if(isset($data['groupes']) && !empty($data['groupes'])){
+             $html .= '<dl>';
+                foreach ($data['groupes'] as $option_id => $group_id){
+                    $option = getGroup($group_id,$option_id,$colloque);
+
+                    $html .= '<dt>'.$option['title'].'</dt>';
+                    $html .= '<dd>'.$option['text'].'</dd>';
                 }
-            $this->html .= '</dl>';
+            $html .= '</dl>';
         }
 
-        if(isset($this->data['options']) && !empty($this->data['options'])){
-            $this->html .= '<dl><dt>Choix Options</dt>';
-                foreach ($this->data['options'] as $option_id){
-                    $option = $this->colloque->options->find($option_id);
-                    $this->html .= '<dd>'.$option->title.'</dd>';
+        if(isset($data['options']) && !empty($data['options'])){
+
+            $html .= '<dl><dt>Choix Options</dt>';
+                foreach ($data['options'] as $option_id){
+                    $option = getOption($option_id,$colloque);
+
+                    if(isset($option['title'])){
+                        $html .= '<dd>'.$option['title'].' '.(isset($option['text']) ? ': '.$option['text'] : '').'</dd>';
+                    }
                 }
-            $this->html .= '</dl>';
+            $html .= '</dl>';
         }
 
-        return $this;
+        return $html;
     }
 
-    public function occurrences()
+    public function occurrences($colloque,$data)
     {
-       if(isset($this->data['occurrences']) && !empty($this->data['occurrences'])){
-           $this->html .= '<dl><dt>Choix atelier/lieux</dt>';
-               foreach ($this->data['occurrences'] as $occurrence_id){
-                   $occurrence = $this->colloque->occurrences->find($occurrence_id);
-                   $this->html .= '<dd>'.$occurrence->title.'</dd>';
+        $html = '';
+
+        if(isset($data['occurrences']) && !empty($this->data['occurrences'])){
+           $html .= '<dl><dt>Choix atelier/lieux</dt>';
+               foreach ($data['occurrences']['occurrences'] as $occurrence_id){
+                   $occurrence = getOccurrences($occurrence_id,$colloque);
+                   $html .= '<dd>'.$occurrence['title'].'</dd>';
                }
-           $this->html .= '</dl>';
-       }
+           $html .= '</dl>';
+        }
 
-        return $this;
+        return $html;
+    }
+
+    public function linkoptions($data)
+    {
+        $html = '';
+
+        if(isset($data['colloque']) && !empty($data['colloque'])){
+            foreach ($data['colloque'] as $colloque_id => $options){
+                $colloque  = $this->repo_colloque->find($colloque_id);
+                $html .= '<dl class="link"><dt><strong>'.$colloque->titre.'</strong></dt>';
+                $html .= $this->options($colloque,$options);
+                $html .= '</dl>';
+            }
+        }
+
+        return $html;
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Colloque;
 use Illuminate\Http\Request;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
+use App\Droit\PriceLink\Repo\PriceLinkInterface;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -12,16 +13,18 @@ class ColloqueController extends Controller
 {
     protected $colloque;
     protected $inscription;
+    protected $price_link;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription)
+    public function __construct(ColloqueInterface $colloque,InscriptionInterface $inscription, PriceLinkInterface $price_link)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
+        $this->price_link = $price_link;
     }
 
     /**
@@ -97,9 +100,16 @@ class ColloqueController extends Controller
         return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
-    public function colloqueoptions($id,$colloque)
+    public function colloqueoptions(Request $request)
     {
-        return 'dfgh';die();
+        $current    = $this->colloque->find($request->input('colloque_id'));
+        $price_link = $this->price_link->find($request->input('price_link_id'));
+
+        $colloques = $price_link->colloques->filter(function ($colloque) use ($current) {
+            return $colloque->id != $current->id;
+        });
+
+        return view('frontend.pubdroit.colloque.wizard.linkoptions')->with(['colloques' => $colloques])->render();
     }
 
     public function documents($id)

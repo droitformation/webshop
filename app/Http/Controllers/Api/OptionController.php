@@ -87,7 +87,6 @@ class OptionController extends Controller {
 
     public function colloqueoptions(Request $request)
     {
-
         $current = $this->colloque->find($request->input('colloque'));
         $price = explode(':',$request->input('price'))[1];
         $price = $this->pricelink->find($price);

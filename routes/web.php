@@ -63,12 +63,14 @@ Route::group(['middleware' => ['site','impostor']], function () {
     Route::group(['prefix' => 'pubdroit'], function () {
 
         Route::get('page/{slug}/{var?}', array('uses' => 'Frontend\Shop\ShopController@page'));
+
         /* *
           * Colloques
           * */
         Route::get('colloque', 'Frontend\Colloque\ColloqueController@index');
         Route::get('colloque/{id}', 'Frontend\Colloque\ColloqueController@show');
         Route::get('documents/{id}', 'Frontend\Colloque\ColloqueController@documents');
+        Route::post('colloqueoptions', 'Frontend\Colloque\ColloqueController@colloqueoptions');
 
         Route::group(['middleware' => 'auth'], function () {
 
@@ -76,7 +78,6 @@ Route::group(['middleware' => ['site','impostor']], function () {
              * Inscriptions pages
              * */
             Route::get('colloque/inscription/{id}', ['middleware' => ['registered','pending'], 'uses' => 'Frontend\Colloque\ColloqueController@inscription']);
-            Route::get('colloque/colloqueoptions', ['uses' => 'Frontend\Colloque\ColloqueController@colloqueoptions']);
 
             Route::post('registration', ['uses' => 'Frontend\Colloque\InscriptionController@store']);
             Route::post('colloque/inscription/resume', 'Frontend\Colloque\ColloqueController@resume');

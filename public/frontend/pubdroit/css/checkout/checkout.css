@@ -432,8 +432,25 @@ input[type="checkbox"]:checked.options + label{
     margin-bottom: 10px;
 }
 
-#resumeWrapper dl.ref{
+#resumeWrapper dl{
+    width:49%;
     margin-bottom: 10px;
+}
+
+#resumeWrapper dl.link{
+    width: 100%;
+    padding:5px 10px;
+    border:1px solid #b1b1b1;
+    margin-top: 10px;
+}
+
+#resumeWrapper dl.link dl{
+    width: 100%;
+}
+
+#resumeWrapper dl.link dt strong{
+    font-size: 17px;
+    margin-bottom: 15px;
 }
 
 .vue-form-wizard .wizard-btn{

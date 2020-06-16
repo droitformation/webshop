@@ -59494,21 +59494,14 @@ var appVue = new Vue({
         if (checked) {
           var colloque = $(this).data('colloque');
           var id = $(this).data('id');
-          var $wrapper = $('#colloque_options_wrapper');
-          $.ajax({
-            type: "GET",
-            url: location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/colloqueoptions',
-            data: {
-              colloque: colloque,
-              id: id,
-              _token: $("meta[name='_token']").attr('content')
-            },
-            success: function success(html) {
-              $wrapper.append(html);
-            },
-            error: function error() {
-              alert('problème');
-            }
+          axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloqueoptions', {
+            colloque_id: colloque,
+            price_link_id: id
+          }).then(function (response) {
+            console.log(response.data);
+            $('#colloque_options_wrapper').empty().append(response.data);
+          })["catch"](function (error) {
+            console.log(error);
           });
         }
       });

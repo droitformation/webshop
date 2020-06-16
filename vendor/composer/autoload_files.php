@@ -91,4 +91,5 @@ return array(
     '0c3c22e27afa83be19b4c938f4c6e9ea' => $vendorDir . '/spatie/laravel-backup/src/Helpers/functions.php',
     '4b69412694a85d7780e1934ebfeb0c1b' => $baseDir . '/tests/factories/ObjectFactory.php',
     '6f63623309b417353d909e0e864f4beb' => $baseDir . '/app/Support/helpers.php',
+    'd66389fd69502eeac23f5fe43bc72132' => $baseDir . '/app/Support/options.php',
 );

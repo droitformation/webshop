@@ -55,7 +55,8 @@
 		},
 		"files": [
 			"tests/factories/ObjectFactory.php",
-			"app/Support/helpers.php"
+			"app/Support/helpers.php",
+			"app/Support/options.php"
 		]
 	},
 	"autoload-dev": {

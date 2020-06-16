@@ -101,18 +101,11 @@ const appVue = new Vue({
 
                     let colloque = $(this).data('colloque');
                     let id       = $(this).data('id');
-                    let $wrapper = $('#colloque_options_wrapper');
 
-                    $.ajax({
-                        type : "GET",
-                        url  : location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/colloqueoptions',
-                        data : { colloque : colloque, id : id , _token: $("meta[name='_token']").attr('content') },
-                        success: function(html) {
-                            $wrapper.append(html);
-                        },
-                        error: function(){alert('problème');}
-                    });
-
+                    axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloqueoptions', {colloque_id : colloque, price_link_id : id}).then(function (response) {
+                        console.log(response.data);
+                        $('#colloque_options_wrapper').empty().append(response.data);
+                    }).catch(function (error) { console.log(error);});
                 }
             });
 
@@ -123,7 +116,6 @@ const appVue = new Vue({
             });
 
             return $form.find('input').valid();
-
 
         },
         lastTabResume: function(){
