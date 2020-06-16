@@ -15,6 +15,7 @@ class Register
             'reference_no'   => $this->data['reference_no'] ?? null,
             'transaction_no' => $this->data['transaction_no'] ?? null,
             'participant'    => $this->data['participant'] ?? null,
+            'occurrences'    => $this->data['occurrences'] ?? null,
             'email'          => $this->data['email'] ?? null,
             'rabais_id'      => $this->data['rabais_id'] ?? null,
             'user_id'        => $this->data['user_id'],
@@ -49,14 +50,8 @@ class Register
             foreach ($this->data['colloque'] as $id => $options){
                 $colloques[$id] = $this->colloqueoptions($options,$id);
             }
-            /* return collect($this->data['colloque'])->map(function ($options,$id) {
-                 return $this->colloqueoptions($options,$id);
-             })->toArray();*/
-             return $colloques;
 
-            return collect($this->data['colloque'])->mapWithKeys(function ($options,$id) {
-                return [$id => $this->colloqueoptions($options,$id)];
-            })->toArray();
+            return $colloques;
         }
     }
 

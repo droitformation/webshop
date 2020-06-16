@@ -5972,9 +5972,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['options', 'colloque', 'optionListValidation', 'type', 'typeform'],
+  props: ['options', 'colloque', 'type', 'typeform'],
   data: function data() {
     return {
       isValide: false
@@ -5995,7 +5994,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkbox: function checkbox(index) {
-      return this.isValide == 'multiple' ? 'colloque[' + this.thiinss.colloque.id + '][][options][0][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
+      return this.isValide == 'multiple' ? 'colloque[' + this.colloque.id + '][][options][0][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
     },
     radio: function radio(option) {
       return this.isValide == 'multiple' ? 'colloque[' + this.colloque.id + '][][groupes][0][' + option.id + ']' : 'colloque[' + this.colloque.id + '][groupes][' + option.id + ']';
@@ -6017,8 +6016,6 @@ __webpack_require__.r(__webpack_exports__);
       if (data.length == $radios.length) {
         this.isValide = true;
       }
-
-      this.$emit('validated', this.isValide);
     }
   }
 });
@@ -41133,7 +41130,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._v("\n    validation: " + _vm._s(_vm.inValidation) + "?\n    "),
       _c("p", { staticClass: "option-title" }, [
         _vm._v(_vm._s(_vm.colloque.titre))
       ]),
@@ -41174,8 +41170,7 @@ var render = function() {
                                   required: "",
                                   name: _vm.radio(option)
                                 },
-                                domProps: { value: groupe.id },
-                                on: { change: _vm.validate }
+                                domProps: { value: groupe.id }
                               }),
                               _vm._v(_vm._s(groupe.text))
                             ])
@@ -59483,6 +59478,41 @@ var appVue = new Vue({
     },
     beforeTabSwitch: function beforeTabSwitch() {
       var $form = $('#inscriptionForm');
+      var validator = $form.validate({
+        errorPlacement: function errorPlacement(label, element) {
+          label.insertBefore(element);
+        }
+      });
+      return $form.find('input').valid();
+    },
+    beforeTabSwitchPrices: function beforeTabSwitchPrices() {
+      var $form = $('#inscriptionForm');
+      var $radios = $form.find(".item_wrapper_link");
+      $radios.each(function (groupe) {
+        var checked = $(this).find('input[type="radio"]:checked').val();
+
+        if (checked) {
+          var colloque = $(this).data('colloque');
+          var id = $(this).data('id');
+          var $wrapper = $('#colloque_options_wrapper');
+          $.ajax({
+            type: "GET",
+            url: location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/colloqueoptions',
+            data: {
+              colloque: colloque,
+              id: id,
+              _token: $("meta[name='_token']").attr('content')
+            },
+            success: function success(html) {
+              $wrapper.append(html);
+            },
+            error: function error() {
+              alert('problème');
+            }
+          });
+        }
+      });
+      console.log($radios);
       var validator = $form.validate({
         errorPlacement: function errorPlacement(label, element) {
           label.insertBefore(element);

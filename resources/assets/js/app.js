@@ -90,6 +90,42 @@ const appVue = new Vue({
 
             return $form.find('input').valid();
         },
+        beforeTabSwitchPrices: function(){
+
+            let $form = $('#inscriptionForm');
+            let $radios = $form.find(".item_wrapper_link");
+
+            $radios.each(function(groupe){
+                let checked = $(this).find('input[type="radio"]:checked').val();
+                if(checked){
+
+                    let colloque = $(this).data('colloque');
+                    let id       = $(this).data('id');
+                    let $wrapper = $('#colloque_options_wrapper');
+
+                    $.ajax({
+                        type : "GET",
+                        url  : location.protocol + "//" + location.host + "/" + 'pubdroit/colloque/colloqueoptions',
+                        data : { colloque : colloque, id : id , _token: $("meta[name='_token']").attr('content') },
+                        success: function(html) {
+                            $wrapper.append(html);
+                        },
+                        error: function(){alert('problème');}
+                    });
+
+                }
+            });
+
+            console.log($radios);
+
+            let validator = $form.validate({
+                errorPlacement: function( label, element ) {label.insertBefore( element );}
+            });
+
+            return $form.find('input').valid();
+
+
+        },
         lastTabResume: function(){
             let $form = $('#inscriptionForm');
 

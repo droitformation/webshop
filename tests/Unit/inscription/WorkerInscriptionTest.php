@@ -43,37 +43,46 @@ class WorkerInscriptionTest extends TestCase
         $prices   = $colloque->prices->pluck('id')->all();
         $options  = $colloque->options->pluck('id')->all();
 
+        $occurrences = factory(\App\Droit\Occurrence\Entities\Occurrence::class,2)->create([
+            'colloque_id' => $colloque->id,
+        ]);
+
+        $option = factory(\App\Droit\Option\Entities\Option::class)->create([
+            'colloque_id' => $colloque->id,
+            'title'       => 'Option',
+            'type'        => 'choix',
+        ]);
+
+        $groupe1 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create(['colloque_id' => $colloque->id, 'option_id' => $option->id, 'text' => 'Groupe']);
+        $groupe2 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create(['colloque_id' => $colloque->id, 'option_id' => $option->id, 'text' => 'Autre groupe']);
+
+        // AFTER REGISTER CONVERTER
         $data = [
             'colloque_id' => $colloque->id ,
             'user_id'     => $person->id,
             'participant' => [
-                'Cindy Leschaud',
-                'Coralie Ahmetaj'
+                'Cindy, Leschaud',
+                'Coralie, Ahmetaj'
             ],
             'email' => [
                 'cindy.leschaud@gmail.com',
                 'coralie.ahmetaj@hotmail.com'
             ],
-            'price_id' => [
-                $prices[0],
-                $prices[0]
+            'prices' => [
+                ['price_id' =>  $prices[0]],
+                ['price_id' =>  $prices[0]],
             ],
             'occurrences' => [
-                [2],
-                [2,3]
+                [$occurrences->first()->id],
+                $occurrences->pluck('id')->all()
             ],
             'options' => [
-                0 => [
-                    $options[0],
-                    [148 => 'psum odolr amet']
-                ],
-                1 => [
-                    $options[0], [148 => 'lorexm ipsu']
-                ]
+                0 => [$options[0]],
+                1 => [$options[0]]
             ],
             'groupes' => [
-                [147 => 44],
-                [147 => 45]
+                0 => [$option->id => $groupe1->id],
+                1 => [$option->id => $groupe2->id]
             ]
         ];
 
@@ -90,6 +99,16 @@ class WorkerInscriptionTest extends TestCase
             'colloque_id' => $colloque->id,
             'user_id'     => $person->id,
         ]);
+
+        $model = \App\Droit\Inscription\Entities\Inscription::latest('created_at')->first();
+
+        $this->assertEquals('Cindy, Leschaud', $model->participant->name);
+        $this->assertEquals(1, $model->occurrences->count());
+        $this->assertEquals(2, $model->user_options->count());
+
+        $this->assertTrue($model->user_options->contains('option_id',$option->id));
+        $this->assertTrue($model->user_options->contains('option_id',$options[0]));
+        $this->assertTrue($model->user_options->contains('groupe_id',$groupe1->id));
     }
 
     public function testRegister()
@@ -102,12 +121,30 @@ class WorkerInscriptionTest extends TestCase
         $prices   = $colloque->prices->pluck('id')->all();
         $options  = $colloque->options->pluck('id')->all();
 
+        $option = factory(\App\Droit\Option\Entities\Option::class)->create([
+            'colloque_id' => $colloque->id,
+            'title'       => 'Option',
+            'type'        => 'choix',
+        ]);
+
+        $groupe1 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create(['colloque_id' => $colloque->id, 'option_id' => $option->id, 'text' => 'Groupe']);
+        $groupe2 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create(['colloque_id' => $colloque->id, 'option_id' => $option->id, 'text' => 'Autre groupe']);
+
+        $occurrences = factory(\App\Droit\Occurrence\Entities\Occurrence::class,2)->create([
+            'colloque_id' => $colloque->id,
+        ]);
+
+        // AFTER REGISTER CONVERTER
         $data = [
             'colloque_id' => $colloque->id,
             'user_id'     => $person->id,
             'price_id'    => $prices[0],
+            'occurrences' => $occurrences->pluck('id')->all(),
             'options'     => [
                 $options[0]
+            ],
+            'groupes' => [
+                $option->id => $groupe1->id
             ]
         ];
 
@@ -119,6 +156,15 @@ class WorkerInscriptionTest extends TestCase
             'user_id'     => $person->id,
             'price_id'    => $prices[0],
         ]);
+
+        $model = \App\Droit\Inscription\Entities\Inscription::latest('created_at')->first();
+
+        $this->assertEquals(2, $model->occurrences->count());
+        $this->assertEquals(2, $model->user_options->count());
+
+        $this->assertTrue($model->user_options->contains('option_id',$options[0]));
+        $this->assertTrue($model->user_options->contains('option_id',$option->id));
+        $this->assertTrue($model->user_options->contains('groupe_id',$groupe1->id));
     }
 
     public function testUpdateDateSend()

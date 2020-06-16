@@ -48,7 +48,13 @@ class FeatureInscriptionTest extends TestCase
         $colloque = $make->colloque();
         $user     = $make->makeUser([]);
 
-        $input = ['type' => 'simple', 'colloque_id' => $colloque->id, 'user_id' => $user->id, 'inscription_no' => '71-2015/1', 'price_id' => $colloque->prices->first()->id];
+        $input = [
+            'type'           => 'simple',
+            'colloque_id'    => $colloque->id,
+            'user_id'        => $user->id,
+            'inscription_no' => '71-2015/1',
+            'price_id'       => 'price_id:'.$colloque->prices->first()->id,
+        ];
 
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create();
 
@@ -69,7 +75,16 @@ class FeatureInscriptionTest extends TestCase
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
 
-        $input = ['type' => 'multiple', 'colloque_id' => $colloque->id, 'user_id' => 1, 'participant' => ['Jane Doe', 'John Doa'], 'price_id' => [290, 290] ];
+        $input = [
+            'type' => 'multiple',
+            'colloque_id' => $colloque->id,
+            'user_id' => 1,
+            'participant' => ['Jane Doe', 'John Doa'],
+            'price_id[]'  => [
+                "price_link_id:290",
+                "price_link_id:290"
+            ],
+        ];
 
         $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->make();
 
@@ -97,7 +112,7 @@ class FeatureInscriptionTest extends TestCase
             'colloque_id' => $inscription->colloque_id,
             'user_id' => $inscription->user_id,
             'inscription_no' => $inscription->inscription_no,
-            'price_id' => $inscription->price_id
+            'price_id' => 'price_id:'.$inscription->price_id,
         ];
 
         $this->mock->shouldReceive('update')->once()->andReturn($inscription);

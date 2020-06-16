@@ -136,11 +136,11 @@ class InscriptionController extends Controller
     //public function store(InscriptionCreateRequest $request){
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
 
-        echo '<pre>';
+/*        echo '<pre>';
         print_r($request->all());
         print_r($register->general());
         echo '</pre>';
-        exit;
+        exit;*/
 
         session()->put('reference_no', $request->input('reference_no',null));
         session()->put('transaction_no', $request->input('transaction_no',null));

@@ -157,7 +157,7 @@ class FeatureInscriptionAdminTest extends TestCase
         $prices   = $colloque->prices->pluck('id')->all();
         $options  = $colloque->options->pluck('id')->all();
 
-        // See pag with data
+        // See page with data
         $data = ['colloque_id' => $colloque->id, 'user_id' => $person->id,'type' => 'simple'];
         $this->call('POST', 'admin/inscription/make', $data);
 
@@ -165,7 +165,7 @@ class FeatureInscriptionAdminTest extends TestCase
             'type'        => 'simple' ,
             'colloque_id' => $colloque->id,
             'user_id'     => $person->id,
-            'price_id'    => $prices[0],
+            'price_id'    => "price_id:".$prices[0],
             'options'     => [
                 $options[0]
             ]
@@ -178,7 +178,6 @@ class FeatureInscriptionAdminTest extends TestCase
             'user_id'     => $person->id,
             'price_id'    => $prices[0],
         ]);
-
     }
 
     public function testMakeMultipleInscription()
@@ -205,9 +204,9 @@ class FeatureInscriptionAdminTest extends TestCase
                 'cindy.leschaud@gmail.com',
                 'coralie.ahmetaj@hotmail.com'
             ],
-            'price_id' => [
-                $prices[0],
-                $prices[0]
+            'prices' => [
+                ['price_id' =>  $prices[0]],
+                ['price_id' =>  $prices[0]],
             ],
             'options' => [
                 0 => [$options[0]],
@@ -657,7 +656,7 @@ class FeatureInscriptionAdminTest extends TestCase
             'transaction_no' => '29_10_19824',
             'colloque_id' => $colloque->id,
             'user_id'     => $person->id,
-            'price_id'    => $prices[0],
+            'price_id'    => 'price_id:'.$prices[0],
             'options'     => [
                 $options[0]
             ]
@@ -703,9 +702,9 @@ class FeatureInscriptionAdminTest extends TestCase
                 'cindy.leschaud@gmail.com',
                 'coralie.ahmetaj@hotmail.com'
             ],
-            'price_id' => [
-                $prices[0],
-                $prices[0]
+            'prices' => [
+                ['price_id' => $prices[0]],
+                ['price_id' => $prices[0]],
             ],
             'options' => [
                 0 => [$options[0]],

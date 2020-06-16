@@ -380,6 +380,10 @@ Wizard
     width: 33%;
 }
 
+#colloque-dependence .wrapper div.item_wrapper_link {
+
+}
+
 #colloque-dependence .wrapper div label.error {
     position: absolute;
     top: -40px;

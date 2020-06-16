@@ -11,17 +11,22 @@
                          back-button-text="Précédent"
                          color="#b01d22"
                          next-button-text="Suivant">
-                <tab-content title="Prix" :before-change="beforeTabSwitch" backButtonText="Précédent">
+                <tab-content title="Prix" :before-change="beforeTabSwitchPrices" backButtonText="Précédent">
                     @include('frontend.pubdroit.colloque.wizard.price')
                 </tab-content>
+
                 <tab-content title="Options" :before-change="beforeTabSwitch">
                     @include('frontend.pubdroit.colloque.wizard.option')
+
+                    <div id="colloque_options_wrapper"></div>
                 </tab-content>
+
                 @if(!$colloque->occurrences->isEmpty())
                     <tab-content title="Atelier/Lieux" :before-change="beforeTabSwitch">
                         @include('frontend.pubdroit.colloque.wizard.occurrence')
                     </tab-content>
                 @endif
+
                 <tab-content title="Adresse" :after-change="beforeTabSwitch">
                     <h4>Vérifier l'adresse</h4>
 

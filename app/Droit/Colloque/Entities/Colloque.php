@@ -126,6 +126,20 @@ class Colloque extends Model implements HasMedia
         });
     }
 
+    public function getPricesLinkActiveAttribute()
+    {
+        return $this->price_link->reject(function ($price, $key) {
+            return $price->type == 'admin';
+        })->filter(function ($price, $key) {
+
+            if($price->end_at){
+                return $price->end_at > \Carbon\Carbon::now() ? $price : false;
+            }
+
+            return $price;
+        });
+    }
+
     public function getIsActiveAttribute()
     {
         return $this->registration_at >= \Carbon\Carbon::today()->toDateString() ? true : false;

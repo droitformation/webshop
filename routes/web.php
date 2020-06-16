@@ -24,6 +24,7 @@ Route::delete('dejeuner', 'Frontend\ConferenceController@delete');
 Route::get('site/subscribe/{site_id}', 'HomeController@subscribe');
 Route::get('site/unsubscribe/{site_id}', 'HomeController@unsubscribe');
 Route::get('site/confirmation/{site_id}', 'HomeController@confirmation');
+
 /*
 |--------------------------------------------------------------------------
 | Validate presence for inscriptions
@@ -75,6 +76,8 @@ Route::group(['middleware' => ['site','impostor']], function () {
              * Inscriptions pages
              * */
             Route::get('colloque/inscription/{id}', ['middleware' => ['registered','pending'], 'uses' => 'Frontend\Colloque\ColloqueController@inscription']);
+            Route::get('colloque/colloqueoptions', ['uses' => 'Frontend\Colloque\ColloqueController@colloqueoptions']);
+
             Route::post('registration', ['uses' => 'Frontend\Colloque\InscriptionController@store']);
             Route::post('colloque/inscription/resume', 'Frontend\Colloque\ColloqueController@resume');
 

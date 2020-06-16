@@ -35,19 +35,14 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         collect($data['participant'])->map(function ($register,$key) use ($data) {
 
-            $price = $data['prices'][$key];
-            $key   = key($price);
-            $value = $price[$key];
-
             return array_filter([
                 'participant'   => $data['participant'][$key],
                 'email'         => $data['email'][$key],
-                $key            => $value,
                 'rabais_id'     => isset($data['rabais_id'][$key]) ? $data['rabais_id'][$key] : null,
                 'occurrences'   => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
                 'options'       => isset($data['options'][$key]) ? $data['options'][$key] : null,
                 'groupes'       => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
-            ]);
+            ] + $data['prices'][$key]);
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
 
@@ -83,8 +78,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
     public function specialisation($colloque, $user)
     {
-        if(!$colloque->specialisations->isEmpty())
-        {
+        if(!$colloque->specialisations->isEmpty()) {
             $all = array_merge($colloque->specialisations->pluck('id')->all(), $user->adresse_contact->specialisations->pluck('id')->all());
 
             $user->adresse_contact->specialisations()->sync(array_unique($all));

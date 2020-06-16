@@ -153,12 +153,13 @@ class ColloquePricesLinkTest extends TestCase
         $colloque2 = $make->colloque();
 
         $price = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create([
-            'price'       => '12.00', // with quotes else json is not formatted correctly
-            'description' => 'cindy',
+            'price'       => '320.00', // with quotes else json is not formatted correctly
+            'description' => 'Price linked',
         ]);
 
         $price->colloques()->attach([$colloque1->id,$colloque2->id]);
 
+        // Frontend?
 
     }
 }

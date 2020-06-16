@@ -87,7 +87,7 @@ class RabaisTest extends TestCase
             'user_id'     => $person->id,
             'participant' => ['Cindy Leschaud', 'Coralie Ahmetaj'],
             'email'       => ['cindy.leschaud@gmail.com', 'coralie.ahmetaj@hotmail.com'],
-            'price_id'    => [$prices[0], $prices[0]],
+            'prices'      => [['price_id' => $prices[0]], ['price_id' => $prices[0]]],
             'rabais_id'   => [$rabais->id, $rabais->id],
             'options'     => [0 => [$options[0], [148 => 'psum odolr amet']], 1 => [$options[0], [148 => 'lorexm ipsu']]],
             'groupes'     => [[147 => 44], [147 => 45]]

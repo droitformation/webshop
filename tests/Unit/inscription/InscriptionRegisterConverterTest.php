@@ -337,20 +337,16 @@ class InscriptionRegisterConverterTest extends TestCase
             ],
             'colloques' =>[
                 164 => [
-                    'options' => [
-                        0 => [
-                            259,
-                            269 => [
-                                ['Un truc']
-                            ]
+                    'options' =>  [
+                        259,
+                        269 => [
+                            ['Un truc']
                         ]
                     ],
                     'groupes' => [268 => 150]
                 ],
                 166 => [
-                    'options' => [
-                        0 => [259]
-                    ],
+                    'options' => [259],
                     'groupes' => [268 => 150]
                 ]
             ],
@@ -359,12 +355,6 @@ class InscriptionRegisterConverterTest extends TestCase
 
         $register = new \App\Droit\Inscription\Entities\Register($data);
         $actual = $register->general();
-
-/*  */      echo '<pre>';
-        print_r($actual);
-        print_r($expected);
-        echo '</pre>';
-        exit;
 
         $this->assertEquals($expected,$actual);
     }

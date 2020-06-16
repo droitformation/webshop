@@ -39,7 +39,7 @@ class PriceLinkController extends Controller {
             'type'        => $data['type'],
             'description' => $data['description'] ?? null,
             'rang'        => $data['rang'] ?? 1,
-            'remarque'    => $data['remarque'] ?? nul,
+            'remarque'    => $data['remarque'] ?? null,
             'colloques'   => $request->input('relations')
         ]);
 

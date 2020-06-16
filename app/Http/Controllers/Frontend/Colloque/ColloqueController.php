@@ -97,6 +97,11 @@ class ColloqueController extends Controller
         return view('colloques.show')->with(['colloque' => $colloque]);
     }
 
+    public function colloqueoptions($id,$colloque)
+    {
+        return 'dfgh';die();
+    }
+
     public function documents($id)
     {
         $colloque = $this->colloque->find($id);
