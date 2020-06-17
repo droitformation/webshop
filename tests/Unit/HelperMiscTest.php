@@ -232,4 +232,41 @@ class HelperMiscTest extends TestCase
         $expect = \Carbon\Carbon::createFromDate(2020,03,17)->startOfDay()->toDateTimeString();
         $this->assertEquals($expect,$result);
     }
+
+    public function testConvertPriceArray()
+    {
+        $array  = [
+            'price_id' => [
+                'price_id:123',
+                'price_id:123'
+            ]
+        ];
+
+        $expected = [
+            'prices' => [
+                ['price_id' => '123'],
+                ['price_id' => '123']
+            ]
+        ];
+
+        $result = priceConvert($array);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testArraySimplePrice()
+    {
+        $simple  = ['price_id' => 'price_id:123'];
+        $result = priceConvert($simple);
+
+        $this->assertEquals(['price_id' => 123],$result);
+    }
+
+    public function testStringSimplePrice()
+    {
+        $string  = 'price_id:123';
+        $result  = priceConvert($string);
+
+        $this->assertEquals(['price_id' => 123],$result);
+    }
 }

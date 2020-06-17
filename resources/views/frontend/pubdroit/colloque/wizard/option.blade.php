@@ -1,6 +1,6 @@
 <div class="options-list">
 
-    <h4>Merci de préciser pour {{ $colloque->titre }}</h4>
+    <h4>Options pour {{ $colloque->titre }}</h4>
 
     <?php $types = $colloque->options->groupBy('type'); ?>
 
@@ -12,7 +12,7 @@
                 <div class='wrapper'>
                     @foreach($options as $option)
                         <div class="item_wrapper">
-                            <input class="options" type="checkbox" id="option_{{ $option->id }}" name="colloque[{{ $colloque->id }}][options][]" value="{{ $option->id }}">
+                            <input class="options" type="checkbox" id="option_{{ $option->id }}" name="colloques[{{ $colloque->id }}][options][]" value="{{ $option->id }}">
                             <label for="option_{{ $option->id }}">
                                 <div class='package'><div class='name option_name'>{{ $option->title }}</div></div>
                             </label>
@@ -22,28 +22,28 @@
             @endif
 
             @if($type == 'text')
-                <h4>Merci de préciser</h4>
+                <h5>Merci de préciser</h5>
                 <div class='wrapper'>
                     @foreach($options as $option)
                         <div class="item_wrapper">
                             <label for="option_{{ $option->id }}">
                                 <div class='package'><div class='name option_name'>{{ $option->title }}</div></div>
                             </label>
-                            <textarea class="form-control" id="option_{{ $option->id }}" name="colloque[{{ $colloque->id }}][options][][{{ $option->id }}]"></textarea>
+                            <textarea class="form-control" id="option_{{ $option->id }}" name="colloques[{{ $colloque->id }}][options][][{{ $option->id }}]"></textarea>
                         </div>
                     @endforeach
                 </div>
             @endif
 
             @if($type == 'choix')
-                <h4>Merci de préciser</h4>
+                <h5>Merci de préciser</h5>
 
                 @foreach($options as $option)
                     <p class="description_option">{{ strip_tags($option->title) }} &nbsp;<div class="errorTxt"></div></p>
                     <div class='wrapper'>
                         @foreach($option->groupe as $group)
                             <div class="item_wrapper">
-                                <input class="options" type="radio" required id="group_{{ $group->id }}" name="colloque[{{ $colloque->id }}][groupes][{{ $option->id }}]" value="{{ $group->id }}">
+                                <input class="options" type="radio" required id="group_{{ $group->id }}" name="colloques[{{ $colloque->id }}][groupes][{{ $option->id }}]" value="{{ $group->id }}">
                                 <label for="group_{{ $group->id }}">
                                     <div class='package'><div class='name option_name'>{{ $group->text }}</div></div>
                                 </label>

@@ -265,3 +265,24 @@ function getMaj($what)
 {
     return \Storage::disk('local')->get($what.'.txt');
 }
+
+function priceConvert($price){
+
+    if(isset($price['price_id']) && is_array($price['price_id'])){
+        return ['prices' => collect($price['price_id'])->map(function ($p, $index) {
+            $pieces = explode(':',$p);
+            return [$pieces[0] => $pieces[1]];
+        })->toArray()];
+    }
+
+    if(isset($price['price_id']) && (strpos($price['price_id'], ':') !== false)){
+        $pieces = explode(':',$price['price_id']);
+        return [$pieces[0] => $pieces[1]];
+    }
+
+    if(strpos($price, ':') !== false){
+        $pieces = explode(':',$price);
+        return [$pieces[0] => $pieces[1]];
+    }
+
+}

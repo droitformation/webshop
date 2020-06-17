@@ -36,7 +36,7 @@ class Preview
     public function __construct($colloque,$data)
     {
         $this->colloque = $colloque;
-        $this->data = $data;
+        $this->data     = $data;
 
         $this->repo_rabais = \App::make('App\Droit\Inscription\Repo\RabaisInterface');
         $this->repo_colloque = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
@@ -46,7 +46,7 @@ class Preview
     {
         $this->html .= $this->price();
         $this->html .= $this->occurrences($this->colloque,array_only($this->data,['occurrences']));
-        $this->html .= $this->linkoptions(array_only($this->data,['colloque']));
+        $this->html .= $this->linkoptions(array_only($this->data,['colloques']));
 
         $this->html .= isset($this->data['reference_no']) && !empty($this->data['reference_no']) ? '<dl class="ref"><dt>Votre référence</dt><dd><i>'.$this->data['reference_no'].'</i></dd></dl>' : '';
         $this->html .= isset($this->data['transaction_no']) && !empty($this->data['transaction_no']) ? '<dl class="ref"><dt>Votre N° commande</dt><dd><i>'.$this->data['transaction_no'].'</i></dd></dl>' : '';
@@ -56,7 +56,7 @@ class Preview
 
     public function price()
     {
-        $price  = explode(':',$this->data['price_id']);
+        $price  = priceConvert($this->data['price_id']);
         $relation = $price[0];
         $price_id = $price[1];
 
@@ -67,7 +67,7 @@ class Preview
         $rabais = $this->data['rabais_id'] ?? null;
         $prix   = $price->price_cents;
 
-        $html = '<dl style="padding-right:20px;width: 35%;">';
+        $html = '<dl class="link">';
 
         if($rabais){
             $model = $this->repo_rabais->find($rabais);
@@ -136,8 +136,8 @@ class Preview
     {
         $html = '';
 
-        if(isset($data['colloque']) && !empty($data['colloque'])){
-            foreach ($data['colloque'] as $colloque_id => $options){
+        if(isset($data['colloques']) && !empty($data['colloques'])){
+            foreach ($data['colloques'] as $colloque_id => $options){
                 $colloque  = $this->repo_colloque->find($colloque_id);
                 $html .= '<dl class="link"><dt class="heading"><strong>'.$colloque->titre.'</strong></dt>';
                 $html .= $this->options($colloque,$options);

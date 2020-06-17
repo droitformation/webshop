@@ -69,8 +69,8 @@ class WorkerInscriptionTest extends TestCase
                 'coralie.ahmetaj@hotmail.com'
             ],
             'prices' => [
-                ['price_id' =>  $prices[0]],
-                ['price_id' =>  $prices[0]],
+                ['price_id' => $prices[0]],
+                ['price_id' => $prices[0]],
             ],
             'occurrences' => [
                 [$occurrences->first()->id],

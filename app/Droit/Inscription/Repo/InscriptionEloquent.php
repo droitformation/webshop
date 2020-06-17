@@ -190,8 +190,7 @@ class InscriptionEloquent implements InscriptionInterface{
 
     public function create(array $data){
 
-        if( isset($data['user_id']) && $this->isRegistered($data['colloque_id'],$data['user_id']) )
-        {
+        if( isset($data['user_id']) && $this->isRegistered($data['colloque_id'],$data['user_id']) ) {
             throw new \App\Exceptions\RegisterException('Register failed');
         }
             
@@ -201,7 +200,8 @@ class InscriptionEloquent implements InscriptionInterface{
             'group_id'        => (isset($data['group_id']) ? $data['group_id'] : null),
             'rabais_id'       => $data['rabais_id'] ?? null,
             'inscription_no'  => $data['inscription_no'],
-            'price_id'        => $data['price_id'],
+            'price_id'        => $data['price_id'] ?? null,
+            'price_link_id'   => $data['price_link_id'] ?? null,
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()
         ));

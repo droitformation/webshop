@@ -87,6 +87,11 @@ class Groupe extends Model
         return null;
     }
 
+    public function getMainPriceAttribute()
+    {
+        return $this->price ?? $this->price_link;
+    }
+
     public function getPriceCentsAttribute()
     {
         $this->load('inscriptions');

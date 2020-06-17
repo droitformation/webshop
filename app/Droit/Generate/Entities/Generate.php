@@ -141,7 +141,7 @@ class Generate{
 
     public function getPriceName()
     {
-        return $this->getType() == 'group' ? $this->model->inscriptions->pluck('price.description')->all() : $this->model->price->description;
+        return $this->getType() == 'group' ? $this->model->inscriptions->pluck('main_price.description')->all() : $this->model->main_price->description;
     }
 
     public function getParticipant()

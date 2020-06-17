@@ -59503,6 +59503,8 @@ var appVue = new Vue({
           })["catch"](function (error) {
             console.log(error);
           });
+        } else {
+          $('#colloque_options_wrapper').empty();
         }
       });
       console.log($radios);

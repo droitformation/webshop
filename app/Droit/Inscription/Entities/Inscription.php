@@ -13,7 +13,7 @@ class Inscription extends Model
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id', 'rabais_id', 'payed_at', 'send_at', 'status','admin','present'];
+    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id','price_link_id', 'rabais_id', 'payed_at', 'send_at', 'status','admin','present'];
 
     public function getRappelListAttribute()
     {
@@ -37,6 +37,7 @@ class Inscription extends Model
             return $value->starting_at > \Carbon\Carbon::today();
         }) : null;
     }
+
     public function getMainPriceAttribute()
     {
         return $this->price ?? $this->price_link;

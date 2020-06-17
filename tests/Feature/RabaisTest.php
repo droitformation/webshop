@@ -42,13 +42,17 @@ class RabaisTest extends TestCase
         $price_rabais = $price - $rabais->value;
 
         $data = [
-            'price_id'       => $colloque->prices->first()->id,
-            'options'        => [$colloque->options->first()->id],
+            'price_id'       => 'price_id:'.$colloque->prices->first()->id,
+            'colloque_id'    => $colloque->id,
+            'colloques' => [
+                $colloque->id => [
+                    'options' => [$colloque->options->first()->id],
+                ]
+            ],
             'rabais_id'      => $rabais->id,
             'reference_no'   => 'Ref_2019_designpond',
             'transaction_no' => '2109_10_19824',
             'user_id'        => $person->id,
-            'colloque_id'    => $colloque->id
         ];
 
         $reponse = $this->post('pubdroit/registration', $data);

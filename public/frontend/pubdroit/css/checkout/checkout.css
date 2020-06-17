@@ -380,6 +380,10 @@ Wizard
     width: 33%;
 }
 
+dl.price-resume dt{
+    font-size: 16px;
+}
+
 #colloque-dependence .wrapper div.item_wrapper_link {
 
 }
@@ -442,6 +446,7 @@ input[type="checkbox"]:checked.options + label{
     padding:5px 10px;
     border:1px solid #b1b1b1;
     margin-top: 10px;
+    background: #f9f9f9;
 }
 
 #resumeWrapper dl.link dl,

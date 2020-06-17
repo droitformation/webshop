@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Colloque;
 
+use App\Events\InscriptionWasRegistered;
 use App\Http\Controllers\Controller;
 
 use App\Droit\Colloque\Repo\ColloqueInterface;
@@ -135,14 +136,20 @@ class InscriptionController extends Controller
     public function store(Request $request){
     //public function store(InscriptionCreateRequest $request){
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
+        $inscriptions = $register->prepare($register->general());
 
-        /**/ echo '<pre>';
-          //print_r($request->all());
-          print_r($register->general());
-          echo '</pre>';
-          exit;
+        $inscriptions->each(function ($data) use ($request) {
+            // Register each inscription
+            session()->put('reference_no', $request->input('reference_no',null));
+            session()->put('transaction_no', $request->input('transaction_no',null));
 
-        session()->put('reference_no', $request->input('reference_no',null));
+            $inscription  = $this->register->register($data, $request->input('type') == 'simple' ? true : null);
+            $reference    = \App\Droit\Transaction\Reference::make($inscription);
+
+            $this->register->makeDocuments($inscription, true);
+        });
+
+/*        session()->put('reference_no', $request->input('reference_no',null));
         session()->put('transaction_no', $request->input('transaction_no',null));
 
         $simple = $request->input('type') == 'simple' ? true : null;
@@ -150,7 +157,7 @@ class InscriptionController extends Controller
 
         $reference = \App\Droit\Transaction\Reference::make($model);
 
-        $this->register->makeDocuments($model, true);
+        $this->register->makeDocuments($model, true);*/
 
         flash('L\'inscription à bien été crée')->success();
 

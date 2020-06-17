@@ -35,9 +35,10 @@ class FeatureFrontendInscriptionTest extends TestCase
         $person   = $make->makeUser();
 
         $data = [
-            'price_id'       => $colloque->prices->first()->id,
-            'options'        => [$colloque->options->first()->id],
-            //'occurrences'    => [6],
+            'price_id'       => 'price_id:'.$colloque->prices->first()->id,
+            'colloques'      => [
+                $colloque->id => ['options' => [$colloque->options->first()->id]]
+            ],
             'reference_no'   => 'Ref_2019_designpond',
             'transaction_no' => '2109_10_19824',
             'user_id'        => $person->id,
@@ -58,6 +59,62 @@ class FeatureFrontendInscriptionTest extends TestCase
         ]);
     }
 
+    public function testUserRegisterMultipleColloquesPricelink()
+    {
+        $make       = new \tests\factories\ObjectFactory();
+        $person     = $make->makeUser();
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $data = [
+            'price_id'       => 'price_link_id:'.$price_link->id,
+            'colloques'      => [
+                $colloque1->id => [
+                    'options' => [$colloque1->options->first()->id]
+                ],
+                $colloque2->id => [
+                    'options' => [$colloque2->options->first()->id]
+                ]
+            ],
+            'reference_no'   => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824',
+            'user_id'        => $person->id,
+            'colloque_id'    => $colloque1->id
+        ];
+
+        $reponse = $this->post('pubdroit/registration', $data);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'price_link_id' => $price_link->id,
+            'user_id'       => $person->id,
+            'colloque_id'   => $colloque1->id,
+        ]);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'price_link_id' => $price_link->id,
+            'user_id'       => $person->id,
+            'colloque_id'   => $colloque2->id,
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no'   => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824'
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'id'        => 1,
+            'option_id' => $colloque1->options->first()->id,
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'id'        => 2,
+            'option_id' => $colloque2->options->first()->id,
+        ]);
+    }
+
     public function testUserRegisterWithReferences()
     {
         $make     = new \tests\factories\ObjectFactory();
@@ -71,7 +128,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         $reference = \App\Droit\Transaction\Reference::make($inscription);
 
         $this->assertDatabaseHas('transaction_references', [
-            'reference_no' => 'Ref_2019_designpond',
+            'reference_no'   => 'Ref_2019_designpond',
             'transaction_no' => '2109_10_19824'
         ]);
 

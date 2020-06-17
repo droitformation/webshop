@@ -107,6 +107,9 @@ const appVue = new Vue({
                         $('#colloque_options_wrapper').empty().append(response.data);
                     }).catch(function (error) { console.log(error);});
                 }
+                else{
+                    $('#colloque_options_wrapper').empty();
+                }
             });
 
             console.log($radios);

@@ -20,7 +20,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $this->colloque    = $colloque;
         $this->generator   = $generator;
     }
-
+    
     public function register($data, $simple = false)
     {
         if($simple) {
