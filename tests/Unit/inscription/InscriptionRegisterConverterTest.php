@@ -222,8 +222,6 @@ class InscriptionRegisterConverterTest extends TestCase
         $actual = $register->general();
 
         $this->assertEquals($expected,$actual);
-
-
     }
 
     public function testSimpleWithoutOptions()
@@ -447,6 +445,86 @@ class InscriptionRegisterConverterTest extends TestCase
 
         $register = new \App\Droit\Inscription\Entities\Register();
         $actual = $register->prepare($data);
+
+        $this->assertEquals($expected,$actual);
+    }
+
+    public function testConvertOptionsBackendSimple()
+    {
+        $data = [
+            'user_id'        => 710,
+            'colloque_id'    => 165,
+            'type'           => 'simple',
+            'colloques' =>[
+                165 => [
+                    'options' => [
+                        0 => [
+                            0 => 259,
+                            269 => ['Un truc']
+                        ]
+                    ],
+                    'groupes' => [268 => 150]
+                ]
+            ],
+            'price_id' => 'price_link_id:1',
+        ];
+
+        $register = new \App\Droit\Inscription\Entities\Register($data);
+        $actual = $register->general();
+
+        $expected = [
+            'user_id'        => 710,
+            'colloque_id'    => 165,
+            'type'           => 'simple',
+            'colloques' =>[
+                165 => [
+                    'options' => [
+                        0   => 259,
+                        269 => ['Un truc']
+                    ],
+                    'groupes' => [268 => 150]
+                ]
+            ],
+            'price_id' => 'price_link_id:1',
+        ];
+
+        $this->assertEquals($expected,$actual);
+    }
+
+    public function testConvertOptionsFrontend()
+    {
+        $data = [
+            'user_id'        => 710,
+            'colloque_id'    => 165,
+            'colloques' =>[
+                165 => [
+                    'options' => [
+                        0 => 259,
+                        269 => ['Un truc']
+                    ],
+                    'groupes' => [268 => 150]
+                ]
+            ],
+            'price_id' => 'price_link_id:1',
+        ];
+
+        $register = new \App\Droit\Inscription\Entities\Register($data);
+        $actual = $register->general();
+
+        $expected = [
+            'user_id'        => 710,
+            'colloque_id'    => 165,
+            'colloques' =>[
+                165 => [
+                    'options' => [
+                        0   => 259,
+                        269 => ['Un truc']
+                    ],
+                    'groupes' => [268 => 150]
+                ]
+            ],
+            'price_id' => 'price_link_id:1',
+        ];
 
         $this->assertEquals($expected,$actual);
     }

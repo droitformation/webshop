@@ -133,8 +133,8 @@ class InscriptionController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request){
-    //public function store(InscriptionCreateRequest $request){
+    public function store(InscriptionCreateRequest $request){
+
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
         $inscriptions = $register->prepare($register->general());
 

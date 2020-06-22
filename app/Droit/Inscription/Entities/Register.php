@@ -14,7 +14,6 @@ class Register
      * */
     public function prepare($data)
     {
-
         if(isset($data['colloques']) && !empty($data['colloques'])){
             return collect($data['colloques'])->map(function ($options,$key) use ($data) {
                 return ['colloque_id' => $key] + priceConvert($data) + array_except($data,['colloques','_token','price_id']) + $options;
@@ -39,7 +38,7 @@ class Register
             'rabais_id'      => $this->data['rabais_id'] ?? null,
             'user_id'        => $this->data['user_id'],
             'colloque_id'    => $this->data['colloque_id'],
-            'type'           => $this->data['type'],
+            'type'           => $this->data['type'] ?? '',
             'price_id'       => $this->data['price_id'],
             'colloques'      => $this->colloques()
         ]);
@@ -47,9 +46,11 @@ class Register
 
     public function colloquedata($data,$id)
     {
+        $type = $this->data['type'] ?? 'general';
+
         return array_filter([
-            'options'     => isset($data['options']) && isset($data['options'][0]) && $this->data['type'] == 'simple' ? $data['options'][0] : ($data['options'] ?? null),
-            'groupes'     => $data['groupes'] ?? null,
+            'options'     => isset($data['options']) && isset($data['options'][0]) && $type == 'simple' ? $data['options'][0] : ($data['options'] ?? null),
+            'groupes'     => isset($data['groupes']) && isset($data['groupes'][0]) && $type == 'simple' ? $data['groupes'][0] : ($data['groupes'] ?? null),
             'occurrences' => $data['occurrences'] ?? null,
         ]);
     }

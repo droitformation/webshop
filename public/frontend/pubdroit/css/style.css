@@ -1612,7 +1612,7 @@ a.navbar-btn.navbar-register:focus{
 #colloque-dependence input[type=radio]:checked.occurrences + label,
 #colloque-dependence input[type=checkbox]:checked.occurrences  + label
 {
-    width: 30%;
+    width:98%;
     height: 130px;
     padding: 5px 10px;
 }
