@@ -5,7 +5,6 @@
 
 Route::get('cartworker2', function()
 {
-
     $abo        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     
@@ -15,10 +14,36 @@ Route::get('cartworker2', function()
     $generator->stream = true;
     $generator->setPrint(true);
 
-
     return $generator->makeAbo('facture', $abofacture);
 });
 
+Route::get('email_testing', function()
+{
+    // Initialize library class
+    $mail = new \App\Droit\Newsletter\Service\VerifyEmail();
+
+    // Set the timeout value on stream
+    $mail->setStreamTimeoutWait(150);
+
+    // Set debug output mode
+    $mail->Debug= TRUE;
+    $mail->Debugoutput= 'html';
+
+    // Set email address for SMTP request
+    $mail->setEmailFrom('info@designpond.ch');
+
+    // Email to check
+    $email = 'cindy.leschaud@unine.ch';
+
+    // Check if email is valid and exist
+    if($mail->check($email)){
+        echo 'Email &lt;'.$email.'&gt; is exist!';
+    }elseif(App\Droit\Newsletter\Service\VerifyEmail::validate($email)){
+        echo 'Email &lt;'.$email.'&gt; is valid, but not exist!';
+    }else{
+        echo 'Email &lt;'.$email.'&gt; is not valid and not exist!';
+    }
+});
 
 Route::get('abos_test', function () {
 

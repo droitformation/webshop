@@ -64,6 +64,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('send/list', 'Backend\Newsletter\ListController@send');
         Route::get('send/confirmation/{id}', 'Backend\Newsletter\ListController@confirmation');
         Route::post('export', 'Backend\Newsletter\ListController@export');
+
+        Route::get('purge', 'Backend\Newsletter\PurgeController@index');
+        Route::post('purge', 'Backend\Newsletter\PurgeController@store');
+        Route::post('invalid', 'Backend\Newsletter\PurgeController@invalid');
+
         Route::resource('liste', 'Backend\Newsletter\ListController');
 
         Route::get('tracking/stats/{id}', 'Backend\Newsletter\TrackingController@stats');
