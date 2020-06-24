@@ -74,7 +74,11 @@
 
         <table class="content-table content-wide" valign="top">
 
-            @include('templates.partials.colloque',['colloque' => $generate->getColloque()])
+            @if($colloques = $generate->getColloques())
+                @include('templates.partials.colloques',['colloques' => $colloques])
+            @else
+                @include('templates.partials.colloque',['colloque' => $generate->getColloque()])
+            @endif
 
             @include('templates.partials.occurrences',['occurrences' => $generate->getOccurrences()])
 

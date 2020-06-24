@@ -193,7 +193,7 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abo_users       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $prices      = \App::make('App\Droit\Price\Repo\PriceLinkInterface');
+    $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
     $rappels       = \App::make('App\Droit\Inscription\Repo\RappelInterface');
@@ -204,10 +204,10 @@ Route::get('testing', function() {
 
     //$orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     //$order = $orders->find(4830);
-    $all = $rabais->byColloque(164);
+    $colloque = $colloques->find(165);
 
     echo '<pre>';
-    print_r($all);
+    print_r($colloque->price_free);
     echo '</pre>';
     exit;
 /*    $inscription = $model_inscriptions->find(20992);
@@ -551,7 +551,7 @@ Route::get('bv_factures', function()
 
     $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-    $facture   = $Inscriptions->find(18614);//701
+    $facture   = $Inscriptions->find(22500);//701
 
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
@@ -559,7 +559,7 @@ Route::get('bv_factures', function()
 
     //return $generator->makeAbo('facture', $facture);
     $generator->stream = true;
-    return $generator->make('bv', $facture);
+    return $generator->make('facture', $facture);
 });
 
 Route::get('abo1', function()

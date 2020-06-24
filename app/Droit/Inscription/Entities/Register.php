@@ -3,10 +3,12 @@
 class Register
 {
     protected $data;
+    protected $repo_colloque;
 
     public function __construct($data = [])
     {
         $this->data = $data;
+        $this->repo_colloque = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
     }
 
     /*
@@ -15,8 +17,20 @@ class Register
     public function prepare($data)
     {
         if(isset($data['colloques']) && !empty($data['colloques'])){
+
             return collect($data['colloques'])->map(function ($options,$key) use ($data) {
-                return ['colloque_id' => $key] + priceConvert($data) + array_except($data,['colloques','_token','price_id']) + $options;
+                // if original colloque is tthe current
+                // It's supports the invoice price
+                // Else it's free
+                $free = $this->repo_colloque->find($key);
+
+                if($key != $data['colloque_id'] && !isset($free->price_free)){
+                    throw new \App\Exceptions\ColloqueMissingInfoException('Pas de prix gratuit pour un prix lié');
+                }
+
+                $price = $key == $data['colloque_id'] ? priceConvert($data) : ['price_id' => $free->price_free->id];
+
+                return ['colloque_id' => $key] + $price + array_except($data,['colloques','_token','price_id']) + $options;
             });
         }
 
@@ -80,5 +94,4 @@ class Register
             return $colloques;
         }
     }
-
 }

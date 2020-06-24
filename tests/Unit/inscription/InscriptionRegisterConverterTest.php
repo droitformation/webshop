@@ -5,9 +5,31 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\ResetTbl;
 
 class InscriptionRegisterConverterTest extends TestCase
 {
+    use RefreshDatabase,ResetTbl;
+
+    protected $repo_colloque;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+       // $this->repo_colloque = \Mockery::mock('App\Droit\Colloque\Repo\ColloqueInterface');
+        //$this->app->instance('App\Droit\Colloque\Repo\ColloqueInterface', $this->repo_colloque);
+
+        $this->app['config']->set('database.default','testing');
+        $this->reset_all();
+    }
+
+    public function tearDown(): void
+    {
+        \Mockery::close();
+        parent::tearDown();
+    }
+
     public function testConvertPriceMultiple()
     {
         $data = [
@@ -387,68 +409,6 @@ class InscriptionRegisterConverterTest extends TestCase
          $this->assertEquals($expected,$actual);
      }
 
-     public function testConvertDataToCollectionColloques()
-     {
-         $data = [
-             'user_id'        => 710,
-             'colloque_id'    => 165,
-             'type'           => 'simple',
-             'colloques' =>[
-                 165 => [
-                     'options' => [
-                         259,
-                         269 => ['Un truc']
-                     ],
-                     'groupes' => [268 => 150]
-                 ]
-             ],
-             'price_id' => 'price_link_id:1',
-         ];
-
-         $expected = collect([
-             165 => [
-                 'user_id'      => 710,
-                 'colloque_id'  => 165,
-                 'type'         => 'simple',
-                 'options'  => [
-                     259,
-                     269 => ['Un truc']
-                 ],
-                 'groupes'  => [268 => 150],
-                 'price_link_id' => '1',
-             ]
-         ]);
-
-         $register = new \App\Droit\Inscription\Entities\Register();
-         $actual = $register->prepare($data);
-
-         $this->assertEquals($expected,$actual);
-     }
-
-    public function testConvertDataToCollectionOneColloque()
-    {
-        $data = [
-            'user_id'     => 710,
-            'colloque_id' => 165,
-            'type'        => 'simple',
-            'price_id'    => 'price_id:1',
-        ];
-
-        $expected = collect([
-            [
-                'user_id'      => 710,
-                'colloque_id'  => 165,
-                'type'         => 'simple',
-                'price_id'     => '1',
-            ]
-        ]);
-
-        $register = new \App\Droit\Inscription\Entities\Register();
-        $actual = $register->prepare($data);
-
-        $this->assertEquals($expected,$actual);
-    }
-
     public function testConvertOptionsBackendSimple()
     {
         $data = [
@@ -525,6 +485,125 @@ class InscriptionRegisterConverterTest extends TestCase
             ],
             'price_id' => 'price_link_id:1',
         ];
+
+        $this->assertEquals($expected,$actual);
+    }
+
+
+    public function testConvertDataToCollectionOneColloque()
+    {
+        $data = [
+            'user_id'     => 710,
+            'colloque_id' => 165,
+            'type'        => 'simple',
+            'price_id'    => 'price_id:1',
+        ];
+
+        $expected = collect([
+            [
+                'user_id'      => 710,
+                'colloque_id'  => 165,
+                'type'         => 'simple',
+                'price_id'     => '1',
+            ]
+        ]);
+
+        $register = new \App\Droit\Inscription\Entities\Register();
+        $actual = $register->prepare($data);
+
+        $this->assertEquals($expected,$actual);
+    }
+
+    public function testConvertDataToCollectionColloques()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque1 = $make->colloque();
+
+        $data = [
+            'user_id'        => 710,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'simple',
+            'colloques' =>[
+                $colloque1->id => [
+                    'options' => [
+                        259,
+                        269 => ['Un truc']
+                    ],
+                    'groupes' => [268 => 150]
+                ]
+            ],
+            'price_id' => 'price_link_id:1',
+        ];
+
+        $expected = collect([
+            $colloque1->id => [
+                'user_id'      => 710,
+                'colloque_id'  => $colloque1->id,
+                'type'         => 'simple',
+                'options'  => [
+                    259,
+                    269 => ['Un truc']
+                ],
+                'groupes'  => [268 => 150],
+                'price_link_id' => '1',
+            ]
+        ]);
+
+        $register = new \App\Droit\Inscription\Entities\Register();
+        $actual = $register->prepare($data);
+
+        $this->assertEquals($expected,$actual);
+    }
+
+    public function testConvertDataToCollectionColloquesPrices()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque1 = $make->colloque();
+        $colloque2 = $make->colloque();
+
+        $price2 = factory(\App\Droit\Price\Entities\Price::class)->create([
+            'colloque_id' => $colloque2->id, 'price' =>  0, 'type' => 'admin', 'description' => 'gratuit', 'rang' => 2, 'remarque' => 'Gratuit 2'
+        ]);
+
+        $data = [
+            'user_id'        => 710,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'simple',
+            'colloques' => [
+                $colloque1->id => [
+                    'options' => [259],
+                    'groupes' => [268 => 150]
+                ],
+                $colloque2->id => [
+                    'options' => [261]
+                ]
+            ],
+            'price_id' => 'price_link_id:1',
+        ];
+
+        $expected = collect([
+            $colloque1->id => [
+                'user_id'       => 710,
+                'colloque_id'   => $colloque1->id,
+                'type'          => 'simple',
+                'options'       => [259],
+                'groupes'       => [268 => 150],
+                'price_link_id' => '1',
+            ],
+            $colloque2->id => [
+                'user_id'       => 710,
+                'colloque_id'   => $colloque2->id,
+                'type'          => 'simple',
+                'options'       => [261],
+                'price_id'      => $price2->id,
+            ]
+        ]);
+
+        //$this->repo_colloque->shouldReceive('find')->andReturn($colloque1);
+        //$this->repo_colloque->shouldReceive('find')->andReturn($colloque2);
+
+        $register = new \App\Droit\Inscription\Entities\Register();
+        $actual = $register->prepare($data);
 
         $this->assertEquals($expected,$actual);
     }

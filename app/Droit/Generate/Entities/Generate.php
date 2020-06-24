@@ -93,15 +93,24 @@ class Generate{
 
     public function getColloque()
     {
+        // model => inscription or group
         $this->model->load('colloque');
 
         if(isset($this->model->colloque)){
             $this->model->colloque->load('location','compte','attestation','adresse');
-
             return $this->model->colloque;
         }
 
         throw new \App\Exceptions\ColloqueMissingInfoException('No Colloque');
+    }
+
+    public function getColloques()
+    {
+        if($this->getType() == 'inscription' && $this->model->price_link_id){
+            return $this->model->price_link->colloques;
+        }
+
+        return null;
     }
 
     public function getAbo()

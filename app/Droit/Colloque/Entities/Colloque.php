@@ -114,9 +114,7 @@ class Colloque extends Model implements HasMedia
 
     public function getPricesActiveAttribute()
     {
-        return $this->prices->reject(function ($price, $key) {
-                return $price->type == 'admin';
-            })->filter(function ($price, $key) {
+        return $this->prices->whereIn('type',['public'])->filter(function ($price, $key) {
 
             if($price->end_at){
                 return $price->end_at > \Carbon\Carbon::now() ? $price : false;
@@ -128,9 +126,8 @@ class Colloque extends Model implements HasMedia
 
     public function getPricesLinkActiveAttribute()
     {
-        return $this->price_link->reject(function ($price, $key) {
-            return $price->type == 'admin';
-        })->filter(function ($price, $key) {
+        return $this->price_link->whereIn('type',['public'])
+            ->filter(function ($price, $key) {
 
             if($price->end_at){
                 return $price->end_at > \Carbon\Carbon::now() ? $price : false;
@@ -138,6 +135,11 @@ class Colloque extends Model implements HasMedia
 
             return $price;
         });
+    }
+
+    public function getPriceFreeAttribute()
+    {
+        return $this->prices->firstWhere('price', 0);
     }
 
     public function getIsActiveAttribute()
