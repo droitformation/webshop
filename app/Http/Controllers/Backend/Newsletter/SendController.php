@@ -65,6 +65,7 @@ class SendController extends Controller
         $this->campagne->update(['id' => $campagne->id, 'status' => 'envoyé', 'updated_at' => date('Y-m-d G:i:s'), 'send_at' => $toSend]);
 
         event(new \App\Events\ContentUpdated('hub'));
+        event(new \App\Events\CampaignSent($campagne->newsletter_id,$campagne->id));
 
         flash('Campagne envoyé!')->success();
 

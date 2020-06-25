@@ -7,5 +7,4 @@ interface SubscriptionWorkerInterface{
     public function make($email,$newsletter_id);
     public function exist($email);
     public function unsubscribe($subscriber, array $newsletter_ids);
-
 }

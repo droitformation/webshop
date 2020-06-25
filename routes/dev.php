@@ -1454,15 +1454,20 @@ Route::get('factory', function()
     $worker = \App::make('App\Droit\Newsletter\Worker\SubscriptionWorkerInterface');
     $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
     $newsletter = \App::make('App\Droit\Newsletter\Repo\NewsletterInterface');
-
     $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
 
-    $mailjet->setList(1588258);
-    $pubdroit = $newsletter->find(1);
-
-    $allusersDB = $pubdroit->subscriptions->unique('email');
+    //$mailjet->setList(1588258);
+    //$pubdroit = $newsletter->find(1);
+    //$allusersDB = $pubdroit->subscriptions->unique('email');
 
     $subscribers = [];
+
+    $results = $subscribe->getByNewsletterAndDomain(3, '@unine.ch');
+
+    echo '<pre>';
+    print_r($results->pluck('email')->implode('<br>'));
+    echo '</pre>';
+    exit;
 
     /*
         foreach (range(0, 8000, 1000) as $i) {
@@ -1700,6 +1705,12 @@ Route::get('merge', function () {
 
     $abonnes = $abo->abonnements->whereIn('status',['abonne','tiers']);
     
+});
+
+Route::get('test_send_campaign', function() {
+
+    //event(new \App\Events\CampaignSent(3,1974));
+
 });
 
 

@@ -14,7 +14,7 @@
                 <div style="{{ $style['paragraph'] }}">
                     <p>Le message envoyé à l'adresse <strong>{!! $bounce !!}</strong> n'a pas pu être remis.</p>
                     <p><strong>Infos:</strong></p>
-                    @if(isset($headers) && !empty($headers))
+                    @if(isset($headers) && !empty($headers) && is_array($headers))
                         <ul>
                             @foreach($headers as $line => $header)
                                 <li>{{ $line }} : {{ $header }}</li>

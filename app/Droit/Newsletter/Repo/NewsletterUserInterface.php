@@ -14,4 +14,6 @@ interface NewsletterUserInterface {
     public function add(array $data);
 	public function delete($id);
 
+    public function getByNewsletterAndDomain($newsletter_id, $domain);
+
 }

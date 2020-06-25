@@ -64,7 +64,9 @@ class CampagneTest extends TestCase
      */
     public function testSendCampagne()
     {
-        $this->setDate('hub');
+        \Event::fake();
+
+        //$this->setDate('hub');
 
         $response = $this->call('GET', 'hub/maj');
         $response->assertStatus(200);
@@ -82,7 +84,11 @@ class CampagneTest extends TestCase
 
         $response = $this->call('POST', 'build/send/campagne', ['id' => '1']);
 
-        $this->isDate('hub');
+        //$this->isDate('hub');
+
+        \Event::assertDispatched(\App\Events\CampaignSent::class, function ($event) use ($campagne) {
+            return $event->campaign_id == $campagne->id && $event->newsletter_id == $campagne->newsletter_id;
+        });
 
         $response->assertRedirect('build/newsletter');
     }

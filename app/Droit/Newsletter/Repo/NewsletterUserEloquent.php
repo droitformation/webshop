@@ -231,4 +231,11 @@ class NewsletterUserEloquent implements NewsletterUserInterface{
         return true;
 	}
 
+    public function getByNewsletterAndDomain($newsletter_id, $domain){
+
+        return $this->user->where('email', 'like', '%'.$domain)->with(['subscriptions'])->whereHas('subscriptions', function($q) use ($newsletter_id) {
+            $q->where('newsletter_subscriptions.newsletter_id', $newsletter_id);
+        })->get();
+
+    }
 }
