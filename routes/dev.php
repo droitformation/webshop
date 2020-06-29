@@ -1710,7 +1710,13 @@ Route::get('merge', function () {
 Route::get('test_send_campaign', function() {
 
     //event(new \App\Events\CampaignSent(3,1974));
+    $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
+    $results2 = $subscribe->getByNewsletterAndDomain(3, '@unine.ch');
 
+    echo '<pre>';
+    print_r($results2->pluck('email')->unique()->all());
+    echo '</pre>';
+    exit();
 });
 
 

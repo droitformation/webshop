@@ -33,18 +33,16 @@ class SendAtUnine
         $campagne = $this->campagne->find($event->campaign_id);
 
         if(!$emails->isEmpty()){
-            foreach ($emails->chunk(10) as $row){
+            foreach ($emails->chunk(50) as $row){
 
                 $recipients = $row->map(function ($email, $key) {
                     return ['Email' => $email->email, 'Name'  => ""];
                 })->toArray();
 
-                // GET html
-                $html = $this->worker->html($campagne->id);
+                $html = $this->worker->html($campagne->id);   // GET html
 
-                SendCampaign::dispatch($campagne,$html,$recipients)->delay(now()->addSeconds(30));
+                SendCampaign::dispatch($campagne,$html,$recipients)->delay(now()->addSeconds(60));
             }
         }
-
     }
 }
