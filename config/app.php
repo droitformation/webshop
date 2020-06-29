@@ -38,6 +38,8 @@ return [
 
 	'debug' => env('APP_DEBUG'),
 
+    'adobe' => env('ADOBE_API'),
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application URL

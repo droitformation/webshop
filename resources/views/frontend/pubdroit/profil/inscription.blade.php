@@ -18,11 +18,25 @@
                         <img src="{{ secure_asset($inscription->colloque->frontend_illustration) }}" alt='{{ $inscription->colloque->titre }}'/>
                     </a>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-6">
                     <h3>{{ $inscription->colloque->titre }} </h3>
                     <p class="text-muted">{{ $inscription->colloque->soustitre }}</p>
                     <p class="text-primary">{{ $inscription->colloque->location->name }}</p>
                     <p>{{ $inscription->colloque->event_date }}</p>
+                </div>
+                <div class="col-md-4">
+                    @if(!$inscription->colloque->getMedia('preview')->isEmpty())
+                        <h4>Vos ouvrages</h4>
+                        <div class="profil-info">
+                            @foreach($inscription->colloque->getMedia('preview') as $preview)
+                                <p>
+                                    <a data-fancybox data-type="iframe" data-src="{{ url('pubdroit/profil/book/'.$inscription->colloque->id.'/'.$preview->id) }}" href="javascript:;">
+                                        {{ $preview->getCustomProperty('title', '') }}
+                                    </a>
+                                </p>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
 
