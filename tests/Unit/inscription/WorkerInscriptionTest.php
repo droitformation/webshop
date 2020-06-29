@@ -410,4 +410,57 @@ class WorkerInscriptionTest extends TestCase
         $this->assertEquals($first->id, $inscriptions->first()->id);
 
     }
+
+    public function testDeleteInscriptionSimple()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+
+        $worker->unsubscribe($inscription);
+
+        $inscription = $inscription->fresh();
+
+        $this->assertNotNull($inscription->deleted_at);
+    }
+
+    public function testDeleteInscriptionLinked()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = factory(\App\Droit\User\Entities\User::class)->create();
+        $colloque1 = $make->colloque();
+        $colloque2 = $make->colloque();
+
+        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 0, 'description' => 'Price free']);
+        $price_link = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create(['price' => '320.00', 'description' => 'Price linked']);
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'       => $person->id,
+            'colloque_id'   => $colloque1->id,
+            'price_link_id' => $price_link->id,
+            'price_id'      => null
+        ]);
+
+        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'       => $person->id,
+            'colloque_id'   => $colloque1->id,
+            'price_link_id' => null,
+            'price_id'      => $price->id
+        ]);
+
+        $worker->unsubscribe($inscription1);
+
+        $inscription1 = $inscription1->fresh();
+        $inscription2 = $inscription1->fresh();
+
+        $this->assertNotNull($inscription1->deleted_at);
+        $this->assertNotNull($inscription2->deleted_at);
+    }
 }

@@ -290,6 +290,15 @@ class Inscription extends Model
         return $this->group_id > 0 ? $this->group_rappels : $this->rappels;
     }
 
+    public function getLinkedInscriptionsAttribute()
+    {
+        if(isset($this->price_link_id)){
+            return $this->inscrit->inscriptions->whereIn('colloque_id',$this->price_link->colloques->pluck('id')->all());
+        }
+
+        return null;
+    }
+
     public function getNameInscriptionAttribute()
     {
         if($this->group_id > 0)

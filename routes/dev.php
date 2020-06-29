@@ -204,19 +204,20 @@ Route::get('testing', function() {
 
     //$orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     //$order = $orders->find(4830);
-    $colloque = $colloques->find(165);
+/*    $colloque = $colloques->find(165);
 
     echo '<pre>';
     print_r($colloque->price_free);
     echo '</pre>';
-    exit;
-/*    $inscription = $model_inscriptions->find(20992);
+    exit;*/
+
+   $inscription = $model_inscriptions->find(22500);
 
     echo '<pre>';
-    print_r($inscription->export_option_html);
+    print_r($inscription->linked_inscriptions);
     echo '</pre>';
     exit();
-*/
+/* */
 
     $dispach = null;
     $list = [1,2];
