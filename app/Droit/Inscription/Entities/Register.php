@@ -17,7 +17,6 @@ class Register
     public function prepare($data)
     {
         if(isset($data['colloques']) && !empty($data['colloques'])){
-
             return collect($data['colloques'])->map(function ($options,$key) use ($data) {
                 // if original colloque is tthe current
                 // It's supports the invoice price

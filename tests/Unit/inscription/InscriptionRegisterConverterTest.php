@@ -190,10 +190,6 @@ class InscriptionRegisterConverterTest extends TestCase
                         1 => [260, 261]
                     ],
                 ]
-            ],
-            'price_id' => [
-                "price_link_id:1",
-                "price_link_id:1"
             ]
         ];
 
@@ -283,17 +279,13 @@ class InscriptionRegisterConverterTest extends TestCase
                 'Marc.Leschaud@romandie.ch',
                 'cindy.leschaud@gmail.com'
             ],
-            'price_id[]'     => [
+            'price_id'     => [
                 "price_link_id:1",
                 "price_link_id:1"
             ],
             'user_id'        => 710,
             'colloque_id'    => 165,
             'type'           => 'multiple',
-            'price_id' => [
-                ['price_link_id:1'],
-                ['price_link_id:1'],
-            ]
         ];
 
         $expected = [
@@ -309,8 +301,8 @@ class InscriptionRegisterConverterTest extends TestCase
                 'cindy.leschaud@gmail.com'
             ],
             'price_id' => [
-                ['price_link_id:1'],
-                ['price_link_id:1'],
+                "price_link_id:1",
+                "price_link_id:1"
             ]
         ];
 
@@ -605,6 +597,82 @@ class InscriptionRegisterConverterTest extends TestCase
         $register = new \App\Droit\Inscription\Entities\Register();
         $actual = $register->prepare($data);
 
+        $this->assertEquals($expected,$actual);
+    }
+
+    public function testMultiplePriceAndColloques()
+    {
+        $make       = new \tests\factories\ObjectFactory();
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $data = [
+            'user_id'        => 710,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'multiple',
+            'reference_no'   => '',
+            'transaction_no' => '',
+            'participant' => [
+                'Marc,Leschaud',
+                'Cindy,Leschaud'
+            ],
+            'email' => [
+                'Marc.Leschaud@romandie.ch',
+                'cindy.leschaud@gmail.com'
+            ],
+            'price_id'     => [
+                "price_link_id:".$price_link->id,
+                "price_link_id:".$price_link->id,
+            ],
+            'colloques' =>[
+                $colloque1->id => ['options' => [0 => [261]]],
+                $colloque2->id => ['options' => [0 => [259]]],
+            ]
+        ];
+
+        $expected = [
+            'user_id'        => 710,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'multiple',
+            'reference_no'   => '',
+            'transaction_no' => '',
+            'participant' => [
+                'Marc,Leschaud',
+                'Cindy,Leschaud'
+            ],
+            'email' => [
+                'Marc.Leschaud@romandie.ch',
+                'cindy.leschaud@gmail.com'
+            ],
+            'colloques'  => collect([
+                $colloque1->id => [
+                    'user_id'       => 710,
+                    'colloque_id'   => $colloque1->id,
+                    'type'          => 'multiple',
+                    'options'       => [261],
+                    'price_link_id' => $price_link->id,
+                ],
+                $colloque2->id => [
+                    'user_id'       => 710,
+                    'colloque_id'   => $colloque2->id,
+                    'type'          => 'multiple',
+                    'options'       => [259],
+                    'price_id'      => $price->id,
+                ]
+            ])
+        ];
+
+
+        $register = new \App\Droit\Inscription\Entities\Register($data);
+        $actual = $register->prepare($data);
+        echo '<pre>';
+        print_r($actual);
+        echo '</pre>';
+        exit();
         $this->assertEquals($expected,$actual);
     }
 }

@@ -463,4 +463,33 @@ class WorkerInscriptionTest extends TestCase
         $this->assertNotNull($inscription1->deleted_at);
         $this->assertNotNull($inscription2->deleted_at);
     }
+
+    public function testdeleteOneInscriptionFromGroupLinked()
+    {
+        $make       = new \tests\factories\ObjectFactory();
+        $person     = $make->makeUser();
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->create([
+            'user_id'     => $person->id,
+            'colloque_id' => $colloque1->id
+        ]);
+
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,3)->make([
+            'group_id'    => $group->id,
+            'colloque_id' => '12'
+        ]);
+
+        $inscriptions = $inscriptions->map(function ($item, $key) {
+            $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->make([ 'id' => $key ]);
+            return $item;
+        });
+
+        $group->inscriptions = $inscriptions;
+    }
 }

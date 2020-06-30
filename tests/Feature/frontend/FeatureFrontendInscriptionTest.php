@@ -28,7 +28,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         parent::tearDown();
     }
 
-/*    public function testUserRegister()
+    public function testUserRegister()
     {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
@@ -57,7 +57,7 @@ class FeatureFrontendInscriptionTest extends TestCase
             'reference_no' => 'Ref_2019_designpond',
             'transaction_no' => '2109_10_19824'
         ]);
-    }*/
+    }
 
     public function testUserRegisterMultipleColloquesPricelink()
     {
@@ -66,12 +66,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         $colloque1  = $make->colloque();
         $colloque2  = $make->colloque();
 
-        $price      = factory(\App\Droit\Price\Entities\Price::class)->create([
-            'colloque_id' => $colloque2->id,
-            'price'       => 0,
-            'description' => 'Price free'
-        ]);
-
+        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
         $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
         $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
 
@@ -92,8 +87,6 @@ class FeatureFrontendInscriptionTest extends TestCase
         ];
 
         $reponse = $this->post('pubdroit/registration', $data);
-
-        $model = \App\Droit\Inscription\Entities\Inscription::all();
 
         $this->assertDatabaseHas('colloque_inscriptions', [
             'price_link_id' => $price_link->id,
