@@ -29,12 +29,13 @@ class PriceEloquent implements PriceInterface{
             'price'       => $data['price'] * 100,
             'type'        => $data['type'],
             'description' => $data['description'],
+            'main'        => $data['main'] ?? null,
+            'rang'        => $data['rang'] ?? 1,
             'remarque'    => isset($data['remarque']) ? $data['remarque'] : null,
             'end_at'      => isset($data['end_at']) && !empty($data['end_at']) ? $data['end_at'] : null
         ));
 
-        if( ! $price )
-        {
+        if( ! $price ) {
             return false;
         }
 
@@ -46,15 +47,13 @@ class PriceEloquent implements PriceInterface{
 
         $price = $this->price->findOrFail($data['id']);
 
-        if( ! $price )
-        {
+        if( ! $price ) {
             return false;
         }
 
         $price->fill($data);
 
-        if(isset($data['price']))
-        {
+        if(isset($data['price'])) {
             $price->price = $data['price'] * 100;
         }
 
@@ -70,6 +69,5 @@ class PriceEloquent implements PriceInterface{
         $price = $this->price->find($id);
 
         return $price->delete();
-
     }
 }

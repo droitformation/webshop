@@ -192,6 +192,7 @@ class Colloque extends Model implements HasMedia
                 'description'    => $price->description,
                 'price'          => $price->price_cents,
                 'type'           => $price->type,
+                'main'           => $price->main ? 1 : null,
                 'remarque'       => $price->remarque,
                 'rang'           => $price->rang,
                 'occurrences'    => $price->occurrence_list,

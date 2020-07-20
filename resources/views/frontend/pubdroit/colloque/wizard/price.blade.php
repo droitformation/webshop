@@ -13,6 +13,16 @@
                 </label>
             </div>
         @endforeach
+
+        @if(!$account->coupons($colloque->compte->id)->isEmpty())
+            <?php $rabais = $account->coupons($colloque->compte->id)->first(); ?>
+            <div class="card-rabais">
+                <label>Votre rabais</label>
+                <input type="text" disabled class="form-control" value="{{ !empty($rabais->description) ? $rabais->description : '' }} (-{{ $rabais->value }} CHF)">
+                <input name="rabais_id" value="{{ $rabais->id }}" type="hidden">
+            </div>
+        @endif
+
     </div>
     <hr/>
 @endif

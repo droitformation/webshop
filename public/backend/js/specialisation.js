@@ -61,6 +61,65 @@ $( function() {
         });
     }
 
+    if($("#rabais_tags").length) {
+
+        let id = $('#rabais').data('id');
+
+        $.get(base_url + 'admin/rabais/all/' + id, function( data ) {
+
+            $("#rabais_tags").tagit({
+                fieldName          : "rabais",
+                placeholderText    : "Ajouter un rabais",
+                removeConfirmation : true,
+                tagSource          : data,
+                beforeTagAdded: function(event, ui) {
+                    let title = ui.tagLabel;
+                    let result = false;
+
+                    $.ajax({
+                        dataType : "json",
+                        type     : 'POST',
+                        url      : base_url + 'admin/rabais/has',
+                        async:false,
+                        data: { id : id, title : title , _token: $("meta[name='_token']").attr('content') },
+                        success: function( data ) {
+                            result = data.result ? false : true;
+                        },
+                        error: function(data) { return false; }
+                    });
+
+                    return result;
+                },
+                afterTagAdded: function(event, ui) {
+                    if(!ui.duringInitialization) {
+                        var title = ui.tagLabel;
+                        var id     = $('#rabais').data('id');
+                        $.ajax({
+                            dataType : "json",
+                            type     : 'POST',
+                            url      : base_url + 'admin/rabais/add',
+                            data: { id : id, title : title , _token: $("meta[name='_token']").attr('content') },
+                            success: function( data ) {console.log('added');},
+                            error: function(data) {  console.log('error');console.log(data);  }
+                        });
+                    }
+                },
+                beforeTagRemoved: function(event, ui) {
+                    var title = ui.tagLabel;
+                    var id    = $('#rabais').data('id');
+                    $.ajax({
+                        dataType : "json",
+                        type     : 'POST',
+                        url      : base_url + 'admin/rabais/remove',
+                        data     : { id: id, title: title, _token: $("meta[name='_token']").attr('content')},
+                        success: function (data) {console.log('removed');},
+                        error: function (data) {console.log('error');}
+                    });
+                }
+            });
+        });
+    }
+
     if($("#access").length) {
         $.get(base_url + 'admin/specialisation', function( data ) {
             $("#access").tagit({

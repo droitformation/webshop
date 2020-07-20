@@ -11,6 +11,7 @@ use App\Droit\Pays\Repo\PaysInterface;
 use App\Droit\Specialisation\Repo\SpecialisationInterface;
 use App\Droit\Member\Repo\MemberInterface;
 use App\Droit\User\Repo\RoleInterface;
+use App\Droit\Inscription\Repo\RabaisInterface;
 
 class UserAttributeComposer
 {
@@ -21,6 +22,7 @@ class UserAttributeComposer
     protected $specialisation;
     protected $member;
     protected $role;
+    protected $rabais;
 
     /**
      * Create a new profile composer.
@@ -35,7 +37,8 @@ class UserAttributeComposer
         CantonInterface $canton,
         MemberInterface $member,
         SpecialisationInterface $specialisation,
-        RoleInterface $role
+        RoleInterface $role,
+        RabaisInterface $rabais
     )
     {
         $this->civilite       = $civilite;
@@ -45,6 +48,7 @@ class UserAttributeComposer
         $this->member         = $member;
         $this->specialisation = $specialisation;
         $this->role           = $role;
+        $this->rabais         = $rabais;
     }
 
     /**
@@ -61,6 +65,7 @@ class UserAttributeComposer
         $members         = $this->member->getAll();
         $specialisations = $this->specialisation->getAll();
         $roles           = $this->role->getAll();
+        $rabais          = $this->rabais->getAll();
 
         $view->with('civilites',  $this->civilite->getAll());
         $view->with('pays',$pays);
@@ -69,5 +74,6 @@ class UserAttributeComposer
         $view->with('professions',$professions);
         $view->with('members',$members);
         $view->with('specialisations',$specialisations);
+        $view->with('rabais',$rabais);
     }
 }

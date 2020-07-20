@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
+use App\Droit\Inscription\Repo\RabaisInterface;;
 use App\Droit\User\Repo\UserInterface;
 
 use Illuminate\Http\Request;
@@ -19,13 +20,15 @@ class InscriptionController extends Controller
     protected $inscription;
     protected $register;
     protected $colloque;
+    protected $rabais;
     protected $user;
     protected $generator;
     
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register)
+    public function __construct(ColloqueInterface $colloque, RabaisInterface $rabais, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
+        $this->rabais      = $rabais;
         $this->register    = $register;
         $this->user        = $user;
 
@@ -98,6 +101,7 @@ class InscriptionController extends Controller
     {
         $colloques = $this->colloque->getAll();
         $colloque  = $this->colloque->find($request->input('colloque_id'));
+        $rabais    = $this->rabais->byColloque($request->input('colloque_id'));
 
         $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
         $validator->activate();
@@ -105,7 +109,7 @@ class InscriptionController extends Controller
         $user      = $this->user->find($request->input('user_id'));
         $type      = $request->input('type');
 
-        $form = view('backend.inscriptions.register.'.$type)->with(['colloque' => $colloque, 'user' => $user, 'type' => $type]);
+        $form = view('backend.inscriptions.register.'.$type)->with(['colloque' => $colloque, 'rabais' => $rabais, 'user' => $user, 'type' => $type]);
 
         return view('backend.inscriptions.make')->with(['colloques' => $colloques, 'user' => $user, 'colloque' => $colloque, 'form' => $form, 'type' => $type]);
     }

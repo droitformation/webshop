@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cindyleschaud
- * Date: 2019-06-19
- * Time: 13:15
- */
 
 namespace App\Droit\Transaction;
 
@@ -13,6 +7,8 @@ class Preview
     protected $colloque;
     protected $data;
     protected $html = '';
+
+    protected $repo_rabais;
 
     /**
      * Create a new controller instance.
@@ -23,6 +19,8 @@ class Preview
     {
         $this->colloque = $colloque;
         $this->data = $data;
+
+        $this->repo_rabais = \App::make('App\Droit\Inscription\Repo\RabaisInterface');
     }
 
     public function getHtml()
@@ -37,9 +35,24 @@ class Preview
 
     public function price()
     {
-        $price = $this->colloque->prices->find($this->data['price_id']);
-        
-        $this->html .= '<dl><dt>Prix</dt><dd>'.$price->price_cents.' CHF  - '.$price->description.'</dd></dl>';
+        $price  = $this->colloque->prices->find($this->data['price_id']);
+        $rabais = $this->data['rabais_id'] ?? null;
+        $prix   = $price->price_cents;
+
+        $this->html .= '<dl style="padding-right:20px;">';
+
+        if($rabais){
+            $model = $this->repo_rabais->find($rabais);
+            $prix  = $prix - $model->value;
+
+            $this->html .= '<dt style="padding-bottom: 8px;display: block;line-height: 18px;">'.$price->description.'</dt><dd>Prix avec rabais <strong>'.$prix.' CHF</strong></dd>';
+            $this->html .= $rabais ? '<dd class="text-muted" style="margin-top: 5px;">Prix original '.$price->price_cents.' CHF</dd>' : '';
+        }
+        else{
+            $this->html .= '<dt style="padding-bottom: 8px;display: block;line-height: 18px;">'.$price->description.'</dt><dd>Prix '.$prix.' CHF</dd>';
+        }
+
+        $this->html .= '</dl>';
 
         return $this;
     }

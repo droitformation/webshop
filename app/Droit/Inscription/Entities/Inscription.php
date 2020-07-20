@@ -13,7 +13,7 @@ class Inscription extends Model
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id', 'payed_at', 'send_at', 'status','admin','present'];
+    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id', 'rabais_id', 'payed_at', 'send_at', 'status','admin','present'];
 
     public function getRappelListAttribute()
     {
@@ -41,15 +41,21 @@ class Inscription extends Model
     public function getPriceCentsAttribute()
     {
         $money = new \App\Droit\Shop\Product\Entities\Money;
-        $price = $this->price->price / 100;
+
+        if(isset($this->rabais)){
+            $price = ($this->price->price / 100) - $this->rabais->value;
+            $price = $price > 0 ? $price : 0;
+        }
+        else{
+            $price = $this->price->price / 100;
+        }
 
         return $money->format($price);
     }
 
     public function getAnnexeAttribute()
     {
-        if(in_array('bon',$this->colloque->annexe))
-        {
+        if(in_array('bon',$this->colloque->annexe)) {
             return ['bon' => 'bon de participation à présenter à l\'entrée'];
         }
 
@@ -89,12 +95,10 @@ class Inscription extends Model
         $this->load('groupe','user','groupe.user');
         $path = config('documents.colloque.bon');
 
-        if(isset($this->groupe) && !empty($this->groupe))
-        {
+        if(isset($this->groupe) && !empty($this->groupe)) {
             $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->groupe->id.'-'.$this->participant->id.'.pdf';
         }
-        else
-        {
+        else {
             $file = $path.'bon'.'_'.$this->colloque->id.'-'.$this->user->id.'.pdf';
         }
 
@@ -225,8 +229,7 @@ class Inscription extends Model
 
     public function getIsFreeAttribute()
     {
-        if(isset($this->price) && $this->price->price > 0)
-        {
+        if(isset($this->price) && $this->price->price > 0) {
             return false;
         }
 
@@ -316,8 +319,7 @@ class Inscription extends Model
 
     public function getAdresseFacturationAttribute()
     {
-        if($this->group_id)
-        {
+        if($this->group_id) {
             $this->groupe->load('user','user.adresses');
 
             return $this->groupe->user->adresse_contact;
@@ -413,6 +415,11 @@ class Inscription extends Model
     public function price()
     {
         return $this->belongsTo('App\Droit\Price\Entities\Price');
+    }
+
+    public function rabais()
+    {
+        return $this->belongsTo('App\Droit\Inscription\Entities\Rabais');
     }
 
     public function colloque()

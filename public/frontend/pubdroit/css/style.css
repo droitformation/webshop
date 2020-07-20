@@ -1525,6 +1525,21 @@ a.navbar-btn.navbar-register:focus{
     padding: 3px 10px;
 }
 
+.card-rabais{
+    padding:15px 20px;
+    background: #fff;
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 2px !important;
+    border: 1px solid #d9d9d9;
+}
+
+.card-rabais label{
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
 #colloque-dependence input[type=radio],
 #colloque-dependence input[type=checkbox]
 {
@@ -1637,6 +1652,17 @@ a.navbar-btn.navbar-register:focus{
     left: 5px;
     top: 2px;
     font-size: 1rem;
+}
+
+#colloque-dependence input[type=checkbox].rabais{
+    height: auto;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    visibility: visible;
+    width: auto;
+    border: inherit;
+    display: inline;
 }
 
 #colloque-dependence {

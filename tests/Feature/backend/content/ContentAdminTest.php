@@ -323,13 +323,15 @@ class ContentAdminTest extends TestCase
         $response = $this->call('POST', 'admin/compte', [
             'motif'    => 'Un compte',
             'adresse'  => 'Adresse',
+            'centre'   => '1234',
             'compte'   => '234-131-2',
         ]);
 
         $this->assertDatabaseHas('comptes', [
-            'motif'      => 'Un compte',
-            'adresse'    => 'Adresse',
-            'compte'     => '234-131-2'
+            'motif'    => 'Un compte',
+            'adresse'  => 'Adresse',
+            'centre'   => '1234',
+            'compte'   => '234-131-2'
         ]);
     }
 
@@ -341,12 +343,14 @@ class ContentAdminTest extends TestCase
             'id'       => $compte->id,
             'motif'    => 'Un autre compte',
             'adresse'  => '<p>Autre Adresse</p>',
+            'centre'   => '1234',
             'compte'   => '20-4130-2',
         ]);
 
         $this->assertDatabaseHas('comptes', [
             'id'       => $compte->id,
             'motif'    => 'Un autre compte',
+            'centre'   => '1234',
             'adresse'  => '<p>Autre Adresse</p>',
             'compte'   => '20-4130-2',
         ]);

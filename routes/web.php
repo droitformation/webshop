@@ -258,6 +258,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('user/unsubscribe','Backend\User\UserController@unsubscribe');
         Route::resource('user', 'Backend\User\UserController');
 
+        Route::post('rabaisuser/add','Backend\User\RabaisUserController@add');
+        Route::post('rabaisuser/remove','Backend\User\RabaisUserController@remove');
+
         Route::post('duplicate/assign','Backend\User\DuplicateController@assign');
         Route::resource('duplicate', 'Backend\User\DuplicateController');
 
@@ -357,6 +360,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('groupoption', 'Backend\Colloque\GroupOptionController');
         Route::resource('occurrence', 'Backend\Colloque\OccurrenceController');
         Route::resource('compte', 'Backend\Colloque\CompteController');
+
+        Route::get('rabais/all','Backend\Colloque\RabaisController@all');
+        Route::post('rabais/has','Backend\Colloque\RabaisController@has');
+        Route::resource('rabais', 'Backend\Colloque\RabaisController');
 
         Route::get('document/{colloque_id}/{doc}', 'Backend\Colloque\DocumentController@show');
         Route::resource('document', 'Backend\Colloque\DocumentController');
@@ -618,6 +625,8 @@ Route::group(['prefix' => 'vue'], function () {
     Route::post('occurrence','Api\OccurrenceController@store');
     Route::put('occurrence/{id}','Api\OccurrenceController@update');
     Route::delete('occurrence/{id}','Api\OccurrenceController@destroy');
+
+    Route::get('rabais/{user_id}/{colloque_id}', 'Backend\Colloque\RabaisController@search');
 
     Route::post('price','Api\PriceController@store');
     Route::put('price/{id}','Api\PriceController@update');

@@ -139,6 +139,18 @@ class User extends Authenticatable {
         }, '');
     }
 
+    public function getRabaisListAttribute()
+    {
+        return $this->rabais->reduce(function ($carry, $item) {
+            return $carry.'<li>'.$item->title.'</li>';
+        }, '');
+    }
+
+    public function getHasRabaisAttribute()
+    {
+        return $this->rabais->pluck('title')->all();
+    }
+
     public function getAdresseMembresAttribute()
     {
         if(isset($this->adresses))
@@ -291,6 +303,17 @@ class User extends Authenticatable {
     public function access()
     {
         return $this->belongsToMany('App\Droit\Specialisation\Entities\Specialisation', 'specialisations_access', 'user_id', 'specialisation_id');
+    }
+
+    public function rabais()
+    {
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id');
+    }
+
+    public function used_rabais()
+    {
+        return $this->belongsToMany('App\Droit\Inscription\Entities\Rabais', 'user_rabais', 'user_id', 'rabais_id')->withPivot('inscription_id')
+            ->whereNotNull('inscription_id');
     }
 
     public function subscriptions()

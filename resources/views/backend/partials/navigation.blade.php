@@ -62,6 +62,7 @@
                 <i class="fa fa-flag"></i> <span>Colloques</span>
             </a>
         </li>
+
         <li class="<?php echo (Request::is('admin/inscription/create') || Request::is('admin/inscription/*') ? 'active' : '' ); ?>">
             <a href="{{ url('admin/inscription/create') }}">
                 <i class="fa fa-table"></i> <span>Inscription</span>
@@ -87,6 +88,12 @@
                 <li class="{{ Request::is('admin/sondage/*') ? 'active' : '' }}"><a href="{{ url('admin/sondage')  }}">Liste des sondages</a></li>
                 <li class="{{ Request::is('admin/avis/*') ? 'active' : '' }}"><a href="{{ url('admin/avis')  }}">Catalogue de questions</a></li>
             </ul>
+        </li>
+
+        <li class="<?php echo (Request::is('admin/rabais') || Request::is('admin/rabais/*') ? 'active' : '' ); ?>">
+            <a href="{{ url('admin/rabais') }}">
+                <i class="fa fa-arrow-circle-down"></i> <span>Coupon prix colloque</span>
+            </a>
         </li>
 
         <li class="nav-title">Shop</li>

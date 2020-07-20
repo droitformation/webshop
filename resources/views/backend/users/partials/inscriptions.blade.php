@@ -5,7 +5,8 @@
         <tr>
             <th class="col-md-5">Colloque</th>
             <th class="col-md-3">N°</th>
-            <th class="col-md-3">Montant</th>
+            <th class="col-md-2">Montant</th>
+            <th class="col-md-2">Rabais</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
                     @include('backend.partials.toggle', ['id' => $inscription->id])
                 </td>
                 <td>{{ $inscription->price_cents }} CHF</td>
+                <td>{{ isset($inscription->rabais) ? $inscription->rabais->title : '' }}</td>
             </tr>
             <tr>
                 <td colspan="6" class="nopadding">

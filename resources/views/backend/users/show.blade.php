@@ -20,11 +20,13 @@
               <div class="row">
                   <div class="col-md-4">
 
-                      <div class="panel panel-midnightblue">
-                          <div class="panel-body">
+                      <!-- Main form start -->
+                      <form action="{{ url('admin/user/'.$user->id) }}" data-validate="parsley" method="POST" class="validate-form">
+                          <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
+                          <input value="{{ $user->id }}" type="hidden" name="id">
 
-                              <form action="{{ url('admin/user/'.$user->id) }}" data-validate="parsley" method="POST" class="validate-form">
-                                  <input type="hidden" name="_method" value="PUT">{!! csrf_field() !!}
+                          <div class="panel panel-midnightblue">
+                              <div class="panel-body">
 
                                   @if(!$user->roles->isEmpty())
                                       @foreach($user->roles as $role)
@@ -60,11 +62,7 @@
                                       <input type="text" autocomplete="false" name="username" class="form-control" value="{{ $user->username != $user->email ?  $user->username : '' }}">
                                   </div>
 
-                                  @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
-
-                                  <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#">
-                                      <i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe
-                                  </a>
+                                  <a class="text-danger" data-toggle="collapse" href="#changePassword" href="#"><i class="fa fa-exclamation-circle"></i>&nbsp;Modifier le mot de passe</a>
                                   <div class="collapse" id="changePassword">
                                       <div class="form-group">
                                            <label for="pasword" class="control-label">Nouveau mot de passe</label>
@@ -72,13 +70,84 @@
                                       </div>
                                   </div><br>
                                   <div class="form-group">
-                                      <input value="{{ $user->id }}" type="hidden" name="id">
                                       <button class="btn btn-primary pull-right" id="updateUser{{ $user->id }}" type="submit">Enregistrer</button>
                                   </div>
-                                  <div class="clearfix"></div>
-                              </form>
-                              <hr>
-                              <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
+                                  <div class="clearfix"></div><hr>
+                                  <a href="{{ url('admin/user/confirm/'.$user->id) }}" class="btn btn-danger btn-sm deleteAction">Supprimer le compte</a>
+                              </div>
+                          </div>
+
+                          <div class="panel panel-midnightblue">
+                              <div class="panel-body">
+                                  <h3 class="flex flex-row justify-between">
+                                      <div><i class="fa fa-key"></i> &nbsp;Role et accès</div>
+                                      <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseRoles">Voir</a>
+                                  </h3>
+                                  <div class="collapse" id="collapseRoles">
+                                      @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
+                                      <button class="btn btn-primary pull-right" id="updateUser{{ $user->id }}" type="submit">Enregistrer</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                      <!-- Main form end -->
+
+                      <div class="panel panel-midnightblue">
+                          <div class="panel-body">
+                              <h3 class="flex flex-row justify-between">
+                                  <div><i class="fa fa-gift"></i> &nbsp;Rabais sur inscription</div>
+                                  <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseRabais" aria-expanded="false" aria-controls="collapseRabais">
+                                      Voir
+                                  </a>
+                              </h3>
+                              <div class="collapse" id="collapseRabais">
+
+                                  @if(!$account->used()->isEmpty())
+                                      <label class="control-label"><h4>Rabais utilisés</h4></label>&nbsp;
+                                      <ul class="rabaisListe">
+                                          @foreach($account->used() as $used)
+                                              <li class="used">{{ $used->title }}</li>
+                                          @endforeach
+                                      </ul>
+                                  @endif
+
+                                  @if(!$account->active()->isEmpty())
+                                      <label class="control-label"><h4>Rabais actif</h4></label>&nbsp;
+                                      <ul class="rabaisListe">
+                                          @foreach($account->active() as $active)
+                                              <li class="active">
+                                                  <div>{{ $active->title }}</div>
+                                                  <form action="{{ url('admin/rabaisuser/remove') }}" method="POST">{!! csrf_field() !!}
+                                                      <input value="{{ $user->id }}" type="hidden" name="id">
+                                                      <input value="{{ $active->id }}" type="hidden" name="rabais_id">
+                                                      <button id="deleteRabais_{{ $active->id }}" data-what="Supprimer" data-action="{{ $active->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                  </form>
+                                              </li>
+                                          @endforeach
+                                      </ul>
+                                  @endif
+
+                                  @if(!$account->rabais()->isEmpty())
+                                      <div class="form-group" id="rabaisSelect" data-id="{{ $user->id }}" data-rabais="{{ json_encode($user->has_rabais) }}">
+                                          <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
+                                          <form action="{{ url('admin/rabaisuser/add') }}" method="POST">{!! csrf_field() !!}
+                                              <input value="{{ $user->id }}" type="hidden" name="id">
+                                              <div class="input-group">
+                                                  <select class="custom-select" name="rabais_id">
+                                                      <option selected>Choose...</option>
+                                                      @foreach($account->rabais() as $r)
+                                                          <option value="{{ $r->id }}">{{ $r->title }}</option>
+                                                      @endforeach
+                                                  </select>
+                                                  <div class="input-group-append">
+                                                      <button class="btn btn-outline-secondary" type="submit">Ajouter</button>
+                                                  </div>
+                                              </div>
+                                          </form>
+                                      </div>
+                                   @endif
+
+                              </div>
                           </div>
                       </div>
 
