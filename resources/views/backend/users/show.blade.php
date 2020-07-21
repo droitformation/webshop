@@ -81,9 +81,8 @@
                               <div class="panel-body">
                                   <h3 class="flex flex-row justify-between">
                                       <div><i class="fa fa-key"></i> &nbsp;Role et accès</div>
-                                      <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseRoles">Voir</a>
                                   </h3>
-                                  <div class="collapse" id="collapseRoles">
+                                  <div id="collapseRoles">
                                       @include('backend.users.partials.roles', ['roles' => $roles, 'user' => $user])
                                       <button class="btn btn-primary pull-right" id="updateUser{{ $user->id }}" type="submit">Enregistrer</button>
                                   </div>
@@ -91,120 +90,6 @@
                           </div>
                       </form>
                       <!-- Main form end -->
-
-                      <div class="panel panel-midnightblue">
-                          <div class="panel-body">
-                              <h3 class="flex flex-row justify-between">
-                                  <div><i class="fa fa-gift"></i> &nbsp;Rabais sur inscription</div>
-                                  <a class="btn btn-primary btn-sm" role="button" data-toggle="collapse" href="#collapseRabais" aria-expanded="false" aria-controls="collapseRabais">
-                                      Voir
-                                  </a>
-                              </h3>
-                              <div class="collapse" id="collapseRabais">
-
-                                  @if(!$account->used()->isEmpty())
-                                      <label class="control-label"><h4>Rabais utilisés</h4></label>&nbsp;
-                                      <ul class="rabaisListe">
-                                          @foreach($account->used() as $used)
-                                              <li class="used">{{ $used->title }}</li>
-                                          @endforeach
-                                      </ul>
-                                  @endif
-
-                                  @if(!$account->active()->isEmpty())
-                                      <label class="control-label"><h4>Rabais actif</h4></label>&nbsp;
-                                      <ul class="rabaisListe">
-                                          @foreach($account->active() as $active)
-                                              <li class="active">
-                                                  <div>{{ $active->title }}</div>
-                                                  <form action="{{ url('admin/rabaisuser/remove') }}" method="POST">{!! csrf_field() !!}
-                                                      <input value="{{ $user->id }}" type="hidden" name="id">
-                                                      <input value="{{ $active->id }}" type="hidden" name="rabais_id">
-                                                      <button id="deleteRabais_{{ $active->id }}" data-what="Supprimer" data-action="{{ $active->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
-                                                  </form>
-                                              </li>
-                                          @endforeach
-                                      </ul>
-                                  @endif
-
-                                  @if(!$account->rabais()->isEmpty())
-                                      <div class="form-group" id="rabaisSelect" data-id="{{ $user->id }}" data-rabais="{{ json_encode($user->has_rabais) }}">
-                                          <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
-                                          <form action="{{ url('admin/rabaisuser/add') }}" method="POST">{!! csrf_field() !!}
-                                              <input value="{{ $user->id }}" type="hidden" name="id">
-                                              <div class="input-group">
-                                                  <select class="custom-select" name="rabais_id">
-                                                      <option selected>Choose...</option>
-                                                      @foreach($account->rabais() as $r)
-                                                          <option value="{{ $r->id }}">{{ $r->title }}</option>
-                                                      @endforeach
-                                                  </select>
-                                                  <div class="input-group-append">
-                                                      <button class="btn btn-outline-secondary" type="submit">Ajouter</button>
-                                                  </div>
-                                              </div>
-                                          </form>
-                                      </div>
-                                   @endif
-
-                              </div>
-                          </div>
-                      </div>
-
-                      @if(!$user->abos->isEmpty())
-                          <div class="panel panel-midnightblue">
-                              <div class="panel-body">
-                                  <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
-                                  <ul class="list-unstyled">
-                                      @foreach($user->abos as $abo)
-                                          <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
-                                      @endforeach
-                                  </ul>
-                              </div>
-                          </div>
-                      @endif
-
-                      <div class="panel panel-midnightblue">
-                          <div class="panel-body">
-                              <h3><i class="fa fa-tags"></i>&nbsp;Spécialisations</h3>
-                              @if(isset($user->adresse_facturation))
-                                  <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
-                                      {!! $user->adresse_specialisations !!}
-                                  </ul>
-                                  <hr/>
-                                  <h3><i class="fa fa-bookmark"></i> &nbsp;Membre</h3>
-                                  <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
-                                      {!! $user->adresse_membres !!}
-                                  </ul>
-                              @endif
-                          </div>
-                      </div>
-
-                      <div class="panel panel-midnightblue">
-                          <div class="panel-body">
-                              <h3><i class="fa fa-envelope"></i>&nbsp; Newsletters</h3>
-
-                              @if(!$account->subscriptions()->isEmpty())
-                                  @foreach($account->subscriptions() as $email => $subscriptions)
-                                      <h4>{{ $email }}</h4>
-                                      <ul class="list-group">
-                                         @foreach($subscriptions as $subscription)
-                                              <li class="list-group-item">
-                                                  {{ $subscription->titre }}
-                                                  <form action="{{ url('admin/user/unsubscribe') }}" method="POST" class="pull-right">{!! csrf_field() !!}
-                                                     <input type="hidden" name="email" value="{{ $email }}">
-                                                     <input type="hidden" name="newsletter_id" value="{{ $subscription->id }}">
-                                                     <button type="submit" class="btn btn-danger btn-xs">désinscrire</button>
-                                                  </form>
-                                              </li>
-                                         @endforeach
-                                      </ul>
-                                  @endforeach
-                              @endif
-
-                          </div>
-                      </div>
-
                   </div>
                   <div class="col-md-8">
 
@@ -296,6 +181,124 @@
 
                   </div>
               </div>
+
+               <div class="row">
+                   <div class="col-md-4">
+                       <div class="panel panel-midnightblue">
+                           <div class="panel-body">
+                               <h3 class="flex flex-row justify-between">
+                                   <div><i class="fa fa-gift"></i> &nbsp;Rabais sur inscription</div>
+                               </h3>
+                               <div id="collapseRabais">
+
+                                   @if(!$account->used()->isEmpty())
+                                       <label class="control-label"><h4>Rabais utilisés</h4></label>&nbsp;
+                                       <ul class="rabaisListe">
+                                           @foreach($account->used() as $used)
+                                               <li class="used">{{ $used->title }}</li>
+                                           @endforeach
+                                       </ul>
+                                   @endif
+
+                                   @if(!$account->active()->isEmpty())
+                                       <label class="control-label"><h4>Rabais actif</h4></label>&nbsp;
+                                       <ul class="rabaisListe">
+                                           @foreach($account->active() as $active)
+                                               <li class="active">
+                                                   <div>{{ $active->title }}</div>
+                                                   <form action="{{ url('admin/rabaisuser/remove') }}" method="POST">{!! csrf_field() !!}
+                                                       <input value="{{ $user->id }}" type="hidden" name="id">
+                                                       <input value="{{ $active->id }}" type="hidden" name="rabais_id">
+                                                       <button id="deleteRabais_{{ $active->id }}" data-what="Supprimer" data-action="{{ $active->title }}" class="btn btn-danger btn-sm deleteAction">x</button>
+                                                   </form>
+                                               </li>
+                                           @endforeach
+                                       </ul>
+                                   @endif
+
+                                   @if(!$account->rabais()->isEmpty())
+                                       <div class="form-group" id="rabaisSelect" data-id="{{ $user->id }}" data-rabais="{{ json_encode($user->has_rabais) }}">
+                                           <label class="control-label"><h4>Ajouter un rabais</h4></label>&nbsp;
+                                           <form action="{{ url('admin/rabaisuser/add') }}" method="POST">{!! csrf_field() !!}
+                                               <input value="{{ $user->id }}" type="hidden" name="id">
+                                               <div class="input-group">
+                                                   <select class="custom-select" name="rabais_id">
+                                                       <option selected>Choose...</option>
+                                                       @foreach($account->rabais() as $r)
+                                                           <option value="{{ $r->id }}">{{ $r->title }}</option>
+                                                       @endforeach
+                                                   </select>
+                                                   <div class="input-group-append">
+                                                       <button class="btn btn-outline-secondary" type="submit">Ajouter</button>
+                                                   </div>
+                                               </div>
+                                           </form>
+                                       </div>
+                                   @endif
+
+                               </div>
+                           </div>
+                       </div>
+
+                   </div>
+                   <div class="col-md-4">
+                       @if(!$user->abos->isEmpty())
+                           <div class="panel panel-midnightblue">
+                               <div class="panel-body">
+                                   <h3><i class="fa fa-table"></i> &nbsp;Abonnements</h3>
+                                   <ul class="list-unstyled">
+                                       @foreach($user->abos as $abo)
+                                           <li><a href="{{ url('admin/abonnement/'.$abo->id) }}"><i class="fa fa-bookmark"></i> &nbsp;{{ $abo->abo->title }}</a></li>
+                                       @endforeach
+                                   </ul>
+                               </div>
+                           </div>
+                       @endif
+
+                       <div class="panel panel-midnightblue">
+                           <div class="panel-body">
+                               <h3><i class="fa fa-tags"></i>&nbsp;Spécialisations</h3>
+                               @if(isset($user->adresse_facturation))
+                                   <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
+                                       {!! $user->adresse_specialisations !!}
+                                   </ul>
+                                   <hr/>
+                                   <h3><i class="fa fa-bookmark"></i> &nbsp;Membre</h3>
+                                   <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
+                                       {!! $user->adresse_membres !!}
+                                   </ul>
+                               @endif
+                           </div>
+                       </div>
+
+                   </div>
+                   <div class="col-md-4">
+                       <div class="panel panel-midnightblue">
+                           <div class="panel-body">
+                               <h3><i class="fa fa-envelope"></i>&nbsp; Newsletters</h3>
+
+                               @if(!$account->subscriptions()->isEmpty())
+                                   @foreach($account->subscriptions() as $email => $subscriptions)
+                                       <h4>{{ $email }}</h4>
+                                       <ul class="list-group">
+                                           @foreach($subscriptions as $subscription)
+                                               <li class="list-group-item">
+                                                   {{ $subscription->titre }}
+                                                   <form action="{{ url('admin/user/unsubscribe') }}" method="POST" class="pull-right">{!! csrf_field() !!}
+                                                       <input type="hidden" name="email" value="{{ $email }}">
+                                                       <input type="hidden" name="newsletter_id" value="{{ $subscription->id }}">
+                                                       <button type="submit" class="btn btn-danger btn-xs">désinscrire</button>
+                                                   </form>
+                                               </li>
+                                           @endforeach
+                                       </ul>
+                                   @endforeach
+                               @endif
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
 
         </div>
     @endif
