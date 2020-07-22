@@ -284,5 +284,31 @@ function priceConvert($price){
         $pieces = explode(':',$price);
         return [$pieces[0] => $pieces[1]];
     }
+}
 
+function filterEmptyArray($array){
+
+    return array_map('array_filter', $array);
+
+    return collect($array)->map(function ($item, $key) {
+
+        if(is_array($item)){
+            return collect($item)->reject(function ($child) {
+                return empty($child);
+            })->values()->toArray();
+        }
+
+        return !empty($item) ? $item : null;
+    })->reject(function ($item) {
+        return empty($item);
+    })->values()->toArray();
+}
+
+function array_filter_recursive($input){
+    foreach ($input as &$value){
+        if (is_array($value)){
+            $value = array_filter_recursive($value);
+        }
+    }
+    return array_filter($input);
 }

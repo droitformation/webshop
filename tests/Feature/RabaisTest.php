@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use phpDocumentor\Reflection\Types\Integer;
 use Tests\TestCase;
 use Tests\ResetTbl;
 
@@ -56,6 +57,11 @@ class RabaisTest extends TestCase
         ];
 
         $reponse = $this->post('pubdroit/registration', $data);
+
+        echo '<pre>';
+        print_r($reponse->getContent());
+        echo '</pre>';
+        exit;
 
         $this->assertDatabaseHas('colloque_inscriptions', [
             'price_id'    => $colloque->prices->first()->id,
