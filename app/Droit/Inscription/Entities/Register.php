@@ -4,12 +4,14 @@ class Register
 {
     protected $data;
     protected $repo_colloque;
+    protected $repo_price;
 
     public function __construct($data = [])
     {
         $this->data = $data;
         $this->data['type'] = isset($this->data['type']) ? $this->data['type'] : 'simple';
         $this->repo_colloque = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
+        $this->repo_price    = \App::make('App\Droit\Price\Repo\PriceInterface');
     }
 
     /*
@@ -22,12 +24,7 @@ class Register
                 // if original colloque is tthe current
                 // It's supports the invoice price
                 // Else it's free
-                $free = $this->repo_colloque->find($key);
-
-                if(!isset($free) && !isset($free->price_free)){
-                   factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $key,'price' => 0, 'description' => 'Prix gratuit pour prix lié','type' => 'admin']);
-                }
-
+                $free  = $this->repo_price->getFreeByColloque($key);
                 $price = $this->prices($data,$key,$free);
 
                 return ['colloque_id' => $key] + $price + array_except($data,['colloques','_token','price_id']) + $options;
@@ -41,13 +38,15 @@ class Register
 
     public function prices($data,$key,$free)
     {
+        $type = $data['type'] ?? 'simple';
+
         // price link colloque for multiple
-        if(!isset($data['type']) || ($data['type'] == 'multiple' && $key != $data['colloque_id'])){
-            return ['prices' => [['price_id' => $free->price_free->id], ['price_id' => $free->price_free->id]]];
+        if($type == 'multiple' && $key != $data['colloque_id']){
+            return ['prices' => [['price_id' => $free->id], ['price_id' => $free->id]]];
         }
 
-        if(!isset($data['type']) || ($data['type'] == 'simple' && $key != $data['colloque_id'])){
-            return ['price_id' => $free->price_free->id];
+        if($type == 'simple' && $key != $data['colloque_id']){
+            return ['price_id' => $free->id];
         }
 
         return priceConvert($data);
@@ -74,11 +73,11 @@ class Register
 
     public function colloquedata($data)
     {
-        $type = $this->data['type'] ?? 'general';
+        $type = $this->data['type'] ?? 'simple';
 
         $options = isset($data['options']) && isset($data['options'][0]) && $type == 'simple' ? $data['options'][0] : ($data['options'] ?? null);
         $groupes = isset($data['groupes']) && isset($data['groupes'][0]) && $type == 'simple' ? $data['groupes'][0] : ($data['groupes'] ?? null);
-        $occurrences =  $data['occurrences'] ?? null;
+        $occurrences = $data['occurrences'] ?? null;
 
         return array_filter([
             'options'     => isset($options) ? array_filter_recursive($options) : null,

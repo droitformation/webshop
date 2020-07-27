@@ -17,6 +17,16 @@ class PriceEloquent implements PriceInterface{
         return $this->price->all();
     }
 
+    public function getFreeByColloque($id){
+        $price = $this->price->where('colloque_id','=',$id)->where('price','=',0)->first();
+
+        if($price){
+            return $price;
+        }
+
+        return $this->create(['colloque_id' => $id, 'price' => 0, 'description' => 'Prix gratuit pour prix lié', 'type' => 'admin']);
+    }
+
     public function find($id){
 
         return $this->price->find($id);

@@ -272,11 +272,32 @@ class HelperMiscTest extends TestCase
 
     public function testFilterEmptyArray()
     {
-        $array  = [1,null,3];
+        $array  = [
+            165 => [
+                'options' => [
+                    0 => [ // like in admin
+                        0   => 259,
+                        269 => []
+                    ]
+                ],
+                'groupes' => [268 => 150]
+            ]
+        ];
+
+        $actual = [
+            165 => [
+                'options' => [
+                    0 => [ // like in admin
+                        0  => 259,
+                    ]
+                ],
+                'groupes' => [268 => 150]
+            ]
+        ];
 
         $result = array_filter_recursive($array);
 
-        $this->assertEquals([1,3],array_values($result));
+        $this->assertEquals($actual,$result);
 
         $array  = [[1,2,null],'',123];
 

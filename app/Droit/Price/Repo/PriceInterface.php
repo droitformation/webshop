@@ -8,4 +8,5 @@ interface PriceInterface {
     public function update(array $data);
     public function delete($id);
 
+    public function getFreeByColloque($id);
 }

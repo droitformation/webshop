@@ -590,8 +590,10 @@ class InscriptionRegisterConverterTest extends TestCase
             'colloques' =>[
                 165 => [
                     'options' => [
-                        0 => 259,
-                        269 => ['Un truc']
+                        0 => [ // like in admin
+                            0 => 259,
+                            269 => ['Un truc']
+                        ]
                     ],
                     'groupes' => [268 => 150]
                 ]
@@ -614,12 +616,12 @@ class InscriptionRegisterConverterTest extends TestCase
                     'groupes' => [268 => 150]
                 ]
             ],
+            'type'     => 'simple',
             'price_id' => 'price_link_id:1',
         ];
 
         $this->assertEquals($expected,$actual);
     }
-
 
     public function testConvertDataToCollectionOneColloque()
     {

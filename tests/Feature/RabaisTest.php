@@ -48,6 +48,7 @@ class RabaisTest extends TestCase
             'colloques' => [
                 $colloque->id => [
                     'options' => [$colloque->options->first()->id],
+                    //'options' => [0 => $colloque->options->first()->id],
                 ]
             ],
             'rabais_id'      => $rabais->id,
@@ -57,11 +58,6 @@ class RabaisTest extends TestCase
         ];
 
         $reponse = $this->post('pubdroit/registration', $data);
-
-        echo '<pre>';
-        print_r($reponse->getContent());
-        echo '</pre>';
-        exit;
 
         $this->assertDatabaseHas('colloque_inscriptions', [
             'price_id'    => $colloque->prices->first()->id,
