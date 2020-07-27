@@ -223,7 +223,7 @@
                                                <input value="{{ $user->id }}" type="hidden" name="id">
                                                <div class="input-group">
                                                    <select class="custom-select" name="rabais_id">
-                                                       <option selected>Choose...</option>
+                                                       <option selected>Choix...</option>
                                                        @foreach($account->rabais() as $r)
                                                            <option value="{{ $r->id }}">{{ $r->title }}</option>
                                                        @endforeach
