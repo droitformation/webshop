@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\abo;
 
 use App\Jobs\MakeFactureAbo;
 use App\Jobs\MergeFactures;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\backend\user;
 
 use Tests\TestCase;
 use Tests\ResetTbl;
