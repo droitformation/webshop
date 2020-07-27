@@ -21,7 +21,7 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option {{ ($rabais->type == 'global' ? 'selected' : '') }} value="global">Sur n'importe quel colloque</option>
-                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte choisi</option>
+                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte(a)</option>
                                 </select>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                         <?php $choices = $rabais->comptes->pluck('id')->all(); ?>
 
                         <div class="form-group" id="colloqueSelect" style="{{ ($rabais->type == 'colloque' ? 'display:block;' : 'display:none;') }}">
-                            <label class="col-sm-3 control-label">Choix des comptes concernés (optionnel)</label>
+                            <label class="col-sm-3 control-label">Choix des comptes concernés</label>
                             <div class="col-sm-9 col-xs-12">
                                 @if(!$comptes->isEmpty())
                                     <select name="compte_id[]" multiple="multiple" id="multi-select">
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="contenu" class="col-sm-3 control-label">Description</label>
+                            <label for="contenu" class="col-sm-3 control-label">Description <br><small class="text-muted">Pour l'utilisateur lors de l'inscription</small></label>
                             <div class="col-sm-7">
                                 <textarea name="description" class="form-control">{!! $rabais->description !!}</textarea>
                             </div>
@@ -64,13 +64,6 @@
                                     <input type="text" class="form-control" value="{{ $rabais->value }}" name="value">
                                     <span class="input-group-addon" id="val_addon">CHF</span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Date d'expiration<br><small class="text-muted">(optionnel)</small></label>
-                            <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control datePicker" value="{{ $rabais->expire_at ? $rabais->expire_at->format('Y-m-d') : '' }}" name="expire_at">
                             </div>
                         </div>
 

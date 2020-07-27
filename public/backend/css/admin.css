@@ -370,9 +370,11 @@ a:hover, a:active, a:focus {
 }
 
 .input-group-addon {
-    min-width: 74px;
+    min-width:44px;
     padding: 7px 4px;
     width: auto;
+    font-size: 13px;
+    line-height: 16px;
 }
 
 .input-group-addon.bg-success{
@@ -1594,7 +1596,7 @@ span.avis-hidden-square{
 }
 
 .invoice_rabais{
-    width: 35%;
+    width: 30%;
 }
 
 .indication{

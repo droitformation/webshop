@@ -29,6 +29,7 @@
         @endforeach
 
         @if(isset($colloque->compte) && isset($account) && !$account->coupons($colloque->compte->id)->isEmpty())
+
             <?php $rabais = $account->coupons($colloque->compte->id)->first(); ?>
             <div class="card-rabais">
                 <label>Votre rabais</label>

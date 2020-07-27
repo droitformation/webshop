@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group" id="colloqueSelect" style="display:block;">
-                            <label class="col-sm-3 control-label">Choix des comptes concernés (optionnel)</label>
+                            <label class="col-sm-3 control-label">Choix des comptes concernés</label>
                             <div class="col-sm-9 col-xs-12">
                                 @if(!$comptes->isEmpty())
                                     <select name="compte_id[]" multiple="multiple" id="multi-select">
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="contenu" class="col-sm-3 control-label">Description</label>
+                            <label for="contenu" class="col-sm-3 control-label">Description <br><small class="text-muted">Pour l'utilisateur lors de l'inscription</small></label>
                             <div class="col-sm-7">
                                 <textarea name="description" class="form-control"></textarea>
                             </div>
@@ -62,13 +62,6 @@
                                     <input type="text" class="form-control" name="value">
                                     <span class="input-group-addon" id="val_addon">%</span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Date d'expiration<br><small class="text-muted">(optionnel)</small></label>
-                            <div class="col-sm-5 col-xs-6">
-                                <input type="text" class="form-control datePicker" name="expire_at">
                             </div>
                         </div>
 

@@ -335,7 +335,7 @@ class Collection extends BaseCollection implements QueueableCollection
      *
      * @param  string|callable|null  $key
      * @param  bool  $strict
-     * @return static|\Illuminate\Support\Collection
+     * @return static
      */
     public function unique($key = null, $strict = false)
     {
@@ -451,7 +451,7 @@ class Collection extends BaseCollection implements QueueableCollection
      */
     public function zip($items)
     {
-        return call_user_func_array([$this->toBase(), 'zip'], func_get_args());
+        return $this->toBase()->zip(...func_get_args());
     }
 
     /**

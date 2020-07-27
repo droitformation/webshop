@@ -10,7 +10,7 @@
     <meta id="_token" name="_token" content="<?php echo csrf_token(); ?>">
 
     <script src="//use.fontawesome.com/fd16a07224.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=121');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/responsive.css');?>">
@@ -23,10 +23,14 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.tagit.css');?>">
 
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css?').rand(1,2000);?>">
+    @if(!\Request::is('build/newsletter'))
+        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/datepicker.css');?>">
+    @endif
+
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>?{{ rand(100,235000) }}">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/inscription.css?').rand(1,2000);?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/types.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/redactor/redactor.css');?>">
@@ -40,6 +44,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/plugins/form-select2/select2.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/bootstrap-datetimepicker.css');?>" media="screen" />
 
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])
@@ -51,6 +56,7 @@
     <script type="text/javascript" src="<?php echo secure_asset('backend/js/jquery.fancybox.min.js');?>"></script>
 
     @include('script.config')
+
     <script>
         window.Laravel = <?php echo json_encode([
                 'csrfToken' => csrf_token(),
@@ -141,7 +147,7 @@
 </div> <!-- page-container -->
 
 <script src="//code.jquery.com/jquery-migrate-1.0.0.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/r/bs/dt-1.10.9/datatables.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="<?php echo secure_asset('backend/js/vendor/bootstrap/bootstrap-editable.js');?>"></script>

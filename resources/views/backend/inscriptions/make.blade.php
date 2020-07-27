@@ -9,7 +9,7 @@
 
 <!-- start row -->
 <div class="row">
-    <div class="col-md-{{ $type == 'simple' ? 6 : 12 }}">
+    <div class="col-md-{{ $type == 'simple' ? 8 : 12 }}">
         <div class="panel panel-magenta">
             <div class="panel-body" id="appComponent">
                 <p><a class="btn btn-warning btn-sm" href="{{ url('admin/inscription/create') }}"><i class="fa fa-arrow-circle-left"></i> &nbsp;Retour</a></p>

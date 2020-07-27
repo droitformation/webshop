@@ -21,7 +21,6 @@
                                 <th>Action</th>
                                 <th>Titre</th>
                                 <th>Valeur</th>
-                                <th>Date</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -35,7 +34,6 @@
                                         {{ $row->title }}
                                     </td>
                                     <td>{{ $row->value.' CHF' }}</td>
-                                    <td>{{ $row->expire_at->formatLocalized('%d %B %Y') }}</td>
                                     <td class="text-right">
                                         @if($row->inscriptions->isEmpty())
                                             <form action="{{ url('admin/rabais/'.$row->id) }}" method="POST" class="form-horizontal">

@@ -15,7 +15,7 @@
             <select name="rabais_id" class="form-control">
                 <option value="">Choix</option>
                 @foreach($rabais as $rabai)
-                    <option value="{{ $rabai->id }}">{{ $rabai->value }} CHF</option>
+                    <option value="{{ $rabai->id }}">{{ $rabai->title }} | {{ $rabai->value }} CHF</option>
                 @endforeach
             </select>
         </div>

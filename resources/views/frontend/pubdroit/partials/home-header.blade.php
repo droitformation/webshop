@@ -59,7 +59,7 @@
                 <span class="h-line"></span>
             </div>
 
-            <?php $chunks = $nouveautes->take(4); ?>
+            <?php $chunks = $nouveautes->take(6); ?>
             @foreach($chunks as $product)
                 @include('frontend.pubdroit.partials.product', ['product' => $product, 'news' => false])
             @endforeach
