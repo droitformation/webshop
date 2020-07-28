@@ -316,3 +316,12 @@ function array_filter_recursive($input){
 
     return $input;
 }
+
+function isLinkedPrice($data){
+     if(isset($data['price_id']) && (strpos($data['price_id'], 'price_link_id:') !== false)){
+         $pieces = explode(':',$data['price_id']);
+         return $pieces[1];
+     }
+
+     return null;
+}

@@ -33,9 +33,11 @@ class Handler extends ExceptionHandler {
 	 */
 	public function report(Exception $e)
 	{
-        \Log::error($e);
+        if(!($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)){
+            \Log::error($e);
+        }
 
-		return parent::report($e);
+        return parent::report($e);
 	}
 
 	/**

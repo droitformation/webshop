@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Date d'expiration<br><small class="text-muted">(optionnel)</small></label>
                             <div class="col-sm-5 col-xs-8">
-                                <input type="text" class="form-control datePicker" value="{{ $rabais->expire_at->format('Y-m-d') }}" name="expire_at">
+                                <input type="text" class="form-control datePicker" value="{{ $rabais->expire_at ? $rabais->expire_at->format('Y-m-d') : '' }}" name="expire_at">
                             </div>
                         </div>
 

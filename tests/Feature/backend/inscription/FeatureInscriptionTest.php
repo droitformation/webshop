@@ -42,7 +42,7 @@ class FeatureInscriptionTest extends TestCase
         parent::tearDown();
     }
 
-/*    public function testRegisterNewInscription()
+    public function testRegisterNewInscription()
     {
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
@@ -64,7 +64,7 @@ class FeatureInscriptionTest extends TestCase
         $response = $this->call('POST', '/admin/inscription', $input);
 
         $response->assertRedirect('/admin/inscription/colloque/'.$colloque->id);
-    }*/
+    }
 
     /**
      *

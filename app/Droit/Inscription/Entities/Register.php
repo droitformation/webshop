@@ -19,13 +19,24 @@ class Register
      * */
     public function prepare($data)
     {
+        $counter = 0;
+
+        $data['price_linked_id'] = isLinkedPrice($data);
+
         if(isset($data['colloques']) && !empty($data['colloques'])){
-            return collect($data['colloques'])->map(function ($options,$key) use ($data) {
+            return collect($data['colloques'])->map(function ($options,$key) use ($data, &$counter) {
                 // if original colloque is tthe current
                 // It's supports the invoice price
                 // Else it's free
                 $free  = $this->repo_price->getFreeByColloque($key);
                 $price = $this->prices($data,$key,$free);
+
+                // remove rabais for multiple colloques, only de first one is supporting the invoice price
+                if($counter > 0){
+                    unset($data['rabais_id']);
+                }
+
+                $counter++;
 
                 return ['colloque_id' => $key] + $price + array_except($data,['colloques','_token','price_id']) + $options;
             });

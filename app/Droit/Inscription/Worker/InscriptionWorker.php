@@ -43,6 +43,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
                 'options'       => isset($data['options'][$key]) ? $data['options'][$key] : null,
                 'groupes'       => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
             ] + $data['prices'][$key]);
+
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
 
@@ -209,6 +210,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     public function unsubscribe($inscription)
     {
         $inscriptions = $inscription->linked_inscriptions ? $inscription->linked_inscriptions : collect([$inscription]);
+
+        echo '<pre>';
+        print_r($inscriptions->toArray());
+        echo '</pre>';
+        exit;
 
         foreach ($inscriptions as $simple){
 

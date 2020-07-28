@@ -149,16 +149,6 @@ class InscriptionController extends Controller
             $this->register->makeDocuments($inscription, true);
         });
 
-/*        session()->put('reference_no', $request->input('reference_no',null));
-        session()->put('transaction_no', $request->input('transaction_no',null));
-
-        $simple = $request->input('type') == 'simple' ? true : null;
-        $model  = $this->register->register($register->general(), $simple);
-
-        $reference = \App\Droit\Transaction\Reference::make($model);
-
-        $this->register->makeDocuments($model, true);*/
-
         flash('L\'inscription à bien été crée')->success();
 
         return redirect('admin/inscription/colloque/'.$request->input('colloque_id'));

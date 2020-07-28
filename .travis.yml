@@ -11,8 +11,8 @@ before_script:
   - cp .env.travis .env
   - mysql -e 'create database staging;'
   - composer self-update
-  - composer install --no-interaction
-  - composer update --no-interaction
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --no-interaction
   - php artisan key:generate
   - mkdir public/files/products
   - mkdir public/files/abos
