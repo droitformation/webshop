@@ -856,4 +856,109 @@ class InscriptionRegisterConverterTest extends TestCase
 
         $this->assertEquals($expected,$actual);
     }
+
+    public function testMultiplePriceAndColloquesNotSamePrice()
+    {
+        $make       = new \tests\factories\ObjectFactory();
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $data = [
+            'participant' => [
+                'Marc,Leschaud',
+                'Cindy,Leschaud'
+            ],
+            'email' => [
+                'Marc.Leschaud@romandie.ch',
+                'cindy.leschaud@gmail.com'
+            ],
+            'user_id'        => 710,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'multiple',
+            'colloques' =>[
+                $colloque1->id => [
+                    'options' => [
+                        0 => [259],
+                        1 => [258]
+                    ],
+                    'groupes' => [
+                        0 => [268 => 150],
+                        1 => [268 => 151]
+                    ]
+                ],
+                $colloque2->id => [
+                    'options'  => [
+                        0 => [261],
+                        1 => [260]
+                    ],
+                ]
+            ],
+            'price_id' => [
+                "price_link_id:".$price_link->id,
+                "price_id:".$price1->id,
+            ]
+        ];
+
+        $expected = collect([
+            $colloque1->id => [
+                'user_id'       => 710,
+                'colloque_id'   => $colloque1->id,
+                'type'          => 'multiple',
+                'participant' => [
+                    'Marc,Leschaud',
+                    'Cindy,Leschaud'
+                ],
+                'email' => [
+                    'Marc.Leschaud@romandie.ch',
+                    'cindy.leschaud@gmail.com'
+                ],
+                'options' => [
+                    0 => [259],
+                    1 => [258]
+                ],
+                'groupes' => [
+                    0 => [268 => 150],
+                    1 => [268 => 151]
+                ],
+                'prices' => [
+                    ["price_link_id" => $price_link->id],
+                    ["price_id" => $price1->id],
+                ],
+                'price_linked_id' => [
+                    ['price_linked_id' => $price_link->id],
+                    ['price_linked_id' => null]
+                ],
+            ],
+            $colloque2->id => [
+                'user_id'       => 710,
+                'colloque_id'   => $colloque2->id,
+                'type'          => 'multiple',
+                'participant' => [
+                    'Marc,Leschaud',
+                ],
+                'email' => [
+                    'Marc.Leschaud@romandie.ch',
+                ],
+                'options'  => [
+                    0 => [261],
+                ],
+                'prices' => [
+                    ["price_id" => $price2->id],
+                ],
+                'price_linked_id' => [
+                    ['price_linked_id' => $price_link->id],
+                ],
+            ]
+        ]);
+
+        $register = new \App\Droit\Inscription\Entities\Register($data);
+        $actual = $register->prepare($data);
+
+        $this->assertEquals($expected,$actual);
+    }
 }

@@ -135,6 +135,11 @@ class InscriptionController extends Controller
      */
     public function store(InscriptionCreateRequest $request){
 
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';
+        exit;
+
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
         $inscriptions = $register->prepare($register->general());
 

@@ -14,9 +14,17 @@ class Register
         $this->repo_price    = \App::make('App\Droit\Price\Repo\PriceInterface');
     }
 
-    /*
-     *  Frontend helper
-     * */
+    public function multiple($data)
+    {
+        $prepared = collect($data['participant'])->map(function ($participant, $index) use ($data) {
+            return [
+                'email'    => $data['email'][$index],
+                'price_id' => $data['price_id'][$index],
+                'price_linked_id' => isLinkedPrice($data['price_id'][$index])
+            ];
+        });
+    }
+
     public function prepare($data)
     {
         $counter = 0;
