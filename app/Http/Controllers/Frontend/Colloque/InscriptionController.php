@@ -41,7 +41,7 @@ class InscriptionController extends Controller
         $register     = new \App\Droit\Inscription\Entities\Register();
         $inscriptions = $register->prepare($request->all());
 
-        $inscriptions->each(function ($data) use ($request) {
+        $inscriptions = $inscriptions->map(function ($data) use ($request) {
             // Register each inscription
             session()->put('reference_no', $request->input('reference_no',null));
             session()->put('transaction_no', $request->input('transaction_no',null));
@@ -49,6 +49,8 @@ class InscriptionController extends Controller
             $inscription = $this->register->register($data,true);
 
             event(new InscriptionWasRegistered($inscription));
+
+            return $inscription;
         });
 
         $request->session()->flash('InscriptionConfirmation', 'Ok');

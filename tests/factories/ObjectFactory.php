@@ -574,4 +574,94 @@ class ObjectFactory
             'updated_at'  => $date
         ]);
     }
+
+    public function makePricelinkInscription()
+    {
+        $person   = $this->makeUser();
+
+        $colloque1  = $this->colloque();
+        $colloque2  = $this->colloque();
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => $person->id,
+            'price_link_id'   => $price_link->id,
+            'colloque_id'     => $colloque1->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => $person->id,
+            'price_id'        => $price2->id,
+            'colloque_id'     => $colloque2->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        return collect([$inscription1,$inscription2]);
+    }
+
+    public function makeMultipleInscriptionsPricelink()
+    {
+        $person   = $this->makeUser();
+
+        $colloque1  = $this->colloque();
+        $colloque2  = $this->colloque();
+
+        $groupe_1 = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['colloque_id' => $colloque1->id, 'user_id' => $person->id]);
+        $groupe_2 = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['colloque_id' => $colloque2->id, 'user_id' => $person->id]);
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $name1 = $this->faker->firstName;
+        $name2 = $this->faker->firstName;
+
+        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => null,
+            'group_id'        => $groupe_1->id,
+            'price_link_id'   => $price_link->id,
+            'colloque_id'     => $colloque1->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => null,
+            'group_id'        => $groupe_1->id,
+            'price_link_id'   => $price_link->id,
+            'colloque_id'     => $colloque1->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $participant1 = \App\Droit\Inscription\Entities\Participant::create(['name' => $name1, 'inscription_id' => $inscription1->id]);
+        $participant2 = \App\Droit\Inscription\Entities\Participant::create(['name' => $name1, 'inscription_id' => $inscription2->id]);
+
+        $inscription3 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => null,
+            'group_id'        => $groupe_2->id,
+            'price_id'        => $price2->id,
+            'colloque_id'     => $colloque2->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $inscription4 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => null,
+            'group_id'        => $groupe_2->id,
+            'price_id'        => $price2->id,
+            'colloque_id'     => $colloque2->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $participant3 = \App\Droit\Inscription\Entities\Participant::create(['name' => $name2, 'inscription_id' => $inscription3->id]);
+        $participant4 = \App\Droit\Inscription\Entities\Participant::create(['name' => $name2, 'inscription_id' => $inscription4->id]);
+
+        return collect([$inscription1,$inscription2,$inscription3,$inscription4]);
+    }
 }

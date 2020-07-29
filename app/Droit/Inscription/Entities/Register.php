@@ -20,8 +20,9 @@ class Register
     public function prepare($data)
     {
         $counter = 0;
+        $type = $data['type'] ?? 'simple';
 
-        $data['price_linked_id'] = isLinkedPrice($data);
+        $data['price_linked_id'] = isLinkedPrice($data,$type);
 
         if(isset($data['colloques']) && !empty($data['colloques'])){
             return collect($data['colloques'])->map(function ($options,$key) use ($data, &$counter) {
@@ -38,12 +39,12 @@ class Register
 
                 $counter++;
 
-                return ['colloque_id' => $key] + $price + array_except($data,['colloques','_token','price_id']) + $options;
+                return ['colloque_id' => $key] + $price + array_except(array_filter($data),['colloques','_token','price_id']) + $options;
             });
         }
 
         return collect([
-            ['colloque_id' => $data['colloque_id']] + priceConvert($data) + array_except($data,['_token','price_id'])
+            ['colloque_id' => $data['colloque_id']] + priceConvert($data) + array_except(array_filter($data),['_token','price_id'])
         ]);
     }
 

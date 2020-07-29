@@ -317,11 +317,37 @@ function array_filter_recursive($input){
     return $input;
 }
 
-function isLinkedPrice($data){
-     if(isset($data['price_id']) && (strpos($data['price_id'], 'price_link_id:') !== false)){
-         $pieces = explode(':',$data['price_id']);
-         return $pieces[1];
-     }
+function isLinkedPrice($data, $type = 'simple'){
 
-     return null;
+    if($type == 'simple'){
+        return getLinkId($data);
+    }
+
+    if($type == 'multiple'){
+        $prices = [];
+        foreach($data['price_id'] as $price){
+            if(strpos($price, 'price_link_id:') !== false){
+                $pieces = explode(':',$price);
+                $prices[] = ['price_linked_id' => $pieces[1]];
+            }
+        }
+
+        return $prices;
+    }
+
+    return null;
+}
+
+function getLinkId($data){
+
+    if(isset($data['price_id']) && (strpos($data['price_id'], 'price_link_id:') !== false)){
+        $pieces = explode(':',$data['price_id']);
+        return $pieces[1];
+    }
+
+    if(isset($data['price_link_id'])){
+        return $data['price_link_id'];
+    }
+
+    return null;
 }

@@ -91,9 +91,9 @@ class Groupe extends Model
     {
         $this->load('inscriptions');
 
-        $somme = !$this->inscriptions->isEmpty() ? $this->inscriptions->reduce(function ($carry, $inscription) {
+        $somme = $this->inscriptions->reduce(function ($carry, $inscription) {
             return $carry + $inscription->price_cents;
-        },0) :collect([]);
+        },0);
 
         $money = new \App\Droit\Shop\Product\Entities\Money;
 

@@ -35,14 +35,16 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
         collect($data['participant'])->map(function ($register,$key) use ($data) {
 
+            $linked = isset($data['price_linked_id'][$key]) ? $data['price_linked_id'][$key] : [];
+
             return array_filter([
-                'participant'   => $data['participant'][$key],
-                'email'         => $data['email'][$key],
-                'rabais_id'     => isset($data['rabais_id'][$key]) ? $data['rabais_id'][$key] : null,
-                'occurrences'   => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
-                'options'       => isset($data['options'][$key]) ? $data['options'][$key] : null,
-                'groupes'       => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
-            ] + $data['prices'][$key]);
+                'participant'     => $data['participant'][$key],
+                'email'           => $data['email'][$key],
+                'rabais_id'       => isset($data['rabais_id'][$key]) ? $data['rabais_id'][$key] : null,
+                'occurrences'     => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
+                'options'         => isset($data['options'][$key]) ? $data['options'][$key] : null,
+                'groupes'         => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
+            ] + $data['prices'][$key] + $linked);
 
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
@@ -211,22 +213,18 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     {
         $inscriptions = $inscription->linked_inscriptions ? $inscription->linked_inscriptions : collect([$inscription]);
 
-        echo '<pre>';
-        print_r($inscriptions->toArray());
-        echo '</pre>';
-        exit;
-
         foreach ($inscriptions as $simple){
 
             // Destroy documents or else if we register the same person again the docs are going to be wrong
             $this->destroyDocuments($simple);
 
+            $this->inscription->delete($simple->id);
+
             // If it's a group inscription and we have deleted refresh the groupe invoice and bv
-            if($simple->group_id > 0) {
+            if(isset($simple->groupe)) {
+                $simple = $simple->fresh();
                 $this->makeDocuments($simple->groupe, true);
             }
-
-            $this->inscription->delete($simple->id);
         }
     }
 }

@@ -292,11 +292,15 @@ class Inscription extends Model
 
     public function getLinkedInscriptionsAttribute()
     {
-        if(isset($this->price_link_id)){
-            return $this->inscrit->inscriptions->whereIn('colloque_id',$this->price_link->colloques->pluck('id')->all());
+        if(isset($this->groupe)) {
+            if(isset($this->price_linked_id)){
+                return $this->groupe->inscriptions->where('price_linked_id',$this->price_linked_id);
+            }
         }
 
-        return null;
+        if(isset($this->price_linked_id)){
+            return $this->user->inscriptions->where('price_linked_id',$this->price_linked_id);
+        }
     }
 
     public function getNameInscriptionAttribute()

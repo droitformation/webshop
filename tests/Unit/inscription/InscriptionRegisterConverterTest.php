@@ -683,6 +683,7 @@ class InscriptionRegisterConverterTest extends TestCase
                 ],
                 'groupes'  => [268 => 150],
                 'price_link_id' => $price_link->id,
+                'price_linked_id' => $price_link->id,
             ]
         ]);
 
@@ -725,6 +726,7 @@ class InscriptionRegisterConverterTest extends TestCase
                 'options'       => [259],
                 'groupes'       => [268 => 150],
                 'price_link_id' => '1',
+                'price_linked_id' => 1,
             ],
             $colloque2->id => [
                 'user_id'       => 710,
@@ -732,6 +734,7 @@ class InscriptionRegisterConverterTest extends TestCase
                 'type'          => 'simple',
                 'options'       => [261],
                 'price_id'      => $price2->id,
+                'price_linked_id' => 1,
             ]
         ]);
 
@@ -816,6 +819,10 @@ class InscriptionRegisterConverterTest extends TestCase
                     ["price_link_id" => $price_link->id],
                     ["price_link_id" => $price_link->id],
                 ],
+                'price_linked_id' => [
+                    ['price_linked_id' => $price_link->id],
+                    ['price_linked_id' => $price_link->id]
+                ],
             ],
             $colloque2->id => [
                 'user_id'       => 710,
@@ -836,6 +843,10 @@ class InscriptionRegisterConverterTest extends TestCase
                 'prices' => [
                     ["price_id" => $price2->id],
                     ["price_id" => $price2->id],
+                ],
+                'price_linked_id' => [
+                    ['price_linked_id' => $price_link->id],
+                    ['price_linked_id' => $price_link->id]
                 ],
             ]
         ]);

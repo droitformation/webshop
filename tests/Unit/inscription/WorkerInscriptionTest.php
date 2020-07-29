@@ -429,80 +429,43 @@ class WorkerInscriptionTest extends TestCase
 
     public function testDeleteInscriptionLinked()
     {
-        // Create colloque
         $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
-
         $make     = new \tests\factories\ObjectFactory();
-        $person   = factory(\App\Droit\User\Entities\User::class)->create();
-        $colloque1 = $make->colloque();
-        $colloque2 = $make->colloque();
 
-        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 0, 'description' => 'Price free']);
-        $price_link = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create(['price' => '320.00', 'description' => 'Price linked']);
-        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+        $inscriptions = $make->makePricelinkInscription();
 
-        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
-            'user_id'       => $person->id,
-            'colloque_id'   => $colloque1->id,
-            'price_link_id' => $price_link->id,
-            'price_id'      => null
-        ]);
-
-        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
-            'user_id'       => $person->id,
-            'colloque_id'   => $colloque1->id,
-            'price_link_id' => null,
-            'price_id'      => $price->id
-        ]);
+        $inscription1 = $inscriptions->shift();
+        $inscription2 = $inscriptions->shift();
 
         $worker->unsubscribe($inscription1);
 
         $inscription1 = $inscription1->fresh();
-        $inscription2 = $inscription1->fresh();
+        $inscription2 = $inscription2->fresh();
 
         $this->assertNotNull($inscription1->deleted_at);
         $this->assertNotNull($inscription2->deleted_at);
     }
 
-/*    public function testdeleteOneInscriptionFromGroupLinked()
+    public function testdeleteOneInscriptionFromGroupLinked()
     {
-        $make       = new \tests\factories\ObjectFactory();
-        $person     = $make->makeUser();
-        $colloque1  = $make->colloque();
-        $colloque2  = $make->colloque();
+        $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make = new \tests\factories\ObjectFactory();
 
-        $names = ['Cindy Leschaud', 'Coralie Ahmetaj', 'Cyril Leschaud'];
+        $inscriptions = $make->makeMultipleInscriptionsPricelink();
 
-        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
-        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
-        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+        $inscription1 = $inscriptions->shift();
+        $inscription2 = $inscriptions->shift();
+        $inscription3 = $inscriptions->shift();
+        $inscription4 = $inscriptions->shift();
 
-        // First inscriptions with price_link
-        $group_1        = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id' => $person->id, 'colloque_id' => $colloque1->id]);
-        $inscriptions_1 = factory(\App\Droit\Inscription\Entities\Inscription::class,3)->create(['group_id' => $group_1->id, 'colloque_id' => $colloque1->id]);
+        $this->generator->shouldReceive('make')->times(3);
 
-        $group_1->inscriptions = $inscriptions_1->map(function ($item, $key) use ($names,$price_link) {
-            $item->user_id = null;
-            $item->price_id = null;
-            $item->price_link_id = $price_link->id;
-            $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->create(['inscription_id' => $item->id, 'name' => $names[$key]]);
-            return $item;
-        });
+        $worker->unsubscribe($inscription1);
 
-        // Second inscriptions with price free
-        $group_2        = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id' => $person->id, 'colloque_id' => $colloque2->id]);
-        $inscriptions_2 = factory(\App\Droit\Inscription\Entities\Inscription::class,3)->create(['group_id' => $group_2->id, 'colloque_id' => $colloque2->id]);
+        $inscription1 = $inscription1->fresh();
+        $inscription2 = $inscription2->fresh();
 
-        $group_2->inscriptions = $inscriptions_2->map(function ($item, $key) use ($names,$price) {
-            $item->user_id = null;
-            $item->price_id = $price->id;
-            $item->price_link_id = null;
-            $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->create(['inscription_id' => $item->id, 'name' => $names[$key]]);
-
-            return $item;
-        });
-
-        // group user_id same and colloque
-
-    }*/
+        $this->assertNotNull($inscription1->deleted_at);
+        $this->assertNotNull($inscription2->deleted_at);
+    }
 }

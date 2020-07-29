@@ -228,8 +228,19 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription', $data);
 
-        $this->assertDatabaseHas('colloque_inscriptions', ['colloque_id' => $colloque1->id, 'user_id' => $person->id, 'price_link_id' => $price_link->id,'rabais_id' => $rabais->id]);
-        $this->assertDatabaseHas('colloque_inscriptions', ['colloque_id' => $colloque2->id, 'user_id' => $person->id, 'price_id' => $price2->id]);
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'colloque_id'     => $colloque1->id,
+            'user_id'         => $person->id,
+            'price_link_id'   => $price_link->id,
+            'rabais_id'       => $rabais->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'colloque_id'     => $colloque2->id,
+            'user_id'         => $person->id,
+            'price_id'        => $price2->id,
+            'price_linked_id' => $price_link->id,
+        ]);
 
         $model  = new \App\Droit\Inscription\Entities\Inscription();
         $inscriptions = $model->all();
@@ -245,7 +256,6 @@ class FeatureInscriptionAdminTest extends TestCase
             'inscription_id' => $second->id,
             'option_id'      => $options2[0],
         ]);
-
 
         $this->assertEquals($price_rabais,$first->price_cents);
         $this->assertEquals(0,$second->price_cents);
@@ -289,8 +299,8 @@ class FeatureInscriptionAdminTest extends TestCase
                         1 => [$options[0]]
                     ],
                     'groupes' => [
-                        0 => [$option_groupe->id => $option_groupe->groupe[0]],
-                        1 => [$option_groupe->id => $option_groupe->groupe[1]]
+                        0 => [$option_groupe->id => $option_groupe->groupe[0]->id],
+                        1 => [$option_groupe->id => $option_groupe->groupe[1]->id]
                     ]
                 ]
             ]
@@ -300,8 +310,9 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $model  = new \App\Droit\Inscription\Entities\Inscription();
         $inscriptions = $model->all();
-        $latest = $inscriptions->shift();
+
         $first  = $inscriptions->shift();
+        $second = $inscriptions->shift();
 
         $this->assertDatabaseHas('colloque_inscriptions', [
             'id'          => $first->id,
@@ -311,9 +322,9 @@ class FeatureInscriptionAdminTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('colloque_inscriptions', [
-            'id'          => $latest->id,
+            'id'          => $second->id,
             'colloque_id' => $colloque->id,
-            'group_id'    => $latest->group_id,
+            'group_id'    => $second->group_id,
             'price_id'    => $prices[0],
         ]);
 
@@ -323,20 +334,20 @@ class FeatureInscriptionAdminTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('colloque_option_users', [
-            'inscription_id' => $latest->id,
+            'inscription_id' => $second->id,
             'option_id'      => $options[0],
         ]);
 
         $this->assertDatabaseHas('colloque_option_users', [
             'inscription_id' => $first->id,
             'option_id'      => $option_groupe->id,
-            'groupe_id'      => $option_groupe->groupe[0],
+            'groupe_id'      => $option_groupe->groupe[0]->id,
         ]);
 
         $this->assertDatabaseHas('colloque_option_users', [
-            'inscription_id' => $latest->id,
+            'inscription_id' => $second->id,
             'option_id'      => $option_groupe->id,
-            'groupe_id'      => $option_groupe->groupe[1],
+            'groupe_id'      => $option_groupe->groupe[1]->id,
         ]);
     }
 
@@ -404,7 +415,6 @@ class FeatureInscriptionAdminTest extends TestCase
             ]
         ];
 
-
         $reponse = $this->call('POST', 'admin/inscription', $data);
 
         $model  = new \App\Droit\Inscription\Entities\Inscription();
@@ -420,13 +430,15 @@ class FeatureInscriptionAdminTest extends TestCase
             'colloque_id'   => $colloque1->id,
             'group_id'      => $first->group_id,
             'price_link_id' => $price_link->id,
+            'price_linked_id' => $price_link->id,
         ]);
 
         $this->assertDatabaseHas('colloque_inscriptions', [
-            'id'            => $second->id,
-            'colloque_id'   => $colloque1->id,
-            'group_id'      => $second->group_id,
-            'price_link_id' => $price_link->id,
+            'id'              => $second->id,
+            'colloque_id'     => $colloque1->id,
+            'group_id'        => $second->group_id,
+            'price_link_id'   => $price_link->id,
+            'price_linked_id' => $price_link->id,
         ]);
 
         $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $first->id, 'option_id' => $options1[0]]);
@@ -435,8 +447,20 @@ class FeatureInscriptionAdminTest extends TestCase
         $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $first->id, 'option_id' => $option_groupe1->id, 'groupe_id' => $option_groupe1->groupe[0]->id]);
         $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $second->id,'option_id' => $option_groupe1->id, 'groupe_id' => $option_groupe1->groupe[1]->id]);
 
-        $this->assertDatabaseHas('colloque_inscriptions', ['id' => $third->id,  'colloque_id' => $colloque2->id, 'group_id' => $third->group_id,  'price_id' => $price2->id]);
-        $this->assertDatabaseHas('colloque_inscriptions', ['id' => $fourth->id, 'colloque_id' => $colloque2->id, 'group_id' => $fourth->group_id, 'price_id' => $price2->id]);
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'id'          => $third->id,
+            'colloque_id' => $colloque2->id,
+            'group_id'    => $third->group_id,
+            'price_id'    => $price2->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'id'          => $fourth->id,
+            'colloque_id' => $colloque2->id,
+            'group_id'    => $fourth->group_id,
+            'price_id'    => $price2->id,
+            'price_linked_id' => $price_link->id,
+        ]);
 
         $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $third->id, 'option_id' => $options2[0]]);
         $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $fourth->id,'option_id' => $options2[0]]);
