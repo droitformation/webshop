@@ -269,4 +269,40 @@ class HelperMiscTest extends TestCase
 
         $this->assertEquals(['price_id' => 123],$result);
     }
+
+    public function testFilterEmptyArray()
+    {
+        $array  = [
+            165 => [
+                'options' => [
+                    0 => [ // like in admin
+                        0   => 259,
+                        269 => []
+                    ]
+                ],
+                'groupes' => [268 => 150]
+            ]
+        ];
+
+        $actual = [
+            165 => [
+                'options' => [
+                    0 => [ // like in admin
+                        0  => 259,
+                    ]
+                ],
+                'groupes' => [268 => 150]
+            ]
+        ];
+
+        $result = array_filter_recursive($array);
+
+        $this->assertEquals($actual,$result);
+
+        $array  = [[1,2,null],'',123];
+
+        $result = array_filter_recursive($array);
+
+        $this->assertEquals([[1,2],123],array_values($result));
+    }
 }

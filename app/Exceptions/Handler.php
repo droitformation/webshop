@@ -33,9 +33,11 @@ class Handler extends ExceptionHandler {
 	 */
 	public function report(Exception $e)
 	{
-        \Log::error($e);
+        if(!($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)){
+            \Log::error($e);
+        }
 
-		return parent::report($e);
+        return parent::report($e);
 	}
 
 	/**
@@ -47,10 +49,6 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-        if ($e instanceof \App\Exceptions\DebounceException){
-            \Mail::to('droitformation.web@gmail.com')->send(new \App\Mail\NotifyWebmaster( $e->getMessage() ));
-        }
-
         if ($e instanceof \Illuminate\Contracts\Encryption\DecryptException){
             dd($e->getMessage());
         }

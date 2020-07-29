@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\inscription;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -286,6 +286,33 @@ class GenerateTest extends TestCase
         $response = $generate->getColloque();
 
         $this->assertEquals($response->id, 12);
+    }
+
+    public function testGetColloquePriceLink()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque1 = $make->colloque();
+        $colloque2 = $make->colloque();
+
+        $price_link = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create([
+            'price'       => '320.00', // with quotes else json is not formatted correctly
+            'description' => 'Price linked',
+        ]);
+
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->make([
+            'id'            => '10',
+            'user_id'       => '1',
+            'colloque_id'   => $colloque1->id,
+            'price_link_id' => $price_link->id,
+            'price_id'      => null
+        ]);
+
+        $generate = new \App\Droit\Generate\Entities\Generate($inscription);
+        $response = $generate->getColloques();
+
+        $this->assertEquals($response->pluck('id'), collect([$colloque1->id,$colloque2->id]));
     }
 
     public function testGetAdresse()

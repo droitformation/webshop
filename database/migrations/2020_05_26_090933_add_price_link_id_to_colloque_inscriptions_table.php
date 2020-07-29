@@ -16,6 +16,7 @@ class AddPriceLinkIdToColloqueInscriptionsTable extends Migration
         Schema::table('colloque_inscriptions', function (Blueprint $table) {
             $table->integer('price_link_id')->nullable();
             $table->integer('price_id')->nullable()->change();
+            $table->integer('price_linked_id')->nullable();
         });
     }
 
@@ -28,6 +29,7 @@ class AddPriceLinkIdToColloqueInscriptionsTable extends Migration
     {
         Schema::table('colloque_inscriptions', function (Blueprint $table) {
             $table->dropColumn('price_link_id');
+            $table->dropColumn('price_linked_id');
             $table->integer('price_id')->change();
         });
     }

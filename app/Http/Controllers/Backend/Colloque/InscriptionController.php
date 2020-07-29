@@ -133,8 +133,8 @@ class InscriptionController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request){
-    //public function store(InscriptionCreateRequest $request){
+    public function store(InscriptionCreateRequest $request){
+
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
         $inscriptions = $register->prepare($register->general());
 
@@ -148,16 +148,6 @@ class InscriptionController extends Controller
 
             $this->register->makeDocuments($inscription, true);
         });
-
-/*        session()->put('reference_no', $request->input('reference_no',null));
-        session()->put('transaction_no', $request->input('transaction_no',null));
-
-        $simple = $request->input('type') == 'simple' ? true : null;
-        $model  = $this->register->register($register->general(), $simple);
-
-        $reference = \App\Droit\Transaction\Reference::make($model);
-
-        $this->register->makeDocuments($model, true);*/
 
         flash('L\'inscription à bien été crée')->success();
 
@@ -219,14 +209,7 @@ class InscriptionController extends Controller
         $inscription = $this->inscription->find($id);
 
         // Destroy documents or else if we register the same person again the docs are going to be wrong
-        $this->register->destroyDocuments($inscription);
-
-        // If it's a group inscription and we have deleted refresh the groupe invoice and bv
-        if($inscription->group_id > 0) {
-            $this->register->makeDocuments($inscription->groupe, true);
-        }
-
-        $this->inscription->delete($id);
+        $this->register->unsubscribe($inscription);
 
         flash('Désinscription effectué')->success();
 

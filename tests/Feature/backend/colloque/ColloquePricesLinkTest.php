@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\backend\colloque;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -146,7 +146,7 @@ class ColloquePricesLinkTest extends TestCase
         $this->assertDatabaseMissing('price_link_colloques', ['colloque_id' => $colloque2->id]);
     }
 
-    public function testColloquePriceLink()
+/*    public function testColloquePriceLink()
     {
         $make      = new \tests\factories\ObjectFactory();
         $colloque1 = $make->colloque();
@@ -161,5 +161,5 @@ class ColloquePricesLinkTest extends TestCase
 
         // Frontend?
 
-    }
+    }*/
 }

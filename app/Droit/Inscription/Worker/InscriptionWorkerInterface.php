@@ -12,4 +12,5 @@ interface InscriptionWorkerInterface{
     public function destroyDocuments($model);
     public function sendEmail($model, $email);
     public function updateInscription($model);
+    public function unsubscribe($inscription);
 }

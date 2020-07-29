@@ -38,7 +38,7 @@
                                     <!-- Inscription loop -->
                                     @foreach($group->inscriptions as $inscription)
 
-                                        <?php $inscription->load('colloque','rappels'); ?>
+                                        <?php $inscription->load('colloque','rappels','participant'); ?>
 
                                         @include('backend.users.partials.single-group', ['inscription' => $inscription])
 

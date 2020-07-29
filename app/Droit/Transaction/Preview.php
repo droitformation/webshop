@@ -56,9 +56,10 @@ class Preview
 
     public function price()
     {
-        $price  = priceConvert($this->data['price_id']);
-        $relation = $price[0];
-        $price_id = $price[1];
+        $pieces = explode(':',$this->data['price_id']);
+
+        $relation = $pieces[0];
+        $price_id = $pieces[1];
 
         $relation = $relation == 'price_id' ? 'prices' : 'price_link';
 
@@ -102,7 +103,7 @@ class Preview
 
         if(isset($data['options']) && !empty($data['options'])){
 
-            $html .= '<dl class="options-wizard"><dt>Choix Options</dt>';
+            $html .= '<dl class="options-wizard"><dt>Choix</dt>';
                 foreach ($data['options'] as $option_id){
                     $option = getOption($option_id,$colloque);
 
@@ -121,8 +122,8 @@ class Preview
         $html = '';
 
         if(isset($data['occurrences']) && !empty($this->data['occurrences'])){
-           $html .= '<dl><dt>Choix atelier/lieux</dt>';
-               foreach ($data['occurrences']['occurrences'] as $occurrence_id){
+           $html .= '<dl class="link"><dt><strong>Choix atelier/lieux</strong></dt>';
+               foreach ($data['occurrences'] as $occurrence_id){
                    $occurrence = getOccurrences($occurrence_id,$colloque);
                    $html .= '<dd>'.$occurrence['title'].'</dd>';
                }

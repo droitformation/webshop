@@ -95,7 +95,6 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-	    $this->registerPurgeService();
         $this->registerSiteService();
         
         $this->registerDuplicateService();
@@ -113,17 +112,6 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->registerEmailService();
 	}
-
-    /**
-     * Purger
-     */
-    protected function registerPurgeService(){
-
-        $this->app->singleton('App\Droit\Newsletter\Service\Purger', function()
-        {
-            return new \App\Droit\Newsletter\Service\Purger(new \GuzzleHttp\Client(['curl' => [CURLOPT_SSL_VERIFYPEER => false]]));
-        });
-    }
     
     /**
      * Site

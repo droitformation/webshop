@@ -47,6 +47,4 @@ interface MailjetServiceInterface {
      */
     public function uploadCSVContactslistData($data);
     public function importCSVContactslistData($data);
-
-    public function unsubscribeBulk($Contacts,$ContactsLists);
 }

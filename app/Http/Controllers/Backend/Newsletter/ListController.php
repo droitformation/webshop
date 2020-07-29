@@ -163,4 +163,5 @@ class ListController extends Controller
 
         return \Excel::download(new \App\Exports\ListExport($list), 'Export_liste_'.$list->title.'.xlsx');
     }
+
 }

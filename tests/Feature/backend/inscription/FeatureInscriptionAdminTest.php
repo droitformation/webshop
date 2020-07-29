@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\backend\inscription;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -147,7 +147,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
     }
 
-    /*public function testMakeSimpleInscription()
+    public function testMakeSimpleInscription()
     {
         // Create colloque
         $make     = new \tests\factories\ObjectFactory();
@@ -180,7 +180,76 @@ class FeatureInscriptionAdminTest extends TestCase
             'user_id'     => $person->id,
             'price_id'    => $prices[0],
         ]);
-    }*/
+    }
+
+    public function testMakeSimpleInscriptionColloques()
+    {
+        // create colloque
+        $make     = new \tests\factories\objectfactory();
+        $person   = $make->makeUser();
+
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10]);
+
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $price_rabais = $price_link->price_cents - $rabais->value;
+
+        $options1 = $colloque1->options->pluck('id')->all();
+        $options2 = $colloque2->options->pluck('id')->all();
+
+        $option_groupe1 = $make->addGroupOption($colloque1);
+        $option_groupe2 = $make->addGroupOption($colloque2);
+
+        // See page with data
+        $data = ['colloque_id' => $colloque1->id, 'user_id' => $person->id,'type' => 'simple'];
+        $this->call('POST', 'admin/inscription/make', $data);
+
+        $data = [
+            'type'        => 'simple' ,
+            'colloque_id' => $colloque1->id,
+            'rabais_id'   => $rabais->id,
+            'user_id'     => $person->id,
+            'price_id'    => "price_link_id:".$price_link->id,
+            'colloques' => [
+                $colloque1->id => [
+                    'options'  => [$options1]
+                ],
+                $colloque2->id => [
+                    'options'  => [$options2]
+                ],
+            ]
+        ];
+
+        $response = $this->call('POST', 'admin/inscription', $data);
+
+        $this->assertDatabaseHas('colloque_inscriptions', ['colloque_id' => $colloque1->id, 'user_id' => $person->id, 'price_link_id' => $price_link->id,'rabais_id' => $rabais->id]);
+        $this->assertDatabaseHas('colloque_inscriptions', ['colloque_id' => $colloque2->id, 'user_id' => $person->id, 'price_id' => $price2->id]);
+
+        $model  = new \App\Droit\Inscription\Entities\Inscription();
+        $inscriptions = $model->all();
+        $first  = $inscriptions->shift();
+        $second = $inscriptions->shift();
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'inscription_id' => $first->id,
+            'option_id'      => $options1[0],
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'inscription_id' => $second->id,
+            'option_id'      => $options2[0],
+        ]);
+
+
+        $this->assertEquals($price_rabais,$first->price_cents);
+        $this->assertEquals(0,$second->price_cents);
+    }
 
     public function testMakeMultipleInscription()
     {
@@ -191,7 +260,9 @@ class FeatureInscriptionAdminTest extends TestCase
         $prices   = $colloque->prices->pluck('id')->all();
         $options  = $colloque->options->pluck('id')->all();
 
-        // See pag with data
+        $option_groupe = $make->addGroupOption($colloque);
+
+        // See page with data
         $data = ['colloque_id' => $colloque->id, 'user_id' => $person->id, 'type' => 'multiple'];
         $this->call('POST', 'admin/inscription/make', $data);
 
@@ -217,6 +288,10 @@ class FeatureInscriptionAdminTest extends TestCase
                         0 => [$options[0]],
                         1 => [$options[0]]
                     ],
+                    'groupes' => [
+                        0 => [$option_groupe->id => $option_groupe->groupe[0]],
+                        1 => [$option_groupe->id => $option_groupe->groupe[1]]
+                    ]
                 ]
             ]
         ];
@@ -241,6 +316,134 @@ class FeatureInscriptionAdminTest extends TestCase
             'group_id'    => $latest->group_id,
             'price_id'    => $prices[0],
         ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'inscription_id' => $first->id,
+            'option_id'      => $options[0],
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'inscription_id' => $latest->id,
+            'option_id'      => $options[0],
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'inscription_id' => $first->id,
+            'option_id'      => $option_groupe->id,
+            'groupe_id'      => $option_groupe->groupe[0],
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users', [
+            'inscription_id' => $latest->id,
+            'option_id'      => $option_groupe->id,
+            'groupe_id'      => $option_groupe->groupe[1],
+        ]);
+    }
+
+    public function testMakeMultipleInscriptionsPriceLink()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = $make->makeUser();
+
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $options1 = $colloque1->options->pluck('id')->all();
+        $options2 = $colloque2->options->pluck('id')->all();
+
+        $option_groupe1 = $make->addGroupOption($colloque1);
+        $option_groupe2 = $make->addGroupOption($colloque2);
+
+        // See page with data
+        $data = ['colloque_id' => $colloque1->id, 'user_id' => $person->id, 'type' => 'multiple'];
+        $this->call('POST', 'admin/inscription/make', $data);
+
+        $data = [
+            'colloque_id' => $colloque1->id ,
+            'user_id'     => $person->id,
+            'type'        => 'multiple',
+            'participant' => [
+                'Cindy Leschaud',
+                'Coralie Ahmetaj'
+            ],
+            'email' => [
+                'cindy.leschaud@gmail.com',
+                'coralie.ahmetaj@hotmail.com'
+            ],
+            'price_id'     => [
+                "price_link_id:".$price_link->id,
+                "price_link_id:".$price_link->id
+            ],
+            'colloques' => [
+                $colloque1->id => [
+                    'options' => [
+                        0 => [$options1[0]],
+                        1 => [$options1[0]]
+                    ],
+                    'groupes' => [
+                        0 => [$option_groupe1->id => $option_groupe1->groupe[0]->id],
+                        1 => [$option_groupe1->id => $option_groupe1->groupe[1]->id]
+                    ]
+                ],
+                $colloque2->id => [
+                    'options' => [
+                        0 => [$options2[0]],
+                        1 => [$options2[0]]
+                    ],
+                    'groupes' => [
+                        0 => [$option_groupe2->id => $option_groupe2->groupe[0]->id],
+                        1 => [$option_groupe2->id => $option_groupe2->groupe[1]->id]
+                    ]
+                ]
+            ]
+        ];
+
+
+        $reponse = $this->call('POST', 'admin/inscription', $data);
+
+        $model  = new \App\Droit\Inscription\Entities\Inscription();
+        $inscriptions = $model->all();
+        $first  = $inscriptions->shift();
+        $second = $inscriptions->shift();
+
+        $third  = $inscriptions->shift();
+        $fourth = $inscriptions->shift();
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'id'            => $first->id,
+            'colloque_id'   => $colloque1->id,
+            'group_id'      => $first->group_id,
+            'price_link_id' => $price_link->id,
+        ]);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'id'            => $second->id,
+            'colloque_id'   => $colloque1->id,
+            'group_id'      => $second->group_id,
+            'price_link_id' => $price_link->id,
+        ]);
+
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $first->id, 'option_id' => $options1[0]]);
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $second->id,'option_id' => $options1[0]]);
+
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $first->id, 'option_id' => $option_groupe1->id, 'groupe_id' => $option_groupe1->groupe[0]->id]);
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $second->id,'option_id' => $option_groupe1->id, 'groupe_id' => $option_groupe1->groupe[1]->id]);
+
+        $this->assertDatabaseHas('colloque_inscriptions', ['id' => $third->id,  'colloque_id' => $colloque2->id, 'group_id' => $third->group_id,  'price_id' => $price2->id]);
+        $this->assertDatabaseHas('colloque_inscriptions', ['id' => $fourth->id, 'colloque_id' => $colloque2->id, 'group_id' => $fourth->group_id, 'price_id' => $price2->id]);
+
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $third->id, 'option_id' => $options2[0]]);
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $fourth->id,'option_id' => $options2[0]]);
+
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $third->id, 'option_id' => $option_groupe2->id, 'groupe_id' => $option_groupe2->groupe[0]->id]);
+        $this->assertDatabaseHas('colloque_option_users',['inscription_id' => $fourth->id,'option_id' => $option_groupe2->id, 'groupe_id' => $option_groupe2->groupe[1]->id]);
+
     }
 
     public function testEditColumnsViaAjax()

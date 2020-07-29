@@ -43,6 +43,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
                 'options'       => isset($data['options'][$key]) ? $data['options'][$key] : null,
                 'groupes'       => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
             ] + $data['prices'][$key]);
+
         })->each(function ($item) use ($group) {
             $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
 
@@ -192,7 +193,9 @@ class InscriptionWorker implements InscriptionWorkerInterface{
 
     public function destroyDocuments($model)
     {
-        \File::delete(collect($model->documents)->pluck('file')->all());
+        if(!empty($model->documents)){
+            \File::delete(collect($model->documents)->pluck('file')->all());
+        }
     }
 
     public function backupDocuments($model)
@@ -202,5 +205,28 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         collect(array_filter($docs))->map(function ($doc, $key) {
             \File::move(public_path($doc), public_path('files/colloques/bak/'.basename($doc)));
         });
+    }
+
+    public function unsubscribe($inscription)
+    {
+        $inscriptions = $inscription->linked_inscriptions ? $inscription->linked_inscriptions : collect([$inscription]);
+
+        echo '<pre>';
+        print_r($inscriptions->toArray());
+        echo '</pre>';
+        exit;
+
+        foreach ($inscriptions as $simple){
+
+            // Destroy documents or else if we register the same person again the docs are going to be wrong
+            $this->destroyDocuments($simple);
+
+            // If it's a group inscription and we have deleted refresh the groupe invoice and bv
+            if($simple->group_id > 0) {
+                $this->makeDocuments($simple->groupe, true);
+            }
+
+            $this->inscription->delete($simple->id);
+        }
     }
 }

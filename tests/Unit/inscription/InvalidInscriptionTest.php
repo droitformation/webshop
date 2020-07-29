@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\inscription;
 
 use function GuzzleHttp\Psr7\uri_for;
 use Tests\TestCase;

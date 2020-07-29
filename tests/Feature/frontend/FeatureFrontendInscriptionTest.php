@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\frontend;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -66,6 +66,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         $colloque1  = $make->colloque();
         $colloque2  = $make->colloque();
 
+        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
         $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
         $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
 
@@ -94,9 +95,9 @@ class FeatureFrontendInscriptionTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('colloque_inscriptions', [
-            'price_link_id' => $price_link->id,
-            'user_id'       => $person->id,
-            'colloque_id'   => $colloque2->id,
+            'price_id'    => $price->id,
+            'user_id'     => $person->id,
+            'colloque_id' => $colloque2->id,
         ]);
 
         $this->assertDatabaseHas('transaction_references', [

@@ -202,6 +202,7 @@ class InscriptionEloquent implements InscriptionInterface{
             'inscription_no'  => $data['inscription_no'],
             'price_id'        => $data['price_id'] ?? null,
             'price_link_id'   => $data['price_link_id'] ?? null,
+            'price_linked_id' => $data['price_linked_id'] ?? null,
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()
         ));

@@ -5,6 +5,7 @@
 
 Route::get('cartworker2', function()
 {
+
     $abo        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     
@@ -14,36 +15,10 @@ Route::get('cartworker2', function()
     $generator->stream = true;
     $generator->setPrint(true);
 
+
     return $generator->makeAbo('facture', $abofacture);
 });
 
-Route::get('email_testing', function()
-{
-    // Initialize library class
-    $mail = new \App\Droit\Newsletter\Service\VerifyEmail();
-
-    // Set the timeout value on stream
-    $mail->setStreamTimeoutWait(150);
-
-    // Set debug output mode
-    $mail->Debug= TRUE;
-    $mail->Debugoutput= 'html';
-
-    // Set email address for SMTP request
-    $mail->setEmailFrom('info@designpond.ch');
-
-    // Email to check
-    $email = 'cindy.leschaud@unine.ch';
-
-    // Check if email is valid and exist
-    if($mail->check($email)){
-        echo 'Email &lt;'.$email.'&gt; is exist!';
-    }elseif(App\Droit\Newsletter\Service\VerifyEmail::validate($email)){
-        echo 'Email &lt;'.$email.'&gt; is valid, but not exist!';
-    }else{
-        echo 'Email &lt;'.$email.'&gt; is not valid and not exist!';
-    }
-});
 
 Route::get('abos_test', function () {
 
@@ -218,7 +193,7 @@ Route::get('testing', function() {
     $abos        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abo_users       = \App::make('App\Droit\Abo\Repo\AboUserInterface');
     $factures    = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
-    $prices      = \App::make('App\Droit\Price\Repo\PriceLinkInterface');
+    $prices      = \App::make('App\Droit\Price\Repo\PriceInterface');
     $products    = \App::make('App\Droit\Shop\Product\Repo\ProductInterface');
     $newslist    = \App::make('App\Droit\Newsletter\Repo\NewsletterListInterface');
     $rappels       = \App::make('App\Droit\Inscription\Repo\RappelInterface');
@@ -229,19 +204,20 @@ Route::get('testing', function() {
 
     //$orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     //$order = $orders->find(4830);
-    $all = $rabais->byColloque(164);
+/*    $colloque = $colloques->find(165);
 
     echo '<pre>';
-    print_r($all);
+    print_r($colloque->price_free);
     echo '</pre>';
-    exit;
-/*    $inscription = $model_inscriptions->find(20992);
+    exit;*/
+
+   $inscription = $model_inscriptions->find(22500);
 
     echo '<pre>';
-    print_r($inscription->export_option_html);
+    print_r($inscription->linked_inscriptions);
     echo '</pre>';
     exit();
-*/
+/* */
 
     $dispach = null;
     $list = [1,2];
@@ -576,7 +552,7 @@ Route::get('bv_factures', function()
 
     $Inscriptions = \App::make('App\Droit\Inscription\Repo\InscriptionInterface');
 
-    $facture   = $Inscriptions->find(18614);//701
+    $facture   = $Inscriptions->find(22500);//701
 
     $generator  = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
 
@@ -584,7 +560,7 @@ Route::get('bv_factures', function()
 
     //return $generator->makeAbo('facture', $facture);
     $generator->stream = true;
-    return $generator->make('bv', $facture);
+    return $generator->make('facture', $facture);
 });
 
 Route::get('abo1', function()

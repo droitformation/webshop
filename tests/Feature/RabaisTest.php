@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use phpDocumentor\Reflection\Types\Integer;
 use Tests\TestCase;
 use Tests\ResetTbl;
 
@@ -47,6 +48,7 @@ class RabaisTest extends TestCase
             'colloques' => [
                 $colloque->id => [
                     'options' => [$colloque->options->first()->id],
+                    //'options' => [0 => $colloque->options->first()->id],
                 ]
             ],
             'rabais_id'      => $rabais->id,

@@ -13,7 +13,7 @@ class Inscription extends Model
 
     protected $dates = ['deleted_at','payed_at','send_at'];
 
-    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id','price_link_id', 'rabais_id', 'payed_at', 'send_at', 'status','admin','present'];
+    protected $fillable = ['colloque_id', 'user_id', 'group_id', 'reference_id','inscription_no', 'price_id','price_link_id','price_linked_id','rabais_id', 'payed_at', 'send_at', 'status','admin','present'];
 
     public function getRappelListAttribute()
     {
@@ -288,6 +288,15 @@ class Inscription extends Model
     public function getListRappelAttribute()
     {
         return $this->group_id > 0 ? $this->group_rappels : $this->rappels;
+    }
+
+    public function getLinkedInscriptionsAttribute()
+    {
+        if(isset($this->price_link_id)){
+            return $this->inscrit->inscriptions->whereIn('colloque_id',$this->price_link->colloques->pluck('id')->all());
+        }
+
+        return null;
     }
 
     public function getNameInscriptionAttribute()

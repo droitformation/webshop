@@ -64,9 +64,5 @@ return [
 
    'qrcode' => [
 		'key' => '82Ic5P8O017X15dWdO1F2EfSWQ'
-	],
-
-    'debounce' => [
-        'api' => env('DEBOUNCE_API'),
-    ],
+	]
 ];

@@ -217,17 +217,19 @@ class ObjectFactory
             'type'        => 'choix',// 'checkbox','choix','text'
         ]);
 
-        factory(\App\Droit\Option\Entities\OptionGroupe::class)->create([
+        $groupe1 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create([
             'colloque_id' => $colloque->id,
             'option_id'   => $option->id,
             'text'        => 'Choix 1',
         ]);
 
-        factory(\App\Droit\Option\Entities\OptionGroupe::class)->create([
+        $groupe2 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create([
             'colloque_id' => $colloque->id,
             'option_id'   => $option->id,
             'text'        => 'Choix 2',
         ]);
+
+        return $option;
     }
 
     public function product($nbr = null)

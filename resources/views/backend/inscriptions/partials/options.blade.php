@@ -10,7 +10,7 @@
             @if($input == 'checkbox')
                 @foreach($options as $i => $option)
                     <div class="form-group type-choix">
-                        <input type="checkbox" class="option-input" name="colloque[{{ $colloque->id }}][options][{{ $index ?? 0 }}][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
+                        <input type="checkbox" class="option-input" name="colloques[{{ $colloque->id }}][options][{{ $index ?? 0 }}][]" value="{{ $option->id }}" /> &nbsp;{{ $option->title }}
                     </div>
                 @endforeach
             @endif
@@ -20,7 +20,7 @@
                     <div class="form-group type-choix">
                         @foreach($options as $option)
                             <label>{{ $option->title }}</label>
-                            <textarea class="form-control text-input" name="colloque[{{ $colloque->id }}][options][{{ $index ?? 0 }}][][{{ $option->id }}]"></textarea>
+                            <textarea class="form-control text-input" name="colloques[{{ $colloque->id }}][options][{{ $index ?? 0 }}][][{{ $option->id }}]"></textarea>
                         @endforeach
                     </div>
                 @endforeach
@@ -35,7 +35,7 @@
                             @foreach($option->groupe as $groupe)
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" required class="group-input" name="colloque[{{ $colloque->id }}][groupes][{{ $index ?? 0 }}][{{ $option->id }}]" value="{{ $groupe->id }}">{{ $groupe->text }}
+                                        <input type="radio" required class="group-input" name="colloques[{{ $colloque->id }}][groupes][{{ $index ?? 0 }}][{{ $option->id }}]" value="{{ $groupe->id }}">{{ $groupe->text }}
                                     </label>
                                 </div>
                             @endforeach
