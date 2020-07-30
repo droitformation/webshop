@@ -351,3 +351,16 @@ function getLinkId($data){
 
     return null;
 }
+
+/*
+ * For new implementation
+ * we pass only the string price_link_id:1 or price_id:621
+ * */
+function isPriceLink($price_string){
+    return (strpos($price_string, 'price_link_id:') !== false);
+}
+
+function getPriceId($price_string){
+    $pieces = explode(':',$price_string);
+    return $pieces[1];
+}

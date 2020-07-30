@@ -16,13 +16,36 @@ class Register
 
     public function multiple($data)
     {
-        $prepared = collect($data['participant'])->map(function ($participant, $index) use ($data) {
-            return [
-                'email'    => $data['email'][$index],
-                'price_id' => $data['price_id'][$index],
-                'price_linked_id' => isLinkedPrice($data['price_id'][$index])
-            ];
+        $participants = collect($data['participant'])->map(function ($participant, $index) use ($data) {
+
+            $part['name']  = $data['name'][$index];
+            $part['email'] = $data['email'][$index];
+            $part['colloques'] = $this->getColloques($data['price_id'][$index]);
+            $part += $this->convertPrices($data['price_id'][$index]);
+
+            return $part;
         });
+    }
+
+    public function getColloques($price)
+    {
+        if(!isPriceLink($price)){
+            return [$this->data['colloque_id']];
+        }
+
+        return $this->data['colloque_id'];
+    }
+
+    /*
+     * test for type of price
+     * */
+    public function convertPrices($price)
+    {
+        return array_filter([
+            'price_id'        => !isPriceLink($price) ? getPriceId($price) : null,
+            'price_link_id'   => isPriceLink($price)? getPriceId($price) : null,
+            'price_linked_id' => isPriceLink($price)? getPriceId($price) : null,
+        ]);
     }
 
     public function prepare($data)
