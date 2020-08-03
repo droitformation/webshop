@@ -1,31 +1,43 @@
 <template>
     <div>
+
         <p><a class="btn btn-sm btn-info" @click="add"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
 
-        <div v-for="participant in participants">
-            <fieldset class="field_clone">
-                <div class="form-group">
-                    <label>Nom du participant</label>
-                    <input name="participant[]" v-model="participant.email" required class="form-control participant-input" value="" type="text">
-                    <p class="text-muted">Inscrire "prenom, nom"</p>
-                </div>
+        <form id="multiplpeForm" :action="url + path" method="post">
 
-                <div class="form-group">
-                    <label>Email (lier à un compte)</label>
-                    <input name="email[]" class="form-control" value="" type="text">
-                </div>
+            <input type="hidden" name="_token" :value="_token">
+            <input type="hidden" name="colloque_id" :value="colloque.id">
+            <input type="hidden" name="user_id" :value="user_id">
+            <input type="hidden" name="type" :value="form">
 
-                <option-link
-                        :optionLinkValidate="inValidation" @validated="handleValidated"
+            <div v-for="(participant,participant_id) in participants">
+                <fieldset class="field_clone">
+                    <div class="form-group">
+                        <label>Nom du participant</label>
+                        <input name="participant[]" v-model="participant.name" required class="form-control participant-input" value="" type="text">
+                        <p class="text-muted">Inscrire "prenom, nom"</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email (lier à un compte)</label>
+                        <input name="email[]" class="form-control" v-model="participant.email" value="" type="text">
+                    </div>
+
+                    <option-link
                         :form="form"
+                        :participant_id="participant_id"
                         :colloque="colloque"
                         :prices="prices"
                         :pricelinks="pricelinks"></option-link>
-            </fieldset>
-        </div>
+                </fieldset>
+            </div>
+        </form>
+
+        {{ formData ? unserialize(formData) : formData }}
 
         <div class="clearfix"></div><br/>
-        <button class="btn btn-danger" id="submitAll" @click="validate($event)" type="submit">Inscrire</button>
+
+        <button class="btn btn-danger" id="submitAll" @click="validate($event)" type="button">Inscrire</button>
     </div>
 </template>
 
@@ -33,11 +45,17 @@
     import OptionLink from './OptionLink.vue';
 
     export default {
-        props: ['colloque','prices','pricelinks','form'],
+        props: ['colloque','prices','pricelinks','form','_token','participant_id','user_id'],
         data() {
             return {
-                participants:[{'email' : ''}],
+                participants:[{
+                    'name' : '',
+                    'email' : '',
+                }],
                 inValidation:false,
+                formData:null,
+                path: 'admin/inscription',
+                url: location.protocol + "//" + location.host+"/",
             }
         },
         components:{
@@ -47,15 +65,37 @@
         watch: {},
         methods: {
             add(){
-                this.participants.push({'email' : ''});
+                this.participants.push({
+                    'name' : '',
+                    'email' : '',
+                    'colloques' : [],
+                    'options' : [],
+                });
             },
             validate(event){
                 this.inValidation = true;
 
-                //event.preventDefault();
+                let valid = $("#multiplpeForm").valid();
+
+                if(valid){
+                    $('#multiplpeForm').submit();
+
+                    axios.post(this.url + this.path,formData).then(function (response) {
+                        console.log(response.data);
+                    }).catch(function (error) { console.log(error);});
+                }
             },
             handleValidated(event){
                 //alert('ok ' + event);
+            },
+            unserialize: function(serialize) {
+                let obj = {};
+                var serialize = serialize.split('&');
+                for (let i = 0; i < serialize.length; i++) {
+                    var thisItem = serialize[i].split('=');
+                    obj[decodeURIComponent(thisItem[0])] = decodeURIComponent(thisItem[1]);
+                };
+                return obj;
             }
         }
     }

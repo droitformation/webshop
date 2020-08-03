@@ -5826,21 +5826,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['colloque', 'prices', 'pricelinks', 'colloques', 'form', 'optionLinkValidate'],
+  props: ['colloque', 'prices', 'pricelinks', 'participant_id', 'form'],
   components: {
     'option-list': _OptionList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -5848,43 +5836,52 @@ __webpack_require__.r(__webpack_exports__);
     return {
       options: [],
       priceoptions: [],
-      chosed: false,
-      linked: '',
-      normal: '',
-      isValid: false,
-      typeform: this.form == 'multiple' ? 'multiple' : 'simple'
+      choose: false,
+      type: 'normal',
+      prix: null,
+      isValid: false // typeform: this.form == 'multiple' ? 'multiple' : 'simple'
+
     };
   },
-  mounted: function mounted() {
-    this.getAll();
+  mounted: function mounted() {// this.getAll();
   },
   computed: {
-    inValidation: function inValidation() {
-      return this.optionLinkValidate;
-    }
+    /*   inValidation () {
+           return this.optionLinkValidate
+       }*/
   },
   watch: {
-    linked: function linked(id) {
-      this.getOptions(id);
+    prix: function prix(value) {
+      this.getOptions();
     }
   },
   methods: {
-    show: function show() {
-      this.linked = '';
-      this.normal = '';
-      $('div[class="price-select"]').show();
-      this.chosed = false;
-    },
-    getOptions: function getOptions(id) {
+    show: function show() {},
+    getOptions: function getOptions() {
       var self = this;
-      axios.get('/vue/priceoptions/' + id + '/' + this.colloque.id, {}).then(function (response) {
+      axios.post('/vue/options', {
+        price: this.prix
+      }).then(function (response) {
         self.priceoptions = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    select: function select() {
-      this.chosed = true;
+
+    /*   getOptions(id,type){
+           var self = this;
+           axios.get('/vue/priceoptions/' + id + '/' + type,{}).then(function (response) {
+               self.priceoptions = response.data;
+           }).catch(function (error) { console.log(error);});
+       },*/
+    select: function select($event) {
+      console.log($event.target.value);
+
+      if ($event.target.options.selectedIndex > -1) {
+        var theTarget = $event.target.options[$event.target.options.selectedIndex].dataset;
+        this.type = theTarget.type;
+        console.log(this.type);
+      }
     },
     getAll: function getAll() {
       var self = this;
@@ -5895,43 +5892,41 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     validate: function validate(event) {
-      this.makeValidation = true;
-
-      if (!this.linked && !this.normal) {
-        event.preventDefault();
-        alert('Merci de choisir un prix');
-      }
-
-      if (!this.isValid) {
-        event.preventDefault();
-        alert('Merci de choisir une option');
-      }
-    },
-    handleValidated: function handleValidated(event) {
-      var dataValidation = [];
-      this.isValid = event;
-
-      if (this.linked.length) {
-        dataValidation.push(this.linked);
-      }
-
-      if (this.normal.length) {
-        dataValidation.push(this.normal);
-      }
-
-      if (this.isValid) {
-        dataValidation.push(this.normal);
-      }
-
-      console.log(dataValidation);
-
-      if (dataValidation.length === 3) {
-        this.$emit('validated', true);
-      } else {
-        // alert('Merci de choisir un prix et les options');
-        this.$emit('validated', false);
-      }
+      alert('validation');
     }
+    /*      validate(event){
+              this.makeValidation = true;
+               if(!this.linked && !this.normal){
+                  event.preventDefault();
+                  alert('Merci de choisir un prix');
+              }
+               if(!this.isValid){
+                  event.preventDefault();
+                  alert('Merci de choisir une option');
+              }
+          },
+          handleValidated(event){
+               let dataValidation = [];
+              this.isValid = event;
+               if(this.linked.length){
+                  dataValidation.push(this.linked);
+              }
+               if(this.normal.length){
+                  dataValidation.push(this.normal);
+              }
+               if(this.isValid){
+                  dataValidation.push(this.normal);
+              }
+               console.log(dataValidation);
+               if(dataValidation.length === 3){
+                  this.$emit('validated',true);
+              }
+              else{
+                 // alert('Merci de choisir un prix et les options');
+                  this.$emit('validated',false);
+              }
+           }*/
+
   }
 });
 
@@ -5973,7 +5968,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['options', 'colloque', 'type', 'typeform'],
+  props: ['options', 'colloque', 'type', 'form', 'participant_id'],
   data: function data() {
     return {
       isValide: false
@@ -5988,19 +5983,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    inValidation: function inValidation() {
-      return this.optionListValidation;
+    inValidation: function inValidation() {//return this.optionListValidation;
     }
   },
   methods: {
     checkbox: function checkbox(index) {
-      return this.isValide == 'multiple' ? 'colloque[' + this.colloque.id + '][][options][0][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
+      return this.form == 'multiple' ? 'colloque[' + this.colloque.id + '][options][' + this.participant_id + '][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
     },
     radio: function radio(option) {
-      return this.isValide == 'multiple' ? 'colloque[' + this.colloque.id + '][][groupes][0][' + option.id + ']' : 'colloque[' + this.colloque.id + '][groupes][' + option.id + ']';
+      return this.form == 'multiple' ? 'colloque[' + this.colloque.id + '][groupes][' + this.participant_id + '][' + option.id + ']' : 'colloque[' + this.colloque.id + '][groupes][' + option.id + ']';
     },
     textarea: function textarea(option) {
-      return this.isValide == 'multiple' ? 'colloque[' + this.colloque.id + '][][options][0][][' + option.id + ']' : 'colloque[' + this.colloque.id + '][options][][' + option.id + ']';
+      return this.form == 'multiple' ? 'colloque[' + this.colloque.id + '][options][' + this.participant_id + '][][' + option.id + ']' : 'colloque[' + this.colloque.id + '][options][][' + option.id + ']';
     },
     validate: function validate() {
       var $radios = $('div.group-choix');
@@ -6143,15 +6137,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['colloque', 'prices', 'pricelinks', 'form'],
+  props: ['colloque', 'prices', 'pricelinks', 'form', '_token', 'participant_id', 'user_id'],
   data: function data() {
     return {
       participants: [{
+        'name': '',
         'email': ''
       }],
-      inValidation: false
+      inValidation: false,
+      formData: null,
+      path: 'admin/inscription',
+      url: location.protocol + "//" + location.host + "/"
     };
   },
   components: {
@@ -6162,13 +6172,38 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     add: function add() {
       this.participants.push({
-        'email': ''
+        'name': '',
+        'email': '',
+        'colloques': [],
+        'options': []
       });
     },
     validate: function validate(event) {
-      this.inValidation = true; //event.preventDefault();
+      this.inValidation = true;
+      var valid = $("#multiplpeForm").valid();
+
+      if (valid) {
+        $('#multiplpeForm').submit();
+        axios.post(this.url + this.path, formData).then(function (response) {
+          console.log(response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     handleValidated: function handleValidated(event) {//alert('ok ' + event);
+    },
+    unserialize: function unserialize(serialize) {
+      var obj = {};
+      var serialize = serialize.split('&');
+
+      for (var i = 0; i < serialize.length; i++) {
+        var thisItem = serialize[i].split('=');
+        obj[decodeURIComponent(thisItem[0])] = decodeURIComponent(thisItem[1]);
+      }
+
+      ;
+      return obj;
     }
   }
 });
@@ -9325,7 +9360,7 @@ return Promise$1;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.15';
+  var VERSION = '4.17.19';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -13032,8 +13067,21 @@ return Promise$1;
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
+      if (iteratees.length) {
+        iteratees = arrayMap(iteratees, function(iteratee) {
+          if (isArray(iteratee)) {
+            return function(value) {
+              return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
+            }
+          }
+          return iteratee;
+        });
+      } else {
+        iteratees = [identity];
+      }
+
       var index = -1;
-      iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
+      iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 
       var result = baseMap(collection, function(value, key, collection) {
         var criteria = arrayMap(iteratees, function(iteratee) {
@@ -13290,6 +13338,10 @@ return Promise$1;
         var key = toKey(path[index]),
             newValue = value;
 
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+          return object;
+        }
+
         if (index != lastIndex) {
           var objValue = nested[key];
           newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -13442,11 +13494,14 @@ return Promise$1;
      *  into `array`.
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
-      value = iteratee(value);
-
       var low = 0,
-          high = array == null ? 0 : array.length,
-          valIsNaN = value !== value,
+          high = array == null ? 0 : array.length;
+      if (high === 0) {
+        return 0;
+      }
+
+      value = iteratee(value);
+      var valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
           valIsUndefined = value === undefined;
@@ -14931,10 +14986,11 @@ return Promise$1;
       if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
         return false;
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(array);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var arrStacked = stack.get(array);
+      var othStacked = stack.get(other);
+      if (arrStacked && othStacked) {
+        return arrStacked == other && othStacked == array;
       }
       var index = -1,
           result = true,
@@ -15096,10 +15152,11 @@ return Promise$1;
           return false;
         }
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(object);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var objStacked = stack.get(object);
+      var othStacked = stack.get(other);
+      if (objStacked && othStacked) {
+        return objStacked == other && othStacked == object;
       }
       var result = true;
       stack.set(object, other);
@@ -18480,6 +18537,10 @@ return Promise$1;
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
      * // => objects for ['barney']
+     *
+     * // Combining several predicates using `_.overEvery` or `_.overSome`.
+     * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
+     * // => objects for ['fred', 'barney']
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -19229,15 +19290,15 @@ return Promise$1;
      * var users = [
      *   { 'user': 'fred',   'age': 48 },
      *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 40 },
+     *   { 'user': 'fred',   'age': 30 },
      *   { 'user': 'barney', 'age': 34 }
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -24112,11 +24173,11 @@ return Promise$1;
 
       // Use a sourceURL for easier debugging.
       // The sourceURL gets injected into the source that's eval-ed, so be careful
-      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
-      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
+      // to normalize all kinds of whitespace, so e.g. newlines (and unicode versions of it) can't sneak in
+      // and escape the comment, thus injecting code that gets evaled.
       var sourceURL = '//# sourceURL=' +
         (hasOwnProperty.call(options, 'sourceURL')
-          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
+          ? (options.sourceURL + '').replace(/\s/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -24149,8 +24210,6 @@ return Promise$1;
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
-      // Like with sourceURL, we take care to not check the option's prototype,
-      // as this configuration is a code injection vector.
       var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
@@ -24857,6 +24916,9 @@ return Promise$1;
      * values against any array or object value, respectively. See `_.isEqual`
      * for a list of supported value comparisons.
      *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
+     *
      * @static
      * @memberOf _
      * @since 3.0.0
@@ -24872,6 +24934,10 @@ return Promise$1;
      *
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
+     *
+     * // Checking for several possible values
+     * _.filter(users, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
@@ -24885,6 +24951,9 @@ return Promise$1;
      * **Note:** Partial comparisons will match empty array and empty object
      * `srcValue` values against any array or object value, respectively. See
      * `_.isEqual` for a list of supported value comparisons.
+     *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
      *
      * @static
      * @memberOf _
@@ -24902,6 +24971,10 @@ return Promise$1;
      *
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
+     *
+     * // Checking for several possible values
+     * _.filter(users, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
@@ -25125,6 +25198,10 @@ return Promise$1;
      * Creates a function that checks if **all** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -25151,6 +25228,10 @@ return Promise$1;
      * Creates a function that checks if **any** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -25170,6 +25251,9 @@ return Promise$1;
      *
      * func(NaN);
      * // => false
+     *
+     * var matchesFunc = _.overSome([{ 'a': 1 }, { 'a': 2 }])
+     * var matchesPropertyFunc = _.overSome([['a', 1], ['a', 2]])
      */
     var overSome = createOver(arraySome);
 
@@ -40868,201 +40952,94 @@ var render = function() {
     "div",
     [
       _c("h4", [_vm._v("Choix du prix applicable")]),
-      _vm._v(
-        "\n    in options validation " + _vm._s(_vm.inValidation) + "\n    "
-      ),
+      _vm._v(" "),
       _c("div", { staticClass: "list_prices" }, [
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.linked,
-                expression: "!linked"
-              }
-            ],
-            staticClass: "price-select"
-          },
-          [
-            _vm.prices.length != 0
-              ? _c("div", { staticClass: "form-group" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.normal,
-                          expression: "normal"
-                        }
-                      ],
-                      staticClass: "form-control select-price",
-                      attrs: { name: "price_id" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.normal = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                          _vm.select
-                        ]
+        _c("div", { staticClass: "price-select" }, [
+          _vm.prices.length != 0
+            ? _c("div", { staticClass: "form-group" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.prix,
+                        expression: "prix"
                       }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [_vm._v("Choix")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.prices, function(price) {
-                        return _c("option", { domProps: { value: price.id } }, [
-                          _vm._v(
-                            _vm._s(price.description) +
-                              " | " +
-                              _vm._s(price.price) +
-                              " CHF"
-                          )
-                        ])
-                      })
                     ],
-                    2
-                  )
-                ])
-              : _vm._e()
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: !_vm.normal,
-                expression: "!normal"
-              }
-            ],
-            staticClass: "price-select"
-          },
-          [
-            _vm.pricelinks.length != 0
-              ? _c("div", { staticClass: "form-group" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.linked,
-                          expression: "linked"
+                    staticClass: "form-control select-price",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.prix = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.select($event)
                         }
-                      ],
-                      staticClass: "form-control select-price",
-                      attrs: { name: "price_link_id" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.linked = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                          _vm.select
-                        ]
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [_vm._v("Choix")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.pricelinks, function(pricelink) {
-                        return _c(
-                          "option",
-                          { domProps: { value: pricelink.id } },
-                          [
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("Choix")]),
+                    _vm._v(" "),
+                    _vm._l(_vm.prices, function(price) {
+                      return _c("option", { domProps: { value: price } }, [
+                        _vm._v(
+                          _vm._s(price.description) +
+                            " | " +
+                            _vm._s(price.price) +
+                            " CHF"
+                        )
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.pricelinks, function(pricelink) {
+                      return _vm.pricelinks.length != 0
+                        ? _c("option", { domProps: { value: pricelink } }, [
                             _vm._v(
                               _vm._s(pricelink.description) +
                                 " | " +
                                 _vm._s(pricelink.price) +
                                 " CHF"
                             )
-                          ]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ])
-              : _vm._e()
-          ]
-        ),
-        _vm._v(" "),
-        _vm.chosed
-          ? _c(
-              "a",
-              {
-                staticClass: "text-danger",
-                attrs: { href: "#", type: "button" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.show($event)
-                  }
-                }
-              },
-              [_vm._v("changer")]
-            )
-          : _vm._e()
+                          ])
+                        : _vm._e()
+                    })
+                  ],
+                  2
+                )
+              ])
+            : _vm._e()
+        ])
       ]),
-      _vm._v(" "),
-      _c("h4", [_vm._v("Merci de préciser les options")]),
-      _vm._v(" "),
-      _c("option-list", {
-        attrs: {
-          typeform: _vm.typeform,
-          type: "normal",
-          colloque: _vm.colloque,
-          optionListValidation: _vm.inValidation,
-          options: _vm.options
-        },
-        on: { validated: _vm.handleValidated }
-      }),
       _vm._v(" "),
       _vm._l(_vm.priceoptions, function(priceoption) {
         return _vm.priceoptions.length != 0
           ? _c(
               "div",
               [
+                _c("h4", [_vm._v("Merci de préciser les options")]),
+                _vm._v(" "),
                 _c("option-list", {
                   attrs: {
-                    typeform: _vm.typeform,
-                    type: "link",
+                    participant_id: _vm.participant_id,
+                    form: _vm.form,
                     colloque: priceoption.colloque,
-                    optionListValidation: _vm.inValidation,
                     options: priceoption.options
-                  },
-                  on: { validated: _vm.handleValidated }
+                  }
                 })
               ],
               1
@@ -41070,23 +41047,30 @@ var render = function() {
           : _vm._e()
       }),
       _vm._v(" "),
-      _vm.form == "simple"
-        ? _c("div", { staticClass: "form-group" }, [
-            _c("br"),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger pull-right",
-                attrs: { id: "makeInscription", type: "submit" },
-                on: {
-                  click: function($event) {
-                    return _vm.validate($event)
-                  }
-                }
-              },
-              [_vm._v("Inscrire")]
-            )
-          ])
+      _vm.prix
+        ? _c(
+            "div",
+            [
+              _vm._l(_vm.prix.linked, function(colloque) {
+                return _c("input", {
+                  attrs: {
+                    name: "colloques[" + _vm.participant_id + "][]",
+                    type: "hidden"
+                  },
+                  domProps: { value: colloque.id }
+                })
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  name: "price_id[" + _vm.participant_id + "]",
+                  type: "hidden"
+                },
+                domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
+              })
+            ],
+            2
+          )
         : _vm._e()
     ],
     2
@@ -41097,13 +41081,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [_c("strong", [_vm._v("Prix normal")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [_c("strong", [_vm._v("Prix liés")])])
+    return _c("label", [_c("strong", [_vm._v("Prix")])])
   }
 ]
 render._withStripped = true
@@ -41304,114 +41282,152 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("p", [
-        _c(
-          "a",
-          { staticClass: "btn btn-sm btn-info", on: { click: _vm.add } },
-          [
-            _c("i", { staticClass: "fa fa-plus-circle" }),
-            _vm._v("  Ajouter un participant")
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.participants, function(participant) {
-        return _c("div", [
-          _c(
-            "fieldset",
-            { staticClass: "field_clone" },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Nom du participant")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: participant.email,
-                      expression: "participant.email"
-                    }
-                  ],
-                  staticClass: "form-control participant-input",
-                  attrs: {
-                    name: "participant[]",
-                    required: "",
-                    value: "",
-                    type: "text"
-                  },
-                  domProps: { value: participant.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+  return _c("div", [
+    _c("p", [
+      _c("a", { staticClass: "btn btn-sm btn-info", on: { click: _vm.add } }, [
+        _c("i", { staticClass: "fa fa-plus-circle" }),
+        _vm._v("  Ajouter un participant")
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: {
+          id: "multiplpeForm",
+          action: _vm.url + _vm.path,
+          method: "post"
+        }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm._token }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "colloque_id" },
+          domProps: { value: _vm.colloque.id }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "user_id" },
+          domProps: { value: _vm.user_id }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "type" },
+          domProps: { value: _vm.form }
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.participants, function(participant, participant_id) {
+          return _c("div", [
+            _c(
+              "fieldset",
+              { staticClass: "field_clone" },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Nom du participant")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: participant.name,
+                        expression: "participant.name"
                       }
-                      _vm.$set(participant, "email", $event.target.value)
+                    ],
+                    staticClass: "form-control participant-input",
+                    attrs: {
+                      name: "participant[]",
+                      required: "",
+                      value: "",
+                      type: "text"
+                    },
+                    domProps: { value: participant.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(participant, "name", $event.target.value)
+                      }
                     }
-                  }
-                }),
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-muted" }, [
+                    _vm._v('Inscrire "prenom, nom"')
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("p", { staticClass: "text-muted" }, [
-                  _vm._v('Inscrire "prenom, nom"')
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(0, true),
-              _vm._v(" "),
-              _c("option-link", {
-                attrs: {
-                  optionLinkValidate: _vm.inValidation,
-                  form: _vm.form,
-                  colloque: _vm.colloque,
-                  prices: _vm.prices,
-                  pricelinks: _vm.pricelinks
-                },
-                on: { validated: _vm.handleValidated }
-              })
-            ],
-            1
-          )
-        ])
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "clearfix" }),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger",
-          attrs: { id: "submitAll", type: "submit" },
-          on: {
-            click: function($event) {
-              return _vm.validate($event)
-            }
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Email (lier à un compte)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: participant.email,
+                        expression: "participant.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "email[]", value: "", type: "text" },
+                    domProps: { value: participant.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(participant, "email", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("option-link", {
+                  attrs: {
+                    form: _vm.form,
+                    participant_id: participant_id,
+                    colloque: _vm.colloque,
+                    prices: _vm.prices,
+                    pricelinks: _vm.pricelinks
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(
+      "\n\n    " +
+        _vm._s(_vm.formData ? _vm.unserialize(_vm.formData) : _vm.formData) +
+        "\n\n    "
+    ),
+    _c("div", { staticClass: "clearfix" }),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-danger",
+        attrs: { id: "submitAll", type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.validate($event)
           }
-        },
-        [_vm._v("Inscrire")]
-      )
-    ],
-    2
-  )
+        }
+      },
+      [_vm._v("Inscrire")]
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Email (lier à un compte)")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { name: "email[]", value: "", type: "text" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

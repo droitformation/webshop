@@ -17,9 +17,11 @@
 
                 <form id="formInscription" class="validate-form" action="{{ url('admin/inscription') }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                </form>
+
                     <h4><strong>Colloque:</strong> {{ $colloque->titre }}</h4>
                     {!! isset($form) ? $form : '' !!}
-                </form>
+
 
             </div>
         </div>

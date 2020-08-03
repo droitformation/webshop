@@ -35,11 +35,37 @@ class OptionController extends Controller {
         return response()->json($colloque->option_display);
     }
 
-    public function priceoptions($price_link_id,$colloque_id)
+    public function options(Request $request)
+    {
+        $colloques = $this->colloque->getById(collect($request->input('price.linked'))->pluck('id')->all());
+        $options   = $colloques->map(function ($colloque) {
+            return [
+                'colloque' => ['id' => $colloque->id, 'titre' => $colloque->titre],
+                'options'  => $colloque->option_display
+            ];
+        });
+
+        return response()->json($options);
+    }
+
+/*    public function priceoptions($colloque)
+    {
+        $colloque = $this->colloque->find($colloque);
+
+        $options   = collect([$colloque])->map(function ($colloque) {
+            return [
+                'colloque' => ['id' => $colloque->id, 'titre' => $colloque->titre],
+                'options'  => $colloque->option_display
+            ];
+        });
+
+        return response()->json($options);
+    }*/
+
+    public function pricelinkoptions($price_link_id)
     {
         $price_link = $this->pricelink->find($price_link_id);
-        $colloques  = $price_link->colloques->whereNotIn('id',[$colloque_id]);
-        $options    = $colloques->map(function ($colloque) {
+        $options    = $price_link->colloques->map(function ($colloque) {
             return [
                 'colloque' => ['id' => $colloque->id, 'titre' => $colloque->titre],
                 'options'  => $colloque->option_display

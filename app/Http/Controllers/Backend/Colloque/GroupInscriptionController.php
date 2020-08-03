@@ -117,4 +117,12 @@ class GroupInscriptionController extends Controller
 
         return redirect()->back();
     }
+
+    public function participant(Request $request)
+    {
+        echo '<pre>';
+        print_r($request->all());
+        echo '</pre>';
+        exit;
+    }
 }

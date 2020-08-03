@@ -640,7 +640,14 @@ Route::group(['prefix' => 'vue'], function () {
 
     Route::get('options/{colloque}','Api\OptionController@index');
     Route::post('colloqueoptions','Api\OptionController@colloqueoptions');
-    Route::get('priceoptions/{price_link_id}/{colloque_id}','Api\OptionController@priceoptions');
+
+   // Route::get('priceoptions/{colloque_id}','Api\OptionController@priceoptions');
+    //Route::get('pricelinkoptions/{price_link_id}','Api\OptionController@pricelinkoptions');
+
+    Route::post('options','Api\OptionController@options');
+
+    Route::post('participant','Backend\Colloque\GroupInscriptionController@participant');
+
     Route::post('option','Api\OptionController@store');
     Route::put('option/{id}','Api\OptionController@update');
     Route::delete('option/{id}','Api\OptionController@destroy');

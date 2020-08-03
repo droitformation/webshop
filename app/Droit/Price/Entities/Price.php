@@ -31,6 +31,11 @@ class Price extends Model{
           });
     }
 
+    public function colloque()
+    {
+        return $this->belongsTo('App\Droit\Colloque\Entities\Colloque');
+    }
+
     public function inscriptions()
     {
         return $this->hasMany('App\Droit\Inscription\Entities\Inscription');

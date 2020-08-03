@@ -26,7 +26,7 @@
 </template>
 <script>
     export default {
-        props: ['options', 'colloque', 'type', 'typeform'],
+        props: ['options', 'colloque', 'type', 'form', 'participant_id'],
         data() {
             return {
                 isValide:false,
@@ -42,18 +42,18 @@
         },
         computed: {
             inValidation () {
-                return this.optionListValidation
+                //return this.optionListValidation;
             }
         },
         methods: {
             checkbox: function (index) {
-                return this.isValide == 'multiple' ? 'colloque['+this.colloque.id+'][][options][0][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
+                return this.form == 'multiple' ? 'colloque['+this.colloque.id+'][options]['+this.participant_id+'][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
             },
             radio: function (option) {
-                return this.isValide == 'multiple' ? 'colloque['+this.colloque.id+'][][groupes][0]['+ option.id +']' : 'colloque['+this.colloque.id+'][groupes]['+ option.id +']';
+                return this.form == 'multiple' ? 'colloque['+this.colloque.id+'][groupes]['+this.participant_id+']['+ option.id +']' : 'colloque['+this.colloque.id+'][groupes]['+ option.id +']';
             },
             textarea:function(option){
-                return this.isValide == 'multiple' ? 'colloque['+this.colloque.id+'][][options][0][]['+ option.id +']' : 'colloque['+this.colloque.id+'][options][]['+ option.id +']' ;
+                return this.form == 'multiple' ? 'colloque['+this.colloque.id+'][options]['+this.participant_id+'][]['+ option.id +']' : 'colloque['+this.colloque.id+'][options][]['+ option.id +']' ;
             },
             validate: function () {
                 let $radios = $('div.group-choix');

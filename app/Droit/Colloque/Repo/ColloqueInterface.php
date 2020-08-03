@@ -7,6 +7,7 @@ interface ColloqueInterface {
     public function getAllAdmin($active = false, $archives = false);
     public function getArchive();
     public function getByYear($year);
+    public function getById($array);
     public function search($term);
     public function getYears();
     public function find($data);

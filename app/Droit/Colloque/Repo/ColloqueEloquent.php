@@ -22,6 +22,10 @@ class ColloqueEloquent implements ColloqueInterface{
         return $this->colloque->admin($active)->archives($archives)->orderBy('start_at','DESC')->get();
     }
 
+    public function getById($array){
+        return $this->colloque->with(['options'])->whereIn('id',$array)->get();
+    }
+
     public function search($term)
     {
         return $this->colloque->where('visible','=',1)

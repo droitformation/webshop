@@ -26,13 +26,15 @@
 <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
 <input name="type" value="{{ $type }}" type="hidden">
 
-{{--<participant
+<participant
         form="multiple"
+        user_id="{{ $user->id }}"
+        _token="{{ csrf_token() }}"
         :colloque="{{ $colloque }}"
         :prices="{{ $colloque->price_display }}"
-        :pricelinks="{{ $colloque->price_link_display }}"></participant>--}}
+        :pricelinks="{{ $colloque->price_link_display }}"></participant>
 
-<p><a href="#" class="btn btn-sm btn-info" id="cloneBtn"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
+{{--<p><a href="#" class="btn btn-sm btn-info" id="cloneBtn"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
 <div id="wrapper_clone">
     <fieldset class="field_clone" id="fieldset_clone" data-index="0">
 
@@ -62,7 +64,7 @@
         <div class="options-liste-box"></div>
 
     </fieldset>
-</div>
+</div>--}}
 
 <div class="form-group">
     <br><button id="makeInscription" class="btn btn-danger pull-right" type="submit">Inscrire</button>

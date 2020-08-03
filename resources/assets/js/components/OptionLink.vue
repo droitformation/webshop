@@ -2,43 +2,31 @@
     <div>
 
         <h4>Choix du prix applicable</h4>
-        in options validation {{ inValidation }}
+
         <div class="list_prices">
 
-            <div v-show="!linked" class="price-select">
+            <div class="price-select">
                 <div class="form-group" v-if="prices.length != 0">
-                    <label><strong>Prix normal</strong></label>
-                    <select name="price_id" class="form-control select-price" @change="select" v-model="normal">
+                    <label><strong>Prix</strong></label>
+                    <select class="form-control select-price" @change="select($event)" v-model="prix">
                         <option value="">Choix</option>
-                        <option v-for="price in prices" :value="price.id" >{{ price.description }} | {{ price.price }} CHF</option>
+                        <option v-for="price in prices" :value="price">{{ price.description }} | {{ price.price }} CHF</option>
+                        <option v-if="pricelinks.length != 0" v-for="pricelink in pricelinks" :value="pricelink">{{ pricelink.description }} | {{ pricelink.price }} CHF</option>
                     </select>
                 </div>
             </div>
-
-            <div v-show="!normal"  class="price-select">
-                <div class="form-group" v-if="pricelinks.length != 0">
-                    <label><strong>Prix liés</strong></label>
-                    <select name="price_link_id" class="form-control select-price" @change="select" v-model="linked">
-                        <option value="">Choix</option>
-                        <option v-for="pricelink in pricelinks" :value="pricelink.id" >{{ pricelink.description }} | {{ pricelink.price }} CHF</option>
-                    </select>
-                </div>
-            </div>
-
-            <a href="#" class="text-danger" @click.prevent="show" type="button" v-if="chosed">changer</a>
         </div>
-
-        <h4>Merci de préciser les options</h4>
-
-        <option-list :typeform="typeform" type="normal" :colloque="colloque" :optionListValidation="inValidation" @validated="handleValidated" :options="options"></option-list>
 
         <div v-if="priceoptions.length != 0" v-for="priceoption in priceoptions">
-            <option-list :typeform="typeform" type="link" :colloque="priceoption.colloque" :optionListValidation="inValidation" @validated="handleValidated" :options="priceoption.options"></option-list>
+            <h4>Merci de préciser les options</h4>
+            <option-list :participant_id="participant_id" :form="form" :colloque="priceoption.colloque" :options="priceoption.options"></option-list>
         </div>
 
-        <div class="form-group" v-if="form == 'simple'">
-            <br><button id="makeInscription" class="btn btn-danger pull-right" @click="validate($event)" type="submit">Inscrire</button>
+        <div v-if="prix">
+            <input v-for="colloque in prix.linked" :name="'colloques['+ participant_id +'][]'" type="hidden" :value="colloque.id">
+            <input :name="'price_id['+ participant_id +']'" :value="prix.genre+':'+prix.id" type="hidden">
         </div>
+
     </div>
 </template>
 <style>
@@ -50,7 +38,7 @@
     import OptionList from './OptionList.vue';
 
     export default {
-        props: ['colloque','prices','pricelinks','colloques','form','optionLinkValidate'],
+        props: ['colloque','prices','pricelinks','participant_id','form'],
         components:{
             'option-list' : OptionList
         },
@@ -58,42 +46,51 @@
             return {
                 options:[],
                 priceoptions:[],
-                chosed:false,
-                linked:'',
-                normal:'',
+                choose:false,
+                type:'normal',
+                prix:null,
                 isValid:false,
-                typeform: this.form == 'multiple' ? 'multiple' : 'simple'
+               // typeform: this.form == 'multiple' ? 'multiple' : 'simple'
             }
         },
         mounted: function () {
-            this.getAll();
+           // this.getAll();
         },
         computed: {
-            inValidation () {
+         /*   inValidation () {
                 return this.optionLinkValidate
-            }
+            }*/
         },
         watch: {
-            linked: function (id) {
-                this.getOptions(id);
+            prix: function (value) {
+                this.getOptions();
             },
         },
         methods: {
             show(){
-                this.linked = '';
-                this.normal = '';
 
-                $('div[class="price-select"]').show();
-                this.chosed = false;
             },
-            getOptions(id){
+            getOptions(){
                 var self = this;
-                axios.get('/vue/priceoptions/' + id + '/' + this.colloque.id, {}).then(function (response) {
+                axios.post('/vue/options',{
+                    price : this.prix
+                }).then(function (response) {
                     self.priceoptions = response.data;
                 }).catch(function (error) { console.log(error);});
             },
-            select(){
-                this.chosed = true;
+         /*   getOptions(id,type){
+                var self = this;
+                axios.get('/vue/priceoptions/' + id + '/' + type,{}).then(function (response) {
+                    self.priceoptions = response.data;
+                }).catch(function (error) { console.log(error);});
+            },*/
+            select($event){
+                console.log($event.target.value);
+                if ($event.target.options.selectedIndex > -1) {
+                    const theTarget = $event.target.options[$event.target.options.selectedIndex].dataset;
+                    this.type = theTarget.type
+                    console.log(this.type);
+                }
             },
             getAll:function(){
                 var self = this;
@@ -102,6 +99,9 @@
                 }).catch(function (error) { console.log(error);});
             },
             validate(event){
+                alert('validation');
+            }
+      /*      validate(event){
                 this.makeValidation = true;
 
                 if(!this.linked && !this.normal){
@@ -141,7 +141,7 @@
                     this.$emit('validated',false);
                 }
 
-            }
+            }*/
         }
     }
 </script>

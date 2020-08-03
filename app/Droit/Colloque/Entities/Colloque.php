@@ -202,17 +202,19 @@ class Colloque extends Model implements HasMedia
     {
         return $this->prices->groupBy('type')->flatten(1)->mapWithKeys_v2(function ($price) {
             return [$price->id => [
-                'id'             => $price->id,
-                'colloque_id'    => $price->colloque_id,
-                'description'    => $price->description,
-                'price'          => $price->price_cents,
-                'type'           => $price->type,
-                'main'           => $price->main ? 1 : null,
-                'remarque'       => $price->remarque,
-                'rang'           => $price->rang,
-                'occurrences'    => $price->occurrence_list,
-                'end_at'         => $price->end_at ? $price->end_at->format('Y-m-d') : null,
-                'state'          => false,
+                'id'          => $price->id,
+                'colloque_id' => $price->colloque_id,
+                'description' => $price->description,
+                'price'       => $price->price_cents,
+                'type'        => $price->type,
+                'main'        => $price->main ? 1 : null,
+                'remarque'    => $price->remarque,
+                'rang'        => $price->rang,
+                'occurrences' => $price->occurrence_list,
+                'end_at'      => $price->end_at ? $price->end_at->format('Y-m-d') : null,
+                'state'       => false,
+                'genre'       => 'price_id',
+                'linked'      => collect([['id' => $price->colloque->id, 'text' => $price->colloque->title]]),
             ]];
         });
     }
@@ -221,21 +223,20 @@ class Colloque extends Model implements HasMedia
     {
         return $this->price_link->groupBy('type')->flatten(1)->mapWithKeys_v2(function ($price) {
             return [$price->id => [
-                'id'             => $price->id,
-                'colloques'      => $price->colloques->map(function ($colloque, $key) {
-                                        return ['id' => $colloque->id, 'text' => $colloque->title];
-                                    })->values(),
-                'linked'         => $price->colloques->filter(function ($colloque) {
-                                    return $colloque->id != $this->id;
-                                })->map(function ($colloque, $key) {
+                'id'           => $price->id,
+                'colloques'    => $price->colloques->map(function ($colloque, $key) {
                                     return ['id' => $colloque->id, 'text' => $colloque->title];
                                 })->values(),
-                'description'    => $price->description,
-                'price'          => $price->price_cents,
-                'type'           => $price->type,
-                'remarque'       => $price->remarque,
-                'rang'           => $price->rang,
-                'state'          => false,
+                'linked'       => $price->colloques->map(function ($colloque, $key) {
+                                    return ['id' => $colloque->id, 'text' => $colloque->title];
+                                })->values(),
+                'description'  => $price->description,
+                'price'        => $price->price_cents,
+                'type'         => $price->type,
+                'remarque'     => $price->remarque,
+                'rang'         => $price->rang,
+                'genre'       => 'price_link_id',
+                'state'        => false,
             ]];
         });
     }

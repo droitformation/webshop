@@ -16,9 +16,9 @@ class Register
 
     public function multiple($data)
     {
-        $participants = collect($data['participant'])->map(function ($participant, $index) use ($data) {
+        return collect($data['participant'])->map(function ($participant, $index) use ($data) {
 
-            $part['name']  = $data['name'][$index];
+            $part['name']  = $data['participant'][$index];
             $part['email'] = $data['email'][$index];
             $part['colloques'] = $this->getColloques($data['price_id'][$index]);
             $part += $this->convertPrices($data['price_id'][$index]);

@@ -957,7 +957,12 @@ class InscriptionRegisterConverterTest extends TestCase
         ]);
 
         $register = new \App\Droit\Inscription\Entities\Register($data);
-        $actual = $register->prepare($data);
+        $actual = $register->multiple($data);
+
+        echo '<pre>';
+        print_r($actual);
+        echo '</pre>';
+        exit;
 
         $this->assertEquals($expected,$actual);
     }
