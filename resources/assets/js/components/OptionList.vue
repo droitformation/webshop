@@ -47,13 +47,13 @@
         },
         methods: {
             checkbox: function (index) {
-                return this.form == 'multiple' ? 'colloque['+this.colloque.id+'][options]['+this.participant_id+'][]' : 'colloque['+this.colloque.id+'][options]['+index+']' ;
+                return this.form == 'multiple' ? 'addons['+this.colloque.id+'][options]['+this.participant_id+'][]' : 'addons['+this.colloque.id+'][options]['+index+']' ;
             },
             radio: function (option) {
-                return this.form == 'multiple' ? 'colloque['+this.colloque.id+'][groupes]['+this.participant_id+']['+ option.id +']' : 'colloque['+this.colloque.id+'][groupes]['+ option.id +']';
+                return this.form == 'multiple' ? 'addons['+this.colloque.id+'][groupes]['+this.participant_id+']['+ option.id +']' : 'addons['+this.colloque.id+'][groupes]['+ option.id +']';
             },
             textarea:function(option){
-                return this.form == 'multiple' ? 'colloque['+this.colloque.id+'][options]['+this.participant_id+'][]['+ option.id +']' : 'colloque['+this.colloque.id+'][options][]['+ option.id +']' ;
+                return this.form == 'multiple' ? 'addons['+this.colloque.id+'][options]['+this.participant_id+'][]['+ option.id +']' : 'addons['+this.colloque.id+'][options][]['+ option.id +']' ;
             },
             validate: function () {
                 let $radios = $('div.group-choix');
