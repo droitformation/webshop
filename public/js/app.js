@@ -5826,6 +5826,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'participant_id', 'form'],
@@ -5839,24 +5840,16 @@ __webpack_require__.r(__webpack_exports__);
       choose: false,
       type: 'normal',
       prix: null,
-      isValid: false // typeform: this.form == 'multiple' ? 'multiple' : 'simple'
-
+      isValid: false
     };
   },
-  mounted: function mounted() {// this.getAll();
-  },
-  computed: {
-    /*   inValidation () {
-           return this.optionLinkValidate
-       }*/
-  },
+  mounted: function mounted() {},
   watch: {
     prix: function prix(value) {
       this.getOptions();
     }
   },
   methods: {
-    show: function show() {},
     getOptions: function getOptions() {
       var self = this;
       axios.post('/vue/options', {
@@ -5867,66 +5860,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-
-    /*   getOptions(id,type){
-           var self = this;
-           axios.get('/vue/priceoptions/' + id + '/' + type,{}).then(function (response) {
-               self.priceoptions = response.data;
-           }).catch(function (error) { console.log(error);});
-       },*/
     select: function select($event) {
       console.log($event.target.value);
 
       if ($event.target.options.selectedIndex > -1) {
         var theTarget = $event.target.options[$event.target.options.selectedIndex].dataset;
         this.type = theTarget.type;
-        console.log(this.type);
       }
-    },
-    getAll: function getAll() {
-      var self = this;
-      axios.get('/vue/options/' + this.colloque.id, {}).then(function (response) {
-        self.options = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    validate: function validate(event) {
-      alert('validation');
     }
-    /*      validate(event){
-              this.makeValidation = true;
-               if(!this.linked && !this.normal){
-                  event.preventDefault();
-                  alert('Merci de choisir un prix');
-              }
-               if(!this.isValid){
-                  event.preventDefault();
-                  alert('Merci de choisir une option');
-              }
-          },
-          handleValidated(event){
-               let dataValidation = [];
-              this.isValid = event;
-               if(this.linked.length){
-                  dataValidation.push(this.linked);
-              }
-               if(this.normal.length){
-                  dataValidation.push(this.normal);
-              }
-               if(this.isValid){
-                  dataValidation.push(this.normal);
-              }
-               console.log(dataValidation);
-               if(dataValidation.length === 3){
-                  this.$emit('validated',true);
-              }
-              else{
-                 // alert('Merci de choisir un prix et les options');
-                  this.$emit('validated',false);
-              }
-           }*/
-
   }
 });
 
@@ -5982,19 +5923,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  computed: {
-    inValidation: function inValidation() {//return this.optionListValidation;
-    }
-  },
+  computed: {},
   methods: {
     checkbox: function checkbox(index) {
-      return this.form == 'multiple' ? 'colloque[' + this.colloque.id + '][options][' + this.participant_id + '][]' : 'colloque[' + this.colloque.id + '][options][' + index + ']';
+      return this.form == 'multiple' ? 'addons[' + this.colloque.id + '][options][' + this.participant_id + '][]' : 'colloques[' + this.colloque.id + '][options][' + index + ']';
     },
     radio: function radio(option) {
-      return this.form == 'multiple' ? 'colloque[' + this.colloque.id + '][groupes][' + this.participant_id + '][' + option.id + ']' : 'colloque[' + this.colloque.id + '][groupes][' + option.id + ']';
+      return this.form == 'multiple' ? 'addons[' + this.colloque.id + '][groupes][' + this.participant_id + '][' + option.id + ']' : 'colloques[' + this.colloque.id + '][groupes][' + option.id + ']';
     },
     textarea: function textarea(option) {
-      return this.form == 'multiple' ? 'colloque[' + this.colloque.id + '][options][' + this.participant_id + '][][' + option.id + ']' : 'colloque[' + this.colloque.id + '][options][][' + option.id + ']';
+      return this.form == 'multiple' ? 'addons[' + this.colloque.id + '][options][' + this.participant_id + '][][' + option.id + ']' : 'colloques[' + this.colloque.id + '][options][][' + option.id + ']';
     },
     validate: function validate() {
       var $radios = $('div.group-choix');
@@ -6190,8 +6128,6 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error);
         });
       }
-    },
-    handleValidated: function handleValidated(event) {//alert('ok ' + event);
     },
     unserialize: function unserialize(serialize) {
       var obj = {};
@@ -7081,6 +7017,84 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/RegisterSimple.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/RegisterSimple.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _OptionLink_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OptionLink.vue */ "./resources/assets/js/components/OptionLink.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['colloque', 'prices', 'pricelinks', 'form', '_token', 'participant_id', 'user_id'],
+  data: function data() {
+    return {
+      formData: null,
+      path: 'admin/inscription',
+      url: location.protocol + "//" + location.host + "/"
+    };
+  },
+  components: {
+    'option-link': _OptionLink_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {},
+  methods: {
+    validate: function validate(event) {
+      this.inValidation = true;
+      var valid = $("#simpleForm").valid();
+      this.formData = $("#simpleForm").serialize();
+      axios.post(this.url + 'vue/participant', this.formData).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+
+      if (valid) {
+        $('#simpleForm').submit();
+      }
+    },
+    unserialize: function unserialize(serialize) {
+      var obj = {};
+      var serialize = serialize.split('&');
+
+      for (var i = 0; i < serialize.length; i++) {
+        var thisItem = serialize[i].split('=');
+        obj[decodeURIComponent(thisItem[0])] = decodeURIComponent(thisItem[1]);
+      }
+
+      ;
+      return obj;
     }
   }
 });
@@ -9360,7 +9374,7 @@ return Promise$1;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.19';
+  var VERSION = '4.17.15';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -13067,21 +13081,8 @@ return Promise$1;
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
-      if (iteratees.length) {
-        iteratees = arrayMap(iteratees, function(iteratee) {
-          if (isArray(iteratee)) {
-            return function(value) {
-              return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
-            }
-          }
-          return iteratee;
-        });
-      } else {
-        iteratees = [identity];
-      }
-
       var index = -1;
-      iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
+      iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
 
       var result = baseMap(collection, function(value, key, collection) {
         var criteria = arrayMap(iteratees, function(iteratee) {
@@ -13338,10 +13339,6 @@ return Promise$1;
         var key = toKey(path[index]),
             newValue = value;
 
-        if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
-          return object;
-        }
-
         if (index != lastIndex) {
           var objValue = nested[key];
           newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -13494,14 +13491,11 @@ return Promise$1;
      *  into `array`.
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
-      var low = 0,
-          high = array == null ? 0 : array.length;
-      if (high === 0) {
-        return 0;
-      }
-
       value = iteratee(value);
-      var valIsNaN = value !== value,
+
+      var low = 0,
+          high = array == null ? 0 : array.length,
+          valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
           valIsUndefined = value === undefined;
@@ -14986,11 +14980,10 @@ return Promise$1;
       if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
         return false;
       }
-      // Check that cyclic values are equal.
-      var arrStacked = stack.get(array);
-      var othStacked = stack.get(other);
-      if (arrStacked && othStacked) {
-        return arrStacked == other && othStacked == array;
+      // Assume cyclic values are equal.
+      var stacked = stack.get(array);
+      if (stacked && stack.get(other)) {
+        return stacked == other;
       }
       var index = -1,
           result = true,
@@ -15152,11 +15145,10 @@ return Promise$1;
           return false;
         }
       }
-      // Check that cyclic values are equal.
-      var objStacked = stack.get(object);
-      var othStacked = stack.get(other);
-      if (objStacked && othStacked) {
-        return objStacked == other && othStacked == object;
+      // Assume cyclic values are equal.
+      var stacked = stack.get(object);
+      if (stacked && stack.get(other)) {
+        return stacked == other;
       }
       var result = true;
       stack.set(object, other);
@@ -18537,10 +18529,6 @@ return Promise$1;
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
      * // => objects for ['barney']
-     *
-     * // Combining several predicates using `_.overEvery` or `_.overSome`.
-     * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
-     * // => objects for ['fred', 'barney']
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -19290,15 +19278,15 @@ return Promise$1;
      * var users = [
      *   { 'user': 'fred',   'age': 48 },
      *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 30 },
+     *   { 'user': 'fred',   'age': 40 },
      *   { 'user': 'barney', 'age': 34 }
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -24173,11 +24161,11 @@ return Promise$1;
 
       // Use a sourceURL for easier debugging.
       // The sourceURL gets injected into the source that's eval-ed, so be careful
-      // to normalize all kinds of whitespace, so e.g. newlines (and unicode versions of it) can't sneak in
-      // and escape the comment, thus injecting code that gets evaled.
+      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
+      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
       var sourceURL = '//# sourceURL=' +
         (hasOwnProperty.call(options, 'sourceURL')
-          ? (options.sourceURL + '').replace(/\s/g, ' ')
+          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -24210,6 +24198,8 @@ return Promise$1;
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
+      // Like with sourceURL, we take care to not check the option's prototype,
+      // as this configuration is a code injection vector.
       var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
@@ -24916,9 +24906,6 @@ return Promise$1;
      * values against any array or object value, respectively. See `_.isEqual`
      * for a list of supported value comparisons.
      *
-     * **Note:** Multiple values can be checked by combining several matchers
-     * using `_.overSome`
-     *
      * @static
      * @memberOf _
      * @since 3.0.0
@@ -24934,10 +24921,6 @@ return Promise$1;
      *
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
-     *
-     * // Checking for several possible values
-     * _.filter(users, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
-     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
@@ -24951,9 +24934,6 @@ return Promise$1;
      * **Note:** Partial comparisons will match empty array and empty object
      * `srcValue` values against any array or object value, respectively. See
      * `_.isEqual` for a list of supported value comparisons.
-     *
-     * **Note:** Multiple values can be checked by combining several matchers
-     * using `_.overSome`
      *
      * @static
      * @memberOf _
@@ -24971,10 +24951,6 @@ return Promise$1;
      *
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
-     *
-     * // Checking for several possible values
-     * _.filter(users, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
-     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
@@ -25198,10 +25174,6 @@ return Promise$1;
      * Creates a function that checks if **all** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
-     * Following shorthands are possible for providing predicates.
-     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
-     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
-     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -25228,10 +25200,6 @@ return Promise$1;
      * Creates a function that checks if **any** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
-     * Following shorthands are possible for providing predicates.
-     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
-     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
-     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -25251,9 +25219,6 @@ return Promise$1;
      *
      * func(NaN);
      * // => false
-     *
-     * var matchesFunc = _.overSome([{ 'a': 1 }, { 'a': 2 }])
-     * var matchesPropertyFunc = _.overSome([['a', 1], ['a', 2]])
      */
     var overSome = createOver(arraySome);
 
@@ -41052,22 +41017,33 @@ var render = function() {
             "div",
             [
               _vm._l(_vm.prix.linked, function(colloque) {
-                return _c("input", {
-                  attrs: {
-                    name: "colloques[" + _vm.participant_id + "][]",
-                    type: "hidden"
-                  },
-                  domProps: { value: colloque.id }
-                })
+                return _vm.form == "multiple"
+                  ? _c("input", {
+                      attrs: {
+                        name: "colloques[" + _vm.participant_id + "][]",
+                        type: "hidden"
+                      },
+                      domProps: { value: colloque.id }
+                    })
+                  : _vm._e()
               }),
               _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  name: "price_id[" + _vm.participant_id + "]",
-                  type: "hidden"
-                },
-                domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
-              })
+              _vm.form == "multiple"
+                ? _c("input", {
+                    attrs: {
+                      name: "price_id[" + _vm.participant_id + "]",
+                      type: "hidden"
+                    },
+                    domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.form == "simple"
+                ? _c("input", {
+                    attrs: { name: "price_id", type: "hidden" },
+                    domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
+                  })
+                : _vm._e()
             ],
             2
           )
@@ -43210,6 +43186,85 @@ var render = function() {
           : _vm._e()
       ])
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/RegisterSimple.vue?vue&type=template&id=e4a5aca8&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/RegisterSimple.vue?vue&type=template&id=e4a5aca8& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "form",
+      {
+        attrs: { id: "simpleForm", action: _vm.url + _vm.path, method: "post" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm._token }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "colloque_id" },
+          domProps: { value: _vm.colloque.id }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "user_id" },
+          domProps: { value: _vm.user_id }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "type" },
+          domProps: { value: _vm.form }
+        }),
+        _vm._v(" "),
+        _c("option-link", {
+          attrs: {
+            form: _vm.form,
+            colloque: _vm.colloque,
+            prices: _vm.prices,
+            pricelinks: _vm.pricelinks
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" }),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-danger",
+        attrs: { id: "submitAll", type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.validate($event)
+          }
+        }
+      },
+      [_vm._v("Inscrire")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -59474,6 +59529,7 @@ Vue.component('rabais', __webpack_require__(/*! ./components/Rabais.vue */ "./re
 Vue.component('tags', __webpack_require__(/*! ./components/Tags.vue */ "./resources/assets/js/components/Tags.vue")["default"]);
 Vue.component('option-link', __webpack_require__(/*! ./components/OptionLink.vue */ "./resources/assets/js/components/OptionLink.vue")["default"]);
 Vue.component('participant', __webpack_require__(/*! ./components/Participant.vue */ "./resources/assets/js/components/Participant.vue")["default"]);
+Vue.component('register-simple', __webpack_require__(/*! ./components/RegisterSimple.vue */ "./resources/assets/js/components/RegisterSimple.vue")["default"]);
 
 Vue.use(vue_drag_and_drop_list__WEBPACK_IMPORTED_MODULE_0___default.a);
 
@@ -62044,6 +62100,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Rappel_vue_vue_type_template_id_30f21966___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Rappel_vue_vue_type_template_id_30f21966___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/RegisterSimple.vue":
+/*!***********************************************************!*\
+  !*** ./resources/assets/js/components/RegisterSimple.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RegisterSimple_vue_vue_type_template_id_e4a5aca8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegisterSimple.vue?vue&type=template&id=e4a5aca8& */ "./resources/assets/js/components/RegisterSimple.vue?vue&type=template&id=e4a5aca8&");
+/* harmony import */ var _RegisterSimple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegisterSimple.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/RegisterSimple.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RegisterSimple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RegisterSimple_vue_vue_type_template_id_e4a5aca8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RegisterSimple_vue_vue_type_template_id_e4a5aca8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/RegisterSimple.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/RegisterSimple.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/assets/js/components/RegisterSimple.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterSimple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./RegisterSimple.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/RegisterSimple.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterSimple_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/RegisterSimple.vue?vue&type=template&id=e4a5aca8&":
+/*!******************************************************************************************!*\
+  !*** ./resources/assets/js/components/RegisterSimple.vue?vue&type=template&id=e4a5aca8& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterSimple_vue_vue_type_template_id_e4a5aca8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./RegisterSimple.vue?vue&type=template&id=e4a5aca8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/RegisterSimple.vue?vue&type=template&id=e4a5aca8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterSimple_vue_vue_type_template_id_e4a5aca8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterSimple_vue_vue_type_template_id_e4a5aca8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

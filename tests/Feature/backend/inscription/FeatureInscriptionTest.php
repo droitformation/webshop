@@ -93,6 +93,10 @@ class FeatureInscriptionTest extends TestCase
                 "price_link_id:".$prices[0],
                 "price_link_id:".$prices[0]
             ],
+            'colloques' => [
+                [$colloque->id],
+                [$colloque->id]
+            ]
         ];
 
         $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->make();

@@ -48,7 +48,6 @@ class RabaisTest extends TestCase
             'colloques' => [
                 $colloque->id => [
                     'options' => [$colloque->options->first()->id],
-                    //'options' => [0 => $colloque->options->first()->id],
                 ]
             ],
             'rabais_id'      => $rabais->id,
@@ -73,39 +72,48 @@ class RabaisTest extends TestCase
 
     public function testMultipleInscriptionRabais()
     {
-        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create([
-            'value' => 10
-        ]);
+        $make       = new \tests\factories\ObjectFactory();
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
 
-        // Create colloque
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-        $person   = $make->makeUser();
+        $price1 = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10]);
 
-        $prices   = $colloque->prices->pluck('id')->all();
-        $options  = $colloque->options->pluck('id')->all();
+        $price_rabais = 2 * ($price1->price_cents - $rabais->value);
 
-        $price        = $colloque->prices->first()->price_cents;
-        $price_rabais = 2 * ($price - $rabais->value);
+        $rabais = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 10]);
 
         $data = [
-            'colloque_id' => $colloque->id ,
-            'user_id'     => $person->id,
-            'participant' => ['Cindy Leschaud', 'Coralie Ahmetaj'],
-            'email'       => ['cindy.leschaud@gmail.com', 'coralie.ahmetaj@hotmail.com'],
-            'prices'      => [['price_id' => $prices[0]], ['price_id' => $prices[0]]],
-            'rabais_id'   => [$rabais->id, $rabais->id],
-            'options'     => [0 => [$options[0], [148 => 'psum odolr amet']], 1 => [$options[0], [148 => 'lorexm ipsu']]],
-            'groupes'     => [[147 => 44], [147 => 45]]
+            'colloque_id'    => $colloque1->id,
+            'user_id'        => 710,
+            'rabais_id'      => $rabais->id,
+            'reference_no'   => '21345',
+            'transaction_no' => '6543',
+            'participants'   => [
+                [
+                    'participant' => 'Marc,Leschaud',
+                    'email'   => 'Marc.Leschaud@romandie.ch',
+                    'options' => [0   => 259],
+                    'groupes' => [268 => 150],
+                    "price_id" => $price1->id
+                ],
+                [
+                    'participant' => 'Cindy,Leschaud',
+                    'email'    => 'cindy.leschaud@gmail.com',
+                    'options'  => [0 => 258],
+                    'groupes'  => [268 => 151],
+                    "price_id" => $price1->id
+                ]
+            ]
         ];
 
         $worker = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
         $worker->register($data);
 
         $this->assertDatabaseHas('colloque_inscriptions', [
-            'colloque_id' => $colloque->id,
+            'colloque_id' => $colloque1->id,
             'user_id'     => null,
-            'price_id'    => $prices[0],
+            'price_id'    => $price1->id,
             'rabais_id'   => $rabais->id,
         ]);
 

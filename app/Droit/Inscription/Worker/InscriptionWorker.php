@@ -33,21 +33,13 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         // create new group
         $group = $this->group->create(['colloque_id' => $colloque_id, 'user_id' => $user_id]);
 
-        collect($data['participant'])->map(function ($register,$key) use ($data) {
+        collect($data['participants'])->map(function ($participant,$key) use ($group,$data) {
 
-            $linked = isset($data['price_linked_id'][$key]) ? $data['price_linked_id'][$key] : [];
-
-            return array_filter([
-                'participant'     => $data['participant'][$key],
-                'email'           => $data['email'][$key],
-                'rabais_id'       => isset($data['rabais_id'][$key]) ? $data['rabais_id'][$key] : null,
-                'occurrences'     => isset($data['occurrences'][$key]) ? $data['occurrences'][$key] : null,
-                'options'         => isset($data['options'][$key]) ? $data['options'][$key] : null,
-                'groupes'         => isset($data['groupes'][$key]) ? $data['groupes'][$key] : null,
-            ] + $data['prices'][$key] + $linked);
-
-        })->each(function ($item) use ($group) {
-            $data = ['group_id'=> $group->id, 'colloque_id' => $group->colloque_id] + $item;
+            $data = array_filter([
+                'group_id'    => $group->id,
+                'colloque_id' => $group->colloque_id,
+                'rabais_id'   => $data['rabais_id'] ?? null
+            ]) + $participant;
 
             $this->inscription($data);
         });

@@ -85,9 +85,6 @@
                     }).catch(function (error) { console.log(error);});
                 }
             },
-            handleValidated(event){
-                //alert('ok ' + event);
-            },
             unserialize: function(serialize) {
                 let obj = {};
                 var serialize = serialize.split('&');

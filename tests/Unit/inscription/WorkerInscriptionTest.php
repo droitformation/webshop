@@ -43,46 +43,34 @@ class WorkerInscriptionTest extends TestCase
         $prices   = $colloque->prices->pluck('id')->all();
         $options  = $colloque->options->pluck('id')->all();
 
-        $occurrences = factory(\App\Droit\Occurrence\Entities\Occurrence::class,2)->create([
-            'colloque_id' => $colloque->id,
-        ]);
-
-        $option = factory(\App\Droit\Option\Entities\Option::class)->create([
-            'colloque_id' => $colloque->id,
-            'title'       => 'Option',
-            'type'        => 'choix',
-        ]);
-
+        $occurrences = factory(\App\Droit\Occurrence\Entities\Occurrence::class,2)->create(['colloque_id' => $colloque->id,]);
+        $option  = factory(\App\Droit\Option\Entities\Option::class)->create(['colloque_id' => $colloque->id, 'title'  => 'Option', 'type' => 'choix',]);
         $groupe1 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create(['colloque_id' => $colloque->id, 'option_id' => $option->id, 'text' => 'Groupe']);
         $groupe2 = factory(\App\Droit\Option\Entities\OptionGroupe::class)->create(['colloque_id' => $colloque->id, 'option_id' => $option->id, 'text' => 'Autre groupe']);
 
         // AFTER REGISTER CONVERTER
         $data = [
-            'colloque_id' => $colloque->id ,
-            'user_id'     => $person->id,
-            'participant' => [
-                'Cindy, Leschaud',
-                'Coralie, Ahmetaj'
-            ],
-            'email' => [
-                'cindy.leschaud@gmail.com',
-                'coralie.ahmetaj@hotmail.com'
-            ],
-            'prices' => [
-                ['price_id' => $prices[0]],
-                ['price_id' => $prices[0]],
-            ],
-            'occurrences' => [
-                [$occurrences->first()->id],
-                $occurrences->pluck('id')->all()
-            ],
-            'options' => [
-                0 => [$options[0]],
-                1 => [$options[0]]
-            ],
-            'groupes' => [
-                0 => [$option->id => $groupe1->id],
-                1 => [$option->id => $groupe2->id]
+            'colloque_id'    => $colloque->id ,
+            'user_id'        => $person->id,
+            'reference_no'   => '21345',
+            'transaction_no' => '6543',
+            'participants'   => [
+                [
+                    'participant' => 'Cindy, Leschaud',
+                    'email'      => 'cindy.leschaud@gmail.com',
+                    'options'    => [$options[0]],
+                    'groupes'    => [$option->id => $groupe1->id],
+                    'occurrences' => [$occurrences->first()->id],
+                    "price_id"   => $prices[0]
+                ],
+                [
+                    'participant' => 'Coralie, Ahmetaj',
+                    'email'       => 'coralie.ahmetaj@hotmail.com',
+                    'options'     => [$options[0]],
+                    'groupes'     => [$option->id => $groupe2->id],
+                    'occurrences' => $occurrences->pluck('id')->all(),
+                    "price_id"    => $prices[0]
+                ]
             ]
         ];
 

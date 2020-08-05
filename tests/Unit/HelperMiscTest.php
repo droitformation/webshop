@@ -306,27 +306,4 @@ class HelperMiscTest extends TestCase
         $this->assertEquals([[1,2],123],array_values($result));
     }
 
-    public function testLinkedPrice()
-    {
-        $data1['price_id'] = 'price_link_id:1';
-        $result1 = isLinkedPrice($data1);
-
-        $this->assertEquals(1,$result1);
-
-        $data2['price_link_id'] = 2;
-        $result2 = isLinkedPrice($data2);
-
-        $this->assertEquals(2,$result2);
-
-        $data3 = [
-            'price_id' =>[
-                'price_link_id:1',
-                'price_link_id:2'
-            ]
-        ];
-
-        $result3 = isLinkedPrice($data3,'multiple');
-
-        $this->assertEquals([['price_linked_id' => 1],['price_linked_id' => 2]],$result3);
-    }
 }

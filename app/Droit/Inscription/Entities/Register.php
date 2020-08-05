@@ -10,45 +10,57 @@ class Register
     public function __construct($data = [])
     {
         $this->data = $data;
-        $this->data['type'] = isset($this->data['type']) ? $this->data['type'] : 'simple';
+        $this->data['type']  = isset($this->data['type']) ? $this->data['type'] : 'simple';
         $this->repo_colloque = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
         $this->repo_price    = \App::make('App\Droit\Price\Repo\PriceInterface');
     }
 
-    public function multiple($data)
+    public function prepare()
     {
-        return collect($data['participant'])->mapWithKeys(function ($participant,$index) use ($data) {
+        if($this->data['type'] == 'simple'){
+            return $this->simple($this->general());
+        }
 
-            $colloques = array_unique(array_flatten($data['colloques']));
+        return $this->multiple();
+    }
 
-            return collect($colloques)->mapWithKeys(function ($colloque, $i) use ($data,$index) {
+    public function multiple()
+    {
+        return collect($this->data['participant'])->mapWithKeys(function ($participant,$index) {
 
-                $participants = collect($data['participant'])->map(function ($participant, $key) use ($data,$colloque) {
-                    if(in_array($colloque,$data['colloques'][$key])){
+            $colloques = array_unique(array_flatten($this->data['colloques']));
 
-                        $free  = $this->repo_price->getFreeByColloque($key);
-                        $price = $colloque != $data['colloque_id'] ? array_filter([
+            return collect($colloques)->mapWithKeys(function ($colloque, $i) use ($index) {
+
+                $participants = collect($this->data['participant'])->map(function ($participant, $key) use ($colloque) {
+
+                    if(isset($this->data['colloques']) && in_array($colloque,$this->data['colloques'][$key])){
+
+                        $free  = $this->repo_price->getFreeByColloque($colloque);
+                        $price = $colloque != $this->data['colloque_id'] ? array_filter([
                             'price_id' => $free->id,
-                            'price_linked_id' => isPriceLink($data['price_id'][$key])? getPriceId($data['price_id'][$key]) : null,
-                        ]) : $this->convertPrices($data['price_id'][$key]);
+                            'price_linked_id' => isPriceLink($this->data['price_id'][$key])? getPriceId($this->data['price_id'][$key]) : null,
+                        ]) : $this->convertPrices($this->data['price_id'][$key]);
 
-                        return [
-                            'participant' => $data['participant'][$key],
-                            'email'    => $data['email'][$key],
-                            'options'  => $data['addons'][$colloque]['options'][$key] ? $data['addons'][$colloque]['options'][$key] : null,
-                            'groupes'  => $data['addons'][$colloque]['groupes'][$key] ? $data['addons'][$colloque]['groupes'][$key] : null,
-                        ] + $price;
+                        return array_filter([
+                            'participant' => $this->data['participant'][$key],
+                            'email'    => $this->data['email'][$key],
+                            'options'  => $this->data['addons'][$colloque]['options'][$key] ?? null,
+                            'groupes'  => $this->data['addons'][$colloque]['groupes'][$key] ?? null,
+                        ]) + $price;
                     }
-                })->reject(function ($participant, $key) use ($data,$colloque) {
+                })->reject(function ($participant, $key) use ($colloque) {
                     return empty($participant);
                 })->toArray();
 
                 return [
                     $colloque => array_filter([
+                        'type'           => 'multiple',
+                        'colloque_id'    => $colloque,
                         'user_id'        => $this->data['user_id'],
                         'reference_no'   => $this->data['reference_no'] ?? null,
                         'transaction_no' => $this->data['transaction_no'] ?? null,
-                        'rabais_id'      => $colloque == $data['colloque_id'] && isset($this->data['rabais_id']) ? $this->data['rabais_id'] : null,
+                        'rabais_id'      => $colloque == $this->data['colloque_id'] && isset($this->data['rabais_id']) ? $this->data['rabais_id'] : null,
                         'participants'   => $participants,
                     ])
                 ];
@@ -57,13 +69,34 @@ class Register
 
     }
 
-    public function getColloques($price)
+    public function simple()
     {
-        if(!isPriceLink($price)){
-            return [$this->data['colloque_id']];
+        $counter = 0;
+
+        $this->data['price_linked_id'] = getLinkId($this->data);
+
+        if(isset($this->data['colloques']) && !empty($this->data['colloques'])){
+            return collect($this->data['colloques'])->map(function ($options,$key) use (&$counter){
+                // if original colloque is the current
+                // It's supports the invoice price else it's free
+                $free  = $this->repo_price->getFreeByColloque($key);
+                $price = $this->prices($this->data,$key,$free);
+
+                if($counter > 0){
+                    unset($this->data['rabais_id']);
+                }
+
+                $counter++;
+
+                return ['colloque_id' => $key] + $price + array_except(array_filter($this->data),['colloques','_token','price_id']) + $options;
+            });
         }
 
-        return $this->data['colloque_id'];
+        return collect([
+            $this->data['colloque_id'] => [
+                'colloque_id' => $this->data['colloque_id']
+            ] + priceConvert($this->data) + array_except(array_filter($this->data),['_token','price_id'])
+        ]);
     }
 
     /*
@@ -78,47 +111,9 @@ class Register
         ]);
     }
 
-    public function prepare($data)
-    {
-        $counter = 0;
-        $type = $data['type'] ?? 'simple';
-
-        $data['price_linked_id'] = isLinkedPrice($data,$type);
-
-        if(isset($data['addons']) && !empty($data['addons'])){
-            return collect($data['addons'])->map(function ($options,$key) use ($data, &$counter) {
-                // if original colloque is tthe current
-                // It's supports the invoice price
-                // Else it's free
-                $free  = $this->repo_price->getFreeByColloque($key);
-                $price = $this->prices($data,$key,$free);
-
-                // remove rabais for multiple colloques, only de first one is supporting the invoice price
-                if($counter > 0){
-                    unset($data['rabais_id']);
-                }
-
-                $counter++;
-
-                return ['colloque_id' => $key] + $price + array_except(array_filter($data),['addons','_token','price_id']) + $options;
-            });
-        }
-
-        return collect([
-            ['colloque_id' => $data['colloque_id']] + priceConvert($data) + array_except(array_filter($data),['_token','price_id'])
-        ]);
-    }
-
     public function prices($data,$key,$free)
     {
-        $type = $data['type'] ?? 'simple';
-
-        // price link colloque for multiple
-        if($type == 'multiple' && $key != $data['colloque_id']){
-            return ['prices' => [['price_id' => $free->id], ['price_id' => $free->id]]];
-        }
-
-        if($type == 'simple' && $key != $data['colloque_id']){
+        if($key != $data['colloque_id']){
             return ['price_id' => $free->id];
         }
 
@@ -133,36 +128,30 @@ class Register
         return array_filter([
             'reference_no'   => $this->data['reference_no'] ?? null,
             'transaction_no' => $this->data['transaction_no'] ?? null,
-            'rabais_id'      => $this->data['rabais_id'] ?? null,
-            'user_id'        => $this->data['user_id'],
-            'colloque_id'    => $this->data['colloque_id'],
-            'type'           => $this->data['type'] ?? '',
             'participant'    => $this->data['participant'] ?? null,
             'email'          => $this->data['email'] ?? null,
+            'rabais_id'      => $this->data['rabais_id'] ?? null,
+            'user_id'        => $this->data['user_id'],
+            'type'           => $this->data['type'],
+            'colloque_id'    => $this->data['colloque_id'],
             'price_id'       => $this->data['price_id'],
-            'addons'         => $this->addons()
+            'colloques'      => $this->colloques()
         ]);
     }
 
     public function colloquedata($data)
     {
-        $type = $this->data['type'] ?? 'simple';
-
-        $options = isset($data['options']) && isset($data['options'][0]) && $type == 'simple' ? $data['options'][0] : ($data['options'] ?? null);
-        $groupes = isset($data['groupes']) && isset($data['groupes'][0]) && $type == 'simple' ? $data['groupes'][0] : ($data['groupes'] ?? null);
-        $occurrences = $data['occurrences'] ?? null;
-
         return array_filter([
-            'options'     => isset($options) ? array_filter_recursive($options) : null,
-            'groupes'     => isset($groupes) ? array_filter_recursive($groupes) : null,
-            'occurrences' => isset($occurrences) ? array_filter_recursive($occurrences) : null
+            'options'     => isset($data['options']) ? array_filter_recursive($data['options']) : null,
+            'groupes'     => isset($data['groupes']) ? array_filter_recursive($data['groupes']) : null,
+            'occurrences' => isset($data['occurrences']) ? array_filter_recursive($data['occurrences']) : null
         ]);
     }
 
     /*
      * General
      * */
-    public function getPrice()
+/*    public function getPrice()
     {
         if(is_array($this->data['price_id'])){
             return ['prices' => collect($this->data['price_id'])->map(function ($price, $index) {
@@ -171,13 +160,13 @@ class Register
         }
 
         return ['price_id' => $this->data['price_id']];
-    }
+    }*/
 
-    public function addons()
+    public function colloques()
     {
-        if(isset($this->data['addons'])){
+        if(isset($this->data['colloques'])){
             $colloques = [];
-            foreach ($this->data['addons'] as $id => $data){
+            foreach ($this->data['colloques'] as $id => $data){
                 $colloques[$id] = $this->colloquedata($data);
             }
 

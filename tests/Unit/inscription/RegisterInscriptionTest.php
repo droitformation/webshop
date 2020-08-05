@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
 
-class WorkerInscriptionTest extends TestCase
+class RgisterInscriptionTest extends TestCase
 {
     use RefreshDatabase,ResetTbl;
 
@@ -56,7 +56,7 @@ class WorkerInscriptionTest extends TestCase
             'user_id'        => 710,
             'colloque_id'    => $colloque1->id,
             'type'           => 'multiple',
-            'colloques' =>[
+            'addons' =>[
                 $colloque1->id => [
                     'options' => [
                         0 => [259],
@@ -77,50 +77,54 @@ class WorkerInscriptionTest extends TestCase
             'price_id' => [
                 "price_link_id:".$price_link->id,
                 "price_id:".$price1->id,
+            ],
+            'colloques' => [
+                0 => [$colloque1->id, $colloque2->id],
+                1 => [$colloque1->id]
             ]
         ];
 
         $expected = collect([
             $colloque1->id => [
-                'user_id'      => 710,
-                'colloque_id'  => $colloque1->id,
                 'type'         => 'multiple',
+                'colloque_id'  => $colloque1->id,
+                'user_id'      => 710,
                 'participants' => [
                     [
-                        'name'  => 'Marc,Leschaud',
+                        'participant'  => 'Marc,Leschaud',
                         'email' => 'Marc.Leschaud@romandie.ch',
-                        "price_link_id"   => $price_link->id,
-                        'price_linked_id' => $price_link->id,
                         'options' => [259],
                         'groupes' => [268 => 150],
+                        "price_link_id"   => $price_link->id,
+                        'price_linked_id' => $price_link->id,
                     ],
                     [
-                        'name'  => 'Cindy,Leschaud',
+                        'participant'  => 'Cindy,Leschaud',
                         'email' => 'cindy.leschaud@gmail.com',
-                        "price_id" => $price1->id,
                         'options' => [258],
                         'groupes' => [268 => 151],
+                        "price_id" => $price1->id,
                     ]
                 ],
             ],
             $colloque2->id => [
-                'user_id'      => 710,
-                'colloque_id'  => $colloque2->id,
                 'type'         => 'multiple',
+                'colloque_id'  => $colloque2->id,
+                'user_id'      => 710,
                 'participants' => [
                     [
-                        'name'  => 'Marc,Leschaud',
+                        'participant'  => 'Marc,Leschaud',
                         'email' => 'Marc.Leschaud@romandie.ch',
+                        'options' => [261],
                         "price_id" => $price2->id,
                         'price_linked_id' => $price_link->id,
-                        'options' => [261],
                     ]
                 ],
             ]
         ]);
 
         $register = new \App\Droit\Inscription\Entities\Register($data);
-        $actual = $register->prepare($data);
+        $actual = $register->prepare();
 
         $this->assertEquals($expected,$actual);
     }

@@ -38,8 +38,8 @@ class InscriptionController extends Controller
     public function store(InscriptionRequest $request)
     {
         // Prepare data to register
-        $register     = new \App\Droit\Inscription\Entities\Register();
-        $inscriptions = $register->prepare($request->all());
+        $register     = new \App\Droit\Inscription\Entities\Register($request->all());
+        $inscriptions = $register->prepare();
 
         $inscriptions = $inscriptions->map(function ($data) use ($request) {
             // Register each inscription

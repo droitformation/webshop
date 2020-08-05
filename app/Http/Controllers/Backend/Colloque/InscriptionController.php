@@ -133,17 +133,18 @@ class InscriptionController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(InscriptionCreateRequest $request){
+    //public function store(InscriptionCreateRequest $request){
+    public function store(Request $request){
 
         $register = new \App\Droit\Inscription\Entities\Register($request->all());
-        $inscriptions = $register->prepare($register->general());
+        $inscriptions = $register->prepare();
 
         $inscriptions = $inscriptions->map(function ($data) use ($request) {
             // Register each inscription
             session()->put('reference_no', $request->input('reference_no',null));
             session()->put('transaction_no', $request->input('transaction_no',null));
 
-            $inscription  = $this->register->register($data, $request->input('type') == 'simple' ? true : null);
+            $inscription  = $this->register->register($data,$request->input('type') == 'simple' ? true : null);
             $reference    = \App\Droit\Transaction\Reference::make($inscription);
 
             $this->register->makeDocuments($inscription, true);

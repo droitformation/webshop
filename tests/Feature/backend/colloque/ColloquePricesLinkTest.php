@@ -44,7 +44,7 @@ class ColloquePricesLinkTest extends TestCase
 
         $results = [
             'colloques'      => [['id' => $colloque1->id, 'text' => $colloque1->title], ['id' => $colloque2->id, 'text' => $colloque2->title]], // all coloques
-            'linked'         => [['id' => $colloque2->id, 'text' => $colloque2->title]], // only other colloque
+            'linked'         => [['id' => $colloque1->id, 'text' => $colloque1->title], ['id' => $colloque2->id, 'text' => $colloque2->title]], // only other colloque
             'description'    => 'cindy',
             'price'          => '10.00',
             'type'           => 'public',
@@ -53,9 +53,10 @@ class ColloquePricesLinkTest extends TestCase
             'state'          => false,
         ];
 
-        $data = ['price' => $prices, 'colloque_id' => $colloque1->id,];
+        $data = ['price' => $prices, 'colloque_id' => $colloque1->id];
 
-        $response = $this->json('POST', '/vue/price_link', $data)->assertJsonFragment($results);
+        $response = $this->json('POST', '/vue/price_link', $data);
+        $response->assertJsonFragment($results);
 
         $this->assertDatabaseHas('price_link', [
             'price'       => 1000,
@@ -99,7 +100,7 @@ class ColloquePricesLinkTest extends TestCase
 
         $results = [
             'colloques'      => [['id' => $colloque1->id, 'text' => $colloque1->title],['id' => $colloque2->id, 'text' => $colloque2->title],['id' => $colloque3->id, 'text' => $colloque3->title]], // all coloques
-            'linked'         => [['id' => $colloque2->id, 'text' => $colloque3->title]], // only other colloque
+            'linked'         => [['id' => $colloque1->id, 'text' => $colloque1->title],['id' => $colloque2->id, 'text' => $colloque2->title],['id' => $colloque3->id, 'text' => $colloque3->title]], // only other colloque
             'price'          => '15.00',
             'type'           => 'public',
             'remarque'       => 'testing',

@@ -211,19 +211,20 @@ class FeatureInscriptionAdminTest extends TestCase
         $this->call('POST', 'admin/inscription/make', $data);
 
         $data = [
-            'type'        => 'simple' ,
-            'colloque_id' => $colloque1->id,
-            'rabais_id'   => $rabais->id,
-            'user_id'     => $person->id,
-            'price_id'    => "price_link_id:".$price_link->id,
+            'rabais_id'      => $rabais->id,
+            'user_id'        => $person->id,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'simple',
             'colloques' => [
                 $colloque1->id => [
-                    'options'  => [$options1]
+                    'options' => [$options1[0]],
+                    'groupes' => [$option_groupe1->id => $option_groupe1->groupe->first()->id]
                 ],
                 $colloque2->id => [
-                    'options'  => [$options2]
-                ],
-            ]
+                    'options' => [$options2[0]]
+                ]
+            ],
+            'price_id' => 'price_link_id:'.$price_link->id,
         ];
 
         $response = $this->call('POST', 'admin/inscription', $data);
@@ -231,8 +232,8 @@ class FeatureInscriptionAdminTest extends TestCase
         $this->assertDatabaseHas('colloque_inscriptions', [
             'colloque_id'     => $colloque1->id,
             'user_id'         => $person->id,
-            'price_link_id'   => $price_link->id,
             'rabais_id'       => $rabais->id,
+            'price_link_id'   => $price_link->id,
             'price_linked_id' => $price_link->id,
         ]);
         $this->assertDatabaseHas('colloque_inscriptions', [
@@ -244,6 +245,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $model  = new \App\Droit\Inscription\Entities\Inscription();
         $inscriptions = $model->all();
+
         $first  = $inscriptions->shift();
         $second = $inscriptions->shift();
 
@@ -292,7 +294,7 @@ class FeatureInscriptionAdminTest extends TestCase
                 "price_id:".$prices[0],
                 "price_id:".$prices[0]
             ],
-            'colloques' => [
+            'addons' => [
                 $colloque->id => [
                     'options' => [
                         0 => [$options[0]],
@@ -303,6 +305,10 @@ class FeatureInscriptionAdminTest extends TestCase
                         1 => [$option_groupe->id => $option_groupe->groupe[1]->id]
                     ]
                 ]
+            ],
+            'colloques' => [
+                [$colloque->id],
+                [$colloque->id]
             ]
         ];
 
@@ -391,7 +397,7 @@ class FeatureInscriptionAdminTest extends TestCase
                 "price_link_id:".$price_link->id,
                 "price_link_id:".$price_link->id
             ],
-            'colloques' => [
+            'addons' => [
                 $colloque1->id => [
                     'options' => [
                         0 => [$options1[0]],
@@ -412,6 +418,10 @@ class FeatureInscriptionAdminTest extends TestCase
                         1 => [$option_groupe2->id => $option_groupe2->groupe[1]->id]
                     ]
                 ]
+            ],
+            'colloques' => [
+                [$colloque1->id,$colloque2->id],
+                [$colloque1->id,$colloque2->id],
             ]
         ];
 
@@ -540,8 +550,8 @@ class FeatureInscriptionAdminTest extends TestCase
         $date = \Carbon\Carbon::now()->toDateString();
 
         $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
-            'user_id' => $person->id,
-            'group_id' => null,
+            'user_id'     => $person->id,
+            'group_id'    => null,
             'colloque_id' => $colloque->id,
             'payed_at'    => null,
         ]);
@@ -894,11 +904,15 @@ class FeatureInscriptionAdminTest extends TestCase
             'type'           => 'simple',
             'reference_no'   => 'Ref_2019_desipond',
             'transaction_no' => '29_10_19824',
-            'colloque_id' => $colloque->id,
-            'user_id'     => $person->id,
-            'price_id'    => 'price_id:'.$prices[0],
-            'options'     => [
-                $options[0]
+            'colloque_id'    => $colloque->id,
+            'user_id'        => $person->id,
+            'price_id'       => 'price_id:'.$prices[0],
+            'colloques' => [
+                $colloque->id => [
+                    'options'  => [
+                        $options[0]
+                    ]
+                ]
             ]
         ];
 
@@ -947,13 +961,17 @@ class FeatureInscriptionAdminTest extends TestCase
                 "price_id:".$prices[0],
                 "price_id:".$prices[0]
             ],
-            'colloques' => [
+            'addons' => [
                 $colloque->id => [
                     'options' => [
                         0 => [$options[0]],
                         1 => [$options[0]]
                     ],
                 ]
+            ],
+            'colloques' => [
+                [$colloque->id],
+                [$colloque->id]
             ]
         ];
 
