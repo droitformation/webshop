@@ -18,6 +18,10 @@ class Register
     public function prepare()
     {
         if($this->data['type'] == 'simple'){
+            echo '<pre>';
+            print_r($this->general());
+            echo '</pre>';
+            exit;
             return $this->simple($this->general());
         }
 
