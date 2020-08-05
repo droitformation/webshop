@@ -40,7 +40,10 @@ class InscriptionController extends Controller
         // Prepare data to register
         $register     = new \App\Droit\Inscription\Entities\Register($request->all());
         $inscriptions = $register->prepare();
-
+        echo '<pre>';
+        print_r($inscriptions);
+        echo '</pre>';
+        exit;
         $inscriptions = $inscriptions->map(function ($data) use ($request) {
             // Register each inscription
             session()->put('reference_no', $request->input('reference_no',null));
