@@ -35,8 +35,8 @@ class FeatureFrontendInscriptionTest extends TestCase
         $colloque1  = $make->colloque();
         $colloque2  = $make->colloque();
 
-        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
-        $price      = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
         $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
         $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
 
@@ -53,7 +53,8 @@ class FeatureFrontendInscriptionTest extends TestCase
             'reference_no'   => 'Ref_2019_designpond',
             'transaction_no' => '2109_10_19824',
             'user_id'        => $person->id,
-            'colloque_id'    => $colloque1->id
+            'colloque_id'    => $colloque1->id,
+            'test' => true
         ];
 
         $reponse = $this->post('pubdroit/registration', $data);
@@ -68,7 +69,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('colloque_inscriptions', [
-            'price_id'    => $price->id,
+            'price_id'    => $price2->id,
             'user_id'     => $person->id,
             'colloque_id' => $colloque2->id,
         ]);

@@ -39,8 +39,7 @@ class InscriptionController extends Controller
     {
         // Prepare data to register
         $register     = new \App\Droit\Inscription\Entities\Register($request->all());
-        $inscriptions = $register->prgit add .
-    giepare();
+        $inscriptions = $register->prepare();
 
         $inscriptions = $inscriptions->map(function ($data) use ($request) {
             // Register each inscription
