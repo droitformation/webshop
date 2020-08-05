@@ -28,37 +28,6 @@ class FeatureFrontendInscriptionTest extends TestCase
         parent::tearDown();
     }
 
-    public function testUserRegister()
-    {
-        $make     = new \tests\factories\ObjectFactory();
-        $colloque = $make->colloque();
-        $person   = $make->makeUser();
-
-        $data = [
-            'price_id'       => 'price_id:'.$colloque->prices->first()->id,
-            'colloques'      => [
-                $colloque->id => ['options' => [$colloque->options->first()->id]]
-            ],
-            'reference_no'   => 'Ref_2019_designpond',
-            'transaction_no' => '2109_10_19824',
-            'user_id'        => $person->id,
-            'colloque_id'    => $colloque->id
-        ];
-
-        $reponse = $this->post('pubdroit/registration', $data);
-
-        $this->assertDatabaseHas('colloque_inscriptions', [
-            'price_id'    => $colloque->prices->first()->id,
-            'user_id'     => $person->id,
-            'colloque_id' => $colloque->id,
-        ]);
-
-        $this->assertDatabaseHas('transaction_references', [
-            'reference_no' => 'Ref_2019_designpond',
-            'transaction_no' => '2109_10_19824'
-        ]);
-    }
-
     public function testUserRegisterMultipleColloquesPricelink()
     {
         $make       = new \tests\factories\ObjectFactory();
@@ -117,6 +86,37 @@ class FeatureFrontendInscriptionTest extends TestCase
         $this->assertDatabaseHas('colloque_option_users', [
             'id'        => 2,
             'option_id' => $colloque2->options->first()->id,
+        ]);
+    }
+
+    public function testUserRegister()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser();
+
+        $data = [
+            'price_id'       => 'price_id:'.$colloque->prices->first()->id,
+            'colloques'      => [
+                $colloque->id => ['options' => [$colloque->options->first()->id]]
+            ],
+            'reference_no'   => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824',
+            'user_id'        => $person->id,
+            'colloque_id'    => $colloque->id
+        ];
+
+        $reponse = $this->post('pubdroit/registration', $data);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'price_id'    => $colloque->prices->first()->id,
+            'user_id'     => $person->id,
+            'colloque_id' => $colloque->id,
+        ]);
+
+        $this->assertDatabaseHas('transaction_references', [
+            'reference_no' => 'Ref_2019_designpond',
+            'transaction_no' => '2109_10_19824'
         ]);
     }
 
