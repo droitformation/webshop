@@ -97,6 +97,8 @@ class Register
                 echo '</pre>';
                 exit;
             }
+
+            return $colloques;
         }
 
         return collect([
