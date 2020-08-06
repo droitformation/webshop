@@ -28,7 +28,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         parent::tearDown();
     }
 
-    public function testUserRegisterMultipleColloquesPricelink()
+  /*  public function testUserRegisterMultipleColloquesPricelink()
     {
         $make       = new \tests\factories\ObjectFactory();
         $person     = $make->makeUser();
@@ -88,7 +88,7 @@ class FeatureFrontendInscriptionTest extends TestCase
             'id'        => 2,
             'option_id' => $colloque2->options->first()->id,
         ]);
-    }
+    }*/
 
     public function testUserRegister()
     {
