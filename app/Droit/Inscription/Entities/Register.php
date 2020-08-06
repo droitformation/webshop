@@ -18,15 +18,6 @@ class Register
     public function prepare()
     {
         if($this->data['type'] == 'simple'){
-
-            if (isset($this->data['test'])){
-                echo '<pre>';
-                print_r($this->general());
-                echo '</pre>';
-                exit;
-            }
-
-
             return $this->simple($this->general());
         }
 
@@ -85,7 +76,7 @@ class Register
         $this->data['price_linked_id'] = getLinkId($this->data);
 
         if(isset($this->data['colloques']) && !empty($this->data['colloques'])){
-            return collect($this->data['colloques'])->map(function ($options,$key) use (&$counter){
+            $colloques = collect($this->data['colloques'])->map(function ($options,$key) use (&$counter){
                 // if original colloque is the current
                 // It's supports the invoice price else it's free
                 $free  = $this->repo_price->getFreeByColloque($key);
@@ -99,6 +90,13 @@ class Register
 
                 return ['colloque_id' => $key] + $price + array_except(array_filter($this->data),['colloques','_token','price_id']) + $options;
             });
+
+            if (isset($this->data['test'])){
+                echo '<pre>';
+                print_r($colloques);
+                echo '</pre>';
+                exit;
+            }
         }
 
         return collect([
