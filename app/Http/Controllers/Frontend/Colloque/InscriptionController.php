@@ -48,6 +48,13 @@ class InscriptionController extends Controller
 
             $inscription = $this->register->register($data,true);
 
+            if($request->input('test')){
+                echo '<pre>';
+                print_r($inscription->toArray());
+                print_r($inscription->toArray());
+                echo '</pre>';
+            }
+
             event(new InscriptionWasRegistered($inscription));
 
             return $inscription;
