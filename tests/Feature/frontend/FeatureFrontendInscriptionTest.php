@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\frontend;
 
+use App\Events\InscriptionWasRegistered;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
@@ -30,6 +31,8 @@ class FeatureFrontendInscriptionTest extends TestCase
 
     public function testUserRegisterMultipleColloquesPricelink()
     {
+        \Event::fake();
+
         $make       = new \tests\factories\ObjectFactory();
         $person     = $make->makeUser();
         $colloque1  = $make->colloque();
@@ -62,6 +65,10 @@ class FeatureFrontendInscriptionTest extends TestCase
         $model  = new \App\Droit\Inscription\Entities\Inscription();
         $inscriptions = $model->all();
 
+        \Event::assertDispatched(\App\Events\InscriptionWasRegistered::class, function ($e) use ($inscriptions) {
+            return $e->inscription->id === $inscriptions->first()->id;
+        });
+
         $this->assertDatabaseHas('colloque_inscriptions', [
             'price_link_id' => $price_link->id,
             'user_id'       => $person->id,
@@ -92,6 +99,8 @@ class FeatureFrontendInscriptionTest extends TestCase
 
     public function testUserRegister()
     {
+        \Event::fake();
+
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->colloque();
         $person   = $make->makeUser();
@@ -108,6 +117,13 @@ class FeatureFrontendInscriptionTest extends TestCase
         ];
 
         $reponse = $this->post('pubdroit/registration', $data);
+
+        $model  = new \App\Droit\Inscription\Entities\Inscription();
+        $inscriptions = $model->all();
+
+        \Event::assertDispatched(\App\Events\InscriptionWasRegistered::class, function ($e) use ($inscriptions) {
+            return $e->inscription->id === $inscriptions->first()->id;
+        });
 
         $this->assertDatabaseHas('colloque_inscriptions', [
             'price_id'    => $colloque->prices->first()->id,
