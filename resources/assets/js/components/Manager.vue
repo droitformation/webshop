@@ -74,7 +74,7 @@
 
 </template>
 
-<style>
+<style scoped>
 
     #fileManager {
         overflow-y: auto;

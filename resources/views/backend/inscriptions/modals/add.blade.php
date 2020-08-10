@@ -37,7 +37,7 @@
                     <!-- Occurence if any -->
                     @if(!$colloque->occurrences->isEmpty())
                         <h4>Conférences</h4>
-                        @include('backend.inscriptions..partials.occurrences', ['select' => 'occurrences[]'])
+                        @include('backend.inscriptions.partials.occurrences', ['select' => 'occurrences[]'])
                     @endif
 
                     @if(!$colloque->options->isEmpty())

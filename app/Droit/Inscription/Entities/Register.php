@@ -148,20 +148,6 @@ class Register
         ]);
     }
 
-    /*
-     * General
-     * */
-/*    public function getPrice()
-    {
-        if(is_array($this->data['price_id'])){
-            return ['prices' => collect($this->data['price_id'])->map(function ($price, $index) {
-                return $price;
-            })->toArray()];
-        }
-
-        return ['price_id' => $this->data['price_id']];
-    }*/
-
     public function colloques()
     {
         if(isset($this->data['colloques'])){

@@ -561,7 +561,7 @@ class FeatureInscriptionAdminTest extends TestCase
             'colloque_id' => $colloque->id,
             'user_id'     => $person->id,
             'payed_at'    => $date,
-            'price_id'    => $prices[0],
+            'price_id'    => 'price_id:'.$prices[0],
             'options'     => [
                 $options[0]
             ]

@@ -306,4 +306,61 @@ class HelperMiscTest extends TestCase
         $this->assertEquals([[1,2],123],array_values($result));
     }
 
+    public function testConvertPriceUpdate()
+    {
+        $data = [
+            'id'          => 22517,
+            'price_id'    => 'price_id:627',
+            'rabais_id'   => null,
+            'options'     => [260, '270' => ''],
+            'groupes'     => [269 => 150],
+            'user_id'     => 710,
+            'colloque_id' => 165,
+            'payed_at'    => null,
+        ];
+
+        $expected = [
+            'id'          => 22517,
+            'price_id'    => 627,
+            'rabais_id'   => null,
+            'options'     => [260, '270' => ''],
+            'groupes'     => [269 => 150],
+            'user_id'     => 710,
+            'colloque_id' => 165,
+            'payed_at'    => null,
+        ];
+
+        $result = converPriceUpdate($data);
+
+        $this->assertEquals($expected,$result);
+    }
+
+    public function testConvertPriceUpdateLinked()
+    {
+        $data = [
+            'id'          => 22517,
+            'price_id'    => 'price_link_id:627',
+            'rabais_id'   => null,
+            'options'     => [260, '270' => ''],
+            'groupes'     => [269 => 150],
+            'user_id'     => 710,
+            'colloque_id' => 165,
+            'payed_at'    => null,
+        ];
+
+        $expected = [
+            'id'             => 22517,
+            'price_link_id'  => 627,
+            'rabais_id'      => null,
+            'options'        => [260, '270' => ''],
+            'groupes'        => [269 => 150],
+            'user_id'        => 710,
+            'colloque_id'    => 165,
+            'payed_at'       => null,
+        ];
+
+        $result = converPriceUpdate($data);
+
+        $this->assertEquals($expected,$result);
+    }
 }

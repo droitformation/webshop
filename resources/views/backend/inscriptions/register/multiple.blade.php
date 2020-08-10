@@ -22,10 +22,6 @@
     </div>
 </div>
 
-<input name="user_id" value="{{ $user->id }}" type="hidden">
-<input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
-<input name="type" value="{{ $type }}" type="hidden">
-
 <participant
         form="multiple"
         user_id="{{ $user->id }}"
@@ -64,9 +60,9 @@
         <div class="options-liste-box"></div>
 
     </fieldset>
-</div>--}}
+</div>
 
 <div class="form-group">
     <br><button id="makeInscription" class="btn btn-danger pull-right" type="submit">Inscrire</button>
-</div>
+</div>--}}
 <!-- END Inscriptions -->

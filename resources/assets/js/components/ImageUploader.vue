@@ -59,7 +59,7 @@
 
 </template>
 
-<style>
+<style scoped>
    .loading{
         width:50px;
         margin:40px auto;

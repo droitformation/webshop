@@ -1737,3 +1737,27 @@ span.avis-hidden-square{
 .rabaisListe li.used{
     background: #f5e2e2;
 }
+
+.row-flex{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.row-flex > [class^="col"] {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.font-weight-bold{
+    font-weight: bold;
+}

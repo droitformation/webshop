@@ -185,7 +185,7 @@ class InscriptionController extends Controller
     public function update(Request $request, $id)
     {
         // Update inscription
-        $inscription = $this->inscription->update($request->all());
+        $inscription = $this->inscription->update(converPriceUpdate($request->all()));
 
         // Attach references if any
         $reference = \App\Droit\Transaction\Reference::update($inscription, $request->only(['reference_no','transaction_no']));

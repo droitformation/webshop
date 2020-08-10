@@ -216,7 +216,9 @@ class InscriptionEloquent implements InscriptionInterface{
             foreach($data['options'] as $option) {
                 if(is_array($option)) {
                     $id = key($option);
-                    $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
+                    if(isset($option[$id]) && !empty($option[$id])){
+                        $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
+                    }
                 }
                 else{
                     $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);
@@ -344,10 +346,11 @@ class InscriptionEloquent implements InscriptionInterface{
         {
             foreach($data['options'] as $option)
             {
-                if(is_array($option))
-                {
+                if(is_array($option)) {
                     $id = key($option);
-                    $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
+                    if(isset($option[$id]) && !empty($option[$id])){
+                        $inscription->options()->attach($id, ['inscription_id' => $inscription->id, 'reponse' => $option[$id]]);
+                    }
                 }
                 else{
                     $inscription->options()->attach($option, ['inscription_id' => $inscription->id]);

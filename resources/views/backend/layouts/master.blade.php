@@ -26,8 +26,8 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/inscription.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css?').rand(1,2000);?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/inscription.css?').rand(1,2000);?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/types.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/redactor/redactor.css');?>">
 

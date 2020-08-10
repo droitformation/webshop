@@ -286,6 +286,18 @@ function priceConvert($price){
     }
 }
 
+function converPriceUpdate($data){
+
+    if(isset($data['price_id']) && (strpos($data['price_id'], ':') !== false)){
+        $price_id = $data['price_id'];
+        unset($data['price_id']);
+        $pieces = explode(':',$price_id);
+        $data[$pieces[0]] = $pieces[1];
+    }
+
+    return $data;
+}
+
 function filterEmptyArray($array){
 
     return array_map('array_filter', $array);

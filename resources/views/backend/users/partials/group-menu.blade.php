@@ -42,7 +42,7 @@
     <div class="row mt-10">
         <div class="col-md-6">
             <div style="display: flex;flow-direction:row;">
-                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#addReference_{{ $group->id }}">Ajouter/Modifier références</button>
+                <div><button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#addReference_{{ $group->id }}">Ajouter/Modifier références</button></div>
                 @include('backend.inscriptions.modals.references', ['group' => $group])
                 <adresse-update
                         hidden="1"

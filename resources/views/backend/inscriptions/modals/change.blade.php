@@ -13,7 +13,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-warning" style="margin-bottom: 20px;" role="alert">
                         <p><strong>Attention!</strong> Êtes-vous sûr de vouloir changer le détenteur?</p>
                     </div>
 
