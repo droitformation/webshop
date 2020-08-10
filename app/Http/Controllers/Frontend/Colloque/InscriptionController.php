@@ -48,10 +48,6 @@ class InscriptionController extends Controller
 
             $inscription = $this->register->register($data,true);
 
-            if($request->input('test')){
-               \Log::info(json_encode($inscription->toArray()));
-            }
-
             event(new InscriptionWasRegistered($inscription));
 
             return $inscription;

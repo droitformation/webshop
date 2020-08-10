@@ -28,7 +28,7 @@ class FeatureFrontendInscriptionTest extends TestCase
         parent::tearDown();
     }
 
-  /*  public function testUserRegisterMultipleColloquesPricelink()
+    public function testUserRegisterMultipleColloquesPricelink()
     {
         $make       = new \tests\factories\ObjectFactory();
         $person     = $make->makeUser();
@@ -37,7 +37,7 @@ class FeatureFrontendInscriptionTest extends TestCase
 
         $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
         $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
-        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create();
         $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
 
         $data = [
@@ -88,7 +88,7 @@ class FeatureFrontendInscriptionTest extends TestCase
             'id'        => 2,
             'option_id' => $colloque2->options->first()->id,
         ]);
-    }*/
+    }
 
     public function testUserRegister()
     {
