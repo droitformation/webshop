@@ -33,11 +33,15 @@ class ReponseController extends Controller
     {
         $data    = (array) json_decode(base64_decode($token));
         $sondage = $this->sondage->find($data['sondage_id']);
+
+        if($data['email'] == 'cristian.ferrara@bluewin.ch'){
+            $data['email'] = 'sondage'.$data['sondage_id'].'_'.rand(1,100).'@publications-droit.ch';
+        }
+
         $answer  = $this->reponse->hasAnswer($data['email'], $data['sondage_id']);
         $isTest  = isset($data['isTest']) ? true : false;
 
-        if($answer)
-        {
+        if($answer) {
             flash('Vous avez déjà répondu au sondage!')->warning();
 
             return redirect('reponse');
