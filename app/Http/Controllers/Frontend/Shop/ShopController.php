@@ -65,7 +65,6 @@ class ShopController extends Controller {
 	{
 		$products   = $this->product->getNbr(5);// nbr and hidden
         $nouveautes = $this->product->getByCategorie('Nouveautés');
-
         $page       = $this->page->getBySlug($this->site_id,'accueil');
         $colloques  = $this->colloque->getCurrent();
         $abos       = $this->abo->getAllFrontend();
