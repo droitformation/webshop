@@ -101,7 +101,7 @@ class InscriptionController extends Controller
     {
         $colloques = $this->colloque->getAll();
         $colloque  = $this->colloque->find($request->input('colloque_id'));
-        $rabais    = $this->rabais->byColloque($request->input('colloque_id'));
+        $rabais    = $this->rabais->byCompte($colloque->compte_id);
 
         $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
         $validator->activate();
