@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="contenu" class="col-sm-3 control-label">Description <br><small class="text-muted">Que pour admin</small></label>
+                            <label for="contenu" class="col-sm-3 control-label">Description <br><small class="text-muted">Pour l'utilisateur lors de l'inscription</small></label>
                             <div class="col-sm-7">
                                 <textarea name="description" class="form-control">{!! $rabais->description !!}</textarea>
                             </div>
