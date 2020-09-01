@@ -370,8 +370,10 @@ a:hover, a:active, a:focus {
 }
 
 .input-group-addon {
-    min-width: 74px;
+    min-width: 44px;
     padding: 7px 4px;
+    font-size: 13px;
+    line-height: 16px;
     width: auto;
 }
 
