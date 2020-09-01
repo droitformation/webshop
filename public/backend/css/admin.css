@@ -1564,6 +1564,7 @@ span.avis-hidden-square{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 30px;
 }
 
 .invoice_for address {
@@ -1576,7 +1577,7 @@ span.avis-hidden-square{
 }
 
 .invoice_rabais{
-    width: 35%;
+    width: 30%;
 }
 
 .indication{

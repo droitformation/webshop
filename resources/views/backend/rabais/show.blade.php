@@ -21,7 +21,7 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option {{ ($rabais->type == 'global' ? 'selected' : '') }} value="global">Sur n'importe quel colloque</option>
-                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte choisi</option>
+                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte(s)</option>
                                 </select>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                         <?php $choices = $rabais->comptes->pluck('id')->all(); ?>
 
                         <div class="form-group" id="colloqueSelect" style="{{ ($rabais->type == 'colloque' ? 'display:block;' : 'display:none;') }}">
-                            <label class="col-sm-3 control-label">Choix des comptes concernés (optionnel)</label>
+                            <label class="col-sm-3 control-label">Choix des comptes concernés</label>
                             <div class="col-sm-9 col-xs-12">
                                 @if(!$comptes->isEmpty())
                                     <select name="compte_id[]" multiple="multiple" id="multi-select">

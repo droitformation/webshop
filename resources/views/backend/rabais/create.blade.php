@@ -21,13 +21,13 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option value="global">Sur n'importe quel colloque</option>
-                                    <option selected value="colloque">Compte choisi</option>
+                                    <option selected value="colloque">Compte(s)</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group" id="colloqueSelect" style="display:block;">
-                            <label class="col-sm-3 control-label">Choix des comptes concernés (optionnel)</label>
+                            <label class="col-sm-3 control-label">Choix des comptes concernés</label>
                             <div class="col-sm-9 col-xs-12">
                                 @if(!$comptes->isEmpty())
                                     <select name="compte_id[]" multiple="multiple" id="multi-select">

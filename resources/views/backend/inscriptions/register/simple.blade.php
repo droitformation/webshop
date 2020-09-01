@@ -12,6 +12,19 @@
                 {{ $user->adresse_facturation->npa }} {{ $user->adresse_facturation->ville }}
             </address>
             @include('backend.inscriptions.partials.references')
+            <div class="invoice_rabais">
+
+                <h4><strong>Choix du rabais</strong></h4>
+                <div class="form-group">
+                    <!-- Only public prices -->
+                    <select name="rabais_id" class="form-control">
+                        <option value="">Choix</option>
+                        @foreach($rabais as $rabai)
+                            <option value="{{ $rabai->id }}">{{ $rabai->title }} | {{ $rabai->value }} CHF</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         </div>
 
         @if(!$colloque->prices->isEmpty())
