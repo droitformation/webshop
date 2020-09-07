@@ -14,7 +14,7 @@
                     <br/>
                         <label class="control-label text-primary">Spécifier une date et heure d'envoi</label>
 
-                        <div class="input-group date datePickerNewsletter" style="width:200px; margin-top: 60px;" id="datePickerNewsletter_{{ $campagne->id }}">
+                        <div class="input-group date datePickerNewsletter" style="width:200px; margin-top: 50px;" id="datePickerNewsletter_{{ $campagne->id }}">
                             <input type="text" class="form-control" name="date"/>
                             <span class="input-group-addon">
                                 <span class="fa fa-calendar"></span>
