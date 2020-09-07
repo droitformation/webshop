@@ -24,8 +24,9 @@
 
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
 
-    @if(\Request::is('admin/colloque/*'))
+    @if(!\Request::is('build/newsletter'))
         <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/datepicker.css');?>">
     @endif
 
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">

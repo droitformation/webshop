@@ -14,7 +14,7 @@
                     <br/>
                         <label class="control-label text-primary">Spécifier une date et heure d'envoi</label>
 
-                        <div class="input-group date datePickerNewsletter" style="width:200px; margin-top: 50px;" id="datePickerNewsletter_{{ $campagne->id }}">
+                        <div class="input-group date datePickerNewsletter" style="width:200px;" id="datePickerNewsletter_{{ $campagne->id }}">
                             <input type="text" class="form-control" name="date"/>
                             <span class="input-group-addon">
                                 <span class="fa fa-calendar"></span>
@@ -34,10 +34,10 @@
                             });
                         </script>
                     <hr/>
-                    <p class="text-danger">
+                    <div class="text-danger" style="margin-bottom: 30px;">
                         <h4><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Attention</h4>
                         Sans modification spécifié l'envoi est prévu avec un délai de 15 minutes pour permettre une éventuelle annulation.
-                    </p>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
