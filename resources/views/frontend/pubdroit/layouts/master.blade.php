@@ -7,14 +7,30 @@
 	<meta name="viewport" content="width=device-width">
 
 	<!-- Meta LinkedIn -->
-	@if(\Request::is('pubdroit/colloque/*') && isset($colloque))
-		<meta property='og:title' content="{{ $colloque->titre }}"/>
-		<meta property='og:image' content="{{ $colloque->frontend_illustration }}"/>
-		<meta property='og:description' content="{{ $colloque->description }}"/>
-		<meta property='og:url' content="{{ url('pubdroit/colloques/'.$colloque->id) }}" />
-		<meta name="author" content="Publications droit, Faculté de droit, UniNE">
-	@else
-		<meta name="author" content="Cindy Leschaud">
+	@if(\Request::is('pubdroit/colloque/*'))
+		@if(isset($colloque))
+			<meta property='og:title' content="{{ $colloque->titre }}"/>
+			@if($colloque->social_image)
+				<meta property='og:image' content="{{ secure_asset('files/colloques/illustration/'.$colloque->social_image) }}"/>
+			@else
+				<meta property='og:image' content="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}"/>
+			@endif
+			<meta property='og:description' content="{{ strip_tags($colloque->description) }}"/>
+			<meta property='og:url' content="{{ url('pubdroit/colloque/'.$colloque->id) }}" />
+			<meta name="author" content="Publications droit, Faculté de droit, UniNE">
+		@endif
+	@elseif(\Request::is('pubdroit/product/*'))
+		@if(isset($product))
+			<meta property='og:title' content="{{ $product->title }}"/>
+			@if($product->social_image)
+				<meta property='og:image' content="{{ secure_asset('files/products/'.$product->social_image) }}"/>
+			@else
+				<meta property='og:image' content="{{ secure_asset('files/products/'.$product->image) }}"/>
+			@endif
+			<meta property='og:description' content="{{ strip_tags($product->description) }}"/>
+			<meta property='og:url' content="{{ url('pubdroit/product/'.$product->id) }}" />
+			<meta name="author" content="Publications droit, Faculté de droit, UniNE">
+		@endif
 	@endif
 	<!-- Fin Meta -->
 

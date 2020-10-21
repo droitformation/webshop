@@ -348,6 +348,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
 
         // Add, edit, delete items for colloque
         //Route::get('colloque/{back?}', 'Backend\Colloque\ColloqueController@index')->middleware('back');
+        Route::post('social/colloque/{id}', 'Backend\Colloque\ColloqueController@social');
         Route::resource('colloque', 'Backend\Colloque\ColloqueController');
 
         Route::post('slide/send', 'Backend\Colloque\SlideController@send');
@@ -406,6 +407,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::resource('productattribut', 'Backend\Shop\ProductAttributeController');
         Route::resource('productlabel', 'Backend\Shop\ProductLabelController');
 
+        Route::post('social/product/{id}', 'Backend\Shop\ProductController@social');
         Route::match(['get', 'post'], 'products/{back?}', 'Backend\Shop\ProductController@index');
         Route::resource('product', 'Backend\Shop\ProductController');
 

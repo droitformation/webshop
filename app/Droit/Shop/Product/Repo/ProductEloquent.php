@@ -158,6 +158,7 @@ class ProductEloquent implements ProductInterface{
             'title'           => $data['title'],
             'teaser'          => $data['teaser'],
             'image'           => isset($data['image']) ? $data['image'] : '',
+            'social_image'    => isset($data['social_image']) ? $data['social_image'] : null,
             'description'     => $data['description'],
             'weight'          => $data['weight'],
             'sku'             => $data['sku'],
@@ -208,6 +209,8 @@ class ProductEloquent implements ProductInterface{
         {
             $product->url = (!empty($data['url']) ? $data['url'] : null);
         }
+
+        $product->social_image = isset($data['social_image']) ? $data['social_image'] : $product->social_image;
 
         $product->save();
 

@@ -258,6 +258,29 @@
             @include('backend.products.partials.label',['title' => 'Auteur',  'items' => $shopauthors, 'labels' => 'authors'])
             @include('backend.products.partials.label',['title' => 'Domaine', 'items' => $domains, 'labels' => 'domains'])
 
+            <div class="panel panel-midnightblue">
+                <div class="panel-body">
+                    <h4><i class="fa fa-globe"></i> &nbsp;Vignette pour réseau sociaux</h4>
+
+                    @if($product->social_image)
+                        <img style="height: 140px;" src="{{ secure_asset('files/products/'.$product->social_image) }}" />
+                    @endif
+
+                    <form action="{{ url('admin/social/product/'.$product->id) }}" method="post" enctype="multipart/form-data">{!! csrf_field() !!}
+                        <div class="form-group">
+                            <div class="col-md-9 col-sm-9">
+                                <div class="form-group">
+                                    <input type="file" name="file">
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-2 text-right"><button type="submit" class="btn btn-info">Ajouter</button></div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
         </div>
     </div>
 
