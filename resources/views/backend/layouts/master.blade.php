@@ -12,7 +12,7 @@
     <script src="//use.fontawesome.com/fd16a07224.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=121');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=42');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/responsive.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css?=1321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/dragdrop/dragula.min.css');?>">
@@ -23,7 +23,12 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.tagit.css');?>">
 
     <link rel='stylesheet' type='text/css' href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+
+    @if(!\Request::is('build/newsletter'))
+        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/datepicker.css');?>">
+    @endif
+
     <link href="//gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>?{{ rand(100,235000) }}">
@@ -40,6 +45,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/jquery.fancybox.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/plugins/form-select2/select2.css');?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/bootstrap-datetimepicker.css');?>" media="screen" />
 
     @if(isset($isNewsletter))
         @include('style.main', ['campagne' => isset($campagne) ? : null])

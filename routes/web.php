@@ -14,6 +14,10 @@
 Route::get('code', 'CodeController@index');
 Route::get('event', 'Api\ColloqueController@event');
 
+Route::get('conditions', function () {
+    return redirect('pubdroit/page/cg');
+});
+
 //Route::post('tracking', 'Backend\Newsletter\TrackingController@tracking');
 Route::match(['get', 'post'],'tracking', 'Backend\Newsletter\TrackingController@tracking');
 

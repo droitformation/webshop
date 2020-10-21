@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="contenu" class="col-sm-3 control-label">Description <br><small class="text-muted">Que pour admin</small></label>
+                            <label for="contenu" class="col-sm-3 control-label">Description <br><small class="text-muted">Pour l'utilisateur lors de l'inscription</small></label>
                             <div class="col-sm-7">
                                 <textarea name="description" class="form-control">{!! $rabais->description !!}</textarea>
                             </div>
@@ -67,12 +67,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                    {{--    <div class="form-group">
                             <label class="col-sm-3 control-label">Date d'expiration<br><small class="text-muted">(optionnel)</small></label>
                             <div class="col-sm-5 col-xs-8">
                                 <input type="text" class="form-control datePicker" value="{{ isset($rabais->expire_at) ? $rabais->expire_at->format('Y-m-d') : '' }}" name="expire_at">
                             </div>
-                        </div>
+                        </div>--}}
 
                         <input type="hidden" value="{{ $rabais->id }}" name="id">
 
