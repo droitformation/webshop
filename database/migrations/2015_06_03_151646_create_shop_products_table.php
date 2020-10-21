@@ -29,6 +29,7 @@ class CreateShopProductsTable extends Migration {
             $table->text('url')->nullable();
             $table->integer('rang')->default(0);
             $table->integer('abo_id')->nullable();
+            $table->string('social_image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

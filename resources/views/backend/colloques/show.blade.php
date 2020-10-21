@@ -329,6 +329,28 @@
                     @endif
                     <a target="_blank" class="btn btn-sm btn-default" href="{{ url('admin/document/'.$colloque->id.'/attestation') }}">Tester l'attestation</a>
                     <a target="_blank" class="btn btn-sm btn-default" href="{{ url('preview/inscriptioncolloque/'.$colloque->id) }}">Voir l'email</a>
+                </div>
+            </div>
+
+            <div class="panel panel-midnightblue">
+                <div class="panel-body">
+                    <h4><i class="fa fa-globe"></i> &nbsp;Vignette pour réseau sociaux</h4>
+
+                    @if($colloque->social_image)
+                        <img style="height: 140px;" src="{{ secure_asset('files/colloques/illustration/'.$colloque->social_image) }}" />
+                    @endif
+
+                    <form action="{{ url('admin/social/colloque/'.$colloque->id) }}" method="post" enctype="multipart/form-data">{!! csrf_field() !!}
+                        <div class="form-group">
+                            <div class="col-md-9 col-sm-9">
+                                <div class="form-group">
+                                    <input type="file" name="file">
+                                    <input type="hidden" name="id" value="{{ $colloque->id }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-2 text-right"><button type="submit" class="btn btn-info">Ajouter</button></div>
+                        </div>
+                    </form>
 
                 </div>
             </div>

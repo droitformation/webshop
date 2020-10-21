@@ -158,4 +158,21 @@ class ProductController extends Controller {
 
         return redirect('admin/product');
     }
+
+    public function social(Request $request)
+    {
+        $product = $this->product->find($request->input('id'));
+        $_file    = $request->file('file');
+
+        // image reseau sociaux
+        if($_file) {
+            $file = $this->upload->upload( $request->file('file') , 'files/products');
+            $product->social_image = isset($file) && !empty($file) ? $file['name'] : null;
+            $product->save();
+        }
+
+        flash('Changement de l\'image pour meta sociaux')->success();
+
+        return redirect('admin/product/'.$product->id);
+    }
 }

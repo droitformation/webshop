@@ -161,13 +161,7 @@ class ColloqueController extends Controller
 
         return redirect('admin/colloque/'.$colloque->id);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    
     public function destroy($id)
     {
         $this->colloque->delete($id);
@@ -175,6 +169,23 @@ class ColloqueController extends Controller
         flash('Le colloque supprimé')->success();
 
         return redirect('admin/colloque');
+    }
+
+    public function social(Request $request)
+    {
+        $colloque = $this->colloque->find($request->input('id'));
+        $_file    = $request->file('file');
+
+        // image reseau sociaux
+        if($_file) {
+            $file = $this->upload->upload( $request->file('file') , 'files/colloques/illustration');
+            $colloque->social_image = isset($file) && !empty($file) ? $file['name'] : null;
+            $colloque->save();
+        }
+
+        flash('Changement de l\'image pour meta sociaux')->success();
+
+        return redirect('admin/colloque/'.$colloque->id);
     }
 
 }

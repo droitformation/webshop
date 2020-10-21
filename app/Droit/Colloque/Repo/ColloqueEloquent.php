@@ -105,6 +105,7 @@ class ColloqueEloquent implements ColloqueInterface{
             'registration_at' => $data['registration_at'],
             'active_at'       => (isset($data['active_at']) ? $data['active_at'] : null),
             'visible'         => null,
+            'social_image'    => isset($data['social_image']) ? $data['social_image'] : null,
             'created_at'      => \Carbon\Carbon::now(),
             'updated_at'      => \Carbon\Carbon::now()
         ));
@@ -155,6 +156,8 @@ class ColloqueEloquent implements ColloqueInterface{
         if(isset($data['capacite'])) {
             $colloque->capacite = $data['capacite'] > 0 ? $data['capacite'] : null;
         }
+
+        $colloque->social_image = isset($data['social_image']) ? $data['social_image'] : $colloque->social_image;
 
         $colloque->save();
 
