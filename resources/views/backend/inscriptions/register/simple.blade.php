@@ -1,9 +1,7 @@
 <!-- Inscription simple -->
 <div class="clearfix"></div><hr>
-<form role="form" class="validate-form" method="POST" action="{{ url('admin/inscription') }}" data-validate="parsley" >
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+<form id="formInscription" class="validate-form" action="{{ url('admin/inscription') }}" method="post">
     <fieldset>
-
         <div class="invoice_for">
             <address>
                 <h4><strong>Facturé à:</strong></h4>
@@ -13,7 +11,6 @@
             </address>
             @include('backend.inscriptions.partials.references')
             <div class="invoice_rabais">
-
                 <h4><strong>Choix du rabais</strong></h4>
                 <div class="form-group">
                     <!-- Only public prices -->
@@ -26,17 +23,15 @@
                 </div>
             </div>
         </div>
-    </div>
+    </fieldset>
 
-</div>
-
-<register-simple
-        form="simple"
-        user_id="{{ $user->id }}"
-        _token="{{ csrf_token() }}"
-        :colloque="{{ $colloque }}"
-        :prices="{{ $colloque->price_display }}"
-        :pricelinks="{{ $colloque->price_link_display }}"></register-simple>
+    <register-simple
+            form="simple"
+            user_id="{{ $user->id }}"
+            _token="{{ csrf_token() }}"
+            :colloque="{{ $colloque }}"
+            :prices="{{ $colloque->price_display }}"
+            :pricelinks="{{ $colloque->price_link_display }}"></register-simple>
 
         <!-- Occurrences if any -->
 {{--
@@ -62,9 +57,6 @@
 
     <!-- END Inscriptions -->
 
-<form id="formInscription" class="validate-form" action="{{ url('admin/inscription') }}" method="post">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <div class="clearfix"></div><hr>
-    <fieldset id="main_fieldset">
-    </fieldset>
+    <fieldset id="main_fieldset"></fieldset>
 </form>

@@ -7,6 +7,8 @@
             <input type="hidden" name="user_id" :value="user_id">
             <input type="hidden" name="type" :value="form">
 
+
+
             <option-link
                     :form="form"
                     :colloque="colloque"

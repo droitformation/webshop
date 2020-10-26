@@ -17,9 +17,11 @@
             </div>
         </div>
 
-        <div v-if="priceoptions.length != 0" v-for="priceoption in priceoptions">
-            <h4>Merci de préciser les options</h4>
-            <option-list :participant_id="participant_id" :form="form" :colloque="priceoption.colloque" :options="priceoption.options"></option-list>
+        <div v-if="priceoptions.length > 0" v-for="priceoption in priceoptions">
+            <div v-if="priceoption.options > 0">
+               <h4>Merci de préciser les options</h4>
+               <option-list :participant_id="participant_id" :form="form" :colloque="priceoption.colloque" :options="priceoption.options"></option-list>
+            </div>
         </div>
 
         <div v-if="prix">

@@ -54,6 +54,8 @@
             @endif
 
         @endforeach
+    @else
+        <p>Aucune option</p>
     @endif
 
 </div>

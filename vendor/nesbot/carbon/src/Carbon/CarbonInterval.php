@@ -1028,7 +1028,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
      */
     public function set($name, $value = null)
     {
-        $properties = is_array($name) ? $name : [$name => $value];
+        $properties = \is_array($name) ? $name : [$name => $value];
 
         foreach ($properties as $key => $value) {
             switch (Carbon::singularUnit(rtrim($key, 'z'))) {
@@ -1262,7 +1262,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
         }
 
         try {
-            $this->set($method, count($parameters) === 0 ? 1 : $parameters[0]);
+            $this->set($method, \count($parameters) === 0 ? 1 : $parameters[0]);
         } catch (UnknownSetterException $exception) {
             if ($this->localStrictModeEnabled ?? Carbon::isStrictModeEnabled()) {
                 throw new BadFluentSetterException($method, 0, $exception);
@@ -1735,7 +1735,7 @@ class CarbonInterval extends DateInterval implements CarbonConverterInterface
      */
     public function invert($inverted = null)
     {
-        $this->invert = (func_num_args() === 0 ? !$this->invert : $inverted) ? 1 : 0;
+        $this->invert = (\func_num_args() === 0 ? !$this->invert : $inverted) ? 1 : 0;
 
         return $this;
     }

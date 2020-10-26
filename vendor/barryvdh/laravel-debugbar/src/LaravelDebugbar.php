@@ -442,7 +442,7 @@ class LaravelDebugbar extends DebugBar
             try {
                 $livewireCollector = $this->app->make('Barryvdh\Debugbar\DataCollector\LivewireCollector');
                 $this->addCollector($livewireCollector);
-            } catch (\Exception $e){
+            } catch (\Exception $e) {
                 $this->addThrowable(
                     new Exception('Cannot add Livewire Collector: ' . $e->getMessage(), $e->getCode(), $e)
                 );
