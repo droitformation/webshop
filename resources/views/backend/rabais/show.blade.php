@@ -21,7 +21,7 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option {{ ($rabais->type == 'global' ? 'selected' : '') }} value="global">Sur n'importe quel colloque</option>
-                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte(a)</option>
+                                    <option {{ ($rabais->type == 'colloque' ? 'selected' : '') }} value="colloque">Compte(s)</option>
                                 </select>
                             </div>
                         </div>
@@ -66,6 +66,13 @@
                                 </div>
                             </div>
                         </div>
+
+                    {{--    <div class="form-group">
+                            <label class="col-sm-3 control-label">Date d'expiration<br><small class="text-muted">(optionnel)</small></label>
+                            <div class="col-sm-5 col-xs-8">
+                                <input type="text" class="form-control datePicker" value="{{ isset($rabais->expire_at) ? $rabais->expire_at->format('Y-m-d') : '' }}" name="expire_at">
+                            </div>
+                        </div>--}}
 
                         <input type="hidden" value="{{ $rabais->id }}" name="id">
 

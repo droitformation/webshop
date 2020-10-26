@@ -21,7 +21,7 @@
                             <div class="col-sm-5 col-xs-8">
                                 <select class="form-control" name="type" id="rabaisSelect">
                                     <option value="global">Sur n'importe quel colloque</option>
-                                    <option selected value="colloque">Compte choisi</option>
+                                    <option selected value="colloque">Compte(s)</option>
                                 </select>
                             </div>
                         </div>
@@ -64,6 +64,13 @@
                                 </div>
                             </div>
                         </div>
+
+                      {{--  <div class="form-group">
+                            <label class="col-sm-3 control-label">Date d'expiration<br><small class="text-muted">(optionnel)</small></label>
+                            <div class="col-sm-5 col-xs-6">
+                                <input type="text" class="form-control datePicker" name="expire_at">
+                            </div>
+                        </div>--}}
 
                     </div>
                     <div class="panel-footer text-right">

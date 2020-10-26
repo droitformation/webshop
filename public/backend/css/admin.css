@@ -370,8 +370,10 @@ a:hover, a:active, a:focus {
 }
 
 .input-group-addon {
-    min-width:44px;
+    min-width: 44px;
     padding: 7px 4px;
+    font-size: 13px;
+    line-height: 16px;
     width: auto;
     font-size: 13px;
     line-height: 16px;
@@ -1568,22 +1570,7 @@ span.avis-hidden-square{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 10px 15px 20px 15px;
-    background: #f7f7f7;
-    border: 1px solid #efefef;
     margin-bottom: 30px;
-}
-
-.list_prices{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-}
-
-.list_prices .form-group:first-child{
-    width: 100%;
 }
 
 .invoice_for address {

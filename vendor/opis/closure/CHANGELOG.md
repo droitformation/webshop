@@ -1,5 +1,8 @@
 CHANGELOG
 ---------
+### v3.5.6, 2020.08.11
+
+- Fixed issue [#70](https://github.com/opis/closure/issues/70)
 
 ### v3.6.0, 2020.10.12
 

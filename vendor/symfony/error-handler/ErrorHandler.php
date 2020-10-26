@@ -419,8 +419,9 @@ class ErrorHandler
         }
 
         if (!$type || (!$log && !$throw)) {
-            return false;
+            return !$silenced && $type && $log;
         }
+        $scope = $this->scopedErrors & $type;
 
         if (false !== strpos($message, "@anonymous\0")) {
             $logMessage = $this->parseAnonymousClass($message);

@@ -17,7 +17,7 @@ return [
     'enabled' => env('DEBUGBAR_ENABLED', null),
     'except' => [
         'telescope*',
-        'horizon*',
+        'horizon*'
     ],
 
     /*
@@ -150,7 +150,6 @@ return [
                 'types' => ['SELECT'],     // Deprecated setting, is always only SELECT
             ],
             'hints'             => false,    // Show hints for common mistakes
-            'show_copy'         => false,    // Show copy button next to the query
         ],
         'mail' => [
             'full_log' => false,

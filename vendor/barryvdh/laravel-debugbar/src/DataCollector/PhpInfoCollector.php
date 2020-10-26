@@ -1,5 +1,4 @@
 <?php
-
 namespace Barryvdh\Debugbar\DataCollector;
 
 use DebugBar\DataCollector\PhpInfoCollector as DebugBarPhpInfoCollector;

@@ -86,8 +86,7 @@ class FullHttpMessageFormatter implements Formatter
         $data = $stream->__toString();
         $stream->rewind();
 
-        // all non-printable ASCII characters and <DEL> except for \t, \r, \n
-        if (preg_match('/([\x00-\x09\x0C\x0E-\x1F\x7F])/', $data)) {
+        if (preg_match('/[\x00-\x1F\x7F]/', $data)) {
             return $message.'[binary stream omitted]';
         }
 

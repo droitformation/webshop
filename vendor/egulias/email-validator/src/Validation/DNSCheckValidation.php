@@ -97,7 +97,10 @@ class DNSCheckValidation implements EmailValidation
      */
     protected function checkDns($host)
     {
-        $variant = INTL_IDNA_VARIANT_UTS46;
+        $variant = INTL_IDNA_VARIANT_2003;
+        if (defined('INTL_IDNA_VARIANT_UTS46')) {
+            $variant = INTL_IDNA_VARIANT_UTS46;
+        }
 
         $host = rtrim(idn_to_ascii($host, IDNA_DEFAULT, $variant), '.') . '.';
 
@@ -115,12 +118,11 @@ class DNSCheckValidation implements EmailValidation
     private function validateDnsRecords($host)
     {
         // Get all MX, A and AAAA DNS records for host
-        // Using @ as workaround to fix https://bugs.php.net/bug.php?id=73149
-        $dnsRecords = @dns_get_record($host, DNS_MX + DNS_A + DNS_AAAA);
+        $dnsRecords = dns_get_record($host, DNS_MX + DNS_A + DNS_AAAA);
 
 
         // No MX, A or AAAA DNS records
-        if (empty($dnsRecords) || !$dnsRecords) {
+        if (empty($dnsRecords)) {
             $this->error = new NoDNSRecord();
             return false;
         }
