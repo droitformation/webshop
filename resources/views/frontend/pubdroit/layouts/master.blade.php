@@ -15,9 +15,9 @@
 			@else
 				<meta property='og:image' content="{{ secure_asset('files/colloques/illustration/'.$colloque->illustration->path) }}"/>
 			@endif
-			<meta property='og:description' content="{{ strip_tags($colloque->description) }}"/>
+			<meta property='og:description' content="{{ strip_tags($colloque->description_og) }}"/>
 			<meta property='og:url' content="{{ url('pubdroit/colloque/'.$colloque->id) }}" />
-			<meta name="author" content="Publications droit, Faculté de droit, UniNE">
+			<meta name="author" content="Faculté de droit, UniNE">
 		@endif
 	@elseif(\Request::is('pubdroit/product/*'))
 		@if(isset($product))
@@ -29,7 +29,7 @@
 			@endif
 			<meta property='og:description' content="{{ strip_tags($product->description) }}"/>
 			<meta property='og:url' content="{{ url('pubdroit/product/'.$product->id) }}" />
-			<meta name="author" content="Publications droit, Faculté de droit, UniNE">
+			<meta name="author" content="{{ $product->authors_list }}">
 		@endif
 	@endif
 	<!-- Fin Meta -->
