@@ -103,7 +103,7 @@ const appVue = new Vue({
                     let colloque = $(this).data('colloque');
                     let id       = $(this).data('id');
 
-                    axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloqueoptions', {colloque_id : colloque, price_link_id : id}).then(function (response) {
+                    axios.post(location.protocol + "//" + location.host + "/" + 'pubdroit/colloqueoptions',{colloque_id : colloque, price_link_id : id}).then(function (response) {
                         console.log(response.data);
                         $('#colloque_options_wrapper').empty().append(response.data);
                     }).catch(function (error) { console.log(error);});
