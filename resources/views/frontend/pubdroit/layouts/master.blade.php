@@ -70,7 +70,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/parsley.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/validation.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/checkout/checkout.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/checkout/checkout.css');?>?{{ rand(100,43000) }}">
 	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/sweetalert.css');?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo secure_asset('frontend/pubdroit/css/jquery.steps.css');?>">
 	<link rel="stylesheet" type="text/css" href="https://unpkg.com/microtip/microtip.css">

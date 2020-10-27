@@ -1,6 +1,7 @@
 <template>
     <div>
         <p class="option-title">{{ colloque.titre }}</p>
+
         <div v-for="(option,index) in options">
             <div v-if="option.type == 'checkbox'">
                 <div class="form-group type-choix" >
@@ -22,6 +23,9 @@
                 </div>
             </div>
         </div>
+
+      <input type="hidden" :name="normal" />&nbsp;
+
     </div>
 </template>
 <script>
@@ -40,7 +44,11 @@
                 }
             },
         },
-        computed: {},
+        computed: {
+            normal(){
+              return this.form == 'multiple' ? 'addons['+this.colloque.id+'][options]['+this.participant_id+']' : 'colloques['+this.colloque.id+'][options]' ;
+            },
+        },
         methods: {
             checkbox: function (index) {
                 return this.form == 'multiple' ? 'addons['+this.colloque.id+'][options]['+this.participant_id+'][]' : 'colloques['+this.colloque.id+'][options]['+index+']' ;

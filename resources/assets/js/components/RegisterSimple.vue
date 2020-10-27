@@ -2,12 +2,12 @@
     <div>
         <form id="simpleForm" :action="url + path" method="post">
 
+           <div id="invoice_for"></div>
+
             <input type="hidden" name="_token" :value="_token">
             <input type="hidden" name="colloque_id" :value="colloque.id">
             <input type="hidden" name="user_id" :value="user_id">
             <input type="hidden" name="type" :value="form">
-
-
 
             <option-link
                     :form="form"
@@ -16,9 +16,11 @@
                     :pricelinks="pricelinks"></option-link>
         </form>
 
-        <div class="clearfix"></div><br/>
+      <div class="clearfix"></div>
+      <hr>
 
-        <button class="btn btn-danger" id="submitAll" @click="validate($event)" type="button">Inscrire</button>
+      <p class="text-right"><button class="btn btn-danger" id="submitAll" @click="validate($event)" type="button">Inscrire</button></p>
+
     </div>
 </template>
 
@@ -37,8 +39,16 @@
         components:{
             'option-link' : OptionLink
         },
-        mounted: function () {},
+        mounted: function () {
+          this.getInfo();
+        },
         methods: {
+            getInfo(){
+              axios.post(this.url + 'admin/inscription/registerinfos',{user_id :this.user_id, colloque_id: this.colloque.id, type: 'simple' }).then(function (response) {
+                console.log(response.data);
+                $('#invoice_for').empty().append(response.data);
+              }).catch(function (error) { console.log(error);});
+            },
             validate(event){
                 this.inValidation = true;
 

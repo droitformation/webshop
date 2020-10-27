@@ -7,6 +7,7 @@ use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Droit\Inscription\Repo\GroupeInterface;
+use App\Droit\Inscription\Repo\RabaisInterface;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -19,14 +20,16 @@ class InscriptionController extends Controller
     protected $register;
     protected $user;
     protected $groupe;
+    protected $rabais;
     
-    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register, GroupeInterface $groupe)
+    public function __construct(ColloqueInterface $colloque, InscriptionInterface $inscription, UserInterface $user, InscriptionWorkerInterface $register, GroupeInterface $groupe, RabaisInterface $rabais)
     {
         $this->colloque    = $colloque;
         $this->inscription = $inscription;
         $this->register    = $register;
         $this->user        = $user;
         $this->groupe      = $groupe;
+        $this->rabais      = $rabais;
     }
 
     /**
@@ -88,5 +91,17 @@ class InscriptionController extends Controller
         $this->inscription->updateColumn(['id' => $request->input('id') , 'present' => $request->input('presence') ? 1 : null]);
 
         echo 'ok';exit;
+    }
+
+    public function registerinfos(Request $request)
+    {
+        $user  = $this->user->find($request->input('user_id'));
+
+        if($request->input('type',null) == 'simple'){
+            $colloque  = $this->colloque->find($request->input('colloque_id'));
+            $rabais    = $this->rabais->byCompte($colloque->compte_id);
+        }
+
+        return view('backend.inscriptions.register.infos')->with(['rabais' => $rabais ?? null, 'user' => $user])->render();
     }
 }

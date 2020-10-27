@@ -456,7 +456,7 @@ input[type="checkbox"]:checked.options + label{
 
 #resumeWrapper dl.link dt.heading{
     font-size: 17px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .vue-form-wizard .wizard-btn{
@@ -471,7 +471,6 @@ input[type="checkbox"]:checked.options + label{
     padding: 8px 12px;
     border: none;
 }
-
 
 .label-info-tooltip{
     display: flex;
@@ -544,7 +543,7 @@ input[type="checkbox"]:checked.options + label{
 }
 
 .vue-form-wizard .wizard-tab-content {
-    padding: 40px 0 20px 0 !important;
+    padding: 40px 0 40px 0 !important;
 }
 
 .vue-form-wizard.md .wizard-icon-circle {

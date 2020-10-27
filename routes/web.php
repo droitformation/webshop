@@ -313,6 +313,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('inscription/type', 'Api\InscriptionController@inscription');
         Route::post('inscription/generate', 'Api\InscriptionController@generate');
         Route::post('inscription/edit', 'Api\InscriptionController@edit');
+        Route::post('inscription/registerinfos', 'Api\InscriptionController@registerinfos');
 
         // Desinscriptions
         Route::get('desinscription/{id}', 'Backend\Colloque\DesinscriptionController@index');

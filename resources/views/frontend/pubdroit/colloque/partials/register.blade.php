@@ -89,7 +89,7 @@
 
                     <input name="user_id" value="{{ Auth::user()->id }}" type="hidden">
                     <input name="colloque_id" value="{{ $colloque->id }}" type="hidden">
-
+                    <input name="type" value="simple" type="hidden">
                 </tab-content>
                 <template type="primary" slot="finish"><button class="btn wizard-btn primary">Envoyer</button></template>
             </form-wizard>

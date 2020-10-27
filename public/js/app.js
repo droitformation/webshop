@@ -5827,8 +5827,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'participant_id', 'form'],
@@ -5910,6 +5908,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['options', 'colloque', 'type', 'form', 'participant_id'],
   data: function data() {
@@ -5925,7 +5927,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  computed: {},
+  computed: {
+    normal: function normal() {
+      return this.form == 'multiple' ? 'addons[' + this.colloque.id + '][options][' + this.participant_id + ']' : 'colloques[' + this.colloque.id + '][options]';
+    }
+  },
   methods: {
     checkbox: function checkbox(index) {
       return this.form == 'multiple' ? 'addons[' + this.colloque.id + '][options][' + this.participant_id + '][]' : 'colloques[' + this.colloque.id + '][options][' + index + ']';
@@ -6089,6 +6095,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'form', '_token', 'participant_id', 'user_id'],
@@ -6107,9 +6121,22 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     'option-link': _OptionLink_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.getInfo();
+  },
   watch: {},
   methods: {
+    getInfo: function getInfo() {
+      axios.post(this.url + 'admin/inscription/registerinfos', {
+        user_id: this.user_id,
+        colloque_id: this.colloque.id
+      }).then(function (response) {
+        console.log(response.data);
+        $('#invoice_for').empty().append(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     add: function add() {
       this.participants.push({
         'name': '',
@@ -6117,6 +6144,9 @@ __webpack_require__.r(__webpack_exports__);
         'colloques': [],
         'options': []
       });
+    },
+    remove: function remove(index) {
+      this.participants.splice(index, 1);
     },
     validate: function validate(event) {
       this.inValidation = true;
@@ -7057,6 +7087,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'form', '_token', 'participant_id', 'user_id'],
@@ -7070,8 +7104,22 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     'option-link': _OptionLink_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.getInfo();
+  },
   methods: {
+    getInfo: function getInfo() {
+      axios.post(this.url + 'admin/inscription/registerinfos', {
+        user_id: this.user_id,
+        colloque_id: this.colloque.id,
+        type: 'simple'
+      }).then(function (response) {
+        console.log(response.data);
+        $('#invoice_for').empty().append(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     validate: function validate(event) {
       this.inValidation = true;
       var valid = $("#simpleForm").valid();
@@ -41049,28 +41097,22 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(_vm.priceoptions, function(priceoption) {
-        return _vm.priceoptions.length > 0
-          ? _c("div", [
-              priceoption.options > 0
-                ? _c(
-                    "div",
-                    [
-                      _c("h4", [_vm._v("Merci de préciser les options")]),
-                      _vm._v(" "),
-                      _c("option-list", {
-                        attrs: {
-                          participant_id: _vm.participant_id,
-                          form: _vm.form,
-                          colloque: priceoption.colloque,
-                          options: priceoption.options
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e()
-            ])
-          : _vm._e()
+        return _c(
+          "div",
+          [
+            _c("h4", [_vm._v("Merci de préciser les options")]),
+            _vm._v(" "),
+            _c("option-list", {
+              attrs: {
+                participant_id: _vm.participant_id,
+                form: _vm.form,
+                colloque: priceoption.colloque,
+                options: priceoption.options
+              }
+            })
+          ],
+          1
+        )
       }),
       _vm._v(" "),
       _vm.prix
@@ -41211,7 +41253,10 @@ var render = function() {
               ])
             : _vm._e()
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c("input", { attrs: { type: "hidden", name: _vm.normal } }),
+      _vm._v(" \n\n")
     ],
     2
   )
@@ -41320,13 +41365,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", [
-      _c("a", { staticClass: "btn btn-sm btn-info", on: { click: _vm.add } }, [
-        _c("i", { staticClass: "fa fa-plus-circle" }),
-        _vm._v("  Ajouter un participant")
-      ])
-    ]),
-    _vm._v(" "),
     _c(
       "form",
       {
@@ -41337,6 +41375,19 @@ var render = function() {
         }
       },
       [
+        _c("div", { attrs: { id: "invoice_for" } }),
+        _vm._v(" "),
+        _c("p", [
+          _c(
+            "a",
+            { staticClass: "btn btn-sm btn-info", on: { click: _vm.add } },
+            [
+              _c("i", { staticClass: "fa fa-plus-circle" }),
+              _vm._v("  Ajouter un participant")
+            ]
+          )
+        ]),
+        _vm._v(" "),
         _c("input", {
           attrs: { type: "hidden", name: "_token" },
           domProps: { value: _vm._token }
@@ -41363,6 +41414,22 @@ var render = function() {
               "fieldset",
               { staticClass: "field_clone" },
               [
+                _c("p", { staticClass: "text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.remove(participant_id)
+                        }
+                      }
+                    },
+                    [_vm._v("x")]
+                  )
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", [_vm._v("Nom du participant")]),
                   _vm._v(" "),
@@ -41437,30 +41504,35 @@ var render = function() {
               1
             )
           ])
-        })
+        }),
+        _vm._v(
+          "\n\n\n    " +
+            _vm._s(
+              _vm.formData ? _vm.unserialize(_vm.formData) : _vm.formData
+            ) +
+            "\n\n    "
+        ),
+        _c("div", { staticClass: "clearfix" }),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-right" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              attrs: { id: "submitAll", type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.validate($event)
+                }
+              }
+            },
+            [_vm._v("Inscrire")]
+          )
+        ])
       ],
       2
-    ),
-    _vm._v(
-      "\n\n    " +
-        _vm._s(_vm.formData ? _vm.unserialize(_vm.formData) : _vm.formData) +
-        "\n\n    "
-    ),
-    _c("div", { staticClass: "clearfix" }),
-    _c("br"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-danger",
-        attrs: { id: "submitAll", type: "button" },
-        on: {
-          click: function($event) {
-            return _vm.validate($event)
-          }
-        }
-      },
-      [_vm._v("Inscrire")]
     )
   ])
 }
@@ -43278,6 +43350,8 @@ var render = function() {
         attrs: { id: "simpleForm", action: _vm.url + _vm.path, method: "post" }
       },
       [
+        _c("div", { attrs: { id: "invoice_for" } }),
+        _vm._v(" "),
         _c("input", {
           attrs: { type: "hidden", name: "_token" },
           domProps: { value: _vm._token }
@@ -43311,21 +43385,24 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "clearfix" }),
-    _c("br"),
     _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-danger",
-        attrs: { id: "submitAll", type: "button" },
-        on: {
-          click: function($event) {
-            return _vm.validate($event)
+    _c("hr"),
+    _vm._v(" "),
+    _c("p", { staticClass: "text-right" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { id: "submitAll", type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.validate($event)
+            }
           }
-        }
-      },
-      [_vm._v("Inscrire")]
-    )
+        },
+        [_vm._v("Inscrire")]
+      )
+    ])
   ])
 }
 var staticRenderFns = []

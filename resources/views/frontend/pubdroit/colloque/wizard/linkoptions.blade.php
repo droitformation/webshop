@@ -1,6 +1,5 @@
-<div class="options-list">
-
-    @if(!$colloques->isEmpty())
+@if(!$colloques->isEmpty())
+    <div class="options-list">
         @foreach($colloques as $colloque)
 
             <h4>Merci de préciser pour {{ $colloque->titre }}</h4>
@@ -60,5 +59,7 @@
             @endif
 
         @endforeach
-    @endif
-</div>
+    </div>
+@else
+    <input type="hidden" name="colloques[{{ $colloque->id }}][options]">
+@endif

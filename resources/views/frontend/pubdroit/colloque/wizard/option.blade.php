@@ -1,3 +1,5 @@
+<input type="hidden" name="colloques[{{ $colloque->id }}][options]">
+
 @if(!$colloque->options->isEmpty())
     <div class="options-list">
 
@@ -7,6 +9,7 @@
 
         @if(!$types->isEmpty())
             @foreach($types as $type => $options)
+
                 @if($type == 'checkbox')
                     <h5>Merci de préciser &nbsp;<small class="text-muted">(facultatif)</small></h5>
                     <div class='wrapper'>
@@ -55,5 +58,10 @@
 
             @endforeach
         @endif
+    </div>
+@else
+    <div class="options-list">
+        <h4>Options pour {{ $colloque->titre }}</h4>
+        <p>Aucune option pour le colloque</p>
     </div>
 @endif

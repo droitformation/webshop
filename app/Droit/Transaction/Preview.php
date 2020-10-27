@@ -44,9 +44,9 @@ class Preview
 
     public function getHtml()
     {
-        $this->html .= $this->price();
         $this->html .= $this->occurrences($this->colloque,array_only($this->data,['occurrences']));
         $this->html .= $this->linkoptions(array_only($this->data,['colloques']));
+        $this->html .= $this->price();
 
         $this->html .= isset($this->data['reference_no']) && !empty($this->data['reference_no']) ? '<dl class="ref"><dt>Votre référence</dt><dd><i>'.$this->data['reference_no'].'</i></dd></dl>' : '';
         $this->html .= isset($this->data['transaction_no']) && !empty($this->data['transaction_no']) ? '<dl class="ref"><dt>Votre N° commande</dt><dd><i>'.$this->data['transaction_no'].'</i></dd></dl>' : '';
@@ -141,7 +141,9 @@ class Preview
             foreach ($data['colloques'] as $colloque_id => $options){
                 $colloque  = $this->repo_colloque->find($colloque_id);
                 $html .= '<dl class="link"><dt class="heading"><strong>'.$colloque->titre.'</strong></dt>';
-                $html .= $this->options($colloque,$options);
+                if(!empty($options)){
+                    $html .= $this->options($colloque,$options);
+                }
                 $html .= '</dl>';
             }
         }

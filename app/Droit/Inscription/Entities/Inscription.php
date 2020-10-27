@@ -233,7 +233,7 @@ class Inscription extends Model
 
     public function getIsFreeAttribute()
     {
-        if(isset($this->price) && $this->price->price > 0) {
+        if(isset($this->main_price) && $this->main_price->price > 0) {
             return false;
         }
 

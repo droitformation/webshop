@@ -1,9 +1,11 @@
 <template>
     <div>
 
-        <p><a class="btn btn-sm btn-info" @click="add"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
+       <form id="multiplpeForm" :action="url + path" method="post">
 
-        <form id="multiplpeForm" :action="url + path" method="post">
+       <div id="invoice_for"></div>
+
+        <p><a class="btn btn-sm btn-info" @click="add"><i class="fa fa-plus-circle"></i> &nbsp;Ajouter un participant</a></p>
 
             <input type="hidden" name="_token" :value="_token">
             <input type="hidden" name="colloque_id" :value="colloque.id">
@@ -12,6 +14,9 @@
 
             <div v-for="(participant,participant_id) in participants">
                 <fieldset class="field_clone">
+
+                    <p class="text-right"><button type="button" @click="remove(participant_id)" class="btn btn-sm btn-danger">x</button></p>
+
                     <div class="form-group">
                         <label>Nom du participant</label>
                         <input name="participant[]" v-model="participant.name" required class="form-control participant-input" value="" type="text">
@@ -31,13 +36,16 @@
                         :pricelinks="pricelinks"></option-link>
                 </fieldset>
             </div>
-        </form>
+
 
         {{ formData ? unserialize(formData) : formData }}
 
-        <div class="clearfix"></div><br/>
+        <div class="clearfix"></div>
+        <hr>
 
-        <button class="btn btn-danger" id="submitAll" @click="validate($event)" type="button">Inscrire</button>
+        <p class="text-right"><button class="btn btn-danger" id="submitAll" @click="validate($event)" type="button">Inscrire</button></p>
+
+       </form>
     </div>
 </template>
 
@@ -61,9 +69,17 @@
         components:{
             'option-link' : OptionLink
         },
-        mounted: function () {},
+        mounted: function () {
+          this.getInfo();
+        },
         watch: {},
         methods: {
+            getInfo(){
+                axios.post(this.url + 'admin/inscription/registerinfos',{user_id :this.user_id, colloque_id: this.colloque.id }).then(function (response) {
+                  console.log(response.data);
+                  $('#invoice_for').empty().append(response.data);
+                }).catch(function (error) { console.log(error);});
+            },
             add(){
                 this.participants.push({
                     'name' : '',
@@ -71,6 +87,9 @@
                     'colloques' : [],
                     'options' : [],
                 });
+            },
+            remove(index) {
+                this.participants.splice(index,1)
             },
             validate(event){
                 this.inValidation = true;

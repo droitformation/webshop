@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Inscription\Repo\InscriptionInterface;
 use App\Droit\Inscription\Worker\InscriptionWorkerInterface;
-use App\Droit\Inscription\Repo\RabaisInterface;;
+use App\Droit\Inscription\Repo\RabaisInterface;
 use App\Droit\User\Repo\UserInterface;
 
 use Illuminate\Http\Request;
