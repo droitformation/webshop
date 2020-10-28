@@ -25,7 +25,7 @@
                    <tr>
                        <!-- Bloc image gauche-->
                        <td v-if="type == 4" valign="top" align="center" width="160" class="resetMarge">
-                           <image-newsletter :visible="isImage" :mode="mode" :type="type" @imageUploaded="imageUploadedUpdate" :model="model" ></image-newsletter>
+                           <image-newsletter :visible="isImage" :mode="mode" :type="type" @imageUploaded="imageUploadedUpdate" :model="model"></image-newsletter>
                        </td>
                        <td v-if="type == 4" width="25" class="resetMarge"></td><!-- space -->
 
@@ -42,7 +42,6 @@
                            <img v-if="type == 10 || categorie" :src="imgcategorie" class="img-responsive">
                        </td>
                    </tr>
-
                 </table>
                 <!-- Bloc content-->
             </div>
