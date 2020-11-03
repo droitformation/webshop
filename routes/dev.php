@@ -1416,7 +1416,8 @@ Route::get('factory', function()
     $translatedDateString = $date->translatedFormat($format);
 
     echo '<pre>';
-    print_r($translatedDateString);
+    echo \Carbon\Carbon::now()->formatLocalized('d F Y');
+    //print_r($translatedDateString);
     echo '</pre>';
     exit;
 

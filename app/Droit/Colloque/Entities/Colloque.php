@@ -162,6 +162,14 @@ class Colloque extends Model implements HasMedia
         return $html;
     }
 
+    public function getDescriptionOgAttribute()
+    {
+        $html  = $this->location ? $this->location->name.' | ' : '';
+        $html .= $this->event_date;
+
+        return $html;
+    }
+
     public function getEventDateAttribute()
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');

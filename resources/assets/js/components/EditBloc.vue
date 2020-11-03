@@ -64,6 +64,7 @@
                                     <input type="hidden" :value="campagne.id" name="campagne">
                                     <input type="hidden" :value="bloc.groupe_id" name="groupe_id">
                                     <input v-if="model" type="hidden" :name="path + '_id'" :value="selected" />
+                                    <input type="hidden" v-if="type == 10" :value="model.image" name="image">
                                     <input v-for="chose in choosen" type="hidden" name="arrets[]" :value="chose.id" />
                                     <button type="submit" class="btn btn-sm btn-warning">Envoyer</button>
                                     <button type="button" @submit.prevent @click="makeVisible" class="btn btn-sm btn-default cancelCreate">Annuler</button>

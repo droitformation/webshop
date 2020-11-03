@@ -2331,7 +2331,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = (_props$components$dat = {
   props: ['type', 'campagne', '_token', 'url', 'title', 'model', 'site', 'mode'],
@@ -3445,6 +3444,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocs_ModelContent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocs/ModelContent.vue */ "./resources/assets/js/components/blocs/ModelContent.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_3__);
+//
 //
 //
 //
@@ -37357,6 +37357,13 @@ var render = function() {
                                     name: _vm.path + "_id"
                                   },
                                   domProps: { value: _vm.selected }
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.type == 10
+                              ? _c("input", {
+                                  attrs: { type: "hidden", name: "image" },
+                                  domProps: { value: _vm.model.image }
                                 })
                               : _vm._e(),
                             _vm._v(" "),

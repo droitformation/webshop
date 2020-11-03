@@ -13,6 +13,15 @@ class Product extends Model{
 
     protected $fillable = ['title', 'teaser', 'image', 'social_image','description', 'weight','price', 'sku', 'is_downloadable','download_link','hidden','url','rang','pages','reliure','edition_at','format','notify_url'];
 
+    public function getAuthorsListAttribute()
+    {
+        if($this->authors->count() > 5){
+            return 'Faculté de droit, UniNE';
+        }
+
+        return $this->authors->implode('name',', ');
+    }
+
     public function getReferenceAttribute()
     {
         $attribute = $this->attributs->first(function ($item, $key) {

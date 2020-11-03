@@ -161,7 +161,7 @@ class FeatureInscriptionAdminTest extends TestCase
         $data = ['colloque_id' => $colloque->id, 'user_id' => $person->id,'type' => 'simple'];
         $response = $this->call('POST', 'admin/inscription/make', $data);
 
-        $response->assertSeeText('Choix du rabais');
+        //$response->assertSeeText('Choix du rabais');
 
         $data = [
             'type'        => 'simple' ,
