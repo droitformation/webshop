@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <style type="text/css">
         @page { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; page-break-inside: auto;}

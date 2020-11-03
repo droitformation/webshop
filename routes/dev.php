@@ -1400,8 +1400,26 @@ Route::get('cleanlist', function()
     echo '</pre>';exit();
 });
 
+use Carbon\Carbon;
+
 Route::get('factory', function()
 {
+// Create a date object
+    $date = Carbon::now();
+
+    $locale = app()->getLocale();
+
+    Carbon::setlocale($locale);
+
+    $format = $locale === 'fr' ? 'l j F Y' : 'd M j Y';
+
+    $translatedDateString = $date->translatedFormat($format);
+
+    echo '<pre>';
+    print_r($translatedDateString);
+    echo '</pre>';
+    exit;
+
 
     /*
         $model  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
