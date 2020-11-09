@@ -111,14 +111,16 @@ class Generate{
             return $this->model->price_link->colloques;
         }
 
-        // multiples inscriptions, model group
-        $colloques = $this->model->inscriptions->map(function ($inscription, $key) {
-            return $inscription->price_link_id ? $inscription->price_link->colloques : null;
-        })->flatten(1)->reject(function ($colloque) {
-            return empty($colloque);
-        });
+        if($this->getType() == 'group'){
+            // multiples inscriptions, model group
+            $colloques = isset($this->model->inscriptions) ? $this->model->inscriptions->map(function ($inscription, $key) {
+                return $inscription->price_link_id ? $inscription->price_link->colloques : null;
+            })->flatten(1)->reject(function ($colloque) {
+                return empty($colloque);
+            }) : collect([]);
+        }
 
-        return !$colloques->isEmpty() ? $colloques : null;
+        return isset($colloques) && !$colloques->isEmpty() ? $colloques : null;
     }
 
     public function getAbo()

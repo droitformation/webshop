@@ -364,7 +364,7 @@ class GenerateTest extends TestCase
         $group->inscriptions = collect([$inscription1,$inscription2,$inscription3]);
 
         $generate = new \App\Droit\Generate\Entities\Generate($group);
-        $result = $generate->getColloques();
+        $result   = $generate->getColloques();
 
         $this->assertEquals($result->pluck('id'), collect([$colloque1->id,$colloque2->id]));
     }

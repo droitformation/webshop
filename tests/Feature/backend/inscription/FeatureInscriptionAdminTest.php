@@ -664,7 +664,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription/send', ['id' => $inscription->id, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
 
-        $this->assertCount(1, $this->flashMessagesForMessage('Email envoyé'));
+        $response->assertSessionHas('flash_notification.0.message', 'Email envoyé');
     }
 
     /**
