@@ -35,16 +35,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if(!$group->inscriptions->isEmpty())
                                     <!-- Inscription loop -->
                                     @foreach($group->inscriptions as $inscription)
 
                                         <?php $inscription->load('colloque','rappels','participant'); ?>
 
                                         @include('backend.users.partials.single-group', ['inscription' => $inscription])
-
                                     @endforeach
-
-                                <!-- END Inscription loop -->
+                                    <!-- END Inscription loop -->
+                                @endif
                                 </tbody>
                             </table>
 
@@ -54,9 +54,9 @@
                             <!-- END Inscription updates buttons -->
 
                             <!-- Modals add to and edit group -->
-                            @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $inscription->colloque])
+                            @include('backend.inscriptions.modals.add', ['group' => $group, 'colloque' => $group->colloque])
                             @include('backend.inscriptions.modals.change', ['group' => $group])
-                            @include('backend.users.modals.sendgroup', ['group' => $inscription->groupe]) <!-- Modal send inscription -->
+                            @include('backend.users.modals.sendgroup', ['group' => $group]) <!-- Modal send inscription -->
                             <!--END Inscription dependences -->
 
                         </div>

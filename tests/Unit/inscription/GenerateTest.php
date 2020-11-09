@@ -315,6 +315,60 @@ class GenerateTest extends TestCase
         $this->assertEquals($response->pluck('id'), collect([$colloque1->id,$colloque2->id]));
     }
 
+    public function testGetColloquesGroupePriceLink()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $person   = $make->makeUser();
+        $colloque1 = $make->colloque();
+        $colloque2 = $make->colloque();
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 150, 'description' => 'Price normal','colloque_id' => $colloque1->id]);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 0, 'description' => 'Price gratuit','colloque_id' => $colloque1->id]);
+        $price3     = factory(\App\Droit\Price\Entities\Price::class)->create(['price' => 0, 'description' => 'Price gratuit','colloque_id' => $colloque2->id]);
+
+        $price_link = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create(['price' => 300, 'description' => 'Price linked']);
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id'=> $person->id, 'colloque_id' => $colloque1->id]); // $colloque1 soutient
+
+        // participant 1
+        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'group_id'        => $group->id,
+            'colloque_id'     => $colloque1->id,
+            'price_id'        => null,
+            'price_link_id'   => $price_link->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $participant1 = factory(\App\Droit\Inscription\Entities\Participant::class)->create(['name' => 'participant_1','inscription_id' => $inscription1->id]);
+
+        // participant 1
+        $inscription2 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'group_id'        => $group->id,
+            'colloque_id'     => $colloque2->id,
+            'price_id'        => $price3->id,
+            'price_linked_id' => $price_link->id,
+        ]);
+
+        $participant2 = factory(\App\Droit\Inscription\Entities\Participant::class)->create(['name' => 'participant_1','inscription_id' => $inscription2->id]);
+
+        // participant 2
+        $inscription3 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'group_id'        => $group->id,
+            'colloque_id'     => $colloque1->id,
+            'price_id'        => $price1->id,
+        ]);
+
+        $participant3 = factory(\App\Droit\Inscription\Entities\Participant::class)->create(['name' => 'participant_2','inscription_id' => $inscription3->id]);
+
+        $group->inscriptions = collect([$inscription1,$inscription2,$inscription3]);
+
+        $generate = new \App\Droit\Generate\Entities\Generate($group);
+        $result = $generate->getColloques();
+
+        $this->assertEquals($result->pluck('id'), collect([$colloque1->id,$colloque2->id]));
+    }
+
     public function testGetAdresse()
     {
         $make     = new \tests\factories\ObjectFactory();
@@ -375,23 +429,19 @@ class GenerateTest extends TestCase
     {
         $group = factory(\App\Droit\Inscription\Entities\Groupe::class)->make(['user_id'=> '20', 'colloque_id' => '12']);
 
-        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,3)->make(['group_id' => '5', 'colloque_id' => '12']);
-
+        $inscriptions = factory(\App\Droit\Inscription\Entities\Inscription::class,3)->create(['group_id' => '5', 'colloque_id' => '12']);
         $inscriptions = $inscriptions->map(function ($item, $key) {
-            $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->make(['id' => $key ,'name' => 'Cindy_'.$key ]);
+            factory(\App\Droit\Inscription\Entities\Participant::class)->create(['inscription_id' => $item->id ,'name' => 'Cindy_'.$item->id ]);
             return $item;
         });
 
         $group->inscriptions = $inscriptions;
 
-        foreach($group->inscriptions as $index => $inscription)
-        {
+        foreach($group->inscriptions as $index => $inscription) {
             $generate = new \App\Droit\Generate\Entities\Generate($inscription);
-
             $response = $generate->getParticipant();
 
-            $this->assertEquals($response, 'Cindy_'.$index);
+            $this->assertEquals($response, $inscription->participant->name);
         }
     }
-
 }

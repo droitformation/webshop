@@ -106,11 +106,19 @@ class Generate{
 
     public function getColloques()
     {
+        // simple inscription passed
         if($this->getType() == 'inscription' && $this->model->price_link_id){
             return $this->model->price_link->colloques;
         }
 
-        return null;
+        // multiples inscriptions, model group
+        $colloques = $this->model->inscriptions->map(function ($inscription, $key) {
+            return $inscription->price_link_id ? $inscription->price_link->colloques : null;
+        })->flatten(1)->reject(function ($colloque) {
+            return empty($colloque);
+        });
+
+        return !$colloques->isEmpty() ? $colloques : null;
     }
 
     public function getAbo()

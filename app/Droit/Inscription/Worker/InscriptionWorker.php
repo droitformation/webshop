@@ -151,6 +151,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         });
     }
 
+    /*
+     * $model
+     * simple => inscription
+     * multiple => groupe
+     * */
     public function makeDocuments($model,$refresh = false)
     {
         $annexes = $model->colloque->annexe;

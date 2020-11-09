@@ -4,7 +4,6 @@
         <h4>Choix du prix applicable</h4>
 
         <div class="list_prices">
-
             <div class="price-select">
                 <div class="form-group" v-if="prices.length != 0">
                     <label><strong>Prix</strong></label>
@@ -18,8 +17,10 @@
         </div>
 
         <div v-for="priceoption in priceoptions">
+            <div v-if="!empty(priceoption.options)">
               <h4>Merci de préciser les options</h4>
-              <option-list :participant_id="participant_id" :form="form" :colloque="priceoption.colloque" :options="priceoption.options"></option-list>
+            </div>
+            <option-list :participant_id="participant_id" :form="form" :colloque="priceoption.colloque" :options="priceoption.options"></option-list>
         </div>
 
         <div v-if="prix">
@@ -60,6 +61,9 @@
             },
         },
         methods: {
+            empty(obj){
+              return Object.keys(obj).length === 0;
+            },
             getOptions(){
                 var self = this;
                 axios.post('/vue/options',{

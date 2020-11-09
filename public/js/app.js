@@ -5827,6 +5827,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'participant_id', 'form'],
@@ -5850,6 +5851,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    empty: function empty(obj) {
+      return Object.keys(obj).length === 0;
+    },
     getOptions: function getOptions() {
       var self = this;
       axios.post('/vue/options', {
@@ -5912,6 +5916,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['options', 'colloque', 'type', 'form', 'participant_id'],
   data: function data() {
@@ -5933,6 +5939,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    empty: function empty(obj) {
+      return Object.keys(obj).length === 0;
+    },
     checkbox: function checkbox(index) {
       return this.form == 'multiple' ? 'addons[' + this.colloque.id + '][options][' + this.participant_id + '][]' : 'colloques[' + this.colloque.id + '][options][' + index + ']';
     },
@@ -41107,7 +41116,9 @@ var render = function() {
         return _c(
           "div",
           [
-            _c("h4", [_vm._v("Merci de préciser les options")]),
+            !_vm.empty(priceoption.options)
+              ? _c("div", [_c("h4", [_vm._v("Merci de préciser les options")])])
+              : _vm._e(),
             _vm._v(" "),
             _c("option-list", {
               attrs: {
@@ -41197,6 +41208,8 @@ var render = function() {
       _c("p", { staticClass: "option-title" }, [
         _vm._v(_vm._s(_vm.colloque.titre))
       ]),
+      _vm._v(" "),
+      _vm.empty(_vm.options) ? _c("div", [_vm._v("Pas d'options")]) : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.options, function(option, index) {
         return _c("div", [

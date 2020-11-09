@@ -5,7 +5,7 @@
             @foreach($colloques->chunk(2) as $row)
                 <tr>
                     @foreach($row as $colloque)
-                        <td>
+                        <td width="50%">
                             <h3 style="font-size: 14px; font-weight: bold;">{{ $colloque->titre }}</h3>
                             <h4 style="margin-bottom: 5px;font-weight: normal;">{{ $colloque->soustitre }}</h4>
 

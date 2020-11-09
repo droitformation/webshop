@@ -1,6 +1,8 @@
 <template>
     <div>
+
         <p class="option-title">{{ colloque.titre }}</p>
+        <div v-if="empty(options)">Pas d'options</div>
 
         <div v-for="(option,index) in options">
             <div v-if="option.type == 'checkbox'">
@@ -50,6 +52,9 @@
             },
         },
         methods: {
+            empty(obj){
+              return Object.keys(obj).length === 0;
+            },
             checkbox: function (index) {
                 return this.form == 'multiple' ? 'addons['+this.colloque.id+'][options]['+this.participant_id+'][]' : 'colloques['+this.colloque.id+'][options]['+index+']' ;
             },
