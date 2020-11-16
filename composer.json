@@ -25,7 +25,7 @@
 		"maatwebsite/excel": "3.1.*",
 		"mailgun/mailgun-php": "^2.6",
 		"mailjet/mailjet-apiv3-php": "^1.4",
-		"msurguy/honeypot": "dev-master",Doctrine\DBAL\Driver\PDOMySql\Driver
+		"msurguy/honeypot": "dev-master",
 		"php-http/guzzle6-adapter": "^1.0",
 		"queueworker/sansdaemon": "^1.1",
 		"rguedes/pdfmerger": "^1.0",
