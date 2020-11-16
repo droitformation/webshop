@@ -79,7 +79,7 @@
 
                         @endif
 
-                        <form action="{{ url('build/campagne/'.$campagne->id) }}" method="POST" class="pull-left">
+                        <form action="{{ url('build/campagne/'.$campagne->id) }}" method="POST" class="text-right">
                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                             <button type="submit" data-action="campagne {{ $campagne->sujet }}" data-what="Supprimer" class="btn btn-danger btn-xs deleteNewsAction"><i class="fa fa-remove"></i></button>
                         </form>

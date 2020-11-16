@@ -229,7 +229,7 @@
 
                     <form action="{{ url('admin/productattribut') }}" method="POST">{!! csrf_field() !!}
                         <div class="form-group">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <label>Type</label>
                                 @if(!$attributes->isEmpty())
                                     <select class="form-control" name="attribute_id">
@@ -240,7 +240,7 @@
                                     </select>
                                 @endif
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <label>Valeur (ou titre pour rappel)</label>
                                 <div class="input-group">
                                     <input type="text" name="value" class="form-control" placeholder="Valeur">

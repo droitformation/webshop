@@ -35,7 +35,7 @@
                                         <p><strong>{{ $sondage->colloque->titre }} | {{ $sondage->colloque->event_date }}</strong></p>
                                     @endif
                                 </div>
-                                <div class="col-md-6 no-print">
+                                <div class="col-md-5 no-print">
                                     <form action="{{ url('admin/reponse/'.$sondage->id) }}" method="POST" data-validate="parsley"> {!! csrf_field() !!}
                                         <label for="message" class="control-label">
                                             Trier par

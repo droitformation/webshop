@@ -24,7 +24,7 @@
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-filter"></i> &nbsp;Trier</button>
                                 <a class="btn btn-default" href="{{ url('admin/products') }}">Tous</a>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Rechercher</label>
                                 <div class="input-group">
                                     <input type="text" name="term" class="form-control" placeholder="ISBN, titre">
@@ -33,7 +33,7 @@
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
-                            <div class="col-md-1 text-right">
+                            <div class="col-md-2 text-right">
                                 <label>&nbsp;</label><br/>
                                 <a href="{{ url('admin/product/create') }}" id="addProduct" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>
                             </div>
@@ -56,14 +56,14 @@
                                 <div class="col-md-4">
                                     <div class="card">
                                         <div class="row">
-                                            <div class="col-md-10">
+                                            <div class="col-md-9">
                                                 <p>
                                                     <img style="height: 50px; float:left; margin-right: 10px;" src="{{ secure_asset('files/products/'.$product->image) }}" />
                                                     <a href="{{ url('admin/product/'.$product->id) }}"><span class="title">{{ $product->title }}</span></a>
                                                 </p>
                                             </div>
-                                            <div class="col-md-2 text-right">
-                                                <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbsp;éditer&nbsp;</a>
+                                            <div class="col-md-3 text-right">
+                                                <a href="{{ url('admin/product/'.$product->id) }}" class="btn btn-xs btn-info">&nbspéditer&nbsp;</a>
                                             </div>
                                         </div>
                                     </div>
