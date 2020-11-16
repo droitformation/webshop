@@ -25,6 +25,7 @@ public/files/seminaires
 public/colloques
 public/newsletter/js/env.js
 storage/designpond_registry.json
+storage/droitformation_registry.json
 public/files/downloads
 public/newsletter/
 public/storage
@@ -35,3 +36,4 @@ public/backend/js/redactorold/
 public/backend/js/redactorold1/
 public/files/imports
 storage/test/test.pdf
+.phpunit.result.cache
