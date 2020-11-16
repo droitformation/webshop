@@ -2,16 +2,21 @@
 
 namespace Spatie\Backup\Notifications\Notifications;
 
-use Spatie\Backup\Notifications\BaseNotification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Messages\SlackAttachment;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Spatie\Backup\Events\HealthyBackupWasFound as HealthyBackupWasFoundEvent;
+use Spatie\Backup\Notifications\BaseNotification;
 
 class HealthyBackupWasFound extends BaseNotification
 {
     /** @var \Spatie\Backup\Events\HealthyBackupWasFound */
     protected $event;
+
+    public function __construct(HealthyBackupWasFoundEvent $event)
+    {
+        $this->event = $event;
+    }
 
     public function toMail(): MailMessage
     {
@@ -37,12 +42,5 @@ class HealthyBackupWasFound extends BaseNotification
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields($this->backupDestinationProperties()->toArray());
             });
-    }
-
-    public function setEvent(HealthyBackupWasFoundEvent $event)
-    {
-        $this->event = $event;
-
-        return $this;
     }
 }

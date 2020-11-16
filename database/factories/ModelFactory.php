@@ -323,7 +323,7 @@ $factory->define(App\Droit\Shop\Coupon\Entities\Coupon::class, function (Faker\G
     ];
 });
 
-$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'price', function (Faker\Generator $faker) {
+/*$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'price', function (Faker\Generator $faker) {
 
     $tomorrow = \Carbon\Carbon::now()->addDay();
 
@@ -346,7 +346,7 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'priceshipping'
         'title'      => 'Price shipping',
         'expire_at'  => $tomorrow
     ];
-});
+});*/
 
 $factory->define(App\Droit\Shop\Rappel\Entities\Rappel::class, function (Faker\Generator $faker) {
     return [
@@ -376,7 +376,7 @@ $factory->define(App\Droit\Shop\Cart\Entities\Cart::class, function (Faker\Gener
     ];
 });
 
-$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'two', function (Faker\Generator $faker) {
+/*$factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'two', function (Faker\Generator $faker) {
 
     $tomorrow = \Carbon\Carbon::now()->addDay();
 
@@ -400,7 +400,7 @@ $factory->defineAs(App\Droit\Shop\Coupon\Entities\Coupon::class, 'three', functi
         'product_id' => null,
         'expire_at'  => $tomorrow
     ];
-});
+});*/
 
 $factory->define(App\Droit\Shop\Categorie\Entities\Categorie::class, function (Faker\Generator $faker) {
     return [
@@ -566,7 +566,7 @@ $factory->define(App\Droit\Sondage\Entities\Avis::class, function (Faker\Generat
 });
 
 
-$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
+/*$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
     return [
         'first_name' => 'Cindy',
         'last_name'  => 'Leschaud',
@@ -582,7 +582,7 @@ $factory->defineAs(App\Droit\User\Entities\User::class, 'user' ,function ($facto
         'email'      => 'jane.doe@gmail.com',
         'password'   => bcrypt('jane2')
     ];
-});
+});*/
 
 $factory->define(App\Droit\Reminder\Entities\Reminder::class, function (Faker\Generator $faker) {
 
@@ -678,13 +678,13 @@ $factory->define(App\Droit\Newsletter\Entities\Newsletter_campagnes::class, func
     ];
 });
 
-$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
+/*$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
     return [
         'name'       => 'Cindy Leschaud',
         'email'      => 'cindy.leschaud@unine.ch',
         'password'   => bcrypt('cindy2')
     ];
-});
+});*/
 
 $factory->define(App\Droit\Newsletter\Entities\Newsletter_lists::class, function (Faker\Generator $faker) {
     return [

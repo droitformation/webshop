@@ -151,10 +151,6 @@ class SearchAdminAdresseTest extends TestCase
         ]);
     }
 
-
-    /**
-     * @expectedException \App\Exceptions\AdresseRemoveException
-     */
     public function testDeleteAdresseValidation()
     {
         $make = new \tests\factories\ObjectFactory();
@@ -170,12 +166,10 @@ class SearchAdminAdresseTest extends TestCase
         $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
         $validator->activate();
 
-        $this->expectExceptionMessage('L\'adresse est lié à des commandes, L\'adresse est rattaché à un compte utilisateur');
+        $errors = $this->app['session.store']->all();
+        $this->assertEquals('L\'adresse est rattaché à un compte utilisateur, L\'adresse est lié à des commandes',$errors['flash_notification'][0]->message);
     }
 
-    /**
-     * @expectedException \App\Exceptions\AdresseRemoveException
-     */
     public function testDeleteAdresseWithOrdersValidation()
     {
         $make = new \tests\factories\ObjectFactory();
@@ -187,7 +181,8 @@ class SearchAdminAdresseTest extends TestCase
         $validator = new \App\Droit\Adresse\Worker\AdresseValidation($adresse);
         $validator->activate();
 
-        $this->expectExceptionMessage('L\'adresse est lié à des commandes');
+        $errors = $this->app['session.store']->all();
+        $this->assertEquals('L\'adresse est lié à des commandes',$errors['flash_notification'][0]->message);
     }
 
     public function testUserName()

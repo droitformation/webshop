@@ -61,6 +61,8 @@ class WorkerAccountTest extends TestCase
      */
     public function testValidationFails()
     {
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+
         $worker = \App::make('App\Droit\User\Worker\AccountWorkerInterface');
         $reponse = $worker->createAccount([]);
     }

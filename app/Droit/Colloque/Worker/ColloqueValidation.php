@@ -20,7 +20,8 @@ class ColloqueValidation
         $this->hasAttestation()->hasPrice()->hasInvoice();
 
         if(!empty($this->errors)){
-            throw new \App\Exceptions\ColloqueMissingInfoException(implode(', ', $this->errors));
+            flash(implode(', ', $this->errors))->warning();
+            return redirect()->back();
         }
 
         return true;

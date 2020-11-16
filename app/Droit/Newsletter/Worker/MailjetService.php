@@ -391,7 +391,9 @@ class MailjetService implements MailjetServiceInterface{
     public function hasList()
     {
         if(!$this->list){
-            throw new \App\Exceptions\ListNotSetException('Attention aucune liste indiqueé');
+            //throw new \App\Exceptions\ListNotSetException('Attention aucune liste indiqueé');
+            flash('Attention aucune liste indiqué')->warning();
+            return redirect()->back();
         }
     }
 }

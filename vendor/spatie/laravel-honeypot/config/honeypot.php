@@ -18,6 +18,12 @@ return [
     'randomize_name_field_name' => env('HONEYPOT_RANDOMIZE', true),
 
     /*
+     * When this is activated, requests will be checked if
+     * form is submitted faster than this amount of seconds
+     */
+    'valid_from_timestamp' => env('HONEYPOT_VALID_FROM_TIMESTAMP', true),
+
+    /*
      * This field contains the name of a form field that will be used to verify
      * if the form wasn't submitted too quickly. Make sure this name does not
      * collide with a form field that is actually used.
@@ -38,6 +44,13 @@ return [
      * `Spatie\Honeypot\SpamResponder\SpamResponder`
      */
     'respond_to_spam_with' => BlankPageResponder::class,
+
+    /*
+     * When activated, requests will be checked if honeypot fields are missing,
+     * if so the request will be stamped as spam. Be careful! When using the
+     * global middleware be sure to add honeypot fields to each form.
+     */
+    'honeypot_fields_required_for_all_forms' => false,
 
     /*
      * This switch determines if the honeypot protection should be activated.

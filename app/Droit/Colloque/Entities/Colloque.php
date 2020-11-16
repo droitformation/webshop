@@ -5,13 +5,12 @@ namespace App\Droit\Colloque\Entities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Colloque extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes, InteractsWithMedia;
 
     protected $table = 'colloques';
 
@@ -21,10 +20,6 @@ class Colloque extends Model implements HasMedia
         'titre', 'soustitre', 'sujet', 'social_image','remarques', 'themes','capacite','notice','start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
         'location_id', 'compte_id', 'visible', 'bon', 'facture', 'email' ,'adresse_id','created_at', 'updated_at','url','slide_text'
     ];
-
-    public function registerMediaConversions(Media $media = null){}
-    public function registerMediaCollections(){}
-    public function registerAllMediaConversions(){}
 
     public function getIllustrationAttribute()
     {

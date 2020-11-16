@@ -7,6 +7,7 @@ use Closure;
 use Exception;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Concerns\BuildsQueries;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Pagination\Paginator;
@@ -74,7 +75,7 @@ class Builder
      */
     protected $passthru = [
         'insert', 'insertOrIgnore', 'insertGetId', 'insertUsing', 'getBindings', 'toSql', 'dump', 'dd',
-        'exists', 'doesntExist', 'count', 'min', 'max', 'avg', 'average', 'sum', 'getConnection',
+        'exists', 'doesntExist', 'count', 'min', 'max', 'avg', 'average', 'sum', 'getConnection', 'raw', 'getGrammar',
     ];
 
     /**
@@ -232,7 +233,7 @@ class Builder
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and')
     {
-        if ($column instanceof Closure) {
+        if ($column instanceof Closure && is_null($operator)) {
             $column($query = $this->model->newQueryWithoutRelationships());
 
             $this->query->addNestedWhereQuery($query->getQuery(), $boolean);
@@ -263,7 +264,7 @@ class Builder
      * @param  \Closure|array|string|\Illuminate\Database\Query\Expression  $column
      * @param  mixed  $operator
      * @param  mixed  $value
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @return $this
      */
     public function orWhere($column, $operator = null, $value = null)
     {
@@ -384,6 +385,8 @@ class Builder
     {
         $result = $this->find($id, $columns);
 
+        $id = $id instanceof Arrayable ? $id->toArray() : $id;
+
         if (is_array($id)) {
             if (count($result) === count(array_unique($id))) {
                 return $result;
@@ -420,7 +423,7 @@ class Builder
      * @param  array  $values
      * @return \Illuminate\Database\Eloquent\Model|static
      */
-    public function firstOrNew(array $attributes, array $values = [])
+    public function firstOrNew(array $attributes = [], array $values = [])
     {
         if (! is_null($instance = $this->where($attributes)->first())) {
             return $instance;
@@ -509,7 +512,7 @@ class Builder
     public function value($column)
     {
         if ($result = $this->first([$column])) {
-            return $result->{$column};
+            return $result->{Str::afterLast($column, '.')};
         }
     }
 
@@ -897,6 +900,17 @@ class Builder
     }
 
     /**
+     * Determine if the given model has a scope.
+     *
+     * @param  string  $scope
+     * @return bool
+     */
+    public function hasNamedScope($scope)
+    {
+        return $this->model && $this->model->hasNamedScope($scope);
+    }
+
+    /**
      * Call the given local model scopes.
      *
      * @param  array|string  $scopes
@@ -917,10 +931,7 @@ class Builder
             // Next we'll pass the scope callback to the callScope method which will take
             // care of grouping the "wheres" properly so the logical order doesn't get
             // messed up when adding scopes. Then we'll return back out the builder.
-            $builder = $builder->callScope(
-                [$this->model, 'scope'.ucfirst($scope)],
-                (array) $parameters
-            );
+            $builder = $builder->callNamedScope($scope, (array) $parameters);
         }
 
         return $builder;
@@ -971,7 +982,7 @@ class Builder
      * @param  array  $parameters
      * @return mixed
      */
-    protected function callScope(callable $scope, $parameters = [])
+    protected function callScope(callable $scope, array $parameters = [])
     {
         array_unshift($parameters, $this);
 
@@ -990,6 +1001,20 @@ class Builder
         }
 
         return $result;
+    }
+
+    /**
+     * Apply the given named scope on the current builder instance.
+     *
+     * @param  string  $scope
+     * @param  array  $parameters
+     * @return mixed
+     */
+    protected function callNamedScope($scope, array $parameters = [])
+    {
+        return $this->callScope(function (...$parameters) use ($scope) {
+            return $this->model->callNamedScope($scope, $parameters);
+        }, $parameters);
     }
 
     /**
@@ -1110,9 +1135,9 @@ class Builder
         $results = [];
 
         foreach ($relations as $name => $constraints) {
-            // If the "name" value is a numeric key, we can assume that no
-            // constraints have been specified. We'll just put an empty
-            // Closure there, so that we can treat them all the same.
+            // If the "name" value is a numeric key, we can assume that no constraints
+            // have been specified. We will just put an empty Closure there so that
+            // we can treat these all the same while we are looping through them.
             if (is_numeric($name)) {
                 $name = $constraints;
 
@@ -1143,7 +1168,15 @@ class Builder
     protected function createSelectWithConstraint($name)
     {
         return [explode(':', $name)[0], static function ($query) use ($name) {
-            $query->select(explode(',', explode(':', $name)[1]));
+            $query->select(array_map(static function ($column) use ($query) {
+                if (Str::contains($column, '.')) {
+                    return $column;
+                }
+
+                return $query instanceof BelongsToMany
+                        ? $query->getRelated()->getTable().'.'.$column
+                        : $column;
+            }, explode(',', explode(':', $name)[1])));
         }];
     }
 
@@ -1172,6 +1205,19 @@ class Builder
         }
 
         return $results;
+    }
+
+    /**
+     * Apply query-time casts to the model instance.
+     *
+     * @param  array  $casts
+     * @return $this
+     */
+    public function withCasts($casts)
+    {
+        $this->model->mergeCasts($casts);
+
+        return $this;
     }
 
     /**
@@ -1368,8 +1414,8 @@ class Builder
             return $callable(...$parameters);
         }
 
-        if ($this->model !== null && method_exists($this->model, $scope = 'scope'.ucfirst($method))) {
-            return $this->callScope([$this->model, $scope], $parameters);
+        if ($this->hasNamedScope($method)) {
+            return $this->callNamedScope($method, $parameters);
         }
 
         if (in_array($method, $this->passthru)) {

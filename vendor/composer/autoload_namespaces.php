@@ -8,14 +8,13 @@ $baseDir = dirname($vendorDir);
 return array(
     'Venturecraft\\Revisionable' => array($vendorDir . '/venturecraft/revisionable/src'),
     'SimpleSoftwareIO\\QrCode\\' => array($vendorDir . '/simplesoftwareio/simple-qrcode/src'),
-    'ShvetsGroup\\LaravelEmailDatabaseLog\\' => array($vendorDir . '/shvetsgroup/laravel-email-database-log/src'),
     'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
     'PDFMerger' => array($vendorDir . '/rguedes/pdfmerger/Classes'),
     'Msurguy\\Honeypot\\' => array($vendorDir . '/msurguy/honeypot/src'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),
-    'Mailgun' => array($vendorDir . '/mailgun/mailgun-php/src'),
     'Laracasts\\Flash' => array($vendorDir . '/laracasts/flash/src'),
     'InlineStyle' => array($vendorDir . '/inlinestyle/inlinestyle'),
+    'Droitformation\\DatabaseLog\\' => array($vendorDir . '/droitformation/databaselog/src'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

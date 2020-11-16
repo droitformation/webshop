@@ -159,7 +159,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-		DesignPond\Registry\RegistryServiceProvider::class,
+        Droitformation\Registry\RegistryServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
@@ -167,7 +167,7 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
-		ShvetsGroup\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
+        Droitformation\DatabaseLog\DatabaseLogServiceProvider::class,
 		Msurguy\Honeypot\HoneypotServiceProvider::class,
 		App\Providers\NewsletterServiceProvider::class,
 
@@ -245,7 +245,7 @@ return [
         'Excel'      => Maatwebsite\Excel\Facades\Excel::class,
         'PDF'        => Barryvdh\DomPDF\Facade::class,
         'QrCode'     => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-		'Registry'   => DesignPond\Registry\Facades\Registry::class,
+        'Registry'   => Droitformation\Registry\Facades\Registry::class,
 		'Alert'      => Vinkla\Alert\Facades\Alert::class,
 		'Honeypot'   => Msurguy\Honeypot\HoneypotFacade::class,
         'Arr'        => Illuminate\Support\Arr::class,

@@ -115,7 +115,9 @@ class FeatureProductTest extends TestCase
         $validator = new \App\Droit\Shop\Product\Worker\ProductValidation($product);
         $validator->activate();
 
-        $this->expectExceptionMessage('Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement');
+        $errors = $this->app['session.store']->all();
+        $this->assertEquals('Le livre doit avoir une référence ainsi que l\'édition comme attributs pour devenir un abonnement',$errors['flash_notification'][0]->message);
+
     }
 
     public function testExternalProductNotInNewOrderList()

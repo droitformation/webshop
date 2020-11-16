@@ -3,15 +3,15 @@
 namespace Spatie\Backup\Tasks\Backup;
 
 use Exception;
+use Illuminate\Database\ConfigurationUrlParser;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Spatie\DbDumper\DbDumper;
-use Spatie\DbDumper\Databases\MySql;
-use Spatie\DbDumper\Databases\Sqlite;
-use Spatie\DbDumper\Databases\MongoDb;
-use Spatie\DbDumper\Databases\PostgreSql;
-use Illuminate\Database\ConfigurationUrlParser;
 use Spatie\Backup\Exceptions\CannotCreateDbDumper;
+use Spatie\DbDumper\Databases\MongoDb;
+use Spatie\DbDumper\Databases\MySql;
+use Spatie\DbDumper\Databases\PostgreSql;
+use Spatie\DbDumper\Databases\Sqlite;
+use Spatie\DbDumper\DbDumper;
 
 class DbDumperFactory
 {
@@ -20,6 +20,7 @@ class DbDumperFactory
     public static function createFromConnection(string $dbConnectionName): DbDumper
     {
         $parser = new ConfigurationUrlParser();
+
         try {
             $dbConfig = $parser->parseConfiguration(config("database.connections.{$dbConnectionName}"));
         } catch (Exception $e) {
@@ -33,7 +34,7 @@ class DbDumperFactory
             );
         }
 
-        $dbDumper = static::forDriver($dbConfig['driver'])
+        $dbDumper = static::forDriver($dbConfig['driver'] ?? '')
             ->setHost(Arr::first(Arr::wrap($dbConfig['host'] ?? '')))
             ->setDbName($dbConfig['database'])
             ->setUserName($dbConfig['username'] ?? '')
@@ -44,7 +45,7 @@ class DbDumperFactory
         }
 
         if ($dbDumper instanceof MongoDb) {
-            $dbDumper->setAuthenticationDatabase(config('database.connections.mongodb.dump.mongodb_user_auth') ?? '');
+            $dbDumper->setAuthenticationDatabase($dbConfig['dump']['mongodb_user_auth'] ?? '');
         }
 
         if (isset($dbConfig['port'])) {
@@ -53,6 +54,10 @@ class DbDumperFactory
 
         if (isset($dbConfig['dump'])) {
             $dbDumper = static::processExtraDumpParameters($dbConfig['dump'], $dbDumper);
+        }
+
+        if (isset($dbConfig['unix_socket'])) {
+            $dbDumper = $dbDumper->setSocket($dbConfig['unix_socket']);
         }
 
         return $dbDumper;

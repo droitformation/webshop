@@ -58,13 +58,19 @@ class MailjetServiceTest extends TestCase
         $this->assertEquals(1, 1);
     }
 
-    /**
-     * @expectedException \App\Exceptions\ListNotSetException
-     */
+
     public function testNoListException()
     {
+        $response = \Mockery::mock('\Mailjet\Response');
+
+        $this->mailjet->shouldReceive('get')->once()->andReturn($response);// called in get
+        $response->shouldReceive('success','getData')->andReturn(true);
+
         $worker = new \App\Droit\Newsletter\Worker\MailjetService($this->mailjet,$this->resources);
         $result = $worker->getSubscribers();
+
+        $errors = $this->app['session.store']->all();
+        $this->assertEquals('Attention aucune liste indiqué',$errors['flash_notification'][0]->message);
     }
 
     /**

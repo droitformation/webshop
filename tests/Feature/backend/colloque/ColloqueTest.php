@@ -20,6 +20,8 @@ class ColloqueTest extends TestCase
         $user = factory(\App\Droit\User\Entities\User::class)->create();
         $user->roles()->attach(1);
         $this->actingAs($user);
+
+       // $this->withoutExceptionHandling();
     }
 
     public function tearDown(): void
@@ -31,7 +33,7 @@ class ColloqueTest extends TestCase
     public function testIntersectAnnexes()
     {
         $annexes = ['bon','facture','bv'];
-        $result  = (count(array_intersect($annexes, ['bon','facture'])) == count(['bon','facture']) ? true : false);
+        $result  = count(array_intersect($annexes, ['bon','facture'])) == count(['bon','facture']);
 
         $this->assertTrue($result);
     }
@@ -155,9 +157,6 @@ class ColloqueTest extends TestCase
         ]);
     }
 
-    /**
-     * @expectedException \App\Exceptions\ColloqueMissingInfoException
-     */
     public function testColloqueValidationFails()
     {
         $make     = new \tests\factories\ObjectFactory();
@@ -168,7 +167,10 @@ class ColloqueTest extends TestCase
         $validator = new \App\Droit\Colloque\Worker\ColloqueValidation($colloque);
         $validator->activate();
 
-        $this->expectExceptionMessage('Il manque les infos d\'attestation, Il manque au moins un prix');
+        $errors = $this->app['session.store']->all();
+
+        $this->assertEquals('Il manque au moins un prix',$errors['flash_notification'][0]->message);
+
     }
 
     public function testColloqueValidation()

@@ -95,7 +95,8 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     public function send($data, $user, $attachements, $email)
     {
         if(substr(strrchr($email, "@"), 1) == 'publications-droit.ch'){
-            throw new \App\Exceptions\EmailSubstituteException($email);
+            flash('L\'email '.$email.' est un email de substitution et n\'est pas valide pour l\'envoi de confirmation.')->error();
+            return redirect()->back();
         }
 
         \Mail::send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements,$email) {

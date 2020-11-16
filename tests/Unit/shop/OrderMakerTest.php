@@ -510,7 +510,9 @@ class OrderMakerTest extends TestCase
      */
     public function testGetUserOrCreateAdresseFromOrder()
     {
-        $make    = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+        $make = \App::make('App\Droit\Shop\Order\Worker\OrderMakerInterface');
+
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
 
         // Create a new adresse
         // Validation fails

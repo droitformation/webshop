@@ -18,7 +18,8 @@ class AdresseValidation
         $this->hasUser()->hasOrdersOrInscriptions();
 
         if(!empty($this->errors)){
-            throw new \App\Exceptions\AdresseRemoveException(implode(', ', $this->errors));
+            flash(implode(', ', $this->errors))->warning();
+            return redirect()->back();
         }
 
         return true;

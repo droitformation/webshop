@@ -1,14 +1,11 @@
 # Mailgun PHP client
 
-This is the Mailgun PHP SDK. This SDK contains methods for easily interacting 
-with the Mailgun API. 
-Below are examples to get you started. For additional examples, please see our 
-official documentation 
-at http://documentation.mailgun.com
+This is the Mailgun PHP SDK. This SDK contains methods for easily interacting
+with the Mailgun API. Below are examples to get you started. For additional
+examples, please see our official documentation at http://documentation.mailgun.com
 
 [![Latest Version](https://img.shields.io/github/release/mailgun/mailgun-php.svg?style=flat-square)](https://github.com/mailgun/mailgun-php/releases)
 [![Build Status](https://img.shields.io/travis/mailgun/mailgun-php/master.svg?style=flat-square)](https://travis-ci.org/mailgun/mailgun-php)
-[![StyleCI](https://styleci.io/repos/11654443/shield?branch=master)](https://styleci.io/repos/11654443)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/mailgun/mailgun-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/mailgun/mailgun-php)
 [![Quality Score](https://img.shields.io/scrutinizer/g/mailgun/mailgun-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/mailgun/mailgun-php)
 [![Total Downloads](https://img.shields.io/packagist/dt/mailgun/mailgun-php.svg?style=flat-square)](https://packagist.org/packages/mailgun/mailgun-php)
@@ -25,25 +22,23 @@ composer:
 curl -sS https://getcomposer.org/installer | php
 ```
 
-The Mailgun api client is not hard coupled to Guzzle or any other library that sends HTTP messages. It uses an abstraction 
-called HTTPlug. This will give you the flexibilty to choose what PSR-7 implementation and HTTP client to use. 
+The Mailgun API Client is not hard coupled to Guzzle, Buzz or any other library that sends
+HTTP messages. Instead, it uses the [PSR-18](https://www.php-fig.org/psr/psr-18/) client abstraction.
+This will give you the flexibility to choose what
+[PSR-7 implementation and HTTP client](https://packagist.org/providers/php-http/client-implementation)
+you want to use. 
 
 If you just want to get started quickly you should run the following command: 
 
 ```bash
-php composer.phar require mailgun/mailgun-php php-http/curl-client guzzlehttp/psr7
+composer require mailgun/mailgun-php kriswallsmith/buzz nyholm/psr7
 ```
-
-### Why requiring so many packages?
-
-Mailgun has a dependency on the virtual package
-[php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation) which requires you to install **an** adapter, but we do not care which one. That is an implementation detail in your application. We also need **a** PSR-7 implementation and **a** message factory. 
-
-You do not have to use the `php-http/curl-client` if you do not want to. You may use the `php-http/guzzle6-adapter`. Read more about the virtual packages, why this is a good idea and about the flexibility it brings at the [HTTPlug docs](http://docs.php-http.org/en/latest/httplug/users.html).
 
 ## Usage
 
-You should always use Composer's autoloader in your application to automatically load the your dependencies. All examples below assumes you've already included this in your file:
+You should always use Composer autoloader in your application to automatically load
+your dependencies. All the examples below assume you've already included this in your
+file:
 
 ```php
 require 'vendor/autoload.php';
@@ -53,11 +48,12 @@ use Mailgun\Mailgun;
 Here's how to send a message using the SDK:
 
 ```php
-# First, instantiate the SDK with your API credentials
-$mg = Mailgun::create('key-example');
+// First, instantiate the SDK with your API credentials
+$mg = Mailgun::create('key-example'); // For US servers
+$mg = Mailgun::create('key-example', 'https://api.eu.mailgun.net'); // For EU servers
 
-# Now, compose and send your message.
-# $mg->messages()->send($domain, $params);
+// Now, compose and send your message.
+// $mg->messages()->send($domain, $params);
 $mg->messages()->send('example.com', [
   'from'    => 'bob@example.com',
   'to'      => 'sally@example.com',
@@ -70,8 +66,8 @@ Attention: `$domain` must match to the domain you have configured on [app.mailgu
 
 ### All usage examples
 
-You find more detailed documentation at [/doc](doc/index.md) and on 
-[https://documentation.mailgun.com](https://documentation.mailgun.com/api_reference.html).
+You will find more detailed documentation at [/doc](doc/index.md) and on 
+[https://documentation.mailgun.com](https://documentation.mailgun.com/en/latest/api_reference.html).
 
 ### Response
 
@@ -97,7 +93,7 @@ use Mailgun\Hydrator\ArrayHydrator;
 $configurator = new HttpClientConfigurator();
 $configurator->setApiKey('key-example');
 
-$mg = Mailgun::configure($configurator, new ArrayHydrator());
+$mg = new Mailgun($configurator, new ArrayHydrator());
 $data = $mg->domains()->show('example.com');
 
 foreach ($data['receiving_dns_records'] as $record) {
@@ -112,12 +108,12 @@ the API calls.
 
 ### Debugging
 
-Debugging the PHP SDK can be really helpful when things aren't working quite right. 
+Debugging the PHP SDK can be helpful when things aren't working quite right. 
 To debug the SDK, here are some suggestions: 
 
-Set the endpoint to Mailgun's Postbin. A Postbin is a web service that allows you to 
-post data, which is then displayed through a browser. This allows you to quickly determine
-what is actually being transmitted to Mailgun's API. 
+Set the endpoint to Mailgun's Postbin. A Postbin is a web service that allows you to
+post data, which then you can display it through a browser. Using Postbin is an easy way
+to quickly determine what data you're transmitting to Mailgun's API.
 
 **Step 1 - Create a new Postbin.**  
 Go to http://bin.mailgun.net. The Postbin will generate a special URL. Save that URL. 
@@ -125,13 +121,18 @@ Go to http://bin.mailgun.net. The Postbin will generate a special URL. Save that
 **Step 2 - Instantiate the Mailgun client using Postbin.**  
 
 *Tip: The bin id will be the URL part after bin.mailgun.net. It will be random generated letters and numbers. 
-For example, the bin id in this URL, http://bin.mailgun.net/aecf68de, is "aecf68de".*
+For example, the bin id in this URL (http://bin.mailgun.net/aecf68de) is `aecf68de`.*
 
 ```php
+use Mailgun\HttpClient\HttpClientConfigurator;
+use Mailgun\Hydrator\NoopHydrator;
+
 $configurator = new HttpClientConfigurator();
 $configurator->setEndpoint('http://bin.mailgun.net/aecf68de');
+$configurator->setApiKey('key-example');
 $configurator->setDebug(true);
-$mg = Mailgun::configure($configurator);
+
+$mg = new Mailgun($configurator, new NoopHydrator());
 
 # Now, compose and send your message.
 $mg->messages()->send('example.com', [
@@ -160,18 +161,19 @@ batch messaging is eliminated!
 If you are using a framework you might consider these composer packages to make the framework integration easier. 
 
 * [tehplague/swiftmailer-mailgun-bundle](https://github.com/tehplague/swiftmailer-mailgun-bundle) for Symfony
-* [Bogardo/Mailgun](https://github.com/Bogardo/Mailgun) for Laravel
 * [katanyoo/yii2-mailgun-mailer](https://github.com/katanyoo/yii2-mailgun-mailer) for Yii2
 * [narendravaghela/cakephp-mailgun](https://github.com/narendravaghela/cakephp-mailgun) for CakePHP
+* [drupal/mailgun](https://www.drupal.org/project/mailgun) for Drupal
 
 ## Contribute
 
-We are currently building a new object oriented API client. Feel free to contribute in any way. As an example you may: 
-* Trying out dev-master the code
+This SDK is an Open Source under the MIT license. It is, thus, maintained by collaborators and contributors.
+
+Feel free to contribute in any way. As an example you may: 
+* Trying out the `dev-master` code
 * Create issues if you find problems
 * Reply to other people's issues
 * Review PRs
-* Write PR. You find our current milestone [here](https://github.com/mailgun/mailgun-php/milestone/1) 
 
 ### Running the test code
 

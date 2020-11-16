@@ -18,7 +18,8 @@ class ProductValidation
         $this->hasAttributes();
 
         if(!empty($this->errors)){
-            throw new \App\Exceptions\ProductMissingInfoException(implode(', ', $this->errors));
+            flash(implode(', ', $this->errors))->warning();
+            return redirect()->back();
         }
 
         return true;

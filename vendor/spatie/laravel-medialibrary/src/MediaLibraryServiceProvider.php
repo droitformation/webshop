@@ -3,19 +3,45 @@
 namespace Spatie\MediaLibrary;
 
 use Illuminate\Support\ServiceProvider;
-use Spatie\MediaLibrary\Commands\CleanCommand;
-use Spatie\MediaLibrary\Commands\ClearCommand;
-use Spatie\MediaLibrary\Filesystem\Filesystem;
-use Spatie\MediaLibrary\Commands\RegenerateCommand;
-use Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator;
+use Spatie\MediaLibrary\Conversions\Commands\RegenerateCommand;
+use Spatie\MediaLibrary\MediaCollections\Commands\CleanCommand;
+use Spatie\MediaLibrary\MediaCollections\Commands\ClearCommand;
+use Spatie\MediaLibrary\MediaCollections\Filesystem;
+use Spatie\MediaLibrary\MediaCollections\MediaRepository;
+use Spatie\MediaLibrary\MediaCollections\Models\Observers\MediaObserver;
 use Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator;
+use Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator;
 
 class MediaLibraryServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->registerPublishables();
+
+        $mediaClass = config('media-library.media_model');
+
+        $mediaClass::observe(new MediaObserver());
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'media-library');
+    }
+
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/media-library.php', 'media-library');
+
+        $this->app->singleton(MediaRepository::class, function () {
+            $mediaClass = config('media-library.media_model');
+
+            return new MediaRepository(new $mediaClass);
+        });
+
+        $this->registerCommands();
+    }
+
+    protected function registerPublishables(): void
+    {
         $this->publishes([
-            __DIR__.'/../config/medialibrary.php' => config_path('medialibrary.php'),
+            __DIR__.'/../config/media-library.php' => config_path('media-library.php'),
         ], 'config');
 
         if (! class_exists('CreateMediaTable')) {
@@ -25,48 +51,24 @@ class MediaLibraryServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/medialibrary'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/media-library'),
         ], 'views');
-
-        $mediaClass = config('medialibrary.media_model');
-
-        $mediaClass::observe(new MediaObserver());
-
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'medialibrary');
     }
 
-    public function register()
+    protected function registerCommands(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/medialibrary.php', 'medialibrary');
-
-        $this->app->singleton(MediaRepository::class, function () {
-            $mediaClass = config('medialibrary.media_model');
-
-            return new MediaRepository(new $mediaClass);
-        });
-
-        $this->app->bind('command.medialibrary:regenerate', RegenerateCommand::class);
-        $this->app->bind('command.medialibrary:clear', ClearCommand::class);
-        $this->app->bind('command.medialibrary:clean', CleanCommand::class);
-
         $this->app->bind(Filesystem::class, Filesystem::class);
+        $this->app->bind(WidthCalculator::class, config('media-library.responsive_images.width_calculator'));
+        $this->app->bind(TinyPlaceholderGenerator::class, config('media-library.responsive_images.tiny_placeholder_generator'));
 
-        $this->app->bind(WidthCalculator::class, config('medialibrary.responsive_images.width_calculator'));
-        $this->app->bind(TinyPlaceholderGenerator::class, config('medialibrary.responsive_images.tiny_placeholder_generator'));
+        $this->app->bind('command.media-library:regenerate', RegenerateCommand::class);
+        $this->app->bind('command.media-library:clear', ClearCommand::class);
+        $this->app->bind('command.media-library:clean', CleanCommand::class);
 
         $this->commands([
-            'command.medialibrary:regenerate',
-            'command.medialibrary:clear',
-            'command.medialibrary:clean',
+            'command.media-library:regenerate',
+            'command.media-library:clear',
+            'command.media-library:clean',
         ]);
-
-        $this->registerDeprecatedConfig();
-    }
-
-    protected function registerDeprecatedConfig()
-    {
-        if (! config('medialibrary.disk_name')) {
-            config(['medialibrary.disk_name' => config('medialibrary.default_filesystem')]);
-        }
     }
 }

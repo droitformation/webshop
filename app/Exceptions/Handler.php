@@ -1,6 +1,6 @@
 <?php namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -31,7 +31,7 @@ class Handler extends ExceptionHandler {
 	 * @param  \Exception  $e
 	 * @return void
 	 */
-	public function report(Exception $e)
+	public function report(Throwable $e)
 	{
         if(!($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)){
             \Log::error($e);
@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler {
 	 * @param  \Exception  $e
 	 * @return \Illuminate\Http\Response
 	 */
-	public function render($request, Exception $e)
+	public function render($request, Throwable $e)
 	{
         if ($e instanceof \Illuminate\Contracts\Encryption\DecryptException){
             dd($e->getMessage());

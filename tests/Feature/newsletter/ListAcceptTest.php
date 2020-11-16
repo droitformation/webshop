@@ -30,7 +30,8 @@ class ListAcceptTest extends TestCase
 
     public function testStoreListeUploadFails()
     {
-        $file   = dirname(__DIR__).'/excel/test.xlsx';
+        $file = base_path('tests/Feature/excel/test.xlsx');
+
         $upload = $this->prepareFileUpload($file);
 
         $response = $this->call('POST', 'build/liste', ['title' => 'Un titre' ,'list_id' => 1, 'campagne_id' => 1], []);
@@ -114,7 +115,7 @@ class ListAcceptTest extends TestCase
 
     function prepareFileUpload($path)
     {
-        return new \Symfony\Component\HttpFoundation\File\UploadedFile($path, 'test.xlsx', \File::mimeType($path), null, null, true);
+        return new \Symfony\Component\HttpFoundation\File\UploadedFile($path,'test.xlsx', \File::mimeType($path),null, true);
     }
 
     public function testAddEmailToList()

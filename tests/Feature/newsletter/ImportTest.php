@@ -78,9 +78,6 @@ class ImportTest extends TestCase
         $this->assertEquals($data,$results);
     }
 
-    /**
-     * @expectedException \PhpOffice\PhpSpreadsheet\Exception
-     */
    public function testReadFails()
     {
         $file = new \Symfony\Component\HttpFoundation\File\ UploadedFile(
@@ -90,6 +87,9 @@ class ImportTest extends TestCase
         );
 
         $results = $this->import->read($file);
+
+        $errors = $this->app['session.store']->all();
+        $this->assertEquals('Le fichier est vide ou mal formaté',$errors['flash_notification'][0]->message);
     }
 
     public function testSubscribeExist()
