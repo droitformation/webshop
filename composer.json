@@ -11,6 +11,7 @@
 		"barryvdh/laravel-debugbar": "^3.2",
 		"barryvdh/laravel-dompdf": "0.8.x@dev",
 		"designpond/config-registry": "0.1.x-dev",
+		"doctrine/dbal": "^3.0",
 		"fideloper/proxy": "4.2.0",
 		"guzzlehttp/guzzle": "6.4.*",
 		"hardevine/shoppingcart": "^2.7",
@@ -24,7 +25,7 @@
 		"maatwebsite/excel": "3.1.*",
 		"mailgun/mailgun-php": "^2.6",
 		"mailjet/mailjet-apiv3-php": "^1.4",
-		"msurguy/honeypot": "dev-master",
+		"msurguy/honeypot": "dev-master",Doctrine\DBAL\Driver\PDOMySql\Driver
 		"php-http/guzzle6-adapter": "^1.0",
 		"queueworker/sansdaemon": "^1.1",
 		"rguedes/pdfmerger": "^1.0",
