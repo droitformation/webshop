@@ -6,7 +6,7 @@
     </style>
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/common.css') }}" media="screen" />
     <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/bon.css') }}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/invoice.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ secure_asset('common/css/generate/invoice.css') }}?{{ rand(245,654323) }}" media="screen" />
 </head>
 <body style="position: relative;height:297mm;">
 
