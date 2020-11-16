@@ -229,10 +229,10 @@ Route::get('testing', function() {
 
     //$orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     //$order = $orders->find(4830);
-    $all = $rabais->byColloque(164);
+    $one = $model_inscriptions->find(23957);
 
     echo '<pre>';
-    print_r($all);
+    print_r($one->main_adresse);
     echo '</pre>';
     exit;
 /*    $inscription = $model_inscriptions->find(20992);

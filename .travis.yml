@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: php
 php:
-  - '7.3'
+  - '7.4'
 
 before_script:
   - pear config-set preferred_state beta
