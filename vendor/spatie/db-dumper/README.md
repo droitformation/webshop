@@ -1,10 +1,8 @@
 # Dump the contents of a database
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/db-dumper.svg?style=flat-square)](https://packagist.org/packages/spatie/db-dumper)
+![run-tests](https://github.com/spatie/db-dumper/workflows/run-tests/badge.svg)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spatie/db-dumper/run-tests?label=Tests)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/db-dumper.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/db-dumper)
-[![StyleCI](https://styleci.io/repos/49829051/shield?branch=master)](https://styleci.io/repos/49829051)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/db-dumper.svg?style=flat-square)](https://packagist.org/packages/spatie/db-dumper)
 
 This repo contains an easy to use class to dump a database using PHP. Currently MySQL, PostgreSQL, SQLite and MongoDB are supported. Behind
@@ -50,7 +48,13 @@ Spatie\DbDumper\Databases\MongoDb::create()
     ->dumpToFile('dump.gz');
 ```
 
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
+## Support us
+
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/db-dumper.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/db-dumper)
+
+We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+
+We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Requirements
 For dumping MySQL-db's `mysqldump` should be installed.
@@ -121,6 +125,22 @@ Spatie\DbDumper\Databases\MySql::create()
     ->setUserName($userName)
     ->setPassword($password)
     ->includeTables('table1, table2, table3')
+    ->dumpToFile('dump.sql');
+```
+
+### Don't use column_statics table with some old version of MySql service.
+
+In order to use "_--column-statistics=0_" as option in mysqldump command you can use _doNotUseColumnStatistics()_ method.
+
+If you have installed _mysqldump 8_, it queries by default _column_statics_ table in _information_schema_ database.
+In some old version of MySql (service) like 5.7, this table it not exists. So you could have an exception during the execution of mysqldump. To avoid this, you could use _doNotUseColumnStatistics()_ method.
+
+```php
+Spatie\DbDumper\Databases\MySql::create()
+    ->setDbName($databaseName)
+    ->setUserName($userName)
+    ->setPassword($password)
+    ->doNotUseColumnStatistics()
     ->dumpToFile('dump.sql');
 ```
 
@@ -252,19 +272,11 @@ composer test
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security
 
 If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
-
-## Postcardware
-
-You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
-
-Our address is: Spatie, Samberstraat 69D, 2060 Antwerp, Belgium.
-
-We publish all received postcards [on our company website](https://spatie.be/en/opensource/postcards).
 
 ## Credits
 
@@ -272,13 +284,6 @@ We publish all received postcards [on our company website](https://spatie.be/en/
 - [All Contributors](../../contributors)
 
 Initial PostgreSQL support was contributed by [Adriano Machado](https://github.com/ammachado). SQlite support was contributed by [Peter Matseykanets](https://twitter.com/pmatseykanets).
-
-## Support us
-
-Spatie is a webdesign agency based in Antwerp, Belgium. You'll find an overview of all our open source projects [on our website](https://spatie.be/opensource).
-
-Does your business depend on our contributions? Reach out and support us on [Patreon](https://www.patreon.com/spatie).
-All pledges will be dedicated to allocating workforce on maintenance and new awesome stuff.
 
 ## License
 
