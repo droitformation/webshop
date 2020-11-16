@@ -350,12 +350,18 @@ class Inscription extends Model
 
                 return $query->where(function($query) use ($search) {
                     $query->where('inscription_no','=',$search)->orWhereHas('user', function($q) use ($search){
-                        $q->where('users.first_name','LIKE', '%'.$search.'%')->orWhere('users.last_name','LIKE', '%'.$search.'%');
+                        $q->where('users.first_name','LIKE', '%'.$search.'%')
+                            ->orWhere('users.last_name','LIKE', '%'.$search.'%');
                     })->orWhereHas('participant', function($q) use ($search){
                         $q->where('colloque_inscriptions_participants.name','LIKE', '%'.$search.'%');
-                    })->orWhereHas('groupe', function($q) use ($search){
+                    })
+                    ->orWhereHas('main_adresse', function($q) use ($search){
+                        $q->where('adresses.company','LIKE', '%'.$search.'%');
+                    })
+                    ->orWhereHas('groupe', function($q) use ($search){
                         $q->whereHas('user', function($second) use ($search){
-                            $second->where('users.first_name','LIKE', '%'.$search.'%')->orWhere('users.last_name','LIKE', '%'.$search.'%');
+                            $second->where('users.first_name','LIKE', '%'.$search.'%')
+                                ->orWhere('users.last_name','LIKE', '%'.$search.'%');
                         });
                     });
                 });
@@ -475,5 +481,10 @@ class Inscription extends Model
     public function references()
     {
         return $this->belongsTo('App\Droit\Transaction\Entities\Transaction_reference','reference_id');
+    }
+
+    public function main_adresse()
+    {
+        return $this->hasOne('App\Droit\Adresse\Entities\Adresse','user_id', 'user_id')->where('type', '=', 1);
     }
 }
