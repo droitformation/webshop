@@ -18,6 +18,7 @@
         "queryobject",
         "sasql",
         "sql",
+        "sqlanywhere",
         "sqlite",
         "sqlserver",
         "sqlsrv"
@@ -31,8 +32,8 @@
         {"name": "Jonathan Wage", "email": "jonwage@gmail.com"}
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
-        "composer/package-versions-deprecated": "^1.11.99",
+        "php": "^7.3 || ^8",
+        "ext-pdo": "*",
         "doctrine/cache": "^1.0",
         "doctrine/event-manager": "^1.0"
     },
@@ -40,7 +41,6 @@
         "doctrine/coding-standard": "^8.1",
         "jetbrains/phpstorm-stubs": "^2019.1",
         "phpstan/phpstan": "^0.12.40",
-        "phpstan/phpstan-strict-rules": "^0.12.2",
         "phpunit/phpunit": "^9.4",
         "psalm/plugin-phpunit": "^0.10.0",
         "symfony/console": "^2.0.5|^3.0|^4.0|^5.0",
@@ -51,16 +51,16 @@
     },
     "bin": ["bin/doctrine-dbal"],
     "config": {
+        "sort-packages": true,
         "platform": {
             "php": "7.3.0"
-        },
-        "sort-packages": true
+        }
     },
     "autoload": {
-        "psr-4": { "Doctrine\\DBAL\\": "src" }
+        "psr-4": { "Doctrine\\DBAL\\": "lib/Doctrine/DBAL" }
     },
     "autoload-dev": {
-        "psr-4": { "Doctrine\\DBAL\\Tests\\": "tests" }
+        "psr-4": { "Doctrine\\Tests\\": "tests/Doctrine/Tests" }
     },
     "extra": {
         "branch-alias": {
