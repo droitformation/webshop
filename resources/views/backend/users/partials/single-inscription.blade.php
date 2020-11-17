@@ -14,8 +14,7 @@
         @endif
     </div>
 </div>
-
-<div class="row">
+<div class="row mt-10">
     <div class="col-md-5">
         <h4>Documents</h4>
         @include('backend.users.inscription.documents')

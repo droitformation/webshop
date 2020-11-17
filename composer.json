@@ -31,7 +31,7 @@
 		"msurguy/honeypot": "dev-master",
 		"php-http/guzzle7-adapter": "0.1.1",
 		"queueworker/sansdaemon": "^1.1",
-		"rguedes/pdfmerger": "^1.0",
+		"clegginabox/pdf-merger": "dev-master",
 		"simplesoftwareio/simple-qrcode": "2.0.0",
 		"spatie/laravel-backup": "6.11.6",
 		"spatie/laravel-honeypot": "^2.3",

@@ -144,10 +144,10 @@ class InscriptionController extends Controller
             session()->put('reference_no', $request->input('reference_no',null));
             session()->put('transaction_no', $request->input('transaction_no',null));
 
-            $inscription  = $this->register->register($data,$request->input('type') == 'simple' ? true : null);
-            $reference    = \App\Droit\Transaction\Reference::make($inscription);
+            $inscription = $this->register->register($data,$request->input('type') == 'simple' ? true : null);
+            $reference   = \App\Droit\Transaction\Reference::make($inscription);
 
-            $this->register->makeDocuments($inscription, true);
+            $this->register->makeDocuments($inscription,true);
 
             return $inscription;
         });

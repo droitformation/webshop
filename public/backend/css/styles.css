@@ -2341,6 +2341,15 @@ fieldset[disabled] .btn-link:focus {
 .btn-block + .btn-block {
   margin-top: 5px;
 }
+.btn-group.btn-group-colloque .btn.btn-danger {
+  float: initial !important;
+}
+
+.btn-archives-colloques{
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
@@ -10573,7 +10582,7 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
   font-size: 14px;
 }
 [class*="panel-"].panel .panel-body {
-  padding: 20px;
+  padding: 15px;
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
@@ -10584,7 +10593,7 @@ body.collapse-leftbar #search.keep-open form button[type="submit"] {
   border-width: 0 1px 1px 1px;
   border-style: solid;
   border-color: #dddddd;
-  padding: 20px 20px;
+  padding: 15px;
   color: #000000;
 }
 [class*="panel-"].panel .panel-heading + .panel-body {

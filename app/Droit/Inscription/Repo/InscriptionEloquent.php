@@ -75,8 +75,12 @@ class InscriptionEloquent implements InscriptionInterface{
         return $this->inscription->where('colloque_id','=',$id)
             ->whereNull('payed_at')
             ->with(['price','colloque','user','participant','groupe','duplicate', 'occurrences'])
-            ->whereHas('price', function($q){
-                $q->where('price','>', 0);
+            ->where(function($query){
+                $query->whereHas('price', function($q){
+                    $q->where('price','>', 0);
+                })->orWhereHas('price_link', function($q){
+                    $q->where('price','>', 0);
+                });
             })
             ->groupBy(\DB::raw('CASE WHEN group_id IS NOT NULL THEN group_id ELSE id END'))
             ->get();

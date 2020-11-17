@@ -35,7 +35,7 @@ class ObjectFactory
             'first_name'    => $first_name,
             'last_name'     => $last_name,
             'email'         => $email,
-            'company'       => $this->faker->company,
+            'company'       => isset($data['company']) ? $data['company'] : $this->faker->company,
             'profession_id' => isset($data['profession']) ? $data['profession'] : 0,
             'telephone'     => '032 690 00 23',
             'mobile'        => '032 690 00 23',

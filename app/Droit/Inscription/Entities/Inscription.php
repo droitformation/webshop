@@ -385,16 +385,20 @@ class Inscription extends Model
             }
 
             if(isset($filter['status']) && !empty($filter['status'])){
-                if($filter['status'] == 'free')
-                {
+                if($filter['status'] == 'free') {
                     return $query->whereHas('price', function($q){
+                        $q->where('price','=', 0);
+                    })->orWhereHas('price_link', function($q){
                         $q->where('price','=', 0);
                     });
                 }
                 else{
-                    return $query->where('status','=',$filter['status'])
-                        ->whereHas('price', function($q){
-                            $q->where('price','>', 0);
+                    return $query->where('status','=',$filter['status'])->where(function($query) {
+                            $query->whereHas('price', function($q){
+                                $q->where('price','>', 0);
+                            })->orWhereHas('price_link', function($q){
+                                $q->where('price','>', 0);
+                            });
                         });
                 }
             }

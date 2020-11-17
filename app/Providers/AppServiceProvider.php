@@ -73,10 +73,19 @@ class AppServiceProvider extends ServiceProvider {
         view()->composer(['frontend.bail.*','backend.seminaires.*'], 'App\Http\ViewComposers\BailComposer');
         view()->composer(['frontend.matrimonial.*'], 'App\Http\ViewComposers\MatrimonialComposer');
 
-      /*  if (\App::environment('local')) {
-            $this->mock = \Mockery::mock('App\Droit\Newsletter\Service\Mailjet');
-            $this->app->instance('App\Droit\Newsletter\Service\Mailjet', $this->mock);
-        }*/
+        \Response::macro(
+            'pdfDownload',
+            function (string $pdf, string $fileName) {
+                return \Response::make($pdf)
+                    ->withHeaders(
+                        [
+                            'Content-Type'        => 'application/pdf',
+                            'Content-Disposition' => \sprintf('inline; filename="%s"', $fileName),
+                            'Cache-Control'       => 'private, max-age=0, must-revalidate',
+                        ]
+                    );
+            }
+        );
 
         Queue::failing(function (JobFailed $event) {
             \Mail::to('cindy.leschaud@gmail.com')

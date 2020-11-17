@@ -67,8 +67,7 @@ class Colloque extends Model implements HasMedia
             return $item->type == 'illustration';
         });
   
-        if(!$illustration->isEmpty())
-        {
+        if(!$illustration->isEmpty()) {
             return secure_asset('files/colloques/illustration/'.$illustration->first()->path);
         }
 
@@ -81,8 +80,7 @@ class Colloque extends Model implements HasMedia
             return $item->type == 'programme';
         });
 
-        if(!$programme->isEmpty())
-        {
+        if(!$programme->isEmpty()) {
             return $programme->first();
         }
 

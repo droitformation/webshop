@@ -17,20 +17,18 @@
                     <h3 style="margin-bottom:0px;line-height:20px;font-size: 18px;"><a href="{{ url('admin/colloque/'.$colloque->id) }}">{{ $colloque->titre }}</a></h3>
                     <p style="margin-bottom: 0;">{{ $colloque->event_date }}</p>
                 </div>
-                <div class="col-md-3" style="border-right: 1px solid #cecece;">
+                <div class="col-md-3" style="border-right: 1px solid #cecece; border-left: 1px solid #cecece;">
                     <form action="{{ url('admin/inscription/rappel/make') }}" method="POST" class="form-inline">{!! csrf_field() !!}
                         <input type="hidden" name="colloque_id" value="{{ $colloque->id }}">
-                        <div class="checkbox text-right" style="border-left: 1px solid #cecece; padding-left: 10px;">
-                            <label><input name="more" value="1" type="checkbox"> &nbsp;<strong>Ajouter 1 rappel</strong> <br/>aux rappels existants</label>
+                        <div class="checkbox text-right" style="margin-bottom: 5px; margin-top: 10px;">
+                            <label><input name="more" value="1" type="checkbox"> &nbsp;<strong style="font-size: 12px;">Ajouter 1 rappel</strong> aux rappels existants</label>
                         </div>
-                        <button class="btn btn-brown pull-right" type="submit"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</button>
+                        <p style="margin-top: 10px;"><button class="btn btn-brown btn-block" type="submit"><i class="fa fa-bell"></i> &nbsp;Générer tous les rappels</button></p>
                     </form>
                 </div>
-                <div class="col-md-2">
-                    <a href="{{ url('admin/register/rappel/toprint/'.$colloque->id) }}" class="btn btn-primary pull-right"><i class="fa fa-download"></i> &nbsp Créer Rappels + BV</a>
-                </div>
-                <div class="col-md-2">
-                    <a href="{{ url('admin/register/rappel/confirmation/'.$colloque->id) }}" class="btn btn-inverse pull-right" >
+                <div class="col-md-4">
+                    <a href="{{ url('admin/register/rappel/toprint/'.$colloque->id) }}" class="btn btn-primary btn-block"><i class="fa fa-download"></i> &nbsp Créer Rappels + BV</a>
+                    <a href="{{ url('admin/register/rappel/confirmation/'.$colloque->id) }}" class="btn btn-inverse btn-block" >
                         <i class="fa fa-paper-plane"></i> &nbsp; Confirmer la liste et envoyer
                     </a>
                 </div>

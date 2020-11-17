@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '2f9561c517be864603753769bc86ec24d889c523',
+    'reference' => 'c6bd8fc603ef55277ddd3e0f2b68aa0a242ed468',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -65,6 +65,16 @@
       ),
       'reference' => '283a40c901101e66de7061bd359252c013dcc43c',
     ),
+    'clegginabox/pdf-merger' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '9999999-dev',
+      ),
+      'reference' => '63eab0e592332da3272b8a7e09fa6aa41ff7322b',
+    ),
     'clue/stream-filter' => 
     array (
       'pretty_version' => 'v1.5.0',
@@ -99,12 +109,12 @@
     ),
     'doctrine/dbal' => 
     array (
-      'pretty_version' => '2.12.0',
-      'version' => '2.12.0.0',
+      'pretty_version' => '2.12.1',
+      'version' => '2.12.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c6d37b4c42aaa3c3ee175f05eca68056f4185646',
+      'reference' => 'adce7a954a1c2f14f85e94aed90c8489af204086',
     ),
     'doctrine/event-manager' => 
     array (
@@ -180,12 +190,12 @@
     ),
     'egulias/email-validator' => 
     array (
-      'pretty_version' => '2.1.23',
-      'version' => '2.1.23.0',
+      'pretty_version' => '2.1.24',
+      'version' => '2.1.24.0',
       'aliases' => 
       array (
       ),
-      'reference' => '5fa792ad1853ae2bc60528dd3e5cbf4542d3c1df',
+      'reference' => 'ca90a3291eee1538cd48ff25163240695bd95448',
     ),
     'facade/ignition-contracts' => 
     array (
@@ -548,7 +558,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '2f9561c517be864603753769bc86ec24d889c523',
+      'reference' => 'c6bd8fc603ef55277ddd3e0f2b68aa0a242ed468',
     ),
     'laravel/ui' => 
     array (
@@ -589,12 +599,12 @@
     ),
     'league/glide' => 
     array (
-      'pretty_version' => '1.6.0',
-      'version' => '1.6.0.0',
+      'pretty_version' => '1.7.0',
+      'version' => '1.7.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8759b8edfe953c8e6aceb45b3647fb7ae5349a0c',
+      'reference' => 'ae5e26700573cb678919d28e425a8b87bc71c546',
     ),
     'league/mime-type-detection' => 
     array (
@@ -607,12 +617,12 @@
     ),
     'maatwebsite/excel' => 
     array (
-      'pretty_version' => '3.1.24',
-      'version' => '3.1.24.0',
+      'pretty_version' => '3.1.25',
+      'version' => '3.1.25.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8b267b4a940634195eb6ea60c2da62f178a15940',
+      'reference' => 'a3e56f1a60e49f21798fd242a3b3d2f4051eeda7',
     ),
     'maennchen/zipstream-php' => 
     array (
@@ -698,25 +708,25 @@
     ),
     'myclabs/deep-copy' => 
     array (
-      'pretty_version' => '1.10.1',
-      'version' => '1.10.1.0',
+      'pretty_version' => '1.10.2',
+      'version' => '1.10.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '969b211f9a51aa1f6c01d1d2aef56d3bd91598e5',
+      'reference' => '776f831124e9c62e1a2c601ecc52e776d8bb7220',
       'replaced' => 
       array (
-        0 => '1.10.1',
+        0 => '1.10.2',
       ),
     ),
     'myclabs/php-enum' => 
     array (
-      'pretty_version' => '1.7.6',
-      'version' => '1.7.6.0',
+      'pretty_version' => '1.7.7',
+      'version' => '1.7.7.0',
       'aliases' => 
       array (
       ),
-      'reference' => '5f36467c7a87e20fbdc51e524fd8f9d1de80187c',
+      'reference' => 'd178027d1e679832db9f38248fcc7200647dc2b7',
     ),
     'nesbot/carbon' => 
     array (
@@ -1126,15 +1136,6 @@
       ),
       'reference' => 'cd4032040a750077205918c86049aa0f43d22947',
     ),
-    'rguedes/pdfmerger' => 
-    array (
-      'pretty_version' => '1.0.4',
-      'version' => '1.0.4.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '8e1caa1093160107bb1796ce07d9fc3d6769fc34',
-    ),
     'rhumsaa/uuid' => 
     array (
       'replaced' => 
@@ -1295,6 +1296,24 @@
       ),
       'reference' => 'c6c1022351a901512170118436c764e473f6de8c',
     ),
+    'setasign/fpdf' => 
+    array (
+      'pretty_version' => '1.8.2',
+      'version' => '1.8.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd77904018090c17dc9f3ab6e944679a7a47e710a',
+    ),
+    'setasign/fpdi' => 
+    array (
+      'pretty_version' => 'v2.3.4',
+      'version' => '2.3.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2b5fb811c04f937ef257ef3f798cebeded33c136',
+    ),
     'simplesoftwareio/simple-qrcode' => 
     array (
       'pretty_version' => '2.0.0',
@@ -1315,12 +1334,12 @@
     ),
     'spatie/image' => 
     array (
-      'pretty_version' => '1.7.6',
-      'version' => '1.7.6.0',
+      'pretty_version' => '1.9.0',
+      'version' => '1.9.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '74535b5fd67ace75840c00c408666660843e755e',
+      'reference' => 'cef42a2d131e28d6f3e0af91c0570f6ba45a8d40',
     ),
     'spatie/image-optimizer' => 
     array (
@@ -1351,12 +1370,12 @@
     ),
     'spatie/laravel-medialibrary' => 
     array (
-      'pretty_version' => '9.1.1',
-      'version' => '9.1.1.0',
+      'pretty_version' => '9.1.3',
+      'version' => '9.1.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c42ddce19b29c4039b3b9c1f48eb0474869f38e5',
+      'reference' => 'bac9c3180343d478f59eac8f69bebfe37b66dd29',
     ),
     'spatie/temporary-directory' => 
     array (
@@ -1689,12 +1708,12 @@
     ),
     'voku/portable-ascii' => 
     array (
-      'pretty_version' => '1.5.4',
-      'version' => '1.5.4.0',
+      'pretty_version' => '1.5.6',
+      'version' => '1.5.6.0',
       'aliases' => 
       array (
       ),
-      'reference' => '87dc337d4200b32717dd3849fea846319e897658',
+      'reference' => '80953678b19901e5165c56752d087fc11526017c',
     ),
     'webmozart/assert' => 
     array (

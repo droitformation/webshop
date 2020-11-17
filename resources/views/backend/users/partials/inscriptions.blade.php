@@ -38,36 +38,36 @@
 
                             <!-- Inscription edit,send,rappels -->
                             <div class="row">
-                                <div class="col-md-2 line-spacer">
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
+                                <div class="col-md-3 line-spacer">
+                                    <button type="button" class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#editInscription_{{ $inscription->id }}">
                                         Éditer/Références
                                     </button>
-                                </div>
-                                <div class="col-md-6 line-spacer">
                                     @if(!empty($inscription->colloque->annexe))
-                                        <a href="{{ url('admin/inscription/regenerate/'.$inscription->id) }}" class="btn btn-sm btn-warning">Regénérer les documents</a>
+                                        <a href="{{ url('admin/inscription/regenerate/'.$inscription->id) }}" class="btn btn-sm btn-warning btn-block">Regénérer les documents</a>
                                     @endif
-                                    @if(!$inscription->doc_attestation)
-                                        <a href="{{ url('admin/attestation/inscription/'.$inscription->id) }}" class="btn btn-sm btn-green">Attestation</a>
-                                    @endif
-                                    <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
-                                        Envoyer l'inscription
-                                    </button>
                                 </div>
-                                <div class="col-md-2 line-spacer">
+                                <div class="col-md-3 line-spacer">
+                                    @if(!$inscription->doc_attestation)
+                                        <a href="{{ url('admin/attestation/inscription/'.$inscription->id) }}" class="btn btn-sm btn-green btn-block" style="margin-bottom: 10px;">Attestation</a>
+                                    @endif
                                     <adresse-update
                                             hidden="1"
                                             :main="{{ $inscription->user->adresse_livraison }}"
                                             :original="{{ $inscription->user->adresse_facturation }}"
                                             title=""
-                                            btn="btn-sm btn-default"
+                                            btn="btn-sm btn-default btn-block"
                                             texte="Adresse facturation MAJ"
                                             dir="left"
                                             type="4">
                                     </adresse-update>
                                 </div>
-                                <div class="col-md-2 line-spacer text-right">
-                                    <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
+                                <div class="col-md-3 line-spacer">
+                                    <button type="button" class="btn btn-sm btn-inverse" data-toggle="modal" data-target="#sendInscription_{{ $inscription->id }}">
+                                        Envoyer l'inscription
+                                    </button>
+                                </div>
+                                <div class="col-md-3 line-spacer text-right">
+                                    <form action="{{ url('admin/inscription/'.$inscription->id) }}" method="POST">{!! csrf_field() !!}
                                         <input type="hidden" name="_method" value="DELETE">
                                         <button data-what="Désinscrire" data-action="N°: {{ $inscription->inscription_no }}" class="btn btn-danger btn-sm deleteAction">X</button>
                                     </form>

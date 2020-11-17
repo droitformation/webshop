@@ -62,6 +62,45 @@ class FeatureInscriptionAdminTest extends TestCase
         $this->assertEquals($result->inscription_no, $inscription->inscription_no);
     }
 
+    public function testSearchUserInfoInscription()
+    {
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+        $person   = $make->makeUser(['company' => 'Acme']);
+
+        $prices    = $colloque->prices->pluck('id')->all();
+
+        $inscription = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'     => $person->id,
+            'price_id'    => $prices[0],
+            'colloque_id' => $colloque->id
+        ]);
+
+        // with search results
+        $this->call('POST', 'admin/inscription/colloque/'.$colloque->id, ['search' => 'Acme']);
+
+        $reponse = $this->get('admin/inscription/colloque/'.$colloque->id);
+        $content = $reponse->getOriginalContent();
+        $content = $content->getData();
+
+        $inscriptions = $content['inscriptions'];
+        $result  = $inscriptions->first();
+
+        $this->assertEquals($result->user->adresses->first()->company, 'Acme');
+
+        // with search results
+        $this->call('POST', 'admin/inscription/colloque/'.$colloque->id, ['search' => 'Designpond']);
+
+        $reponse = $this->get('admin/inscription/colloque/'.$colloque->id);
+        $content = $reponse->getOriginalContent();
+        $content = $content->getData();
+
+        $inscriptions = $content['inscriptions'];
+        $result  = $inscriptions->first();
+
+        $this->assertNotEquals($result->user->adresses->first()->company, 'Designpond');
+    }
+
     public function testCreateInscription()
     {
         $make     = new \tests\factories\ObjectFactory();

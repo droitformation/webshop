@@ -4,6 +4,7 @@ namespace App\Droit\Inscription\Worker;
 
 use App\Droit\Inscription\Worker\RappelWorkerInterface;
 use App\Droit\Inscription\Repo\RappelInterface;
+use iio\libmergepdf\Merger;
 
 class RappelWorker implements RappelWorkerInterface
 {
@@ -116,15 +117,17 @@ class RappelWorker implements RappelWorkerInterface
         // Create output directory if doesn't exist. Delete output file if exist
         if (\File::exists($name)) { \File::delete($name); }
 
-        $pdf = new \PDFMerger;
+        // $pdf = new \Karriere\PdfMerge\PdfMerge();
+        $pdf = new \Clegginabox\PDFMerger\PDFMerger;
 
         // create command if we have files
         if(!empty($files)) {
             foreach ($files as $file){
-                $pdf->addPDF($file, 'all');
+                $pdf->addPDF($file->getPathname(), 'all');
             }
 
-            $pdf->merge('file', $name);
+            $pdf->merge($name);
+            $pdf->merge('file', $name, 'P');
 
             sleep(1);
             emptyDirectory(public_path('files/colloques/temp'));

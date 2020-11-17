@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\ResetTbl;
 
-class RgisterInscriptionTest extends TestCase
+class RegisterInscriptionTest extends TestCase
 {
     use RefreshDatabase,ResetTbl;
 
@@ -139,5 +139,46 @@ class RgisterInscriptionTest extends TestCase
         ];
 
         $this->assertEquals($expected,$actual);
+    }
+
+    public function testSimpleRegisterWithRabais()
+    {
+        $make       = new \tests\factories\ObjectFactory();
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+        $person     = $make->makeUser();
+
+        $price1 = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2 = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+
+        $rabais   = factory(\App\Droit\Inscription\Entities\Rabais::class)->create(['value' => 100, 'title' => 'GLOBAL', 'type' => 'colloque', 'description' => 'test']);
+        $options1 = $colloque1->options->pluck('id')->all();
+        $options2 = $colloque2->options->pluck('id')->all();
+
+        $person->rabais()->attach($rabais->id);
+
+        $price_link = factory(\App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $data = [
+            'rabais_id'      => $rabais->id,
+            'user_id'        => $person->id,
+            'colloque_id'    => $colloque1->id,
+            'type'           => 'simple',
+            'colloques' => [
+                $colloque1->id => ['options' => $options1],
+                $colloque2->id => ['options' => $options2]
+            ],
+            'price_id' => 'price_link_id:'.$price_link->id,
+        ];
+
+        $response = $this->call('POST', 'admin/inscription', $data);
+
+        $this->assertDatabaseHas('colloque_inscriptions', [
+            'colloque_id' => $colloque1->id,
+            'user_id'     => $person->id,
+            'price_link_id'  => $price_link->id,
+        ]);
+
     }
 }

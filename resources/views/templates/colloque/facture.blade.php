@@ -5,7 +5,7 @@
 
     <div class="content">
         <div id="header-main">
-            <table class="content-table">
+            <table class="content-table" border="0">
                 <tr><td colspan="2" height="30">&nbsp;</td></tr>
                 <tr>
                     <td colspan="2">
