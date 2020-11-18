@@ -6605,6 +6605,7 @@ return array(
     'Tests\\Unit\\inscription\\InscriptionRegisterConverterTest' => $baseDir . '/tests/Unit/inscription/InscriptionRegisterConverterTest.php',
     'Tests\\Unit\\inscription\\InvalidInscriptionTest' => $baseDir . '/tests/Unit/inscription/InvalidInscriptionTest.php',
     'Tests\\Unit\\inscription\\RappelInscriptionTest' => $baseDir . '/tests/Unit/inscription/RappelInscriptionTest.php',
+    'Tests\\Unit\\inscription\\RegisterInscriptionTest' => $baseDir . '/tests/Unit/inscription/RegisterInscriptionTest.php',
     'Tests\\Unit\\inscription\\WorkerInscriptionTest' => $baseDir . '/tests/Unit/inscription/WorkerInscriptionTest.php',
     'Tests\\Unit\\shop\\CartWorkerTest' => $baseDir . '/tests/Unit/shop/CartWorkerTest.php',
     'Tests\\Unit\\shop\\OrderBoxTest' => $baseDir . '/tests/Unit/shop/OrderBoxTest.php',

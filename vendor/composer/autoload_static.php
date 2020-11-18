@@ -7412,6 +7412,7 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'Tests\\Unit\\inscription\\InscriptionRegisterConverterTest' => __DIR__ . '/../..' . '/tests/Unit/inscription/InscriptionRegisterConverterTest.php',
         'Tests\\Unit\\inscription\\InvalidInscriptionTest' => __DIR__ . '/../..' . '/tests/Unit/inscription/InvalidInscriptionTest.php',
         'Tests\\Unit\\inscription\\RappelInscriptionTest' => __DIR__ . '/../..' . '/tests/Unit/inscription/RappelInscriptionTest.php',
+        'Tests\\Unit\\inscription\\RegisterInscriptionTest' => __DIR__ . '/../..' . '/tests/Unit/inscription/RegisterInscriptionTest.php',
         'Tests\\Unit\\inscription\\WorkerInscriptionTest' => __DIR__ . '/../..' . '/tests/Unit/inscription/WorkerInscriptionTest.php',
         'Tests\\Unit\\shop\\CartWorkerTest' => __DIR__ . '/../..' . '/tests/Unit/shop/CartWorkerTest.php',
         'Tests\\Unit\\shop\\OrderBoxTest' => __DIR__ . '/../..' . '/tests/Unit/shop/OrderBoxTest.php',
