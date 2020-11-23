@@ -5148,16 +5148,16 @@
         },
         {
             "name": "spatie/image-optimizer",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image-optimizer.git",
-                "reference": "f87f8328ca5bfabb3811241f5d35f17e146f7f83"
+                "reference": "b622d0cf29f57d7735d49f2b62471e6b788cb291"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/f87f8328ca5bfabb3811241f5d35f17e146f7f83",
-                "reference": "f87f8328ca5bfabb3811241f5d35f17e146f7f83",
+                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/b622d0cf29f57d7735d49f2b62471e6b788cb291",
+                "reference": "b622d0cf29f57d7735d49f2b62471e6b788cb291",
                 "shasum": ""
             },
             "require": {
@@ -5196,9 +5196,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/image-optimizer/issues",
-                "source": "https://github.com/spatie/image-optimizer/tree/1.3.0"
+                "source": "https://github.com/spatie/image-optimizer/tree/1.3.1"
             },
-            "time": "2020-11-10T13:45:49+00:00"
+            "time": "2020-11-20T11:36:11+00:00"
         },
         {
             "name": "spatie/laravel-backup",
@@ -5362,16 +5362,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "9.1.3",
+            "version": "9.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "bac9c3180343d478f59eac8f69bebfe37b66dd29"
+                "reference": "fce33ddd6613f8048ef554d64e82ffa5b05204d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/bac9c3180343d478f59eac8f69bebfe37b66dd29",
-                "reference": "bac9c3180343d478f59eac8f69bebfe37b66dd29",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/fce33ddd6613f8048ef554d64e82ffa5b05204d6",
+                "reference": "fce33ddd6613f8048ef554d64e82ffa5b05204d6",
                 "shasum": ""
             },
             "require": {
@@ -5450,7 +5450,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.1.3"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/9.1.5"
             },
             "funding": [
                 {
@@ -5462,7 +5462,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-12T12:59:59+00:00"
+            "time": "2020-11-22T21:40:26+00:00"
         },
         {
             "name": "spatie/temporary-directory",

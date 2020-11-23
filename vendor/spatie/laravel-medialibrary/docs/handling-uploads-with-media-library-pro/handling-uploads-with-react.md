@@ -13,7 +13,13 @@ The `MediaLibraryCollection` component can upload multiple files with custom pro
 
 ![Screenshot of the MediaLibraryCollection React component](/docs/laravel-medialibrary/v9/images/pro/collection.png)
 
-If neither of these fit the bill, we've exposed a set of APIs for you to be bold and [roll your own components](#).
+If neither of these fit the bill, we've exposed a set of APIs for you to be bold and [roll your own components](./creating-custom-react-components).
+
+## Demo application
+
+In [this repo on GitHub](https://github.com/spatie/laravel-medialibrary-pro-app), you'll find a demo Laravel application in which you'll find examples of how to use Media Library Pro with React.
+
+If you are having troubles using the components, take a look in that app to see how we've done it.
 
 ## Basic setup
 
@@ -43,9 +49,9 @@ The React components post data to `/media-library-pro/uploads` by default. If yo
 
 ### Importing the components
 
-The components are located in `vendor/spatie/laravel-medialibrary-pro/resources/js` when you install the package through Composer. This makes for very long import statements, which you can clean up by adding some configuration to your Webpack/Laravel Mix configuration.
+_If you're developing a project where you don't have access to composer, you can download the package through GitHub Packages: [installation steps](./installation#usage-in-a-frontend-repository). [Read this for usage in Next.js](#usage-in-nextjs)_
 
-_If you're developing a project where you don't have access to composer, you can download the package through GitHub Packages: [installation steps](./installation/#registering-with-git-hub-packages)_
+The components are located in `vendor/spatie/laravel-medialibrary-pro/resources/js` when you install the package through Composer. This makes for very long import statements, which you can clean up by adding some configuration to your Webpack/Laravel Mix configuration.
 
 **laravel-mix >6**
 
@@ -78,7 +84,7 @@ mix.webpackConfig({
 This will force Webpack to look in `vendor/spatie/laravel-medialibrary-pro/resources/js` when resolving imports, and allows you to shorten your import to this:
 
 ```js
-import MediaLibraryAttachment from "media-library-pro-react-attachment";
+import { MediaLibraryAttachment } from "media-library-pro-react-attachment";
 ```
 
 If you're using TypeScript, you will also have have to add this to your tsconfig:
@@ -102,8 +108,8 @@ The most basic components have a `name` prop. This name will be used to identify
 ```jsx
 // MyImageUploader.jsx
 
-import MediaLibraryAttachment from "media-library-pro-react-attachment";
-import MediaLibraryCollection from "media-library-pro-react-collection";
+import { MediaLibraryAttachment } from "media-library-pro-react-attachment";
+import { MediaLibraryCollection } from "media-library-pro-react-collection";
 
 export default function MyImageUploader() {
     return (
@@ -132,7 +138,7 @@ You can retrieve your initial values in Laravel using `$yourModel->getMedia($col
 </form>
 ```
 
-Under the hood, these components create hidden `<input />` fields to keep track of the form values on submit. If you would like to submit your values asynchronously, refer to the `Asynchronously submit data` section.
+Under the hood, these components create hidden `<input />` fields to keep track of the form values on submit. If you would like to submit your values asynchronously, refer to the [Asynchronously submit data](#asynchronously-submit-data) section.
 
 ### Setting validation rules
 
@@ -182,7 +188,7 @@ See the [Validation rules section](#validation-rules) for a complete list of all
 The components keep track of whether they're ready to be submitted, you can use this to disable a submit button while a file is still uploading or when there are frontend validation errors. This value can be tracked by passing a listener method to the `onIsReadyToSubmitChange` prop. If you submit a form while a file is uploading, Laravel will return a HTTP 500 error with an `invalid uuid` message.
 
 ```jsx
-import MediaLibraryAttachment from "media-library-pro-react-attachment";
+import { MediaLibraryAttachment } from "media-library-pro-react-attachment";
 
 function AvatarComponent() {
     const [isReadyToSubmit, setIsReadyToSubmit] = useState(true);
@@ -369,6 +375,54 @@ return (
 );
 ```
 
+## Translations
+
+If you would like to use the components in your own language, you can pass a `translations` prop to the component.
+
+```jsx
+translations = {
+    fileTypeNotAllowed: "You must upload a file of type",
+    tooLarge: "File too large, max",
+    tooSmall: "File too small, min",
+    tryAgain: "please try uploading this file again",
+    somethingWentWrong: "Something went wrong while uploading this file",
+    selectOrDrag: "Select or drag files",
+    selectOrDragMax: "Select or drag max {maxItems} {file}",
+    file: { singular: "file", plural: "files" },
+    anyImage: "any image",
+    anyVideo: "any video",
+    goBack: "Go back",
+    dropFile: "Drop file to upload",
+    dragHere: "Drag file here",
+    remove: "Remove",
+};
+
+return <MediaLibraryCollection translations={translations} />;
+```
+
+The values mentioned here are the defaults. Feel free to only pass in a couple of keys, as your object will be merged onto the default.
+
+If you use the component in different parts of your app, you might want to set the translations globally.
+
+```js
+window.mediaLibraryTranslations = {
+    somethingWentWrong: "whoops",
+    remove: "delete",
+};
+```
+
+## Usage in Next.js
+
+Because the components need references `document` and `window`, Server Side Rendering won't work. This means you'll have to use [dynamic imports](https://nextjs.org/docs/advanced-features/dynamic-import) to get the UI components to work.
+
+```js
+import dynamic from "next/dynamic";
+const MediaLibraryCollection = dynamic(
+    () => import("@spatie/media-library-pro-react-collection"),
+    { ssr: false }
+);
+```
+
 ## Props
 
 These props are available on both the `attachment` and the `collection` component.
@@ -378,7 +432,7 @@ These props are available on both the `attachment` and the `collection` componen
 | name                     |                                                       |                                                                                                                                                                                   |
 | initialValue             | `[]`                                                  |                                                                                                                                                                                   |
 | routePrefix              | `"media-library-pro"`                                 |                                                                                                                                                                                   |
-| validationRules          |                                                       | Refer to [validation](#validation-rules) section                                                                                                                                  |
+| validationRules          |                                                       | Refer to the ["validation rules"](#validation-rules) section                                                                                                                      |
 | validationErrors         |                                                       | The standard Laravel validation error object                                                                                                                                      |
 | multiple                 | `false` (always `true` in the `collection` component) | Only exists on the `attachment` components                                                                                                                                        |
 | maxItems                 | `1` when `multiple` = `false`, otherwise `undefined   |                                                                                                                                                                                   |
@@ -386,8 +440,9 @@ These props are available on both the `attachment` and the `collection` componen
 | vaporSignedStorageUrl    | `"vapor/signed-storage-url"`                          |                                                                                                                                                                                   |
 | maxSizeForPreviewInBytes | `5242880` (5 MB)                                      | When an image is added, the component will try to generate a local preview for it. This is done on the main thread, and can freeze the component and/or page for very large files |
 | sortable                 | `true`                                                | Only exists on the `collection` components. Allows the user to drag images to change their order, this will be reflected by a zero-based `order` attribute in the value           |
+| translations             |                                                       | Refer to the ["Translations"](#translations) section                                                                                                                              |
 | setMediaLibrary          |                                                       | Used to set a reference to the MediaLibrary instance, so you can change the internal state of the component.                                                                      |
 | beforeUpload             |                                                       | A method that is run right before a temporary upload is started. You can throw an `Error` from this function with a custom validation message                                     |
 | afterUpload              |                                                       | A method that is run right after a temporary upload has completed, `{ success: true, uuid }`                                                                                      |
 | onChange                 |                                                       |                                                                                                                                                                                   |
-| onIsReadyToSubmitChange  |                                                       | Refer to [Checking the upload state](#checking-the-upload-state) section                                                                                                          |
+| onIsReadyToSubmitChange  |                                                       | Refer to the ["Checking the upload state"](#checking-the-upload-state) section                                                                                                    |
