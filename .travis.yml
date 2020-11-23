@@ -1,8 +1,11 @@
 sudo: required
-dist: precise
+dist: xenial
 language: php
 php:
   - '7.4'
+
+services:
+  - mysql
 
 before_script:
   - pear config-set preferred_state beta
