@@ -37,3 +37,4 @@ public/backend/js/redactorold1/
 public/files/imports
 storage/test/test.pdf
 .phpunit.result.cache
+storage/droitformation_registry.json

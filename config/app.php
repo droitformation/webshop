@@ -159,7 +159,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-       // Droitformation\Registry\RegistryServiceProvider::class,
+        Droitformation\Registry\RegistryServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
