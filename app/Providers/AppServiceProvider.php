@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
 use App\Mail\WebmasterNotification;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider {
 	public function boot()
 	{
         Schema::defaultStringLength(191);
+        Paginator::useBootstrap();
 
         view()->composer([
             'backend.partials.sites',

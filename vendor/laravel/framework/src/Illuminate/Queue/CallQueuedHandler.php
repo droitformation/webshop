@@ -3,9 +3,12 @@
 namespace Illuminate\Queue;
 
 use Exception;
+use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Queue\Job;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pipeline\Pipeline;
 use ReflectionClass;
@@ -58,8 +61,13 @@ class CallQueuedHandler
 
         $this->dispatchThroughMiddleware($job, $command);
 
+        if (! $job->isReleased()) {
+            $this->ensureUniqueJobLockIsReleased($command);
+        }
+
         if (! $job->hasFailed() && ! $job->isReleased()) {
             $this->ensureNextJobInChainIsDispatched($command);
+            $this->ensureSuccessfulBatchJobIsRecorded($command);
         }
 
         if (! $job->isDeletedOrReleased()) {
@@ -133,6 +141,50 @@ class CallQueuedHandler
     }
 
     /**
+     * Ensure the batch is notified of the successful job completion.
+     *
+     * @param  mixed  $command
+     * @return void
+     */
+    protected function ensureSuccessfulBatchJobIsRecorded($command)
+    {
+        $uses = class_uses_recursive($command);
+
+        if (! in_array(Batchable::class, $uses) ||
+            ! in_array(InteractsWithQueue::class, $uses) ||
+            is_null($command->batch())) {
+            return;
+        }
+
+        $command->batch()->recordSuccessfulJob($command->job->uuid());
+    }
+
+    /**
+     * Ensure the lock for a unique job is released.
+     *
+     * @param  mixed  $command
+     * @return void
+     */
+    protected function ensureUniqueJobLockIsReleased($command)
+    {
+        if (! $command instanceof ShouldBeUnique) {
+            return;
+        }
+
+        $uniqueId = method_exists($command, 'uniqueId')
+                    ? $command->uniqueId()
+                    : ($command->uniqueId ?? '');
+
+        $cache = method_exists($command, 'uniqueVia')
+                    ? $command->uniqueVia()
+                    : $this->container->make(Cache::class);
+
+        $cache->lock(
+            'laravel_unique_job:'.get_class($command).$uniqueId
+        )->forceRelease();
+    }
+
+    /**
      * Handle a model not found exception.
      *
      * @param  \Illuminate\Contracts\Queue\Job  $job
@@ -163,15 +215,53 @@ class CallQueuedHandler
      * The exception that caused the failure will be passed.
      *
      * @param  array  $data
-     * @param  \Throwable  $e
+     * @param  \Throwable|null  $e
+     * @param  string  $uuid
      * @return void
      */
-    public function failed(array $data, $e)
+    public function failed(array $data, $e, string $uuid)
     {
         $command = unserialize($data['command']);
 
+        $this->ensureUniqueJobLockIsReleased($command);
+        $this->ensureFailedBatchJobIsRecorded($uuid, $command, $e);
+        $this->ensureChainCatchCallbacksAreInvoked($uuid, $command, $e);
+
         if (method_exists($command, 'failed')) {
             $command->failed($e);
+        }
+    }
+
+    /**
+     * Ensure the batch is notified of the failed job.
+     *
+     * @param  string  $uuid
+     * @param  mixed  $command
+     * @param  \Throwable  $e
+     * @return void
+     */
+    protected function ensureFailedBatchJobIsRecorded(string $uuid, $command, $e)
+    {
+        if (! in_array(Batchable::class, class_uses_recursive($command)) ||
+            is_null($command->batch())) {
+            return;
+        }
+
+        $command->batch()->recordFailedJob($uuid, $e);
+    }
+
+    /**
+     * Ensure the chained job catch callbacks are invoked.
+     *
+     * @param  string  $uuid
+     * @param  mixed  $command
+     * @param  \Throwable  $e
+     * @return void
+     */
+    protected function ensureChainCatchCallbacksAreInvoked(string $uuid, $command, $e)
+    {
+        if (method_exists($command, 'invokeChainCatchCallbacks')) {
+            $command->invokeChainCatchCallbacks($e);
         }
     }
 }

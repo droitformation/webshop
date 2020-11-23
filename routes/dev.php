@@ -6,6 +6,12 @@
 Route::get('cartworker2', function()
 {
 
+    $tomorrow = \Carbon\Carbon::now()->addDay();
+    $lastWeek = \Carbon\Carbon::now()->subWeek();
+
+// Carbon embed 822 languages:
+    echo $tomorrow->locale('fr')->isoFormat('dddd Do MMMM YYYY');
+    exit;
     $abo        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     

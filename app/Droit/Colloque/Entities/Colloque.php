@@ -177,6 +177,7 @@ class Colloque extends Model implements HasMedia
         }
         else
         {
+            // return ucfirst($this->start_at->locale('fr')->isoFormat('dddd Do MMMM YYYY'));
             return $this->start_at->formatLocalized('%A %d %B %Y');
         }
     }
