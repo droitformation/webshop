@@ -117,7 +117,7 @@ class Generate{
                 return $inscription->price_link_id ? $inscription->price_link->colloques : null;
             })->flatten(1)->reject(function ($colloque) {
                 return empty($colloque);
-            }) : collect([]);
+            })->unique('id') : collect([]);
         }
 
         return isset($colloques) && !$colloques->isEmpty() ? $colloques : null;

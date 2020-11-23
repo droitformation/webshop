@@ -174,6 +174,7 @@ class RegisterInscriptionTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription', $data);
 
+
         $this->assertDatabaseHas('colloque_inscriptions', [
             'colloque_id' => $colloque1->id,
             'user_id'     => $person->id,
