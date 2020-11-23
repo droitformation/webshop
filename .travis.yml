@@ -1,8 +1,8 @@
 sudo: required
-dist: trusty
+dist: precise
 language: php
 php:
-  - '7.3'
+  - '7.4'
 
 before_script:
   - pear config-set preferred_state beta
@@ -16,7 +16,7 @@ before_script:
   - php artisan key:generate
   - mkdir public/files/products
   - mkdir public/files/abos
-  - mkdir public/files/arrets
+  - mkdir public/files/arretsprecise
   - mkdir public/files/analyses
   - mkdir public/files/uploads
   - mkdir public/files/colloques
