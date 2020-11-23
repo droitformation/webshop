@@ -10,10 +10,6 @@ use App\Droit\Shop\Product\Repo\ProductInterface;
 use App\Droit\Abo\Worker\AboFactureWorkerInterface;
 use App\Droit\Abo\Worker\AboRappelWorkerInterface;
 
-use Box\Spout\Writer\WriterFactory;
-use Box\Spout\Writer\Style\StyleBuilder;
-use Box\Spout\Common\Type;
-
 class AboFileController extends Controller {
     
     protected $abo;

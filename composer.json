@@ -10,12 +10,14 @@
 		"php": "^7.4.0",
 		"barryvdh/laravel-debugbar": "^3.5.1",
 		"barryvdh/laravel-dompdf": "0.8.x@dev",
+		"clegginabox/pdf-merger": "dev-master",
 		"doctrine/dbal": "^2.10",
 		"droitformation/databaselog": "^1.0",
 		"droitformation/registry": "^1.0",
+		"facade/ignition": "^2.5",
 		"fideloper/proxy": "4.4.1",
 		"fruitcake/laravel-cors": "^2.0",
-		"guzzlehttp/guzzle": "7.0.0",
+		"guzzlehttp/guzzle": "7.0.1",
 		"hardevine/shoppingcart": "^2.9",
 		"inlinestyle/inlinestyle": "1.*",
 		"intervention/image": "^2.5",
@@ -31,7 +33,6 @@
 		"msurguy/honeypot": "dev-master",
 		"php-http/guzzle7-adapter": "0.1.1",
 		"queueworker/sansdaemon": "^1.1",
-		"clegginabox/pdf-merger": "dev-master",
 		"simplesoftwareio/simple-qrcode": "2.0.0",
 		"spatie/laravel-backup": "6.11.6",
 		"spatie/laravel-honeypot": "^2.3",
@@ -52,8 +53,7 @@
 			"database/factories"
 		],
 		"psr-4": {
-			"App\\": "app/",
-			"Box\\Spout\\": "vendor/box/spout/src/Spout/"
+			"App\\": "app/"
 		},
 		"files": [
 			"tests/factories/ObjectFactory.php",

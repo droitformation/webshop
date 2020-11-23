@@ -14,9 +14,6 @@ use App\Droit\Generate\Pdf\PdfGeneratorInterface;
 
 use App\Droit\Shop\Order\Worker\OrderMakerInterface; // new implementation
 
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
-use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
-
 class OrderController extends Controller {
 
 	protected $product;
