@@ -1,35 +1,38 @@
 <template>
-    <div>
 
-        <h4>Choix du prix applicable</h4>
+      <div class="row">
+        <div :class=" form == 'multiple' ? 'col-md-12' : 'col-md-6 col-xs-12'">
+          <h4>Choix du prix applicable</h4>
 
-        <div class="list_prices">
+          <div class="list_prices">
             <div class="price-select">
-                <div class="form-group" v-if="prices.length != 0">
-                    <label><strong>Prix</strong></label>
-                    <select class="form-control select-price" @change="select($event)" v-model="prix">
-                        <option value="">Choix</option>
-                        <option v-for="price in prices" :value="price">{{ price.description }} | {{ price.price }} CHF</option>
-                        <option v-if="pricelinks.length != 0" v-for="pricelink in pricelinks" :value="pricelink">{{ pricelink.description }} | {{ pricelink.price }} CHF</option>
-                    </select>
-                </div>
+              <div class="form-group" v-if="prices.length != 0">
+                <label><strong>Prix</strong></label>
+                <select class="form-control select-price" @change="select($event)" v-model="prix">
+                  <option value="">Choix</option>
+                  <option v-for="price in prices" :value="price">{{ price.description }} | {{ price.price }} CHF</option>
+                  <option v-if="pricelinks.length != 0" v-for="pricelink in pricelinks" :value="pricelink">{{ pricelink.description }} | {{ pricelink.price }} CHF</option>
+                </select>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <div v-for="priceoption in priceoptions">
+          <div v-for="priceoption in priceoptions">
             <div v-if="!empty(priceoption.options)">
               <h4>Merci de préciser les options</h4>
             </div>
             <option-list :participant_id="participant_id" :form="form" :colloque="priceoption.colloque" :options="priceoption.options"></option-list>
-        </div>
+          </div>
 
-        <div v-if="prix">
+          <div v-if="prix">
             <input v-if="form == 'multiple'" v-for="colloque in prix.linked" :name="'colloques['+ participant_id +'][]'" type="hidden" :value="colloque.id">
             <input v-if="form == 'multiple'" :name="'price_id['+ participant_id +']'" :value="prix.genre+':'+prix.id" type="hidden">
             <input v-if="form == 'simple'" name="price_id" :value="prix.genre+':'+prix.id" type="hidden">
-        </div>
+          </div>
 
-    </div>
+        </div>
+      </div>
+
 </template>
 <style>
     .price-select{

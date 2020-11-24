@@ -5828,6 +5828,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['colloque', 'prices', 'pricelinks', 'participant_id', 'form'],
@@ -41034,144 +41037,149 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h4", [_vm._v("Choix du prix applicable")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "list_prices" }, [
-        _c("div", { staticClass: "price-select" }, [
-          _vm.prices.length != 0
-            ? _c("div", { staticClass: "form-group" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.prix,
-                        expression: "prix"
-                      }
-                    ],
-                    staticClass: "form-control select-price",
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.prix = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          return _vm.select($event)
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { class: _vm.form == "multiple" ? "col-md-12" : "col-md-6 col-xs-12" },
+      [
+        _c("h4", [_vm._v("Choix du prix applicable")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "list_prices" }, [
+          _c("div", { staticClass: "price-select" }, [
+            _vm.prices.length != 0
+              ? _c("div", { staticClass: "form-group" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.prix,
+                          expression: "prix"
                         }
-                      ]
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [_vm._v("Choix")]),
-                    _vm._v(" "),
-                    _vm._l(_vm.prices, function(price) {
-                      return _c("option", { domProps: { value: price } }, [
-                        _vm._v(
-                          _vm._s(price.description) +
-                            " | " +
-                            _vm._s(price.price) +
-                            " CHF"
-                        )
-                      ])
-                    }),
-                    _vm._v(" "),
-                    _vm._l(_vm.pricelinks, function(pricelink) {
-                      return _vm.pricelinks.length != 0
-                        ? _c("option", { domProps: { value: pricelink } }, [
-                            _vm._v(
-                              _vm._s(pricelink.description) +
-                                " | " +
-                                _vm._s(pricelink.price) +
-                                " CHF"
-                            )
-                          ])
-                        : _vm._e()
-                    })
-                  ],
-                  2
-                )
-              ])
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.priceoptions, function(priceoption) {
-        return _c(
-          "div",
-          [
-            !_vm.empty(priceoption.options)
-              ? _c("div", [_c("h4", [_vm._v("Merci de préciser les options")])])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("option-list", {
-              attrs: {
-                participant_id: _vm.participant_id,
-                form: _vm.form,
-                colloque: priceoption.colloque,
-                options: priceoption.options
-              }
-            })
-          ],
-          1
-        )
-      }),
-      _vm._v(" "),
-      _vm.prix
-        ? _c(
+                      ],
+                      staticClass: "form-control select-price",
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.prix = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          function($event) {
+                            return _vm.select($event)
+                          }
+                        ]
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [_vm._v("Choix")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.prices, function(price) {
+                        return _c("option", { domProps: { value: price } }, [
+                          _vm._v(
+                            _vm._s(price.description) +
+                              " | " +
+                              _vm._s(price.price) +
+                              " CHF"
+                          )
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.pricelinks, function(pricelink) {
+                        return _vm.pricelinks.length != 0
+                          ? _c("option", { domProps: { value: pricelink } }, [
+                              _vm._v(
+                                _vm._s(pricelink.description) +
+                                  " | " +
+                                  _vm._s(pricelink.price) +
+                                  " CHF"
+                              )
+                            ])
+                          : _vm._e()
+                      })
+                    ],
+                    2
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.priceoptions, function(priceoption) {
+          return _c(
             "div",
             [
-              _vm._l(_vm.prix.linked, function(colloque) {
-                return _vm.form == "multiple"
-                  ? _c("input", {
-                      attrs: {
-                        name: "colloques[" + _vm.participant_id + "][]",
-                        type: "hidden"
-                      },
-                      domProps: { value: colloque.id }
-                    })
-                  : _vm._e()
-              }),
-              _vm._v(" "),
-              _vm.form == "multiple"
-                ? _c("input", {
-                    attrs: {
-                      name: "price_id[" + _vm.participant_id + "]",
-                      type: "hidden"
-                    },
-                    domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
-                  })
+              !_vm.empty(priceoption.options)
+                ? _c("div", [
+                    _c("h4", [_vm._v("Merci de préciser les options")])
+                  ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm.form == "simple"
-                ? _c("input", {
-                    attrs: { name: "price_id", type: "hidden" },
-                    domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
-                  })
-                : _vm._e()
+              _c("option-list", {
+                attrs: {
+                  participant_id: _vm.participant_id,
+                  form: _vm.form,
+                  colloque: priceoption.colloque,
+                  options: priceoption.options
+                }
+              })
             ],
-            2
+            1
           )
-        : _vm._e()
-    ],
-    2
-  )
+        }),
+        _vm._v(" "),
+        _vm.prix
+          ? _c(
+              "div",
+              [
+                _vm._l(_vm.prix.linked, function(colloque) {
+                  return _vm.form == "multiple"
+                    ? _c("input", {
+                        attrs: {
+                          name: "colloques[" + _vm.participant_id + "][]",
+                          type: "hidden"
+                        },
+                        domProps: { value: colloque.id }
+                      })
+                    : _vm._e()
+                }),
+                _vm._v(" "),
+                _vm.form == "multiple"
+                  ? _c("input", {
+                      attrs: {
+                        name: "price_id[" + _vm.participant_id + "]",
+                        type: "hidden"
+                      },
+                      domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.form == "simple"
+                  ? _c("input", {
+                      attrs: { name: "price_id", type: "hidden" },
+                      domProps: { value: _vm.prix.genre + ":" + _vm.prix.id }
+                    })
+                  : _vm._e()
+              ],
+              2
+            )
+          : _vm._e()
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
