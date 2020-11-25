@@ -134,14 +134,17 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             return 'Aucune inscription à afficher';
         }
 
-        if($inscription->group_id)
-        {
+        if($inscription->group_id) {
             $attachements = $inscription->groupe->documents;
         }
 
-        if($inscription->user_id)
-        {
+        if($inscription->user_id) {
             $attachements = $inscription->documents;
+        }
+
+        // hold on the bon if we need to
+        if(isset($attachements['bon']) && $inscription->colloque->keepBon){
+            unset($attachements['bon']);
         }
 
         $program = $inscription->colloque->programme_attachement;
@@ -192,6 +195,11 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
             'facture' => ['name' => 'Facture', 'url' => '#'],
             'bv' => ['name' => 'BV', 'url' => '#'],
         ];
+
+        // hold on the bon if we need to
+        if(isset($attachments['bon']) && $inscription->colloque->keepBon){
+            unset($attachments['bon']);
+        }
 
         $data = [
             'title'        => 'Votre inscription sur publications-droit.ch',
