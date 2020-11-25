@@ -204,7 +204,7 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         $data = [
             'title'        => 'Votre inscription sur publications-droit.ch',
             'concerne'     => 'Inscription',
-            'annexes'      => $inscription->colloque->annexe,
+            'annexes'      => $inscription->colloque->send_annexe,
             'attachements' => $attachments,
             'colloque'     => $inscription->colloque,
             'inscription'  => $inscription,

@@ -68,7 +68,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             ->bcc('archive@publications-droit.ch', 'Archive publications-droit')
             ->send(new \App\Mail\SendRegisterConfirmation(
                 'Votre inscription sur publications-droit.ch',
-                $this->inscription->colloque->annexe,
+                $this->inscription->colloque->send_annexe,
                 $this->inscription->colloque,
                 $this->inscription->user,
                 $this->inscription,
