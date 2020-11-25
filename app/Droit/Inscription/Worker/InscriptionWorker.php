@@ -92,7 +92,14 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $this->makeDocuments($model,true);
 
         // Send prepared data and documents, update inscription with send date for admin
-        $this->send($this->prepareData($model), $model->user, $model->documents, $email);
+        $attachements = $model->documents;
+
+        // hold on the bon if we need to
+        if(isset($attachements['bon']) && $model->colloque->keepBon){
+            unset($attachements['bon']);
+        }
+
+        $this->send($this->prepareData($model, $attachements), $model->user, $attachements, $email);
         $this->updateInscription($model);
 
         return true;
@@ -104,22 +111,13 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             throw new \App\Exceptions\EmailSubstituteException($email);
         }
 
-        \Mail::send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements,$email) {
+        $email = ($email ? $email : $user->email);
 
-            // Overwrite the email to send to?
-            $email = ($email ? $email : $user->email);
-
-            $message->sender(config('mail.from.address'))->to($email, $user->name)->subject('Confirmation d\'inscription');
-
-            if(!empty($attachements) && config('inscription.link') == false) {
-                foreach($attachements as $attachement) {
-                    $message->attach($attachement['file'], ['as' => isset($attachement['pdfname']) ? $attachement['pdfname'] : '', 'mime' => 'application/pdf']);
-                }
-            }
-        });
+        \Mail::to($email, $user->name)->bcc('archive@publications-droit.ch', 'Archive publications-droit')
+            ->send(new \App\Mail\SendRegisterConfirmation($data['title'], $data['annexes'], $data['colloque'], $data['user'], $data['inscription'], $attachements));
     }
 
-    public function prepareData($model)
+    public function prepareData($model, $attachements = [])
     {
         $data = [
             'title'       => 'Votre inscription sur publications-droit.ch',
@@ -129,7 +127,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             'annexes'      => $model->colloque->annexe,
             'colloque'     => $model->colloque,
             'user'         => $model->user,
-            'attachements' => $model->documents
+            'attachements' => !empty($attachements) ? $attachements : $model->documents
         ];
 
         if($model instanceof \App\Droit\Inscription\Entities\Groupe)
@@ -165,8 +163,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         $refresh = $refresh ? true : empty($model->documents);
 
         // Generate annexes if any
-        if($refresh && !empty($annexes))
-        {
+        if($refresh && !empty($annexes)) {
             collect($annexes)->map(function ($annexe, $key) use ($model) {
 
                 // List inscription to remake

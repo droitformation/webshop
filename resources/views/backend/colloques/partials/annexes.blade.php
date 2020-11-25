@@ -30,3 +30,11 @@
         </select>
     </div>
 </div>
+
+<div class="form-group">
+    <label class="col-sm-3 control-label">Envoyer le bon de participation</label>
+    <div class="col-sm-5">
+        <label class="radio-inline"><input type="radio" {{ (!$colloque->keepBon ? 'checked' : '') }} name="keepBon" value="0"> Oui</label>
+        <label class="radio-inline"><input type="radio" {{ ($colloque->keepBon ? 'checked' : '') }} name="keepBon" value="1"> Non</label>
+    </div>
+</div>

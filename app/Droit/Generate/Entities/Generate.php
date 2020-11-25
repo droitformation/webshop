@@ -200,22 +200,18 @@ class Generate{
         $path = config('documents.colloque.'.$annexe);
         $part = (isset($this->model->participant) ? $this->model->group_id.'-'.$this->model->participant->id : $this->model->user_id);
 
-        if($annexe == 'bon')
-        {
+        if($annexe == 'bon') {
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$part.'.pdf');
         }
 
-        if( ($annexe == 'facture' || $annexe == 'bv') && $this->getType() == 'group')
-        {
+        if( ($annexe == 'facture' || $annexe == 'bv') && $this->getType() == 'group') {
             return public_path($path.$name.'_'.$this->model->colloque_id.'-'.$this->model->id.'-'.$this->model->user_id.'.pdf');
         }
 
-        if($this->getType() != 'abo' && $annexe == 'rappel')
-        {
+        if($this->getType() != 'abo' && $annexe == 'rappel') {
             $path = 'files/colloques/'.$annexe.'/'.$this->model->product_id;
 
-            if (!\File::exists(public_path($path)))
-            {
+            if (!\File::exists(public_path($path))) {
                 if (!mkdir(public_path($path), 0755, true)) {
                     die('Failed to create folders...');
                 }
@@ -226,19 +222,16 @@ class Generate{
             return public_path($file);
         }
 
-        if($this->getType() == 'abo')
-        {
+        if($this->getType() == 'abo') {
             $path = 'files/abos/'.$annexe.'/'.$this->model->product_id;
 
-            if (!\File::exists(public_path($path)))
-            {
+            if (!\File::exists(public_path($path))) {
                 if (!mkdir(public_path($path), 0755, true)) {
                     die('Failed to create folders...');
                 }
             }
 
-            if($annexe == 'rappel')
-            {
+            if($annexe == 'rappel') {
                 return public_path($path.'/'.$name.'_'.$this->model->id.'.pdf');
             }
 

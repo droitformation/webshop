@@ -34,6 +34,7 @@ class CreateColloquesTable extends Migration
             $table->tinyInteger('visible')->nullable();
             $table->tinyInteger('bon')->default(1);
             $table->tinyInteger('facture')->default(1);
+            $table->tinyInteger('keepBon')->nullable();
             $table->integer('counter')->default(0);
             $table->text('themes')->nullable();
             $table->string('social_image')->nullable();

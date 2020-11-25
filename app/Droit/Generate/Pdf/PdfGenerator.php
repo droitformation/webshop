@@ -89,13 +89,7 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['rappel']   = $rappel ? $rappel : null;
         $data['date']     = isset($order->created_at) ? $order->created_at->formatLocalized('%d %B %Y') : Carbon::now()->formatLocalized('%d %B %Y');
 
-        $context = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
-        ]);
+        $context = stream_context_create(['ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]]);
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->getDomPDF()->setHttpContext($context);
@@ -172,13 +166,7 @@ class PdfGenerator implements PdfGeneratorInterface
             $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate($url));
         }
 
-        $context = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
-        ]);
+        $context = stream_context_create(['ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]]);
         
         $pdf = \App::make('dompdf.wrapper');
         $pdf->getDomPDF()->setHttpContext($context);
@@ -198,7 +186,6 @@ class PdfGenerator implements PdfGeneratorInterface
         }
 
         return $view->$state($filepath);
-
     }
 
     public function makeInscriptionRappel($model, $rappel ,$filepath){

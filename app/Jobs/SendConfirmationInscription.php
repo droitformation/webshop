@@ -35,8 +35,6 @@ class SendConfirmationInscription extends Job implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $attachements = [];
-
         $generator = \App::make('App\Droit\Generate\Pdf\PdfGeneratorInterface');
         
         $this->inscription->load('colloque');
@@ -61,7 +59,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             $attachements['program'] = $program;
         }
 
-        $data = [
+        /* $data = [
             'title'       => 'Votre inscription sur publications-droit.ch',
             'concerne'    => 'Inscription',
             'annexes'     => $this->inscription->colloque->annexe,
@@ -72,8 +70,7 @@ class SendConfirmationInscription extends Job implements ShouldQueue
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
         ];
 
-        $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements) {
-
+       $mailer->send('emails.colloque.confirmation', $data , function ($message) use ($user,$attachements) {
             $message->to($user->email, $user->name)->subject('Confirmation d\'inscription');
             $message->bcc('archive@publications-droit.ch', 'Archive publications-droit');
             $message->replyTo('bounce@publications-droit.ch', 'Réponse depuis publications-droit.ch');
@@ -84,12 +81,22 @@ class SendConfirmationInscription extends Job implements ShouldQueue
                     $message->attach($attachement['file'], ['as' => isset($attachement['pdfname']) ? $attachement['pdfname'] : '', 'mime' => 'application/pdf']);
                 }
             }
-        });
+        });*/
+
+
+        \Mail::to($user->email, $user->name)
+            ->bcc('archive@publications-droit.ch', 'Archive publications-droit')
+            ->send(new \App\Mail\SendRegisterConfirmation(
+                'Votre inscription sur publications-droit.ch',
+                $this->inscription->colloque->annexe,
+                $this->inscription->colloque,
+                $this->inscription->user,
+                $this->inscription,
+                $attachements
+            ));
 
         // Update the send date and add true if send via admin
         $this->inscription->send_at = date('Y-m-d');
         $this->inscription->save();
-
     }
-
 }

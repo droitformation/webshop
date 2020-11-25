@@ -45,12 +45,9 @@ class SendConfirmationGroupInscriptionEmail extends Job implements ShouldQueue
         $annexes = $this->group->colloque->annexe;
 
         // Generate annexes if any
-        if(empty($this->group->documents) && !empty($annexes))
-        {
-            foreach($annexes as $annexe)
-            {
-                foreach($this->group->inscriptions as $inscription)
-                {
+        if(empty($this->group->documents) && !empty($annexes)) {
+            foreach($annexes as $annexe) {
+                foreach($this->group->inscriptions as $inscription) {
                     // Make the bon and the other docs if the price is not 0
                     if($annexe == 'bon' || ($inscription->price_cents > 0 && ($annexe == 'facture' || $annexe == 'bv')))
                     {
