@@ -36,6 +36,8 @@ class PdfGenerator implements PdfGeneratorInterface
 
     public $signature = 'Le secrétariat de la Faculté de droit';
 
+    protected $pdf;
+
     public function __construct()
     {
         setlocale(LC_ALL, 'fr_FR.UTF-8');
@@ -52,6 +54,20 @@ class PdfGenerator implements PdfGeneratorInterface
             'nom'     => \Registry::get('shop.infos.nom'),
             'adresse' => \Registry::get('shop.infos.tiers'),
         ];
+    }
+
+    /*
+     * Can't make one and use it everywhere I don't now why
+     * If it's in the IOC it's not a new instance maybe?
+     * */
+    public function pdf()
+    {
+        $context = stream_context_create(['ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]]);
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->getDomPDF()->setHttpContext($context);
+
+        return $pdf;
     }
 
     /*
@@ -89,23 +105,12 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['rappel']   = $rappel ? $rappel : null;
         $data['date']     = isset($order->created_at) ? $order->created_at->formatLocalized('%d %B %Y') : Carbon::now()->formatLocalized('%d %B %Y');
 
-        $context = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
-        ]);
+        $pdf  = $this->pdf();
+        $view = $pdf->loadView('templates.shop.facture', $data)->setPaper('a4');
 
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->getDomPDF()->setHttpContext($context);
+        $filepath = $generate->getFilename($rappel);
 
-        $facture = $pdf->loadView('templates.shop.facture', $data)->setPaper('a4');
-
-        $make = ($this->stream ? 'stream' : 'save');
-        $name = $generate->getFilename($rappel);
-
-        return $facture->$make($name);
+        return $this->print($view,$filepath);
     }
 
     public function makeAbo($document, $model, $rappel = null, $rappel_model = null)
@@ -116,29 +121,16 @@ class PdfGenerator implements PdfGeneratorInterface
         $data['generate'] = $generate;
         $data['rappel']   = $rappel;
         $data['model']    = $rappel_model;
-        $data['print']    = $this->toPrint;
 
-        $context = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
-        ]);
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->getDomPDF()->setHttpContext($context);
-
+        $pdf  = $this->pdf();
         $view = $pdf->loadView('templates.abonnement.facture', $data)->setPaper('a4');
 
-        // Do wee need to stream or save the pdf
-        $state    = ($this->stream ? 'stream' : 'save');
-        $name     = ($rappel ? 'rappel_'.$rappel_model->id : $document);
+        $name = ($rappel ? 'rappel_'.$rappel_model->id : $document);
 
         // Path for saving document
         $filepath = $generate->getFilename($document, $name);
 
-        return $view->$state($filepath);
+        return $this->print($view,$filepath);
     }
 
     /*
@@ -158,7 +150,6 @@ class PdfGenerator implements PdfGeneratorInterface
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
-        $data['print']    = $this->toPrint;
 
         if($rappel){
             $data['rappel'] = $model->load('rappels')->rappels->count();
@@ -172,21 +163,9 @@ class PdfGenerator implements PdfGeneratorInterface
             $data['code'] = base64_encode(\QrCode::format('png')->margin(3)->size(115)->encoding('UTF-8')->generate($url));
         }
 
-        $context = stream_context_create([
-            'ssl' => [
-                'verify_peer' => FALSE,
-                'verify_peer_name' => FALSE,
-                'allow_self_signed'=> TRUE
-            ]
-        ]);
-        
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->getDomPDF()->setHttpContext($context);
-
+        $pdf  = $this->pdf();
         $view = $pdf->loadView('templates.colloque.'.$document, $data)->setPaper('a4');
 
-        // Do wee need to stream or save the pdf
-        $state    = ($this->stream ? 'stream' : 'save');
         $document = ($rappel ? 'rappel' : $document);
         $name     = ($rappel ? 'rappel_'.$rappel->id : $document);
 
@@ -197,8 +176,7 @@ class PdfGenerator implements PdfGeneratorInterface
             $filepath =  storage_path('test/test.pdf');
         }
 
-        return $view->$state($filepath);
-
+        return $this->print($view,$filepath);
     }
 
     public function makeInscriptionRappel($model, $rappel ,$filepath){
@@ -207,16 +185,20 @@ class PdfGenerator implements PdfGeneratorInterface
         $generate = new \App\Droit\Generate\Entities\Generate($model);
 
         $data['generate'] = $generate;
-        $data['print']    = $this->toPrint;
         $data['rappel']   = $model->load('rappels')->rappels->count();
 
-        $context = stream_context_create(['ssl' => ['verify_peer' => FALSE, 'verify_peer_name' => FALSE, 'allow_self_signed'=> TRUE]]);
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->getDomPDF()->setHttpContext($context);
-
+        $pdf  = $this->pdf();
         $view = $pdf->loadView('templates.colloque.facture', $data)->setPaper('a4');
 
+        return $this->print($view,$filepath);
+    }
+
+    /*
+     * $view = dompdf loadView & setPaper
+     * $filepath = path for pdf
+     * */
+    protected function print($view,$filepath)
+    {
         $state = ($this->stream ? 'stream' : 'save');
 
         return $view->$state($filepath);
@@ -226,35 +208,21 @@ class PdfGenerator implements PdfGeneratorInterface
     {
         $data['expediteur']  = $this->expediteur;
         $data['date']        = $this->now;
-
-        if($document == 'facture')
-        {
-             $data['messages']  = $this->messages;
-             $data['signature'] = $this->signature;
-             $data['tva']       = $this->tva;
-        }
+        $data['print']       = $this->toPrint;
+        $data['messages']    = $this->messages;
+        $data['signature']   = $this->signature;
+        $data['tva']         = $this->tva;
 
         if($document == 'order')
         {
-            $data['messages']  = $this->messages;
-            $data['signature'] = $this->signature;
-            $data['tva']       = $this->tva;
             $data['versement'] = $this->versement;
-            $data['motif'] = [
-                'centre' => $this->centre,
-                'texte'  => $this->motif,
-            ];
-            $data['tva'] = [
-                'taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres',
-                'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'
-            ];
+            $data['motif'] = ['centre' => $this->centre, 'texte'  => $this->motif,];
+            $data['tva']   = ['taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres', 'taux_normal' => 'Taux '.$this->tva['taux_normal'].'% pour les autres produits'];
         }
 
         if($document == 'abo')
         {
-            $data['messages']  = $this->messages;
             $data['versement'] = $this->versement;
-            $data['signature'] = $this->signature;
             $data['tva']       = ['taux_reduit' => 'Taux '.$this->tva['taux_reduit'].'% inclus pour les livres'];
             $data['msgTypes']  = ['warning','special','remarque','signature'];
             $data['compte']    = \Registry::get('abo.compte');
