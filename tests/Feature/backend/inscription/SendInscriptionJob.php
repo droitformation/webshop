@@ -38,10 +38,19 @@ class SendInscriptionJob extends TestCase
         $colloque    = $make->makeInscriptions(1);
         $inscription = $colloque->inscriptions->first();
 
+        $attachments = [
+            'bon'     => ['name' => 'Bon', 'url' => storage_path('test/test_bon.pdf')],
+            'facture' => ['name' => 'Facture', 'url' => storage_path('test/test_facture.pdf')],
+            'bv'      => ['name' => 'BV', 'url' => storage_path('test/test_bv.pdf')],
+        ];
+
+        $inscription->documents = $attachments;
+
         $worker->sendEmail($inscription, 'cindy.leschaud@gmail.com');
 
         \Mail::assertSent(\App\Mail\SendRegisterConfirmation::class);
-    /*    \Mail::assertSent(\App\Mail\SendRegisterConfirmation::class, function($mail) {
+   /*     \Mail::assertSent(\App\Mail\SendRegisterConfirmation::class, function($mail) {
+            $mail = $mail->build();
             return count($mail->attachments) > 3;
         });*/
 

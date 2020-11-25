@@ -166,7 +166,6 @@ class Inscription extends Model
                 $file = public_path($path);
 
                 if (\File::exists($file)) {
-
                     $docs[$annexe]['file'] = $file;
                     $docs[$annexe]['link'] = $path;
                     $docs[$annexe]['name'] = ucfirst($annexe);

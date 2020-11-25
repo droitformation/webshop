@@ -124,7 +124,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             'logo'        => 'facdroit.png',
             'concerne'    => 'Inscription',
             'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
-            'annexes'      => $model->colloque->annexe,
+            'annexes'      => $model->colloque->send_annexe,
             'colloque'     => $model->colloque,
             'user'         => $model->user,
             'attachements' => !empty($attachements) ? $attachements : $model->documents

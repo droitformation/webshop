@@ -259,6 +259,22 @@ class Colloque extends Model implements HasMedia
         return $annexes;
     }
 
+    public function getSendAnnexeAttribute()
+    {
+        $annexes = [];
+
+        if($this->bon && !$this->keepBon) {
+            $annexes[] = 'bon';
+        }
+
+        if($this->facture) {
+            $annexes[] = 'facture';
+            $annexes[] = 'bv';
+        }
+
+        return $annexes;
+    }
+
     public function scopeVisible($query,$visible)
     {
         if($visible) $query->where('visible','=',1);
