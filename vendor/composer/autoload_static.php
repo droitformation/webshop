@@ -1398,6 +1398,7 @@ class ComposerStaticInitc52037196f1e031d777473b7cafc3d8a
         'App\\Listeners\\UpdateSubscriberEmail' => __DIR__ . '/../..' . '/app/Listeners/UpdateSubscriberEmail.php',
         'App\\Mail\\NotifyBounce' => __DIR__ . '/../..' . '/app/Mail/NotifyBounce.php',
         'App\\Mail\\NotifyWebmaster' => __DIR__ . '/../..' . '/app/Mail/NotifyWebmaster.php',
+        'App\\Mail\\SendRegisterConfirmation' => __DIR__ . '/../..' . '/app/Mail/SendRegisterConfirmation.php',
         'App\\Mail\\SendSlides' => __DIR__ . '/../..' . '/app/Mail/SendSlides.php',
         'App\\Mail\\WebmasterNotification' => __DIR__ . '/../..' . '/app/Mail/WebmasterNotification.php',
         'App\\Notifications\\ResetPassword' => __DIR__ . '/../..' . '/app/Notifications/ResetPassword.php',

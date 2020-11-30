@@ -15,14 +15,42 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12 col-xs-12">
+    <div class="col-md-12 col-xs-12" id="appComponent">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <form action="{{ url('admin/allavis') }}" method="post">{!! csrf_field() !!}
+                    <div class="row">
+                        <div class="col-md-3 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label"><strong>Ordre</strong></label>
+                                <div>
+                                    <label class="radio-inline"><input type="radio" value="alpha" {{ isset($sort) && $sort == 'alpha' || old('sort') == 'alpha' || !isset($sort) ? 'checked' : '' }} name="sort"> Alphabétique</label>
+                                    <label class="radio-inline"><input type="radio" value="type" {{ isset($sort) && $sort == 'type' || old('sort') == 'type' ? 'checked' : '' }} name="sort"> Type</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <button class="btn btn-primary" type="submit">Envoyer </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         @if(!$avis->isEmpty())
 
             <div class="panel panel-primary">
                 <div class="panel-body">
-                    @include('backend.avis.partials.liste', ['avis' => $avis])
-
+                    <div class="row">
+                        <div class="col-md-1"><strong>Action</strong></div>
+                        <div class="col-md-6"><strong>Question</strong></div>
+                        <div class="col-md-3"><strong>Type</strong></div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <hr/>
+                        <question-row :avis="{{ $avis }}"></question-row>
                     <hr/>
                     <p><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#hiddenTable">Questions cahées</a></p>
                 </div>

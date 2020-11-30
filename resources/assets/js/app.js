@@ -52,7 +52,8 @@ Vue.component('adresse-update', require('./components/AdresseUpdate.vue').defaul
 Vue.component('choix-duplicate', require('./components/ChoixDuplicate.vue').default);
 Vue.component('rabais', require('./components/Rabais.vue').default);
 Vue.component('tags', require('./components/Tags.vue').default);
-
+Vue.component('question-liste', require('./components/QuestionListe.vue').default);
+Vue.component('question-row', require('./components/QuestionRow.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);
