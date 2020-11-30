@@ -11,7 +11,7 @@
         @foreach($avis as $question)
             <tr>
                 <td><a class="btn btn-sky btn-sm" href="{{ url('admin/avis/'.$question->id) }}"><i class="fa fa-edit"></i></a></td>
-                <td><strong>{!! $question->question !!}</strong></td>
+                <td><strong>{!! strip_tags($question->question) !!}</strong></td>
                 <td>{{ $question->type_name }}</td>
                 <td class="text-right">
                     <form action="{{ url('admin/avis/'.$question->id) }}" method="POST" class="form-horizontal">

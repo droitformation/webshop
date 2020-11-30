@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Sondage\Repo\AvisInterface;
 use App\Droit\Sondage\Repo\SondageInterface;
+use function GuzzleHttp\Psr7\str;
 
 class AvisController extends Controller
 {
@@ -25,15 +26,38 @@ class AvisController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $sort = $request->input('sort','alpha');
         $avis = $this->avis->getAll();
 
         list($hidden, $activ) = $avis->partition(function ($item) {
             return $item->hidden;
         });
 
-        return view('backend.avis.index')->with(['avis' => $activ, 'hidden' => $hidden]);
+        $hidden = $hidden->map(function ($row, $key) {
+            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
+            $row->setAttribute('alpha',strtolower($sort));
+            return $row;
+        })->sortBy($sort)->values();
+
+        $activ = $activ->map(function ($row) {
+            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
+
+            return [
+                'id'        => $row->id,
+                'type_name' => $row->type_name,
+                'type'      => $row->type,
+                'question'  => strip_tags($row->question),
+                'hidden'    => $row->hidden,
+                'class'     => $row->hidden ? 'row-hidden' : '',
+                'alpha'     => strtolower($sort),
+                'path_delete' => secure_url('admin/avis/deleteAjax'),
+                'path_update' => secure_url('admin/avis/updateAjax'),
+            ];
+        })->sortBy($sort)->values();
+
+        return view('backend.avis.index')->with(['avis' => $activ, 'hidden' => $hidden, 'sort' => $sort]);
     }
 
     /**
@@ -101,12 +125,6 @@ class AvisController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
         $this->avis->delete($id);
@@ -114,5 +132,19 @@ class AvisController extends Controller
         flash('La question a été supprimé')->success();
 
         return redirect()->back();
+    }
+
+    public function deleteAjax(Request $request)
+    {
+        $this->avis->delete($request->input('id'));
+
+        return response()->json($this->avis->getAll());
+    }
+
+    public function updateAjax(Request $request)
+    {
+        $avis = $this->avis->update(['id' => $request->input('id'), 'hidden' => 1]);
+
+        return response()->json($avis);
     }
 }

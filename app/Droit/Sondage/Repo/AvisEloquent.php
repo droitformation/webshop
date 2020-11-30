@@ -14,7 +14,7 @@ class AvisEloquent implements AvisInterface{
 
     public function getAll($active = null)
     {
-        return $this->avis->active($active)->get();
+        return $this->avis->active($active)->orderBy('question','ASC')->get();
     }
 
     public function find($id)
@@ -43,8 +43,7 @@ class AvisEloquent implements AvisInterface{
     {
         $avis = $this->avis->findOrFail($data['id']);
 
-        if(!$avis)
-        {
+        if(!$avis) {
             return false;
         }
 
