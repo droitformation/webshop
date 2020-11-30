@@ -18,7 +18,7 @@ class Colloque extends Model implements HasMedia
 
     protected $fillable = [
         'titre', 'soustitre', 'sujet', 'social_image','remarques', 'themes','capacite','notice','start_at', 'end_at', 'registration_at', 'active_at', 'organisateur',
-        'location_id', 'compte_id', 'visible', 'bon', 'facture', 'email' ,'adresse_id','created_at', 'updated_at','url','slide_text'
+        'location_id', 'compte_id', 'visible', 'bon', 'facture', 'email' ,'adresse_id','created_at', 'updated_at','url','slide_text','keepBon'
     ];
 
     public function getIllustrationAttribute()

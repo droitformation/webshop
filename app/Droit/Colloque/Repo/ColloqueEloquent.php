@@ -157,6 +157,10 @@ class ColloqueEloquent implements ColloqueInterface{
             $colloque->capacite = $data['capacite'] > 0 ? $data['capacite'] : null;
         }
 
+        if(isset($data['keepBon'])) {
+            $colloque->keepBon = $data['keepBon'] > 0 ? 1 : null;
+        }
+
         $colloque->social_image = isset($data['social_image']) ? $data['social_image'] : $colloque->social_image;
 
         $colloque->save();

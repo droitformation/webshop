@@ -222,6 +222,60 @@ class WorkerInscriptionTest extends TestCase
         $this->assertEquals($data, $result);
     }
 
+    public function testPrepareDataPassAttachments()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+        $attachments = $inscription->documents;
+
+        $result = $worker->prepareData($inscription, ['test' => 1]);
+
+        $data = [
+            'title'       => 'Votre inscription sur publications-droit.ch',
+            'logo'        => 'facdroit.png',
+            'concerne'    => 'Inscription',
+            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'annexes'     => $inscription->colloque->annexe,
+            'colloque'    => $inscription->colloque,
+            'inscription' => $inscription,
+            'user'        => $inscription->user,
+            'attachements'=> ['test' => 1]
+        ];
+
+        $this->assertEquals($data, $result);
+    }
+
+    public function testPrepareDataPassAttachmentsEmpty()
+    {
+        // Create colloque
+        $worker   = \App::make('App\Droit\Inscription\Worker\InscriptionWorkerInterface');
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->makeInscriptions(1);
+
+        $inscription = $colloque->inscriptions->first();
+        $attachments = $inscription->documents;
+
+        $result = $worker->prepareData($inscription);
+
+        $data = [
+            'title'       => 'Votre inscription sur publications-droit.ch',
+            'logo'        => 'facdroit.png',
+            'concerne'    => 'Inscription',
+            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'annexes'     => $inscription->colloque->annexe,
+            'colloque'    => $inscription->colloque,
+            'inscription' => $inscription,
+            'user'        => $inscription->user,
+            'attachements'=> $attachments
+        ];
+
+        $this->assertEquals($data, $result);
+    }
+
     public function testPrepareDataGroup()
     {
         // Create colloque
