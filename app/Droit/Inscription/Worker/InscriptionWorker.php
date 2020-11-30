@@ -93,7 +93,7 @@ class InscriptionWorker implements InscriptionWorkerInterface{
         }
 
         // Send prepared data and documents, update inscription with send date for admin
-        $this->send($this->prepareData($model,$attachements), $model->user, $model->documents, $email);
+        $this->send($this->prepareData($model,$attachements), $model->user, $attachements, $email);
         $this->updateInscription($model);
 
         return true;

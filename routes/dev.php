@@ -6,12 +6,23 @@
 Route::get('cartworker2', function()
 {
 
+    setlocale(LC_ALL, 'fr_FR.UTF-8');
+
     $tomorrow = \Carbon\Carbon::now()->addDay();
     $lastWeek = \Carbon\Carbon::now()->subWeek();
 
-// Carbon embed 822 languages:
-    echo $tomorrow->locale('fr')->isoFormat('dddd Do MMMM YYYY');
+    $date = \Carbon\Carbon::now()->locale('fr_FR');
+
+    echo $date->locale();            // fr_FR
+    echo "<br>";
+    echo $date->isoFormat('dddd Do MMMM YYYY');   // vendredi 23 octobre 2020 09:22
+
+    // Carbon embed 822 languages:
+    //echo $tomorrow->locale('fr')->isoFormat('dddd Do MMMM YYYY');
+    //echo '<br>';
+    //echo $tomorrow->locale('fr')->formatLocalized('%A %d %B %Y');
     exit;
+
     $abo        = \App::make('App\Droit\Abo\Repo\AboInterface');
     $abofactures  = \App::make('App\Droit\Abo\Repo\AboFactureInterface');
     

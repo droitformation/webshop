@@ -78,15 +78,15 @@ class AboWorker implements AboWorkerInterface{
             // Create new abonnement
             $abonnement = $this->abonnement->create($item + ['numero' => $max]);
 
+            // Mark reference if any
+            $reference = \App\Droit\Transaction\Reference::make($abonnement);
+
             // Create first invoice
             $facture = $this->abonnement->makeFacture(['abo_user_id' => $abonnement->id, 'product_id' => $item['product_id']]);
 
             // Generate first pdf invoice
             $this->generator->setPrint(true);
             $this->generator->makeAbo('facture', $facture);
-
-            // Mark reference if any
-            $reference = \App\Droit\Transaction\Reference::make($abonnement);
 
             $collection->push($abonnement);
         }
