@@ -31,31 +31,18 @@ class AvisController extends Controller
         $sort = $request->input('sort','alpha');
         $avis = $this->avis->getAll();
 
-        list($hidden, $activ) = $avis->partition(function ($item) {
-            return $item->hidden;
-        });
-
-        $hidden = $hidden->map(function ($row, $key) {
+        $avis = $avis->map(function ($row, $key) {
             $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
             $row->setAttribute('alpha',strtolower($sort));
+            $row->setAttribute('class',null);
+            $row->setAttribute('type_name',$row->type_name);
+            $row->setAttribute('question_simple',strip_tags($row->question));
             return $row;
         })->sortBy($sort)->values();
 
-        $activ = $activ->map(function ($row) {
-            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
-
-            return [
-                'id'        => $row->id,
-                'type_name' => $row->type_name,
-                'type'      => $row->type,
-                'question'  => strip_tags($row->question),
-                'hidden'    => $row->hidden,
-                'class'     => $row->hidden ? 'row-hidden' : '',
-                'alpha'     => strtolower($sort),
-                'path_delete' => secure_url('admin/avis/deleteAjax'),
-                'path_update' => secure_url('admin/avis/updateAjax'),
-            ];
-        })->sortBy($sort)->values();
+        list($hidden, $activ) = $avis->partition(function ($item) {
+            return $item->hidden;
+        });
 
         return view('backend.avis.index')->with(['avis' => $activ, 'hidden' => $hidden, 'sort' => $sort]);
     }

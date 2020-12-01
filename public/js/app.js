@@ -6975,12 +6975,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['avis'],
   data: function data() {
     return {
       rows: this.avis,
-      updated: false
+      updated: false,
+      path: location.protocol + "//" + location.host + "/admin/avis/"
     };
   },
   mounted: function mounted() {
@@ -6989,7 +6991,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     archive: function archive(question) {
       var self = this;
-      axios.post(question.path_update, {
+      axios.post(this.path + 'updateAjax', {
         id: question.id
       }).then(function (response) {
         if (response.data) {
@@ -7007,7 +7009,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     remove: function remove(question) {
       var self = this;
-      axios.post(question.path_delete, {
+      axios.post(this.path + 'deleteAjax', {
         id: question.id
       }).then(function (response) {
         self.rows = response.data;
@@ -8244,7 +8246,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.row-question{\n  padding: 0;\n}\n.row-hidden{\n  background: #fffbeb;\n  transition: all .6s ease;\n}\n.row{\n  display: flex;\n  align-items: center;\n}\n\n", ""]);
+exports.push([module.i, "\n.row-question{\n  padding: 2px 0;\n}\n.row-hidden{\n  background: #fef3c7;\n  transition: all .6s ease;\n}\n.row-avis{\n  display: flex;\n  align-items: center;\n}\n\n", ""]);
 
 // exports
 
@@ -43422,7 +43424,6 @@ var render = function() {
         "div",
         {
           directives: [
-            { name: "transition", rawName: "v-transition" },
             {
               name: "show",
               rawName: "v-show",
@@ -43431,13 +43432,16 @@ var render = function() {
             }
           ],
           class:
-            "row mb-20 row-question " + (question.class ? "row-hidden" : "")
+            "row row-avis mb-20 row-question " +
+            (question.class ? "row-hidden" : "")
         },
         [
           _vm._m(0, true),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
-            _c("strong", { domProps: { innerHTML: _vm._s(question.question) } })
+            _c("strong", {
+              domProps: { innerHTML: _vm._s(question.question_simple) }
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3" }, [

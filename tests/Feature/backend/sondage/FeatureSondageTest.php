@@ -198,7 +198,7 @@ class FeatureSondageTest extends TestCase
             'valid_at'    => \Carbon\Carbon::now()->addDay(5),
         ]);
 
-        // Create and attach a questioin to sondage
+        // Create and attach a question to sondage
         $question = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'checkbox','question' => 'One question' ,'choices' => null]);
         $sondage->avis()->attach($question->id, ['rang' => 1]);
 
@@ -221,5 +221,104 @@ class FeatureSondageTest extends TestCase
         $response = $this->get('reponse/create/'.$token);
 
         $this->assertEquals(302,$response->getStatusCode());
+    }
+
+    public function testSortAvisListe()
+    {
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        // Create a sondage for the colloque
+        $sondage = factory(\App\Droit\Sondage\Entities\Sondage::class)->create(['colloque_id' => $colloque->id, 'valid_at' => \Carbon\Carbon::now()->addDay(5)]);
+
+        // Create and attach a question to sondage
+        $question1 = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'checkbox', 'question' => 'Ceci est une question' ,'choices' => null]);
+        $question2 = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'text', 'question' => 'A new question' ,'choices' => null]);
+        $question3 = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'chapitre', 'question' => 'Dernière question' ,'choices' => null]);
+
+        // Alphabetical order
+        $response = $this->get('admin/avis?sort=alpha');
+
+        $content = $response->getOriginalContent();
+        $content = $content->getData();
+        $avis    = $content['avis'];
+        $avis    = $avis->toArray();
+
+        $this->assertEquals(2, $avis[0]['id']);
+        $this->assertEquals(1, $avis[1]['id']);
+        $this->assertEquals(3, $avis[2]['id']);
+
+        // Type order
+        $response = $this->get('admin/avis?sort=type');
+
+        $content = $response->getOriginalContent();
+        $content = $content->getData();
+        $avis    = $content['avis'];
+        $avis    = $avis->toArray();
+
+        $this->assertEquals(3, $avis[0]['id']);
+        $this->assertEquals(1, $avis[1]['id']);
+        $this->assertEquals(2, $avis[2]['id']);
+    }
+
+    public function testUpdateAvisWithAjax(){
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        // Create a sondage for the colloque
+        $sondage = factory(\App\Droit\Sondage\Entities\Sondage::class)->create(['colloque_id' => $colloque->id, 'valid_at' => \Carbon\Carbon::now()->addDay(5)]);
+
+        // Create and attach a question to sondage
+        $question = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'checkbox', 'question' => 'Ceci est une question' ,'choices' => null]);
+
+        $this->assertDatabaseHas('sondage_avis', [
+            'id'       => $question->id,
+            'type'     => 'checkbox',
+            'question' => 'Ceci est une question',
+            'choices'  => null,
+            'hidden'   => null
+        ]);
+
+        $response = $this->post('admin/avis/updateAjax', ['id' => $question->id]);
+
+        $this->assertDatabaseHas('sondage_avis', [
+            'id'       => $question->id,
+            'type'     => 'checkbox',
+            'question' => 'Ceci est une question',
+            'choices'  => null,
+            'hidden'   => 1
+        ]);
+
+    }
+
+    public function testDeleteAvisWithAjax(){
+        // Create colloque
+        $make     = new \tests\factories\ObjectFactory();
+        $colloque = $make->colloque();
+
+        // Create a sondage for the colloque
+        $sondage = factory(\App\Droit\Sondage\Entities\Sondage::class)->create(['colloque_id' => $colloque->id, 'valid_at' => \Carbon\Carbon::now()->addDay(5)]);
+
+        // Create and attach a question to sondage
+        $question = factory(\App\Droit\Sondage\Entities\Avis::class)->create(['type' => 'checkbox', 'question' => 'Ceci est une question' ,'choices' => null]);
+
+        $this->assertDatabaseHas('sondage_avis', [
+            'id'       => $question->id,
+            'type'     => 'checkbox',
+            'question' => 'Ceci est une question',
+            'choices'  => null,
+        ]);
+
+        $response = $this->post('admin/avis/deleteAjax', ['id' => $question->id]);
+
+        $this->assertDatabaseMissing('sondage_avis', [
+            'id'       => $question->id,
+            'type'     => 'checkbox',
+            'question' => 'Ceci est une question',
+            'choices'  => null,
+        ]);
+
     }
 }
