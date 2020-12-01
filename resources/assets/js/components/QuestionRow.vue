@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div :class="'row mb-20 row-question ' + (question.class ? 'row-hidden' : '')" v-transition v-show="!question.hidden" v-for="question in rows">
+        <div :class="'row row-avis mb-20 row-question ' + (question.class ? 'row-hidden' : '')" v-show="!question.hidden" v-for="question in rows">
             <div class="col-md-1"><a class="btn btn-sky btn-sm" href="#"><i class="fa fa-edit"></i></a></div>
-            <div class="col-md-6"><strong v-html="question.question"></strong></div>
+            <div class="col-md-6"><strong v-html="question.question_simple"></strong></div>
             <div class="col-md-3">{{ question.type_name }}</div>
             <div class="col-md-2 text-right">
               <button class="btn btn-orange btn-sm" @click="archive(question)">Cacher</button>
@@ -14,14 +14,15 @@
 <style>
 
 .row-question{
-  padding: 0;
+  padding: 2px 0;
 }
+
 .row-hidden{
-  background: #fffbeb;
+  background: #fef3c7;
   transition: all .6s ease;
 }
 
-.row{
+.row-avis{
   display: flex;
   align-items: center;
 }
@@ -34,6 +35,7 @@
           return {
             rows : this.avis,
             updated : false,
+            path: location.protocol + "//" + location.host+"/admin/avis/",
           }
         },
         mounted() {
@@ -43,13 +45,12 @@
           archive :function(question){
             var self = this;
 
-            axios.post(question.path_update,{id : question.id }).then(function (response) {
+            axios.post(this.path + 'updateAjax',{id : question.id }).then(function (response) {
 
               if(response.data){
                 self.updated = true;
                 //self.rows = response.data;
                 question.class = 1;
-
                 setTimeout(() => {
                   self.updated = false;
                   question.hidden = 1;
@@ -59,7 +60,7 @@
           },
           remove :function(question){
               var self = this;
-              axios.post(question.path_delete,{id : question.id }).then(function (response) {
+              axios.post(this.path + 'deleteAjax',{id : question.id }).then(function (response) {
                   self.rows = response.data;
               }).catch(function (error) { console.log(error);});
           }

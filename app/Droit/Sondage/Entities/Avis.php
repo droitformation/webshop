@@ -12,7 +12,7 @@ class Avis extends Model{
 
     public function getTypeNameAttribute()
     {
-        $types = ['text' => 'Texte', 'checkbox' => 'Case à cocher', 'radio' => 'Option à choix', 'Chapitre'=> 'Chapitre'];
+        $types = ['text' => 'Texte', 'checkbox' => 'Case à cocher', 'radio' => 'Option à choix', 'chapitre'=> 'Chapitre'];
 
         return isset($types[$this->type]) ? $types[$this->type] : $this->type;
     }

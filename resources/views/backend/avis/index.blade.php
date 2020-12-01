@@ -20,7 +20,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
 
-                <form action="{{ url('admin/allavis') }}" method="post">{!! csrf_field() !!}
+                <form action="{{ url('admin/avis') }}" method="get">{!! csrf_field() !!}
                     <div class="row">
                         <div class="col-md-3 col-xs-12">
                             <div class="form-group">
