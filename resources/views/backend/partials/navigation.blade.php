@@ -82,11 +82,11 @@
             <a href="{{ url('admin/compte') }}"><i class="fa fa-calculator"></i> <span>Comptes</span></a>
         </li>
 
-        <li class="{{ (Request::is('admin/sondage') || Request::is('admin/sondage/*') || Request::is('admin/listeavis') || Request::is('admin/avis/*')) ? 'active' : '' }}">
+        <li class="{{ (Request::is('admin/sondage') || Request::is('admin/sondage/*') || Request::is('admin/avis') || Request::is('admin/avis/*')) ? 'active' : '' }}">
             <a href="javascript:;"><i class="fa fa-question-circle"></i><span>Sondages</span></a>
             <ul class="acc-menu">
                 <li class="{{ Request::is('admin/sondage/*') ? 'active' : '' }}"><a href="{{ url('admin/sondage')  }}">Liste des sondages</a></li>
-                <li class="{{ Request::is('admin/avis/*') || Request::is('admin/listeavis') ? 'active' : '' }}"><a href="{{ url('admin/listeavis')  }}">Catalogue de questions</a></li>
+                <li class="{{ Request::is('admin/avis/*') || Request::is('admin/avis') ? 'active' : '' }}"><a href="{{ url('admin/avis')  }}">Catalogue de questions</a></li>
             </ul>
         </li>
 
