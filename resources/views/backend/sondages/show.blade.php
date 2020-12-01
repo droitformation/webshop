@@ -128,7 +128,7 @@
 
                 <form action="{{ url('admin/sondageavis') }}" method="POST">{!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $sondage->id }}" />
-                    <div class="input-group">
+                    <div class="input-group" style="width: 90%;">
 
                         @if(!$avis->isEmpty())
                             <select class="form-control" name="question_id[]" multiple>
@@ -140,7 +140,7 @@
                                     @endif
                                 @endforeach
                             </select>
-                            <span class="input-group-btn" style="vertical-align:top; padding-left: 5px;">
+                            <span class="input-group-btn" style="vertical-align:top; padding-left: 10px;">
                                 <button class="btn btn-primary" type="submit">Ajouter</button>
                             </span>
                         @endif
