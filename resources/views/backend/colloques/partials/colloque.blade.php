@@ -19,7 +19,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer">
+                    <div class="panel-footer panel-admin">
                         <form action="{{ url('admin/colloque/'.$colloque->id) }}" method="POST">
                             <input type="hidden" name="_method" value="DELETE">{!! csrf_field() !!}
                             <div class="btn-group btn-group-colloque">
