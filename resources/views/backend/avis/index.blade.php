@@ -52,7 +52,7 @@
                     <hr/>
                         <question-row :avis="{{ $avis }}"></question-row>
                     <hr/>
-                    <p><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#hiddenTable">Questions cahées</a></p>
+                    <p><a class="btn btn-warning btn-sm pull-right" data-toggle="collapse" href="#hiddenTable">Questions cachées</a></p>
                 </div>
             </div>
 
