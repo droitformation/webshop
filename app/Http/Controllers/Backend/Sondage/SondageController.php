@@ -93,18 +93,11 @@ class SondageController extends Controller
      */
     public function show($id)
     {
-        $emails    = [];
         $sondage   = $this->sondage->find($id);
         $avis      = $this->avis->getAll();
-
         $colloques = $this->colloque->getAll(false,false);
-
-        if($sondage->colloque_id){
-            $worker = new \App\Droit\Sondage\Worker\SondageWorker();
-            $emails = $worker->getEmails($sondage->colloque_id);
-        }
         
-        return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques, 'emails' => $emails]);
+        return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
     }
 
     /**
