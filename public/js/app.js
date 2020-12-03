@@ -39603,7 +39603,16 @@ var render = function() {
             (question.class ? "row-hidden" : "")
         },
         [
-          _vm._m(0, true),
+          _c("div", { staticClass: "col-md-1" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-sky btn-sm",
+                attrs: { href: _vm.path + question.id }
+              },
+              [_c("i", { staticClass: "fa fa-edit" })]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
             _c("strong", {
@@ -39648,18 +39657,7 @@ var render = function() {
     0
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("a", { staticClass: "btn btn-sky btn-sm", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-edit" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

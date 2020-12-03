@@ -1,7 +1,7 @@
 <template>
     <div>
         <div :class="'row row-avis mb-20 row-question ' + (question.class ? 'row-hidden' : '')" v-show="!question.hidden" v-for="question in rows">
-            <div class="col-md-1"><a class="btn btn-sky btn-sm" href="#"><i class="fa fa-edit"></i></a></div>
+            <div class="col-md-1"><a class="btn btn-sky btn-sm" :href="path + question.id"><i class="fa fa-edit"></i></a></div>
             <div class="col-md-6"><strong v-html="question.question_simple"></strong></div>
             <div class="col-md-3">{{ question.type_name }}</div>
             <div class="col-md-2 text-right">
