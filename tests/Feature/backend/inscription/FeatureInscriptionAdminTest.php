@@ -277,6 +277,7 @@ class FeatureInscriptionAdminTest extends TestCase
             'price_link_id'   => $price_link->id,
             'price_linked_id' => $price_link->id,
         ]);
+        
         $this->assertDatabaseHas('colloque_inscriptions', [
             'colloque_id'     => $colloque2->id,
             'user_id'         => $person->id,

@@ -652,6 +652,7 @@ return array(
     'App\\Listeners\\UpdateEmailAccount' => $baseDir . '/app/Listeners/UpdateEmailAccount.php',
     'App\\Listeners\\UpdateSubscriberEmail' => $baseDir . '/app/Listeners/UpdateSubscriberEmail.php',
     'App\\Mail\\NotifyBounce' => $baseDir . '/app/Mail/NotifyBounce.php',
+    'App\\Mail\\SendRegisterConfirmation' => $baseDir . '/app/Mail/SendRegisterConfirmation.php',
     'App\\Mail\\SendSlides' => $baseDir . '/app/Mail/SendSlides.php',
     'App\\Mail\\WebmasterNotification' => $baseDir . '/app/Mail/WebmasterNotification.php',
     'App\\Notifications\\ResetPassword' => $baseDir . '/app/Notifications/ResetPassword.php',
