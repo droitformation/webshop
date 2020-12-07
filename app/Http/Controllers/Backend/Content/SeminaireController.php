@@ -75,7 +75,7 @@ class SeminaireController extends Controller {
 
         $seminaire = $this->seminaire->create($data);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Seminaire crée')->success();
 
@@ -117,7 +117,7 @@ class SeminaireController extends Controller {
 
         $this->seminaire->update( $data );
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('content'));
 
         flash('Seminaire mise à jour')->success();
 
