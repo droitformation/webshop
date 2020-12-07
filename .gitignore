@@ -36,6 +36,5 @@ public/filemanager/files/
 public/backend/js/redactorold/
 public/backend/js/redactorold1/
 public/files/imports
-storage/test
 .phpunit.result.cache
 storage/droitformation_registry.json
