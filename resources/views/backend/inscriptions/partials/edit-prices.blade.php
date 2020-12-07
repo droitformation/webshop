@@ -11,7 +11,7 @@
                     {{ $price->description }} | {{ $price->price_cents }} CHF
                 </option>
             @endforeach
-            @if(!$colloque->prices->isEmpty())
+            @if(!$colloque->price_link->isEmpty())
                 @foreach($colloque->price_link as $price_link)
                     <option data-type="price_link_id" value="price_link_id:{{ $price_link->id }}" {{ $isLink && $inscription->price_link_id == $price_link->id ? 'selected' : '' }}>
                         {{ $price_link->description }} | {{ $price_link->price_cents }} CHF

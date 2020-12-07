@@ -16,7 +16,9 @@
     </td>
     <td>{{ $inscription->price_cents }} CHF</td>
     <td>{{ $inscription->created_at->formatLocalized('%d %b %Y') }}</td>
-    <td>@include('backend.inscriptions.partials.payed',['model' => 'inscription', 'item' => $inscription, 'inscription' => $inscription])</td>
+    <td>
+        @include('backend.inscriptions.partials.payed',['model' => 'inscription', 'item' => $inscription, 'inscription' => $inscription])
+    </td>
     <td class="text-right">
         <form action="{{ url('admin/inscription/'. $inscription->id) }}" method="POST" class="form-horizontal">{!! csrf_field() !!}
             <input type="hidden" name="_method" value="DELETE">

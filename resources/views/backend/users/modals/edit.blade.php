@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        @if(!$inscription->group_id)
+                        @if(!$inscription->group_id && $inscription->price_cents > 0)
                             <br>
                             <h4>Réferences</h4>
                             <div class="row">

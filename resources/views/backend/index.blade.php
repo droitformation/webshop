@@ -58,7 +58,6 @@
                                             @endif
                                         </td>
                                         <td>
-
                                             @if(isset($inscription->inscrit))
                                                 <?php $adresse = $inscription->inscrit->adresses->where('type',1)->first();?>
                                                 @if(isset($adresse))

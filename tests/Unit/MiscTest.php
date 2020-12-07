@@ -58,4 +58,24 @@ class MiscTest extends TestCase
 
         \Event::assertDispatched(\App\Events\ContentUpdated::class);
     }
+
+    public function testSendMessagContactForm()
+    {
+        $data = [
+            'email'    => 'cindy.leschaud@gmail.com',
+            'name'     => 'Cindy Leschaud',
+            'remarque' => 'Test',
+            'site'     => 1
+        ];
+
+        $response = $this->call('POST', 'sendMessage', $data);
+
+        // The email has been loggued
+        $this->assertDatabaseHas('email_log', [
+            'from' => 'Cindy Leschaud <cindy.leschaud@gmail.com>',
+            'to'   => 'droit.formation@unine.ch',
+            "subject" => "Message depuis le site Publications-droit.ch"
+        ]);
+
+    }
 }
