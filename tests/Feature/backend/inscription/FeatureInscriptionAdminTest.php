@@ -270,6 +270,11 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription', $data);
 
+        echo '<pre>';
+        print_r($response->getContent());
+        echo '</pre>';
+        exit;
+
         $this->assertDatabaseHas('colloque_inscriptions', [
             'colloque_id'     => $colloque1->id,
             'user_id'         => $person->id,
@@ -468,10 +473,7 @@ class FeatureInscriptionAdminTest extends TestCase
         ];
 
         $reponse = $this->call('POST', 'admin/inscription', $data);
-        echo '<pre>';
-        print_r($reponse->getContent());
-        echo '</pre>';
-        exit;
+
         $model  = new \App\Droit\Inscription\Entities\Inscription();
         $inscriptions = $model->all();
         $first  = $inscriptions->shift();
