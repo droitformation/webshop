@@ -270,10 +270,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription', $data);
 
-        echo '<pre>';
-        print_r($response->getContent());
-        echo '</pre>';
-        exit;
+        dd($response);
 
         $this->assertDatabaseHas('colloque_inscriptions', [
             'colloque_id'     => $colloque1->id,
