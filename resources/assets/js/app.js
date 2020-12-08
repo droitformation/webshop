@@ -57,6 +57,7 @@ Vue.component('option-link', require('./components/OptionLink.vue').default);
 Vue.component('participant', require('./components/Participant.vue').default);
 Vue.component('register-simple', require('./components/RegisterSimple.vue').default);
 Vue.component('question-row', require('./components/QuestionRow.vue').default);
+Vue.component('create-model', require('./components/CreateModel.vue').default);
 
 import VueDragAndDropList from 'vue-drag-and-drop-list';
 Vue.use(VueDragAndDropList);

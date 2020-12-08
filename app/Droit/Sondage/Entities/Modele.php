@@ -1,35 +1,19 @@
-<?php
+<?php namespace App\Droit\Sondage\Entities;
 
-namespace App\Droit\Sondage\Entities;
+use Illuminate\Database\Eloquent\Model as M;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Illuminate\Database\Eloquent\Model;
+class Modele extends M{
 
-class Avis extends Model{
+    use SoftDeletes;
 
-    protected $table = 'sondage_avis';
+    protected $table    = 'models';
+    protected $fillable = ['title','description','rang'];
 
-    protected $fillable = ['type','question','choices','hidden'];
-
-    public function getTypeNameAttribute()
+    public function avis()
     {
-        $types = ['text' => 'Texte', 'checkbox' => 'Case à cocher', 'radio' => 'Option à choix', 'chapitre'=> 'Chapitre'];
-
-        return isset($types[$this->type]) ? $types[$this->type] : $this->type;
+        return $this->belongsToMany('App\Droit\Sondage\Entities\Avis', 'model_avis', 'model_id', 'avis_id')
+            ->orderBy('rang')
+            ->withPivot('rang');
     }
-
-    public function scopeActive($query, $active = null)
-    {
-        if($active){
-            $query->whereNull('hidden');
-        }
-        else{
-            $query->whereNull('hidden')->orWhereNotNull('hidden');
-        }
-    }
-
-    public function responses()
-    {
-        return $this->hasMany('App\Droit\Sondage\Entities\Sondage_reponse', 'avis_id', 'id');
-    }
-
 }

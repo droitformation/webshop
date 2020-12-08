@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/admin.css');?>?{{ rand(100,235000) }}">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/inscription.css');?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/types.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/modele.css');?>?{{ rand(100,235000) }}">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/redactor/redactor.css');?>">
 
     <link rel='stylesheet' type='text/css' href="<?php echo secure_asset('backend/plugins/form-multiselect/css/multi-select.css');?>" />

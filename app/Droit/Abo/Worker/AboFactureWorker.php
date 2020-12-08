@@ -126,7 +126,7 @@ class AboFactureWorker implements AboFactureWorkerInterface{
                     $dir  = 'files/abos/facture/'.$product->id;
                     $path = 'facture_'.$product->reference.'-'.$value->id.'_'.$product->id.'.pdf';
 
-                    return !\File::exists(public_path($dir.'/'.$path)) ? true : false;
+                    return !\File::exists(public_path($dir.'/'.$path));
                 })->mapWithKeys(function ($item) use ($product)  {
 
                     $dir  = 'files/abos/facture/'.$product->id;

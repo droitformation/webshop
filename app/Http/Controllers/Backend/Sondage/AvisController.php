@@ -8,7 +8,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Droit\Sondage\Repo\AvisInterface;
 use App\Droit\Sondage\Repo\SondageInterface;
-use function GuzzleHttp\Psr7\str;
 
 class AvisController extends Controller
 {

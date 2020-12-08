@@ -349,6 +349,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','administration']], f
         Route::post('avis/deleteAjax', 'Backend\Sondage\AvisController@deleteAjax');
         Route::post('avis/updateAjax', 'Backend\Sondage\AvisController@updateAjax');
         Route::resource('avis', 'Backend\Sondage\AvisController');
+        Route::resource('modele', 'Backend\Sondage\ModeleController');
 
         Route::match(['get', 'post'], 'reponse/{id}', 'Backend\Sondage\ReponseController@show');
 

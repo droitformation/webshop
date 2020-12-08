@@ -44,6 +44,7 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->registerSondageService();
         $this->registerAvisService();
         $this->registerReponseService();
+        $this->registerModeleService();
     }
 
     /**
@@ -271,6 +272,17 @@ class ColloqueServiceProvider extends ServiceProvider
         $this->app->singleton('App\Droit\Sondage\Repo\ReponseInterface', function()
         {
             return new \App\Droit\Sondage\Repo\ReponseEloquent(new \App\Droit\Sondage\Entities\Reponse());
+        });
+    }
+
+    /**
+     * Modele
+     */
+    protected function registerModeleService(){
+
+        $this->app->singleton('App\Droit\Sondage\Repo\ModeleInterface', function()
+        {
+            return new \App\Droit\Sondage\Repo\ModeleEloquent(new \App\Droit\Sondage\Entities\Modele());
         });
     }
 }
