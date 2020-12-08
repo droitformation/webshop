@@ -41,7 +41,7 @@
     </div>
 
     <div id="appComponent">
-        <create-model></create-model>
+        <create-model :avis="{{ $avis }}"></create-model>
     </div>
 
     <div class="row relative">
