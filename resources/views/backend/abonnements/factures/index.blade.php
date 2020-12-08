@@ -18,18 +18,18 @@
                     <h3 style="margin-bottom:0;line-height:20px;font-size: 18px;"><a href="{{ url('admin/abo/'.$abo->id) }}">{{ $abo->title }}</a></h3>
                     <p style="margin-bottom: 5px;">&Eacute;dition {{ $product->reference.' '.$product->edition }}</p>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <form action="{{ url('admin/abo/generate') }}" method="POST" class="pull-right">
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="worker" value="facture">
                         <input type="hidden" name="all" value="1">
-                        <div class="input-group">
-                            <input type="text" class="form-control datePicker" name="date" placeholder="Date">
-                            <span class="input-group-btn">
-                                 <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
-                            </span>
-                        </div><!-- /input-group -->
+
+                        <div class="flex">
+                            <div><input type="text" class="form-control datePicker" name="date" placeholder="Date"></div>
+                            <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
+                        </div>
+
                         <div class="form-group">
                             <div class="checkbox">
                                 <label><input checked="checked" type="checkbox" value="1" name="print"> ajouter Infos BV</label>
@@ -37,7 +37,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-1 text-right">
+                <div class="col-md-2 text-right">
                     <form action="{{ url('admin/abo/bind') }}" method="POST">
                         <input type="hidden" name="_method" value="POST">{!! csrf_field() !!}
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
