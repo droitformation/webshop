@@ -51,6 +51,7 @@
     max-height: 450px;
     padding: 5px;
     background: #f1f1f1;
+    max-height: 89vh;
 }
 
 .options-item{

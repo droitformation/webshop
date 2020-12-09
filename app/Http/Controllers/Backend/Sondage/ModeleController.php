@@ -46,6 +46,7 @@ class ModeleController extends Controller
             $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
             $row->setAttribute('alpha',strtolower($sort));
             $row->setAttribute('class',null);
+            $row->setAttribute('choices_list',$row->choices ? explode(',', $row->choices) : null);
             $row->setAttribute('type_name',$row->type_name);
             $row->setAttribute('question_simple',strip_tags($row->question));
             return $row;

@@ -3401,6 +3401,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_easy_dnd__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-easy-dnd */ "./node_modules/vue-easy-dnd/dist/vue-easy-dnd.esm.js");
 //
 //
 //
@@ -3427,16 +3428,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['avis'],
+  props: ['avis', 'modele'],
   mounted: function mounted() {
     console.log('Component mounted.');
+    var bar = 230;
+    var width = $('body').innerWidth();
+    var height = $('body').innerHeight();
+    width = width - bar;
+    var $wrapper = $('#sondage_dragdrop');
+    var $sidebar = $('#filter-wrap');
+    var max = height * 0.35;
+    var s_width = (width - 10) * 0.35;
+    var w_width = width * 0.62;
+    $sidebar.css('width', s_width);
+    $wrapper.css('width', w_width);
+    $wrapper.css('margin-left', s_width + 5);
+  },
+  components: {
+    Drag: vue_easy_dnd__WEBPACK_IMPORTED_MODULE_0__["Drag"],
+    DropList: vue_easy_dnd__WEBPACK_IMPORTED_MODULE_0__["DropList"]
   },
   data: function data() {
     return {
+      items: [],
       choosen: [],
       questions: this.avis,
-      search: ''
+      search: '',
+      type: ''
     };
   },
   computed: {
@@ -3444,12 +3511,30 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       return Object.values(this.questions).filter(function (question) {
-        console.log(question);
         return question.question_simple.toLowerCase().includes(_this.search.toLowerCase());
       });
     }
   },
-  methods: {// getInfo(){},
+  watch: {
+    type: function type(val) {
+      this.clear();
+
+      if (this.type) {
+        this.questions = Object.values(this.questions).filter(function (question) {
+          console.log('question ' + question.type);
+          console.log('type ' + val);
+          return question.type == val;
+        });
+      }
+    }
+  },
+  methods: {
+    onInsert: function onInsert(event) {
+      this.items.splice(event.index, 0, event.data);
+    },
+    clear: function clear() {
+      this.questions = this.avis;
+    }
   }
 });
 
@@ -7927,6 +8012,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n#StyleNewsletterCreate{\n    margin-top:5px;\n}\n.create_bloc_form::before{\n    color: #85c744;\n    content: \"\\25C4\";\n    display: block;\n    font-size: 14px;\n    font-weight: bold;\n    height: 10px;\n    left: -2px;\n    position: absolute;\n    top: 0px;\n    width: 5px;\n}\n.upload-btn-wrapper {\n  position: relative;\n  overflow: hidden;\n  display: inline-block;\n}\n.create_bloc_form{\n    margin-left:10px;\n}\n.upload-btn-wrapper input[type=file] {\n  font-size: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  opacity: 0;\n        cursor:pointer;\n}\n.margeUp{\n    margin-top:5px;\n}\n.dragArea {\n    height: 300px;\n    margin: 0 0 20px 0;\n    padding: 3px;\n    overflow: scroll;\n    border: 1px solid #ccc;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;\n    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;\n}\n.dragArea div {\n    width: 100%;\n    height: auto;\n    line-height: 18px;\n    padding: 5px;\n    cursor: pointer;\n    box-shadow: 0px 0px 2px 0px rgba(222, 222, 222, 1.0);\n}\n.sortable-ghost {\n    color: #EAEAEA;\n    background-color: #EAEAEA;\n    border: 1px dashed #aaa;\n}\n.sortable-chosen:not(.sortable-ghost) {\n    color: #224466;\n    background-color: #2299ff;\n}\n.sortable-drag {\n    color: #449922;\n    background-color: #44ff33;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#sondage_dragdrop[data-v-8550e6b4]{\n  overflow: scroll;\n}\n.relative[data-v-8550e6b4]{\n  position: relative;\n}\n.filter-wrap[data-v-8550e6b4]{\n  position: fixed;\n  max-width: 495px;\n}\n.d-block[data-v-8550e6b4]{\n  display: block;\n}\n.card[data-v-8550e6b4]{\n  margin-bottom: 14px;\n}\n.hidden[data-v-8550e6b4]{\n  display: none;\n}\n.card-body-modele[data-v-8550e6b4]{\n  padding: 5px;\n}\n.radio-inline[data-v-8550e6b4],\n.checkbox-inline[data-v-8550e6b4] {\n  padding-left: 10px;\n  font-size: 13px;\n}\n.model-avis[data-v-8550e6b4]{\n  overflow: scroll;\n  padding:0 5px 5px 5px;\n  background: #fff;\n  max-height: 50vh;\n}\n.drop-in[data-v-8550e6b4] {\n  box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);\n}\n.wrapper .list[data-v-8550e6b4] {\n  margin-top: 0;\n}\n.wrapper .list.list_main[data-v-8550e6b4] {\n  min-height: 50px;\n  width: 100%;\n  border: 1px solid #eee;\n  padding: 15px;\n}\n.wrapper .list .item[data-v-8550e6b4] {\n  padding: 15px  10px;\n  margin: 10px 0;\n  display: flex;\n  flex-direction: column;\n  align-items: start;\n  position: relative;\n  background-color: #f7f8fa;\n  border: 1px solid #e0e5ee;\n}\n.wrapper .list_main .item-choosen[data-v-8550e6b4]{\n  padding:  10px;\n  margin-bottom: 5px;\n}\n.wrapper .list .item span[data-v-8550e6b4]{\n  display: block;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 11px;\n  color: #d4a569;\n}\n.wrapper .list .item .question-text[data-v-8550e6b4]{\n  padding: 5px;\n  width: 80%;\n}\n.wrapper .list .item.feedback[data-v-8550e6b4] {\n  background-color: #ffdcdc;\n  border: 2px dashed black;\n}\n.question-p[data-v-8550e6b4]{\n  margin-bottom: 6px;\n  font-weight: 600;\n}\n.question-ul[data-v-8550e6b4]{\n  margin-top: 15px;\n  margin-left: 10px;\n  padding-left: 0;\n}\n.question-ul li[data-v-8550e6b4]{\n  list-style:none;\n  margin-bottom: 5px;\n  padding-left: 5px;\n}\n.question-textarea[data-v-8550e6b4]{\n  margin-top: 15px;\n}\n.mb-1[data-v-8550e6b4]{margin-bottom: 15px}\n.pb-1[data-v-8550e6b4]{padding-bottom: 10px}\n.question-type-chapitre[data-v-8550e6b4]{\n  font-size: 16px;\n  text-transform: uppercase;\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -26942,6 +27046,1149 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/reflect-metadata/Reflect.js":
+/*!**************************************************!*\
+  !*** ./node_modules/reflect-metadata/Reflect.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process, global) {/*! *****************************************************************************
+Copyright (C) Microsoft. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+var Reflect;
+(function (Reflect) {
+    // Metadata Proposal
+    // https://rbuckton.github.io/reflect-metadata/
+    (function (factory) {
+        var root = typeof global === "object" ? global :
+            typeof self === "object" ? self :
+                typeof this === "object" ? this :
+                    Function("return this;")();
+        var exporter = makeExporter(Reflect);
+        if (typeof root.Reflect === "undefined") {
+            root.Reflect = Reflect;
+        }
+        else {
+            exporter = makeExporter(root.Reflect, exporter);
+        }
+        factory(exporter);
+        function makeExporter(target, previous) {
+            return function (key, value) {
+                if (typeof target[key] !== "function") {
+                    Object.defineProperty(target, key, { configurable: true, writable: true, value: value });
+                }
+                if (previous)
+                    previous(key, value);
+            };
+        }
+    })(function (exporter) {
+        var hasOwn = Object.prototype.hasOwnProperty;
+        // feature test for Symbol support
+        var supportsSymbol = typeof Symbol === "function";
+        var toPrimitiveSymbol = supportsSymbol && typeof Symbol.toPrimitive !== "undefined" ? Symbol.toPrimitive : "@@toPrimitive";
+        var iteratorSymbol = supportsSymbol && typeof Symbol.iterator !== "undefined" ? Symbol.iterator : "@@iterator";
+        var supportsCreate = typeof Object.create === "function"; // feature test for Object.create support
+        var supportsProto = { __proto__: [] } instanceof Array; // feature test for __proto__ support
+        var downLevel = !supportsCreate && !supportsProto;
+        var HashMap = {
+            // create an object in dictionary mode (a.k.a. "slow" mode in v8)
+            create: supportsCreate
+                ? function () { return MakeDictionary(Object.create(null)); }
+                : supportsProto
+                    ? function () { return MakeDictionary({ __proto__: null }); }
+                    : function () { return MakeDictionary({}); },
+            has: downLevel
+                ? function (map, key) { return hasOwn.call(map, key); }
+                : function (map, key) { return key in map; },
+            get: downLevel
+                ? function (map, key) { return hasOwn.call(map, key) ? map[key] : undefined; }
+                : function (map, key) { return map[key]; },
+        };
+        // Load global or shim versions of Map, Set, and WeakMap
+        var functionPrototype = Object.getPrototypeOf(Function);
+        var usePolyfill = typeof process === "object" && process.env && process.env["REFLECT_METADATA_USE_MAP_POLYFILL"] === "true";
+        var _Map = !usePolyfill && typeof Map === "function" && typeof Map.prototype.entries === "function" ? Map : CreateMapPolyfill();
+        var _Set = !usePolyfill && typeof Set === "function" && typeof Set.prototype.entries === "function" ? Set : CreateSetPolyfill();
+        var _WeakMap = !usePolyfill && typeof WeakMap === "function" ? WeakMap : CreateWeakMapPolyfill();
+        // [[Metadata]] internal slot
+        // https://rbuckton.github.io/reflect-metadata/#ordinary-object-internal-methods-and-internal-slots
+        var Metadata = new _WeakMap();
+        /**
+         * Applies a set of decorators to a property of a target object.
+         * @param decorators An array of decorators.
+         * @param target The target object.
+         * @param propertyKey (Optional) The property key to decorate.
+         * @param attributes (Optional) The property descriptor for the target key.
+         * @remarks Decorators are applied in reverse order.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     Example = Reflect.decorate(decoratorsArray, Example);
+         *
+         *     // property (on constructor)
+         *     Reflect.decorate(decoratorsArray, Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     Reflect.decorate(decoratorsArray, Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     Object.defineProperty(Example, "staticMethod",
+         *         Reflect.decorate(decoratorsArray, Example, "staticMethod",
+         *             Object.getOwnPropertyDescriptor(Example, "staticMethod")));
+         *
+         *     // method (on prototype)
+         *     Object.defineProperty(Example.prototype, "method",
+         *         Reflect.decorate(decoratorsArray, Example.prototype, "method",
+         *             Object.getOwnPropertyDescriptor(Example.prototype, "method")));
+         *
+         */
+        function decorate(decorators, target, propertyKey, attributes) {
+            if (!IsUndefined(propertyKey)) {
+                if (!IsArray(decorators))
+                    throw new TypeError();
+                if (!IsObject(target))
+                    throw new TypeError();
+                if (!IsObject(attributes) && !IsUndefined(attributes) && !IsNull(attributes))
+                    throw new TypeError();
+                if (IsNull(attributes))
+                    attributes = undefined;
+                propertyKey = ToPropertyKey(propertyKey);
+                return DecorateProperty(decorators, target, propertyKey, attributes);
+            }
+            else {
+                if (!IsArray(decorators))
+                    throw new TypeError();
+                if (!IsConstructor(target))
+                    throw new TypeError();
+                return DecorateConstructor(decorators, target);
+            }
+        }
+        exporter("decorate", decorate);
+        // 4.1.2 Reflect.metadata(metadataKey, metadataValue)
+        // https://rbuckton.github.io/reflect-metadata/#reflect.metadata
+        /**
+         * A default metadata decorator factory that can be used on a class, class member, or parameter.
+         * @param metadataKey The key for the metadata entry.
+         * @param metadataValue The value for the metadata entry.
+         * @returns A decorator function.
+         * @remarks
+         * If `metadataKey` is already defined for the target and target key, the
+         * metadataValue for that key will be overwritten.
+         * @example
+         *
+         *     // constructor
+         *     @Reflect.metadata(key, value)
+         *     class Example {
+         *     }
+         *
+         *     // property (on constructor, TypeScript only)
+         *     class Example {
+         *         @Reflect.metadata(key, value)
+         *         static staticProperty;
+         *     }
+         *
+         *     // property (on prototype, TypeScript only)
+         *     class Example {
+         *         @Reflect.metadata(key, value)
+         *         property;
+         *     }
+         *
+         *     // method (on constructor)
+         *     class Example {
+         *         @Reflect.metadata(key, value)
+         *         static staticMethod() { }
+         *     }
+         *
+         *     // method (on prototype)
+         *     class Example {
+         *         @Reflect.metadata(key, value)
+         *         method() { }
+         *     }
+         *
+         */
+        function metadata(metadataKey, metadataValue) {
+            function decorator(target, propertyKey) {
+                if (!IsObject(target))
+                    throw new TypeError();
+                if (!IsUndefined(propertyKey) && !IsPropertyKey(propertyKey))
+                    throw new TypeError();
+                OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, propertyKey);
+            }
+            return decorator;
+        }
+        exporter("metadata", metadata);
+        /**
+         * Define a unique metadata entry on the target.
+         * @param metadataKey A key used to store and retrieve metadata.
+         * @param metadataValue A value that contains attached metadata.
+         * @param target The target object on which to define metadata.
+         * @param propertyKey (Optional) The property key for the target.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     Reflect.defineMetadata("custom:annotation", options, Example);
+         *
+         *     // property (on constructor)
+         *     Reflect.defineMetadata("custom:annotation", options, Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     Reflect.defineMetadata("custom:annotation", options, Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     Reflect.defineMetadata("custom:annotation", options, Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     Reflect.defineMetadata("custom:annotation", options, Example.prototype, "method");
+         *
+         *     // decorator factory as metadata-producing annotation.
+         *     function MyAnnotation(options): Decorator {
+         *         return (target, key?) => Reflect.defineMetadata("custom:annotation", options, target, key);
+         *     }
+         *
+         */
+        function defineMetadata(metadataKey, metadataValue, target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryDefineOwnMetadata(metadataKey, metadataValue, target, propertyKey);
+        }
+        exporter("defineMetadata", defineMetadata);
+        /**
+         * Gets a value indicating whether the target object or its prototype chain has the provided metadata key defined.
+         * @param metadataKey A key used to store and retrieve metadata.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns `true` if the metadata key was defined on the target object or its prototype chain; otherwise, `false`.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.hasMetadata("custom:annotation", Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.hasMetadata("custom:annotation", Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.hasMetadata("custom:annotation", Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.hasMetadata("custom:annotation", Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.hasMetadata("custom:annotation", Example.prototype, "method");
+         *
+         */
+        function hasMetadata(metadataKey, target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryHasMetadata(metadataKey, target, propertyKey);
+        }
+        exporter("hasMetadata", hasMetadata);
+        /**
+         * Gets a value indicating whether the target object has the provided metadata key defined.
+         * @param metadataKey A key used to store and retrieve metadata.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns `true` if the metadata key was defined on the target object; otherwise, `false`.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.hasOwnMetadata("custom:annotation", Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.hasOwnMetadata("custom:annotation", Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.hasOwnMetadata("custom:annotation", Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.hasOwnMetadata("custom:annotation", Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.hasOwnMetadata("custom:annotation", Example.prototype, "method");
+         *
+         */
+        function hasOwnMetadata(metadataKey, target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryHasOwnMetadata(metadataKey, target, propertyKey);
+        }
+        exporter("hasOwnMetadata", hasOwnMetadata);
+        /**
+         * Gets the metadata value for the provided metadata key on the target object or its prototype chain.
+         * @param metadataKey A key used to store and retrieve metadata.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns The metadata value for the metadata key if found; otherwise, `undefined`.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.getMetadata("custom:annotation", Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.getMetadata("custom:annotation", Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.getMetadata("custom:annotation", Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.getMetadata("custom:annotation", Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.getMetadata("custom:annotation", Example.prototype, "method");
+         *
+         */
+        function getMetadata(metadataKey, target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryGetMetadata(metadataKey, target, propertyKey);
+        }
+        exporter("getMetadata", getMetadata);
+        /**
+         * Gets the metadata value for the provided metadata key on the target object.
+         * @param metadataKey A key used to store and retrieve metadata.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns The metadata value for the metadata key if found; otherwise, `undefined`.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.getOwnMetadata("custom:annotation", Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.getOwnMetadata("custom:annotation", Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.getOwnMetadata("custom:annotation", Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.getOwnMetadata("custom:annotation", Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.getOwnMetadata("custom:annotation", Example.prototype, "method");
+         *
+         */
+        function getOwnMetadata(metadataKey, target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryGetOwnMetadata(metadataKey, target, propertyKey);
+        }
+        exporter("getOwnMetadata", getOwnMetadata);
+        /**
+         * Gets the metadata keys defined on the target object or its prototype chain.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns An array of unique metadata keys.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.getMetadataKeys(Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.getMetadataKeys(Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.getMetadataKeys(Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.getMetadataKeys(Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.getMetadataKeys(Example.prototype, "method");
+         *
+         */
+        function getMetadataKeys(target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryMetadataKeys(target, propertyKey);
+        }
+        exporter("getMetadataKeys", getMetadataKeys);
+        /**
+         * Gets the unique metadata keys defined on the target object.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns An array of unique metadata keys.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.getOwnMetadataKeys(Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.getOwnMetadataKeys(Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.getOwnMetadataKeys(Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.getOwnMetadataKeys(Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.getOwnMetadataKeys(Example.prototype, "method");
+         *
+         */
+        function getOwnMetadataKeys(target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            return OrdinaryOwnMetadataKeys(target, propertyKey);
+        }
+        exporter("getOwnMetadataKeys", getOwnMetadataKeys);
+        /**
+         * Deletes the metadata entry from the target object with the provided key.
+         * @param metadataKey A key used to store and retrieve metadata.
+         * @param target The target object on which the metadata is defined.
+         * @param propertyKey (Optional) The property key for the target.
+         * @returns `true` if the metadata entry was found and deleted; otherwise, false.
+         * @example
+         *
+         *     class Example {
+         *         // property declarations are not part of ES6, though they are valid in TypeScript:
+         *         // static staticProperty;
+         *         // property;
+         *
+         *         constructor(p) { }
+         *         static staticMethod(p) { }
+         *         method(p) { }
+         *     }
+         *
+         *     // constructor
+         *     result = Reflect.deleteMetadata("custom:annotation", Example);
+         *
+         *     // property (on constructor)
+         *     result = Reflect.deleteMetadata("custom:annotation", Example, "staticProperty");
+         *
+         *     // property (on prototype)
+         *     result = Reflect.deleteMetadata("custom:annotation", Example.prototype, "property");
+         *
+         *     // method (on constructor)
+         *     result = Reflect.deleteMetadata("custom:annotation", Example, "staticMethod");
+         *
+         *     // method (on prototype)
+         *     result = Reflect.deleteMetadata("custom:annotation", Example.prototype, "method");
+         *
+         */
+        function deleteMetadata(metadataKey, target, propertyKey) {
+            if (!IsObject(target))
+                throw new TypeError();
+            if (!IsUndefined(propertyKey))
+                propertyKey = ToPropertyKey(propertyKey);
+            var metadataMap = GetOrCreateMetadataMap(target, propertyKey, /*Create*/ false);
+            if (IsUndefined(metadataMap))
+                return false;
+            if (!metadataMap.delete(metadataKey))
+                return false;
+            if (metadataMap.size > 0)
+                return true;
+            var targetMetadata = Metadata.get(target);
+            targetMetadata.delete(propertyKey);
+            if (targetMetadata.size > 0)
+                return true;
+            Metadata.delete(target);
+            return true;
+        }
+        exporter("deleteMetadata", deleteMetadata);
+        function DecorateConstructor(decorators, target) {
+            for (var i = decorators.length - 1; i >= 0; --i) {
+                var decorator = decorators[i];
+                var decorated = decorator(target);
+                if (!IsUndefined(decorated) && !IsNull(decorated)) {
+                    if (!IsConstructor(decorated))
+                        throw new TypeError();
+                    target = decorated;
+                }
+            }
+            return target;
+        }
+        function DecorateProperty(decorators, target, propertyKey, descriptor) {
+            for (var i = decorators.length - 1; i >= 0; --i) {
+                var decorator = decorators[i];
+                var decorated = decorator(target, propertyKey, descriptor);
+                if (!IsUndefined(decorated) && !IsNull(decorated)) {
+                    if (!IsObject(decorated))
+                        throw new TypeError();
+                    descriptor = decorated;
+                }
+            }
+            return descriptor;
+        }
+        function GetOrCreateMetadataMap(O, P, Create) {
+            var targetMetadata = Metadata.get(O);
+            if (IsUndefined(targetMetadata)) {
+                if (!Create)
+                    return undefined;
+                targetMetadata = new _Map();
+                Metadata.set(O, targetMetadata);
+            }
+            var metadataMap = targetMetadata.get(P);
+            if (IsUndefined(metadataMap)) {
+                if (!Create)
+                    return undefined;
+                metadataMap = new _Map();
+                targetMetadata.set(P, metadataMap);
+            }
+            return metadataMap;
+        }
+        // 3.1.1.1 OrdinaryHasMetadata(MetadataKey, O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinaryhasmetadata
+        function OrdinaryHasMetadata(MetadataKey, O, P) {
+            var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
+            if (hasOwn)
+                return true;
+            var parent = OrdinaryGetPrototypeOf(O);
+            if (!IsNull(parent))
+                return OrdinaryHasMetadata(MetadataKey, parent, P);
+            return false;
+        }
+        // 3.1.2.1 OrdinaryHasOwnMetadata(MetadataKey, O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinaryhasownmetadata
+        function OrdinaryHasOwnMetadata(MetadataKey, O, P) {
+            var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/ false);
+            if (IsUndefined(metadataMap))
+                return false;
+            return ToBoolean(metadataMap.has(MetadataKey));
+        }
+        // 3.1.3.1 OrdinaryGetMetadata(MetadataKey, O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinarygetmetadata
+        function OrdinaryGetMetadata(MetadataKey, O, P) {
+            var hasOwn = OrdinaryHasOwnMetadata(MetadataKey, O, P);
+            if (hasOwn)
+                return OrdinaryGetOwnMetadata(MetadataKey, O, P);
+            var parent = OrdinaryGetPrototypeOf(O);
+            if (!IsNull(parent))
+                return OrdinaryGetMetadata(MetadataKey, parent, P);
+            return undefined;
+        }
+        // 3.1.4.1 OrdinaryGetOwnMetadata(MetadataKey, O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinarygetownmetadata
+        function OrdinaryGetOwnMetadata(MetadataKey, O, P) {
+            var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/ false);
+            if (IsUndefined(metadataMap))
+                return undefined;
+            return metadataMap.get(MetadataKey);
+        }
+        // 3.1.5.1 OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinarydefineownmetadata
+        function OrdinaryDefineOwnMetadata(MetadataKey, MetadataValue, O, P) {
+            var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/ true);
+            metadataMap.set(MetadataKey, MetadataValue);
+        }
+        // 3.1.6.1 OrdinaryMetadataKeys(O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinarymetadatakeys
+        function OrdinaryMetadataKeys(O, P) {
+            var ownKeys = OrdinaryOwnMetadataKeys(O, P);
+            var parent = OrdinaryGetPrototypeOf(O);
+            if (parent === null)
+                return ownKeys;
+            var parentKeys = OrdinaryMetadataKeys(parent, P);
+            if (parentKeys.length <= 0)
+                return ownKeys;
+            if (ownKeys.length <= 0)
+                return parentKeys;
+            var set = new _Set();
+            var keys = [];
+            for (var _i = 0, ownKeys_1 = ownKeys; _i < ownKeys_1.length; _i++) {
+                var key = ownKeys_1[_i];
+                var hasKey = set.has(key);
+                if (!hasKey) {
+                    set.add(key);
+                    keys.push(key);
+                }
+            }
+            for (var _a = 0, parentKeys_1 = parentKeys; _a < parentKeys_1.length; _a++) {
+                var key = parentKeys_1[_a];
+                var hasKey = set.has(key);
+                if (!hasKey) {
+                    set.add(key);
+                    keys.push(key);
+                }
+            }
+            return keys;
+        }
+        // 3.1.7.1 OrdinaryOwnMetadataKeys(O, P)
+        // https://rbuckton.github.io/reflect-metadata/#ordinaryownmetadatakeys
+        function OrdinaryOwnMetadataKeys(O, P) {
+            var keys = [];
+            var metadataMap = GetOrCreateMetadataMap(O, P, /*Create*/ false);
+            if (IsUndefined(metadataMap))
+                return keys;
+            var keysObj = metadataMap.keys();
+            var iterator = GetIterator(keysObj);
+            var k = 0;
+            while (true) {
+                var next = IteratorStep(iterator);
+                if (!next) {
+                    keys.length = k;
+                    return keys;
+                }
+                var nextValue = IteratorValue(next);
+                try {
+                    keys[k] = nextValue;
+                }
+                catch (e) {
+                    try {
+                        IteratorClose(iterator);
+                    }
+                    finally {
+                        throw e;
+                    }
+                }
+                k++;
+            }
+        }
+        // 6 ECMAScript Data Typ0es and Values
+        // https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values
+        function Type(x) {
+            if (x === null)
+                return 1 /* Null */;
+            switch (typeof x) {
+                case "undefined": return 0 /* Undefined */;
+                case "boolean": return 2 /* Boolean */;
+                case "string": return 3 /* String */;
+                case "symbol": return 4 /* Symbol */;
+                case "number": return 5 /* Number */;
+                case "object": return x === null ? 1 /* Null */ : 6 /* Object */;
+                default: return 6 /* Object */;
+            }
+        }
+        // 6.1.1 The Undefined Type
+        // https://tc39.github.io/ecma262/#sec-ecmascript-language-types-undefined-type
+        function IsUndefined(x) {
+            return x === undefined;
+        }
+        // 6.1.2 The Null Type
+        // https://tc39.github.io/ecma262/#sec-ecmascript-language-types-null-type
+        function IsNull(x) {
+            return x === null;
+        }
+        // 6.1.5 The Symbol Type
+        // https://tc39.github.io/ecma262/#sec-ecmascript-language-types-symbol-type
+        function IsSymbol(x) {
+            return typeof x === "symbol";
+        }
+        // 6.1.7 The Object Type
+        // https://tc39.github.io/ecma262/#sec-object-type
+        function IsObject(x) {
+            return typeof x === "object" ? x !== null : typeof x === "function";
+        }
+        // 7.1 Type Conversion
+        // https://tc39.github.io/ecma262/#sec-type-conversion
+        // 7.1.1 ToPrimitive(input [, PreferredType])
+        // https://tc39.github.io/ecma262/#sec-toprimitive
+        function ToPrimitive(input, PreferredType) {
+            switch (Type(input)) {
+                case 0 /* Undefined */: return input;
+                case 1 /* Null */: return input;
+                case 2 /* Boolean */: return input;
+                case 3 /* String */: return input;
+                case 4 /* Symbol */: return input;
+                case 5 /* Number */: return input;
+            }
+            var hint = PreferredType === 3 /* String */ ? "string" : PreferredType === 5 /* Number */ ? "number" : "default";
+            var exoticToPrim = GetMethod(input, toPrimitiveSymbol);
+            if (exoticToPrim !== undefined) {
+                var result = exoticToPrim.call(input, hint);
+                if (IsObject(result))
+                    throw new TypeError();
+                return result;
+            }
+            return OrdinaryToPrimitive(input, hint === "default" ? "number" : hint);
+        }
+        // 7.1.1.1 OrdinaryToPrimitive(O, hint)
+        // https://tc39.github.io/ecma262/#sec-ordinarytoprimitive
+        function OrdinaryToPrimitive(O, hint) {
+            if (hint === "string") {
+                var toString_1 = O.toString;
+                if (IsCallable(toString_1)) {
+                    var result = toString_1.call(O);
+                    if (!IsObject(result))
+                        return result;
+                }
+                var valueOf = O.valueOf;
+                if (IsCallable(valueOf)) {
+                    var result = valueOf.call(O);
+                    if (!IsObject(result))
+                        return result;
+                }
+            }
+            else {
+                var valueOf = O.valueOf;
+                if (IsCallable(valueOf)) {
+                    var result = valueOf.call(O);
+                    if (!IsObject(result))
+                        return result;
+                }
+                var toString_2 = O.toString;
+                if (IsCallable(toString_2)) {
+                    var result = toString_2.call(O);
+                    if (!IsObject(result))
+                        return result;
+                }
+            }
+            throw new TypeError();
+        }
+        // 7.1.2 ToBoolean(argument)
+        // https://tc39.github.io/ecma262/2016/#sec-toboolean
+        function ToBoolean(argument) {
+            return !!argument;
+        }
+        // 7.1.12 ToString(argument)
+        // https://tc39.github.io/ecma262/#sec-tostring
+        function ToString(argument) {
+            return "" + argument;
+        }
+        // 7.1.14 ToPropertyKey(argument)
+        // https://tc39.github.io/ecma262/#sec-topropertykey
+        function ToPropertyKey(argument) {
+            var key = ToPrimitive(argument, 3 /* String */);
+            if (IsSymbol(key))
+                return key;
+            return ToString(key);
+        }
+        // 7.2 Testing and Comparison Operations
+        // https://tc39.github.io/ecma262/#sec-testing-and-comparison-operations
+        // 7.2.2 IsArray(argument)
+        // https://tc39.github.io/ecma262/#sec-isarray
+        function IsArray(argument) {
+            return Array.isArray
+                ? Array.isArray(argument)
+                : argument instanceof Object
+                    ? argument instanceof Array
+                    : Object.prototype.toString.call(argument) === "[object Array]";
+        }
+        // 7.2.3 IsCallable(argument)
+        // https://tc39.github.io/ecma262/#sec-iscallable
+        function IsCallable(argument) {
+            // NOTE: This is an approximation as we cannot check for [[Call]] internal method.
+            return typeof argument === "function";
+        }
+        // 7.2.4 IsConstructor(argument)
+        // https://tc39.github.io/ecma262/#sec-isconstructor
+        function IsConstructor(argument) {
+            // NOTE: This is an approximation as we cannot check for [[Construct]] internal method.
+            return typeof argument === "function";
+        }
+        // 7.2.7 IsPropertyKey(argument)
+        // https://tc39.github.io/ecma262/#sec-ispropertykey
+        function IsPropertyKey(argument) {
+            switch (Type(argument)) {
+                case 3 /* String */: return true;
+                case 4 /* Symbol */: return true;
+                default: return false;
+            }
+        }
+        // 7.3 Operations on Objects
+        // https://tc39.github.io/ecma262/#sec-operations-on-objects
+        // 7.3.9 GetMethod(V, P)
+        // https://tc39.github.io/ecma262/#sec-getmethod
+        function GetMethod(V, P) {
+            var func = V[P];
+            if (func === undefined || func === null)
+                return undefined;
+            if (!IsCallable(func))
+                throw new TypeError();
+            return func;
+        }
+        // 7.4 Operations on Iterator Objects
+        // https://tc39.github.io/ecma262/#sec-operations-on-iterator-objects
+        function GetIterator(obj) {
+            var method = GetMethod(obj, iteratorSymbol);
+            if (!IsCallable(method))
+                throw new TypeError(); // from Call
+            var iterator = method.call(obj);
+            if (!IsObject(iterator))
+                throw new TypeError();
+            return iterator;
+        }
+        // 7.4.4 IteratorValue(iterResult)
+        // https://tc39.github.io/ecma262/2016/#sec-iteratorvalue
+        function IteratorValue(iterResult) {
+            return iterResult.value;
+        }
+        // 7.4.5 IteratorStep(iterator)
+        // https://tc39.github.io/ecma262/#sec-iteratorstep
+        function IteratorStep(iterator) {
+            var result = iterator.next();
+            return result.done ? false : result;
+        }
+        // 7.4.6 IteratorClose(iterator, completion)
+        // https://tc39.github.io/ecma262/#sec-iteratorclose
+        function IteratorClose(iterator) {
+            var f = iterator["return"];
+            if (f)
+                f.call(iterator);
+        }
+        // 9.1 Ordinary Object Internal Methods and Internal Slots
+        // https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots
+        // 9.1.1.1 OrdinaryGetPrototypeOf(O)
+        // https://tc39.github.io/ecma262/#sec-ordinarygetprototypeof
+        function OrdinaryGetPrototypeOf(O) {
+            var proto = Object.getPrototypeOf(O);
+            if (typeof O !== "function" || O === functionPrototype)
+                return proto;
+            // TypeScript doesn't set __proto__ in ES5, as it's non-standard.
+            // Try to determine the superclass constructor. Compatible implementations
+            // must either set __proto__ on a subclass constructor to the superclass constructor,
+            // or ensure each class has a valid `constructor` property on its prototype that
+            // points back to the constructor.
+            // If this is not the same as Function.[[Prototype]], then this is definately inherited.
+            // This is the case when in ES6 or when using __proto__ in a compatible browser.
+            if (proto !== functionPrototype)
+                return proto;
+            // If the super prototype is Object.prototype, null, or undefined, then we cannot determine the heritage.
+            var prototype = O.prototype;
+            var prototypeProto = prototype && Object.getPrototypeOf(prototype);
+            if (prototypeProto == null || prototypeProto === Object.prototype)
+                return proto;
+            // If the constructor was not a function, then we cannot determine the heritage.
+            var constructor = prototypeProto.constructor;
+            if (typeof constructor !== "function")
+                return proto;
+            // If we have some kind of self-reference, then we cannot determine the heritage.
+            if (constructor === O)
+                return proto;
+            // we have a pretty good guess at the heritage.
+            return constructor;
+        }
+        // naive Map shim
+        function CreateMapPolyfill() {
+            var cacheSentinel = {};
+            var arraySentinel = [];
+            var MapIterator = /** @class */ (function () {
+                function MapIterator(keys, values, selector) {
+                    this._index = 0;
+                    this._keys = keys;
+                    this._values = values;
+                    this._selector = selector;
+                }
+                MapIterator.prototype["@@iterator"] = function () { return this; };
+                MapIterator.prototype[iteratorSymbol] = function () { return this; };
+                MapIterator.prototype.next = function () {
+                    var index = this._index;
+                    if (index >= 0 && index < this._keys.length) {
+                        var result = this._selector(this._keys[index], this._values[index]);
+                        if (index + 1 >= this._keys.length) {
+                            this._index = -1;
+                            this._keys = arraySentinel;
+                            this._values = arraySentinel;
+                        }
+                        else {
+                            this._index++;
+                        }
+                        return { value: result, done: false };
+                    }
+                    return { value: undefined, done: true };
+                };
+                MapIterator.prototype.throw = function (error) {
+                    if (this._index >= 0) {
+                        this._index = -1;
+                        this._keys = arraySentinel;
+                        this._values = arraySentinel;
+                    }
+                    throw error;
+                };
+                MapIterator.prototype.return = function (value) {
+                    if (this._index >= 0) {
+                        this._index = -1;
+                        this._keys = arraySentinel;
+                        this._values = arraySentinel;
+                    }
+                    return { value: value, done: true };
+                };
+                return MapIterator;
+            }());
+            return /** @class */ (function () {
+                function Map() {
+                    this._keys = [];
+                    this._values = [];
+                    this._cacheKey = cacheSentinel;
+                    this._cacheIndex = -2;
+                }
+                Object.defineProperty(Map.prototype, "size", {
+                    get: function () { return this._keys.length; },
+                    enumerable: true,
+                    configurable: true
+                });
+                Map.prototype.has = function (key) { return this._find(key, /*insert*/ false) >= 0; };
+                Map.prototype.get = function (key) {
+                    var index = this._find(key, /*insert*/ false);
+                    return index >= 0 ? this._values[index] : undefined;
+                };
+                Map.prototype.set = function (key, value) {
+                    var index = this._find(key, /*insert*/ true);
+                    this._values[index] = value;
+                    return this;
+                };
+                Map.prototype.delete = function (key) {
+                    var index = this._find(key, /*insert*/ false);
+                    if (index >= 0) {
+                        var size = this._keys.length;
+                        for (var i = index + 1; i < size; i++) {
+                            this._keys[i - 1] = this._keys[i];
+                            this._values[i - 1] = this._values[i];
+                        }
+                        this._keys.length--;
+                        this._values.length--;
+                        if (key === this._cacheKey) {
+                            this._cacheKey = cacheSentinel;
+                            this._cacheIndex = -2;
+                        }
+                        return true;
+                    }
+                    return false;
+                };
+                Map.prototype.clear = function () {
+                    this._keys.length = 0;
+                    this._values.length = 0;
+                    this._cacheKey = cacheSentinel;
+                    this._cacheIndex = -2;
+                };
+                Map.prototype.keys = function () { return new MapIterator(this._keys, this._values, getKey); };
+                Map.prototype.values = function () { return new MapIterator(this._keys, this._values, getValue); };
+                Map.prototype.entries = function () { return new MapIterator(this._keys, this._values, getEntry); };
+                Map.prototype["@@iterator"] = function () { return this.entries(); };
+                Map.prototype[iteratorSymbol] = function () { return this.entries(); };
+                Map.prototype._find = function (key, insert) {
+                    if (this._cacheKey !== key) {
+                        this._cacheIndex = this._keys.indexOf(this._cacheKey = key);
+                    }
+                    if (this._cacheIndex < 0 && insert) {
+                        this._cacheIndex = this._keys.length;
+                        this._keys.push(key);
+                        this._values.push(undefined);
+                    }
+                    return this._cacheIndex;
+                };
+                return Map;
+            }());
+            function getKey(key, _) {
+                return key;
+            }
+            function getValue(_, value) {
+                return value;
+            }
+            function getEntry(key, value) {
+                return [key, value];
+            }
+        }
+        // naive Set shim
+        function CreateSetPolyfill() {
+            return /** @class */ (function () {
+                function Set() {
+                    this._map = new _Map();
+                }
+                Object.defineProperty(Set.prototype, "size", {
+                    get: function () { return this._map.size; },
+                    enumerable: true,
+                    configurable: true
+                });
+                Set.prototype.has = function (value) { return this._map.has(value); };
+                Set.prototype.add = function (value) { return this._map.set(value, value), this; };
+                Set.prototype.delete = function (value) { return this._map.delete(value); };
+                Set.prototype.clear = function () { this._map.clear(); };
+                Set.prototype.keys = function () { return this._map.keys(); };
+                Set.prototype.values = function () { return this._map.values(); };
+                Set.prototype.entries = function () { return this._map.entries(); };
+                Set.prototype["@@iterator"] = function () { return this.keys(); };
+                Set.prototype[iteratorSymbol] = function () { return this.keys(); };
+                return Set;
+            }());
+        }
+        // naive WeakMap shim
+        function CreateWeakMapPolyfill() {
+            var UUID_SIZE = 16;
+            var keys = HashMap.create();
+            var rootKey = CreateUniqueKey();
+            return /** @class */ (function () {
+                function WeakMap() {
+                    this._key = CreateUniqueKey();
+                }
+                WeakMap.prototype.has = function (target) {
+                    var table = GetOrCreateWeakMapTable(target, /*create*/ false);
+                    return table !== undefined ? HashMap.has(table, this._key) : false;
+                };
+                WeakMap.prototype.get = function (target) {
+                    var table = GetOrCreateWeakMapTable(target, /*create*/ false);
+                    return table !== undefined ? HashMap.get(table, this._key) : undefined;
+                };
+                WeakMap.prototype.set = function (target, value) {
+                    var table = GetOrCreateWeakMapTable(target, /*create*/ true);
+                    table[this._key] = value;
+                    return this;
+                };
+                WeakMap.prototype.delete = function (target) {
+                    var table = GetOrCreateWeakMapTable(target, /*create*/ false);
+                    return table !== undefined ? delete table[this._key] : false;
+                };
+                WeakMap.prototype.clear = function () {
+                    // NOTE: not a real clear, just makes the previous data unreachable
+                    this._key = CreateUniqueKey();
+                };
+                return WeakMap;
+            }());
+            function CreateUniqueKey() {
+                var key;
+                do
+                    key = "@@WeakMap@@" + CreateUUID();
+                while (HashMap.has(keys, key));
+                keys[key] = true;
+                return key;
+            }
+            function GetOrCreateWeakMapTable(target, create) {
+                if (!hasOwn.call(target, rootKey)) {
+                    if (!create)
+                        return undefined;
+                    Object.defineProperty(target, rootKey, { value: HashMap.create() });
+                }
+                return target[rootKey];
+            }
+            function FillRandomBytes(buffer, size) {
+                for (var i = 0; i < size; ++i)
+                    buffer[i] = Math.random() * 0xff | 0;
+                return buffer;
+            }
+            function GenRandomBytes(size) {
+                if (typeof Uint8Array === "function") {
+                    if (typeof crypto !== "undefined")
+                        return crypto.getRandomValues(new Uint8Array(size));
+                    if (typeof msCrypto !== "undefined")
+                        return msCrypto.getRandomValues(new Uint8Array(size));
+                    return FillRandomBytes(new Uint8Array(size), size);
+                }
+                return FillRandomBytes(new Array(size), size);
+            }
+            function CreateUUID() {
+                var data = GenRandomBytes(UUID_SIZE);
+                // mark as random - RFC 4122 § 4.4
+                data[6] = data[6] & 0x4f | 0x40;
+                data[8] = data[8] & 0xbf | 0x80;
+                var result = "";
+                for (var offset = 0; offset < UUID_SIZE; ++offset) {
+                    var byte = data[offset];
+                    if (offset === 4 || offset === 6 || offset === 8)
+                        result += "-";
+                    if (byte < 16)
+                        result += "0";
+                    result += byte.toString(16).toLowerCase();
+                }
+                return result;
+            }
+        }
+        // uses a heuristic used by v8 and chakra to force an object into dictionary mode.
+        function MakeDictionary(obj) {
+            obj.__ = undefined;
+            delete obj.__;
+            return obj;
+        }
+    });
+})(Reflect || (Reflect = {}));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -31035,6 +32282,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Detenteur.vue?vue&type=style&index=0&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Detenteur.vue?vue&type=style&index=0&lang=css& ***!
@@ -32189,6 +33466,343 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-class-component/dist/vue-class-component.esm.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/vue-class-component/dist/vue-class-component.esm.js ***!
+  \**************************************************************************/
+/*! exports provided: default, createDecorator, mixins */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDecorator", function() { return createDecorator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mixins", function() { return mixins; });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/**
+  * vue-class-component v7.2.6
+  * (c) 2015-present Evan You
+  * @license MIT
+  */
+
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+// The rational behind the verbose Reflect-feature check below is the fact that there are polyfills
+// which add an implementation for Reflect.defineMetadata but not for Reflect.getOwnMetadataKeys.
+// Without this check consumers will encounter hard to track down runtime errors.
+function reflectionIsSupported() {
+  return typeof Reflect !== 'undefined' && Reflect.defineMetadata && Reflect.getOwnMetadataKeys;
+}
+function copyReflectionMetadata(to, from) {
+  forwardMetadata(to, from);
+  Object.getOwnPropertyNames(from.prototype).forEach(function (key) {
+    forwardMetadata(to.prototype, from.prototype, key);
+  });
+  Object.getOwnPropertyNames(from).forEach(function (key) {
+    forwardMetadata(to, from, key);
+  });
+}
+
+function forwardMetadata(to, from, propertyKey) {
+  var metaKeys = propertyKey ? Reflect.getOwnMetadataKeys(from, propertyKey) : Reflect.getOwnMetadataKeys(from);
+  metaKeys.forEach(function (metaKey) {
+    var metadata = propertyKey ? Reflect.getOwnMetadata(metaKey, from, propertyKey) : Reflect.getOwnMetadata(metaKey, from);
+
+    if (propertyKey) {
+      Reflect.defineMetadata(metaKey, metadata, to, propertyKey);
+    } else {
+      Reflect.defineMetadata(metaKey, metadata, to);
+    }
+  });
+}
+
+var fakeArray = {
+  __proto__: []
+};
+var hasProto = fakeArray instanceof Array;
+function createDecorator(factory) {
+  return function (target, key, index) {
+    var Ctor = typeof target === 'function' ? target : target.constructor;
+
+    if (!Ctor.__decorators__) {
+      Ctor.__decorators__ = [];
+    }
+
+    if (typeof index !== 'number') {
+      index = undefined;
+    }
+
+    Ctor.__decorators__.push(function (options) {
+      return factory(options, key, index);
+    });
+  };
+}
+function mixins() {
+  for (var _len = arguments.length, Ctors = new Array(_len), _key = 0; _key < _len; _key++) {
+    Ctors[_key] = arguments[_key];
+  }
+
+  return vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend({
+    mixins: Ctors
+  });
+}
+function isPrimitive(value) {
+  var type = _typeof(value);
+
+  return value == null || type !== 'object' && type !== 'function';
+}
+function warn(message) {
+  if (typeof console !== 'undefined') {
+    console.warn('[vue-class-component] ' + message);
+  }
+}
+
+function collectDataFromConstructor(vm, Component) {
+  // override _init to prevent to init as Vue instance
+  var originalInit = Component.prototype._init;
+
+  Component.prototype._init = function () {
+    var _this = this;
+
+    // proxy to actual vm
+    var keys = Object.getOwnPropertyNames(vm); // 2.2.0 compat (props are no longer exposed as self properties)
+
+    if (vm.$options.props) {
+      for (var key in vm.$options.props) {
+        if (!vm.hasOwnProperty(key)) {
+          keys.push(key);
+        }
+      }
+    }
+
+    keys.forEach(function (key) {
+      Object.defineProperty(_this, key, {
+        get: function get() {
+          return vm[key];
+        },
+        set: function set(value) {
+          vm[key] = value;
+        },
+        configurable: true
+      });
+    });
+  }; // should be acquired class property values
+
+
+  var data = new Component(); // restore original _init to avoid memory leak (#209)
+
+  Component.prototype._init = originalInit; // create plain data object
+
+  var plainData = {};
+  Object.keys(data).forEach(function (key) {
+    if (data[key] !== undefined) {
+      plainData[key] = data[key];
+    }
+  });
+
+  if (true) {
+    if (!(Component.prototype instanceof vue__WEBPACK_IMPORTED_MODULE_0___default.a) && Object.keys(plainData).length > 0) {
+      warn('Component class must inherit Vue or its descendant class ' + 'when class property is used.');
+    }
+  }
+
+  return plainData;
+}
+
+var $internalHooks = ['data', 'beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeDestroy', 'destroyed', 'beforeUpdate', 'updated', 'activated', 'deactivated', 'render', 'errorCaptured', 'serverPrefetch' // 2.6
+];
+function componentFactory(Component) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  options.name = options.name || Component._componentTag || Component.name; // prototype props.
+
+  var proto = Component.prototype;
+  Object.getOwnPropertyNames(proto).forEach(function (key) {
+    if (key === 'constructor') {
+      return;
+    } // hooks
+
+
+    if ($internalHooks.indexOf(key) > -1) {
+      options[key] = proto[key];
+      return;
+    }
+
+    var descriptor = Object.getOwnPropertyDescriptor(proto, key);
+
+    if (descriptor.value !== void 0) {
+      // methods
+      if (typeof descriptor.value === 'function') {
+        (options.methods || (options.methods = {}))[key] = descriptor.value;
+      } else {
+        // typescript decorated data
+        (options.mixins || (options.mixins = [])).push({
+          data: function data() {
+            return _defineProperty({}, key, descriptor.value);
+          }
+        });
+      }
+    } else if (descriptor.get || descriptor.set) {
+      // computed properties
+      (options.computed || (options.computed = {}))[key] = {
+        get: descriptor.get,
+        set: descriptor.set
+      };
+    }
+  });
+  (options.mixins || (options.mixins = [])).push({
+    data: function data() {
+      return collectDataFromConstructor(this, Component);
+    }
+  }); // decorate options
+
+  var decorators = Component.__decorators__;
+
+  if (decorators) {
+    decorators.forEach(function (fn) {
+      return fn(options);
+    });
+    delete Component.__decorators__;
+  } // find super
+
+
+  var superProto = Object.getPrototypeOf(Component.prototype);
+  var Super = superProto instanceof vue__WEBPACK_IMPORTED_MODULE_0___default.a ? superProto.constructor : vue__WEBPACK_IMPORTED_MODULE_0___default.a;
+  var Extended = Super.extend(options);
+  forwardStaticMembers(Extended, Component, Super);
+
+  if (reflectionIsSupported()) {
+    copyReflectionMetadata(Extended, Component);
+  }
+
+  return Extended;
+}
+var reservedPropertyNames = [// Unique id
+'cid', // Super Vue constructor
+'super', // Component options that will be used by the component
+'options', 'superOptions', 'extendOptions', 'sealedOptions', // Private assets
+'component', 'directive', 'filter'];
+var shouldIgnore = {
+  prototype: true,
+  arguments: true,
+  callee: true,
+  caller: true
+};
+
+function forwardStaticMembers(Extended, Original, Super) {
+  // We have to use getOwnPropertyNames since Babel registers methods as non-enumerable
+  Object.getOwnPropertyNames(Original).forEach(function (key) {
+    // Skip the properties that should not be overwritten
+    if (shouldIgnore[key]) {
+      return;
+    } // Some browsers does not allow reconfigure built-in properties
+
+
+    var extendedDescriptor = Object.getOwnPropertyDescriptor(Extended, key);
+
+    if (extendedDescriptor && !extendedDescriptor.configurable) {
+      return;
+    }
+
+    var descriptor = Object.getOwnPropertyDescriptor(Original, key); // If the user agent does not support `__proto__` or its family (IE <= 10),
+    // the sub class properties may be inherited properties from the super class in TypeScript.
+    // We need to exclude such properties to prevent to overwrite
+    // the component options object which stored on the extended constructor (See #192).
+    // If the value is a referenced value (object or function),
+    // we can check equality of them and exclude it if they have the same reference.
+    // If it is a primitive value, it will be forwarded for safety.
+
+    if (!hasProto) {
+      // Only `cid` is explicitly exluded from property forwarding
+      // because we cannot detect whether it is a inherited property or not
+      // on the no `__proto__` environment even though the property is reserved.
+      if (key === 'cid') {
+        return;
+      }
+
+      var superDescriptor = Object.getOwnPropertyDescriptor(Super, key);
+
+      if (!isPrimitive(descriptor.value) && superDescriptor && superDescriptor.value === descriptor.value) {
+        return;
+      }
+    } // Warn if the users manually declare reserved properties
+
+
+    if ( true && reservedPropertyNames.indexOf(key) >= 0) {
+      warn("Static property name '".concat(key, "' declared on class '").concat(Original.name, "' ") + 'conflicts with reserved property name of Vue internal. ' + 'It may cause unexpected behavior of the component. Consider renaming the property.');
+    }
+
+    Object.defineProperty(Extended, key, descriptor);
+  });
+}
+
+function Component(options) {
+  if (typeof options === 'function') {
+    return componentFactory(options);
+  }
+
+  return function (Component) {
+    return componentFactory(Component, options);
+  };
+}
+
+Component.registerHooks = function registerHooks(keys) {
+  $internalHooks.push.apply($internalHooks, _toConsumableArray(keys));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Component);
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-drag-and-drop-list/dist/vue-drag-and-drop-list.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/vue-drag-and-drop-list/dist/vue-drag-and-drop-list.js ***!
@@ -32648,6 +34262,1781 @@ DragAndDropList.install = function(Vue) {
 return DragAndDropList;
 
 })));
+
+/***/ }),
+
+/***/ "./node_modules/vue-easy-dnd/dist/vue-easy-dnd.esm.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vue-easy-dnd/dist/vue-easy-dnd.esm.js ***!
+  \************************************************************/
+/*! exports provided: DnDEvent, Drag, DragAwareMixin, DragImagesManager, DragMixin, Drop, DropList, DropMask, DropMixin, InsertEvent, ReorderEvent, createDragImage, dnd */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DnDEvent", function() { return DnDEvent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Drag", function() { return Drag$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DragAwareMixin", function() { return DragAwareMixin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DragImagesManager", function() { return DragImagesManager; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DragMixin", function() { return DragMixin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Drop", function() { return Drop$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DropList", function() { return DropList$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DropMask", function() { return DropMask$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DropMixin", function() { return DropMixin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InsertEvent", function() { return InsertEvent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReorderEvent", function() { return ReorderEvent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDragImage", function() { return createDragImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dnd", function() { return dnd; });
+/* harmony import */ var reflect_metadata__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reflect-metadata */ "./node_modules/reflect-metadata/Reflect.js");
+/* harmony import */ var reflect_metadata__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(reflect_metadata__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-property-decorator */ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js");
+
+
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __values(o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+/**
+ * This is the class of the global object that holds the state of the drag and drop during its progress. It emits events
+ * reporting its state evolution during the progress of the drag and drop. Its data is reactive and listeners can be
+ * attachted to it using the method on.
+ */
+var DnD = /** @class */ (function () {
+    function DnD() {
+        this.inProgress = false;
+        this.type = null;
+        this.data = null;
+        this.source = null;
+        this.top = null;
+        this.position = null;
+        this.eventBus = new vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Vue"]();
+        this.sourceListeners = null;
+        this.success = null;
+    }
+    DnD.prototype.startDrag = function (source, event, x, y, type, data) {
+        this.type = type;
+        this.data = data;
+        this.source = source;
+        this.position = {
+            x: x,
+            y: y
+        };
+        this.top = null;
+        this.sourceListeners = source.$listeners;
+        this.inProgress = true;
+        this.emit(event, "dragstart");
+        this.emit(event, "dragtopchanged", { previousTop: null });
+    };
+    DnD.prototype.stopDrag = function (event) {
+        this.success = this.top !== null && this.top['compatibleMode'] && this.top['dropAllowed'];
+        if (this.top !== null) {
+            this.emit(event, "drop");
+        }
+        this.emit(event, "dragend");
+        this.inProgress = false;
+        this.data = null;
+        this.source = null;
+        this.position = null;
+        this.success = null;
+    };
+    DnD.prototype.mouseMove = function (event, comp) {
+        if (this.inProgress) {
+            var prevent = false;
+            var previousTop = this.top;
+            if (comp === null) {
+                // The mouse move event reached the top of the document without hitting a drop component.
+                this.top = null;
+                prevent = true;
+            }
+            else if (comp['isDropMask']) {
+                // The mouse move event bubbled until it reached a drop mask.
+                this.top = null;
+                prevent = true;
+            }
+            else if (comp['candidate'](this.type, this.data, this.source)) {
+                // The mouse move event bubbled until it reached a drop component that participates in the current drag operation.
+                this.top = comp;
+                prevent = true;
+            }
+            if (prevent) {
+                // We prevent the mouse move event from bubbling further up the tree because it reached the foremost drop component and that component is all that matters.
+                event.stopPropagation();
+            }
+            if (this.top !== previousTop) {
+                this.emit(event.detail.native, 'dragtopchanged', { previousTop: previousTop });
+            }
+            this.position = {
+                x: event.detail.x,
+                y: event.detail.y
+            };
+            this.emit(event.detail.native, 'dragpositionchanged');
+        }
+    };
+    DnD.prototype.emit = function (native, event, data) {
+        this.eventBus.$emit(event, __assign({ type: this.type, data: this.data, top: this.top, source: this.source, position: this.position, success: this.success, native: native }, data));
+    };
+    DnD.prototype.on = function (event, callback) {
+        this.eventBus.$on(event, callback);
+    };
+    DnD.prototype.off = function (event, callback) {
+        this.eventBus.$off(event, callback);
+    };
+    return DnD;
+}());
+var dnd = new DnD();
+dnd = vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Vue"].observable(dnd);
+
+var DragAwareMixin = /** @class */ (function (_super) {
+    __extends(DragAwareMixin, _super);
+    function DragAwareMixin() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(DragAwareMixin.prototype, "dragInProgress", {
+        get: function () {
+            return dnd.inProgress;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragAwareMixin.prototype, "dragData", {
+        get: function () {
+            return dnd.data;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragAwareMixin.prototype, "dragType", {
+        get: function () {
+            return dnd.type;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragAwareMixin.prototype, "dragPosition", {
+        get: function () {
+            return dnd.position;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragAwareMixin.prototype, "dragSource", {
+        get: function () {
+            return dnd.source;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragAwareMixin.prototype, "dragTop", {
+        get: function () {
+            return dnd.top;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DragAwareMixin = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({})
+    ], DragAwareMixin);
+    return DragAwareMixin;
+}(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Vue"]));
+
+/**
+ * This files contains the primitives required to create drag images from HTML elements that serve as models. A snapshot
+ * of the computed styles of the model elements is taken when creating the drag image, so that it will look the same as
+ * the model, no matter where the drag images is grafted into the DOM.
+ */
+/**
+ * Creates a drag image using the given element as model.
+ */
+function createDragImage(el) {
+    var clone = deepClone(el);
+    clone.style.position = 'fixed';
+    clone.style.margin = '0';
+    clone.style["z-index"] = '1000';
+    clone.style.transition = 'opacity 0.2s';
+    return clone;
+}
+/**
+ * Clones the given element and all its descendants.
+ */
+function deepClone(el) {
+    var clone = el.cloneNode(true);
+    copyStyle(el, clone);
+    var vSrcElements = el.getElementsByTagName("*");
+    var vDstElements = clone.getElementsByTagName("*");
+    for (var i = vSrcElements.length; i--;) {
+        var vSrcElement = vSrcElements[i];
+        var vDstElement = vDstElements[i];
+        copyStyle(vSrcElement, vDstElement);
+    }
+    return clone;
+}
+/**
+ * Copy the computed styles from src to destination.
+ */
+function copyStyle(src, destination) {
+    var e_1, _a;
+    var computedStyle = window.getComputedStyle(src);
+    try {
+        for (var computedStyle_1 = __values(computedStyle), computedStyle_1_1 = computedStyle_1.next(); !computedStyle_1_1.done; computedStyle_1_1 = computedStyle_1.next()) {
+            var key = computedStyle_1_1.value;
+            if (key === 'width') {
+                // IE11
+                var width = computedStyle.getPropertyValue("box-sizing") === 'border-box' ?
+                    src.clientWidth :
+                    src.clientWidth - parseFloat(computedStyle.paddingLeft) - parseFloat(computedStyle.paddingRight);
+                destination.style.setProperty("width", width + "px");
+            }
+            else if (key === 'height') {
+                // IE11
+                var height = computedStyle.getPropertyValue("box-sizing") === 'border-box' ?
+                    src.clientHeight :
+                    src.clientHeight - parseFloat(computedStyle.paddingTop) - parseFloat(computedStyle.paddingBottom);
+                destination.style.setProperty("height", height + "px");
+            }
+            else {
+                destination.style.setProperty(key, computedStyle.getPropertyValue(key), computedStyle.getPropertyPriority(key));
+            }
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (computedStyle_1_1 && !computedStyle_1_1.done && (_a = computedStyle_1.return)) { _a.call(computedStyle_1); }
+        }
+        finally { if (e_1) { throw e_1.error; } }
+    }
+    destination.style.pointerEvents = 'none';
+}
+
+var DragMixin = /** @class */ (function (_super) {
+    __extends(DragMixin, _super);
+    function DragMixin() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isDrag = true;
+        _this.mouseIn = null;
+        return _this;
+    }
+    DragMixin.prototype.created = function () {
+        this.reEmit("dragstart");
+        this.reEmit("dragend");
+    };
+    DragMixin.prototype.reEmit = function (eventName) {
+        var _this = this;
+        dnd.on(eventName, function (ev) {
+            if (ev.source === _this) {
+                _this.$emit(eventName, ev);
+            }
+        });
+    };
+    DragMixin.prototype.mounted = function () {
+        var isNodeList = function (el) {
+            return 'item' in el;
+        };
+        var comp = this;
+        var el = this.$el;
+        var dragStarted = false;
+        var initialUserSelect;
+        var downEvent = null;
+        var startPosition = null;
+        if (this.handle) {
+            el = this.$el.querySelectorAll(this.handle);
+        }
+        if (isNodeList(el)) {
+            el.forEach(function (element) {
+                element.addEventListener('mousedown', onMouseDown);
+                element.addEventListener('touchstart', onMouseDown);
+                element.addEventListener('mouseenter', onMouseEnter);
+                element.addEventListener('mouseleave', onMouseLeave);
+            });
+        }
+        else {
+            el.addEventListener('mousedown', onMouseDown);
+            el.addEventListener('touchstart', onMouseDown);
+            el.addEventListener('mouseenter', onMouseEnter);
+            el.addEventListener('mouseleave', onMouseLeave);
+        }
+        function onMouseEnter() {
+            comp.mouseIn = true;
+        }
+        function onMouseLeave() {
+            comp.mouseIn = false;
+        }
+        function noop(e) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        function onMouseDown(e) {
+            if (!comp.disabled && downEvent === null) {
+                initialUserSelect = document.body.style.userSelect;
+                document.documentElement.style.userSelect = 'none'; // Permet au drag de se poursuivre normalement même
+                // quand on quitte un élémént avec overflow: hidden.
+                dragStarted = false;
+                downEvent = e;
+                if (downEvent.type === 'mousedown') {
+                    var mouse = event;
+                    startPosition = {
+                        x: mouse.clientX,
+                        y: mouse.clientY
+                    };
+                }
+                else {
+                    var touch = event;
+                    startPosition = {
+                        x: touch.touches[0].clientX,
+                        y: touch.touches[0].clientY
+                    };
+                }
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('touchmove', onMouseMove, { passive: false });
+                document.addEventListener('easy-dnd-move', onEasyDnDMove);
+                document.addEventListener('mouseup', onMouseUp);
+                document.addEventListener('touchend', onMouseUp);
+                document.addEventListener('selectstart', noop);
+                // Prevents event from bubbling to ancestor drag components and initiate several drags at the same time
+                e.stopPropagation();
+                // Prevents touchstart event to be converted to mousedown
+                //e.preventDefault();
+            }
+        }
+        function onMouseMove(e) {
+            // We ignore the mousemove event that follows touchend :
+            if (downEvent === null)
+                { return; }
+            // On touch devices, we ignore fake mouse events and deal with touch events only.
+            if (downEvent.type === 'touchstart' && e.type === 'mousemove')
+                { return; }
+            // Find out event target and pointer position :
+            var target;
+            var x;
+            var y;
+            if (e.type === 'touchmove') {
+                var touch = e;
+                x = touch.touches[0].clientX;
+                y = touch.touches[0].clientY;
+                target = document.elementFromPoint(x, y);
+                if (!target) {
+                    // Mouse going off screen. Ignore event.
+                    return;
+                }
+            }
+            else {
+                var mouse = e;
+                x = mouse.clientX;
+                y = mouse.clientY;
+                target = mouse.target;
+            }
+            // Distance between current event and start position :
+            var dist = Math.sqrt(Math.pow(startPosition.x - x, 2) + Math.pow(startPosition.y - y, 2));
+            // If the drag has not begun yet and distance from initial point is greater than delta, we start the drag :
+            if (!dragStarted && dist > comp.delta) {
+                dragStarted = true;
+                dnd.startDrag(comp, downEvent, startPosition.x, startPosition.y, comp.type, comp.data);
+                document.documentElement.classList.add('drag-in-progress');
+            }
+            // Dispatch custom easy-dnd-move event :
+            if (dragStarted) {
+                var custom = new CustomEvent("easy-dnd-move", {
+                    bubbles: true,
+                    cancelable: true,
+                    detail: {
+                        x: x,
+                        y: y,
+                        native: e
+                    }
+                });
+                target.dispatchEvent(custom);
+            }
+            // Prevent scroll on touch devices :
+            e.preventDefault();
+        }
+        function onEasyDnDMove(e) {
+            dnd.mouseMove(e, null);
+        }
+        function onMouseUp(e) {
+            // On touch devices, we ignore fake mouse events and deal with touch events only.
+            if (downEvent.type === 'touchstart' && e.type === 'mouseup')
+                { return; }
+            downEvent = null;
+            // This delay makes sure that when the click event that results from the mouseup is produced, the drag is still
+            // in progress. So by checking the flag dnd.inProgress, one can tell appart true clicks from drag and drop artefacts.
+            setTimeout(function () {
+                if (dragStarted) {
+                    document.documentElement.classList.remove('drag-in-progress');
+                    dnd.stopDrag(e);
+                }
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('touchmove', onMouseMove);
+                document.removeEventListener('easy-dnd-move', onEasyDnDMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                document.removeEventListener('touchend', onMouseUp);
+                document.removeEventListener('selectstart', noop);
+                document.documentElement.style.userSelect = initialUserSelect;
+            }, 0);
+        }
+    };
+    Object.defineProperty(DragMixin.prototype, "dragIn", {
+        get: function () {
+            return !this.dragInProgress && this.mouseIn;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragMixin.prototype, "cssClasses", {
+        get: function () {
+            var clazz = {
+                'dnd-drag': true
+            };
+            if (!this.disabled) {
+                return __assign(__assign({}, clazz), { 'drag-source': this.dragInProgress && this.dragSource === this, 'drag-in': this.dragIn, 'drag-out': !this.dragIn, 'drag-mode-copy': this.currentDropMode === 'copy', 'drag-mode-cut': this.currentDropMode === 'cut', 'drag-mode-reordering': this.currentDropMode === 'reordering', 'drag-no-handle': !this.handle });
+            }
+            else {
+                return __assign({}, clazz);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DragMixin.prototype, "currentDropMode", {
+        get: function () {
+            if (this.dragInProgress && this.dragSource === this) {
+                if (this.dragTop && this.dragTop['dropAllowed']) {
+                    if (this.dragTop['reordering'])
+                        { return 'reordering'; }
+                    else
+                        { return this.dragTop['mode']; }
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DragMixin.prototype.createDragImage = function (selfTransform) {
+        var image;
+        if (this.$scopedSlots['drag-image']) {
+            var el = this.$refs['drag-image'];
+            if (el.childElementCount !== 1) {
+                image = createDragImage(el);
+            }
+            else {
+                image = createDragImage(el.children.item(0));
+            }
+        }
+        else {
+            image = createDragImage(this.$el);
+            image.style.transform = selfTransform;
+        }
+        image['__opacity'] = this.dragImageOpacity;
+        return image;
+    };
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: null, type: null }),
+        __metadata("design:type", String)
+    ], DragMixin.prototype, "type", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: null, type: null }),
+        __metadata("design:type", Object)
+    ], DragMixin.prototype, "data", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 0.7, type: Number }),
+        __metadata("design:type", Object)
+    ], DragMixin.prototype, "dragImageOpacity", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: false, type: Boolean }),
+        __metadata("design:type", Boolean)
+    ], DragMixin.prototype, "disabled", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: false, type: Boolean }),
+        __metadata("design:type", Boolean)
+    ], DragMixin.prototype, "goBack", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ required: false, type: String }),
+        __metadata("design:type", String)
+    ], DragMixin.prototype, "handle", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ type: Number, default: 3 }),
+        __metadata("design:type", Number)
+    ], DragMixin.prototype, "delta", void 0);
+    DragMixin = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({})
+    ], DragMixin);
+    return DragMixin;
+}(DragAwareMixin));
+
+var Drag = /** @class */ (function (_super) {
+    __extends(Drag, _super);
+    function Drag() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 'div', type: [String, Object, Function] }),
+        __metadata("design:type", Object)
+    ], Drag.prototype, "tag", void 0);
+    Drag = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({})
+    ], Drag);
+    return Drag;
+}(DragMixin));
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
+function createInjector(context) {
+  return function (id, style) {
+    return addStyle(id, style);
+  };
+}
+var HEAD;
+var styles = {};
+
+function addStyle(id, css) {
+  var group = isOldIE ? css.media || 'default' : id;
+  var style = styles[group] || (styles[group] = {
+    ids: new Set(),
+    styles: []
+  });
+
+  if (!style.ids.has(id)) {
+    style.ids.add(id);
+    var code = css.source;
+
+    if (css.map) {
+      // https://developer.chrome.com/devtools/docs/javascript-debugging
+      // this makes source maps inside style tags work properly in Chrome
+      code += '\n/*# sourceURL=' + css.map.sources[0] + ' */'; // http://stackoverflow.com/a/26603875
+
+      code += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + ' */';
+    }
+
+    if (!style.element) {
+      style.element = document.createElement('style');
+      style.element.type = 'text/css';
+      if (css.media) { style.element.setAttribute('media', css.media); }
+
+      if (HEAD === undefined) {
+        HEAD = document.head || document.getElementsByTagName('head')[0];
+      }
+
+      HEAD.appendChild(style.element);
+    }
+
+    if ('styleSheet' in style.element) {
+      style.styles.push(code);
+      style.element.styleSheet.cssText = style.styles.filter(Boolean).join('\n');
+    } else {
+      var index = style.ids.size - 1;
+      var textNode = document.createTextNode(code);
+      var nodes = style.element.childNodes;
+      if (nodes[index]) { style.element.removeChild(nodes[index]); }
+      if (nodes.length) { style.element.insertBefore(textNode, nodes[index]); }else { style.element.appendChild(textNode); }
+    }
+  }
+}
+
+var browser = createInjector;
+
+/* script */
+var __vue_script__ = Drag;
+
+/* template */
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,_vm._g(_vm._b({tag:"component",class:_vm.cssClasses,scopedSlots:_vm._u([_vm._l((_vm.$scopedSlots),function(_,slot){return {key:slot,fn:function(scope){return [_vm._t(slot,null,null,scope)]}}})],null,true)},'component',_vm.$attrs,false),_vm.$listeners),[_vm._t("default"),_vm._v(" "),_vm._v(" "),_c('div',{ref:"drag-image",staticClass:"__drag-image"},[_vm._t("drag-image")],2)],2)};
+var __vue_staticRenderFns__ = [];
+
+  /* style */
+  var __vue_inject_styles__ = function (inject) {
+    if (!inject) { return }
+    inject("data-v-6f99e82c_0", { source: ".drop-allowed.drop-in *{cursor:inherit!important}.drop-forbidden.drop-in,.drop-forbidden.drop-in *{cursor:no-drop!important}.drag-no-handle.drag-in{cursor:move;cursor:grab}", map: undefined, media: undefined })
+,inject("data-v-6f99e82c_1", { source: "html.drag-in-progress *{cursor:move!important;cursor:grabbing!important}", map: undefined, media: undefined })
+,inject("data-v-6f99e82c_2", { source: ".__drag-image[data-v-6f99e82c]{position:fixed;top:-10000px;left:-10000px;will-change:left,top}", map: undefined, media: undefined });
+
+  };
+  /* scoped */
+  var __vue_scope_id__ = "data-v-6f99e82c";
+  /* module identifier */
+  var __vue_module_identifier__ = undefined;
+  /* functional template */
+  var __vue_is_functional_template__ = false;
+  /* style inject SSR */
+  
+
+  
+  var Drag$1 = normalizeComponent_1(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    browser,
+    undefined
+  );
+
+var DropMixin = /** @class */ (function (_super) {
+    __extends(DropMixin, _super);
+    function DropMixin() {
+        var _this = _super.call(this) || this;
+        _this.isDrop = true;
+        return _this;
+    }
+    DropMixin.prototype.effectiveAcceptsType = function (type) {
+        if (this.acceptsType === null)
+            { return true; }
+        else if (typeof (this.acceptsType) === 'string')
+            { return this.acceptsType === type; }
+        else if (typeof (this.acceptsType) === 'object' && Array.isArray(this.acceptsType)) {
+            return this.acceptsType.includes(type);
+        }
+        else {
+            return this.acceptsType(type);
+        }
+    };
+    DropMixin.prototype.effectiveAcceptsData = function (data, type) {
+        return this.acceptsData(data, type);
+    };
+    DropMixin.prototype.created = function () {
+        dnd.on("dragpositionchanged", this.onDragPositionChanged);
+        dnd.on("dragtopchanged", this.onDragTopChanged);
+        dnd.on("drop", this.onDrop);
+    };
+    DropMixin.prototype.destroyed = function () {
+        dnd.off("dragpositionchanged", this.onDragPositionChanged);
+        dnd.off("dragtopchanged", this.onDragTopChanged);
+        dnd.off("drop", this.onDrop);
+    };
+    DropMixin.prototype.onDragPositionChanged = function (event) {
+        if (this === event.top) {
+            this.$emit("dragover", event);
+        }
+    };
+    DropMixin.prototype.onDragTopChanged = function (event) {
+        if (this === event.top) {
+            this.$emit("dragenter", event);
+        }
+        if (this === event.previousTop) {
+            this.$emit("dragleave", event);
+        }
+    };
+    DropMixin.prototype.onDrop = function (event) {
+        if (this.dropIn && this.compatibleMode && this.dropAllowed) {
+            this.doDrop(event);
+        }
+    };
+    DropMixin.prototype.doDrop = function (event) {
+        this.$emit('drop', event);
+        event.source.$emit(this.mode, event);
+    };
+    DropMixin.prototype.mounted = function () {
+        var el = this.$el;
+        var comp = this;
+        el.addEventListener('easy-dnd-move', onMouseMove);
+        function onMouseMove(e) {
+            dnd.mouseMove(e, comp);
+        }
+    };
+    Object.defineProperty(DropMixin.prototype, "compatibleMode", {
+        get: function () {
+            if (this.dragInProgress) {
+                return this.mode === 'copy' || dnd.sourceListeners.hasOwnProperty(this.mode);
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropMixin.prototype, "dropIn", {
+        get: function () {
+            if (this.dragInProgress) {
+                return this.dragTop === this;
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropMixin.prototype, "typeAllowed", {
+        get: function () {
+            if (this.dragInProgress) {
+                return this.effectiveAcceptsType(this.dragType);
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropMixin.prototype, "dropAllowed", {
+        get: function () {
+            if (this.dragInProgress) {
+                if (this.typeAllowed) {
+                    return this.compatibleMode && this.effectiveAcceptsData(this.dragData, this.dragType);
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropMixin.prototype, "cssClasses", {
+        get: function () {
+            var clazz = {
+                'dnd-drop': true
+            };
+            if (this.dropIn !== null) {
+                clazz = __assign(__assign({}, clazz), { "drop-in": this.dropIn, "drop-out": !this.dropIn });
+            }
+            if (this.typeAllowed !== null) {
+                clazz = __assign(__assign({}, clazz), { "type-allowed": this.typeAllowed, "type-forbidden": !this.typeAllowed });
+            }
+            if (this.dropAllowed !== null) {
+                clazz = __assign(__assign({}, clazz), { "drop-allowed": this.dropAllowed, "drop-forbidden": !this.dropAllowed });
+            }
+            return clazz;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropMixin.prototype, "cssStyle", {
+        get: function () {
+            return {};
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Returns true if the current drop area participates in the current drag operation.
+     */
+    DropMixin.prototype.candidate = function (type, data, source) {
+        return this.effectiveAcceptsType(type);
+    };
+    DropMixin.prototype.createDragImage = function () {
+        var image;
+        if (this.$refs['drag-image']) {
+            var el = this.$refs['drag-image'];
+            if (el.childElementCount !== 1) {
+                image = createDragImage(el);
+            }
+            else {
+                image = createDragImage(el.children.item(0));
+            }
+            image['__opacity'] = this.dragImageOpacity;
+        }
+        else {
+            image = 'source';
+        }
+        return image;
+    };
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: function () { return function () { return true; }; }, type: [String, Array, Function] }),
+        __metadata("design:type", Object)
+    ], DropMixin.prototype, "acceptsType", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: function () { return true; }, type: Function }),
+        __metadata("design:type", Object)
+    ], DropMixin.prototype, "acceptsData", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 'copy' }),
+        __metadata("design:type", String)
+    ], DropMixin.prototype, "mode", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 0.7, type: Number }),
+        __metadata("design:type", Object)
+    ], DropMixin.prototype, "dragImageOpacity", void 0);
+    DropMixin = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({}),
+        __metadata("design:paramtypes", [])
+    ], DropMixin);
+    return DropMixin;
+}(DragAwareMixin));
+
+var Drop = /** @class */ (function (_super) {
+    __extends(Drop, _super);
+    function Drop() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(Drop.prototype, "showDragImage", {
+        get: function () {
+            return this.dragInProgress && this.typeAllowed && this.$scopedSlots['drag-image'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 'div', type: [String, Object, Function] }),
+        __metadata("design:type", Object)
+    ], Drop.prototype, "tag", void 0);
+    Drop = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({})
+    ], Drop);
+    return Drop;
+}(DropMixin));
+
+/* script */
+var __vue_script__$1 = Drop;
+
+/* template */
+var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,_vm._g(_vm._b({tag:"component",class:_vm.cssClasses,style:(_vm.cssStyle),scopedSlots:_vm._u([_vm._l((_vm.$scopedSlots),function(_,slot){return {key:slot,fn:function(scope){return [_vm._t(slot,null,null,scope)]}}})],null,true)},'component',_vm.$attrs,false),_vm.$listeners),[_vm._t("default"),_vm._v(" "),_vm._v(" "),(_vm.showDragImage)?_c('div',{ref:"drag-image",staticClass:"__drag-image"},[_vm._t("drag-image",null,{"type":_vm.dragType,"data":_vm.dragData})],2):_vm._e()],2)};
+var __vue_staticRenderFns__$1 = [];
+
+  /* style */
+  var __vue_inject_styles__$1 = function (inject) {
+    if (!inject) { return }
+    inject("data-v-36a3fb0c_0", { source: ".drop-allowed.drop-in,.drop-allowed.drop-in *{cursor:pointer!important}.drop-forbidden.drop-in,.drop-forbidden.drop-in *{cursor:no-drop!important}", map: undefined, media: undefined })
+,inject("data-v-36a3fb0c_1", { source: ".__drag-image[data-v-36a3fb0c]{position:fixed;top:-10000px;left:-10000px;will-change:left,top}", map: undefined, media: undefined });
+
+  };
+  /* scoped */
+  var __vue_scope_id__$1 = "data-v-36a3fb0c";
+  /* module identifier */
+  var __vue_module_identifier__$1 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$1 = false;
+  /* style inject SSR */
+  
+
+  
+  var Drop$1 = normalizeComponent_1(
+    { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
+    __vue_inject_styles__$1,
+    __vue_script__$1,
+    __vue_scope_id__$1,
+    __vue_is_functional_template__$1,
+    __vue_module_identifier__$1,
+    browser,
+    undefined
+  );
+
+var DropMask = /** @class */ (function (_super) {
+    __extends(DropMask, _super);
+    function DropMask() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isDropMask = true;
+        return _this;
+    }
+    DropMask.prototype.mounted = function () {
+        var el = this.$el;
+        var comp = this;
+        el.addEventListener('easy-dnd-move', onMouseMove);
+        function onMouseMove(e) {
+            dnd.mouseMove(e, comp);
+        }
+    };
+    DropMask.prototype.createDragImage = function () {
+        return 'source';
+    };
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 'div', type: [String, Object, Function] }),
+        __metadata("design:type", Object)
+    ], DropMask.prototype, "tag", void 0);
+    DropMask = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({})
+    ], DropMask);
+    return DropMask;
+}(DragAwareMixin));
+
+/* script */
+var __vue_script__$2 = DropMask;
+
+/* template */
+var __vue_render__$2 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,_vm._g(_vm._b({tag:"component",scopedSlots:_vm._u([_vm._l((_vm.$scopedSlots),function(_,slot){return {key:slot,fn:function(scope){return [_vm._t(slot,null,null,scope)]}}})],null,true)},'component',_vm.$attrs,false),_vm.$listeners),[_vm._t("default")],2)};
+var __vue_staticRenderFns__$2 = [];
+
+  /* style */
+  var __vue_inject_styles__$2 = undefined;
+  /* scoped */
+  var __vue_scope_id__$2 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$2 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$2 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var DropMask$1 = normalizeComponent_1(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$2,
+    __vue_script__$2,
+    __vue_scope_id__$2,
+    __vue_is_functional_template__$2,
+    __vue_module_identifier__$2,
+    undefined,
+    undefined
+  );
+
+/**
+ * This class reacts to drag events emitted by the dnd object to manage a sequence of drag images and fade from one to the
+ * other as the drag progresses.
+ */
+var DragImagesManager = /** @class */ (function (_super) {
+    __extends(DragImagesManager, _super);
+    function DragImagesManager() {
+        var _this = _super.call(this) || this;
+        _this.selfTransform = null;
+        _this.clones = null;
+        _this.source = null;
+        _this.sourcePos = null;
+        _this.sourceClone = null;
+        dnd.on('dragstart', _this.onDragStart);
+        dnd.on('dragtopchanged', _this.onDragTopChanged);
+        dnd.on('dragpositionchanged', _this.onDragPositionChanged);
+        dnd.on('dragend', _this.onDragEnd);
+        return _this;
+    }
+    DragImagesManager.prototype.onDragStart = function (event) {
+        this.sourcePos = {
+            x: event.source.$el.getBoundingClientRect().left,
+            y: event.source.$el.getBoundingClientRect().top
+        };
+        this.selfTransform = "translate(-" + (event.position.x - this.sourcePos.x) + "px, -" + (event.position.y - this.sourcePos.y) + "px)";
+        this.clones = new Map();
+        this.source = event.source;
+    };
+    DragImagesManager.prototype.onDragEnd = function (event) {
+        var _this = this;
+        vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Vue"].nextTick(function () {
+            if (!event.success && _this.source['goBack']) {
+                // Restore the drag image that is active when hovering outside any drop zone :
+                var img_1 = _this.switch(null);
+                // Move it back to its original place :
+                window.requestAnimationFrame(function () {
+                    img_1.style.transition = "all 0.5s";
+                    window.requestAnimationFrame(function () {
+                        img_1.style.left = _this.sourcePos.x + "px";
+                        img_1.style.top = _this.sourcePos.y + "px";
+                        img_1.style.transform = "translate(0,0)";
+                        var handler = function () {
+                            _this.cleanUp();
+                            img_1.removeEventListener("transitionend", handler);
+                        };
+                        img_1.addEventListener("transitionend", handler);
+                    });
+                });
+            }
+            else {
+                _this.cleanUp();
+            }
+        });
+    };
+    DragImagesManager.prototype.cleanUp = function () {
+        this.clones.forEach(function (clone) {
+            if (clone.parentNode === document.body) {
+                document.body.removeChild(clone);
+            }
+        });
+        if (this.sourceClone !== null) {
+            if (this.sourceClone.parentNode === document.body) {
+                document.body.removeChild(this.sourceClone);
+            }
+        }
+        this.selfTransform = null;
+        this.clones = null;
+        this.source = null;
+        this.sourceClone = null;
+        this.sourcePos = null;
+    };
+    DragImagesManager.prototype.onDragTopChanged = function (event) {
+        this.switch(event.top);
+    };
+    DragImagesManager.prototype.switch = function (top) {
+        this.clones.forEach(function (clone) {
+            clone.style.opacity = "0";
+        });
+        if (this.sourceClone) {
+            this.sourceClone.style.opacity = "0";
+        }
+        var activeClone;
+        if (top === null) {
+            activeClone = this.getSourceClone();
+        }
+        else {
+            if (!this.clones.has(top)) {
+                var clone = top['createDragImage'](this.selfTransform);
+                if (clone === 'source') {
+                    clone = this.getSourceClone();
+                }
+                else if (clone !== null) {
+                    clone.style.opacity = '0';
+                    document.body.appendChild(clone);
+                }
+                this.clones.set(top, clone);
+            }
+            activeClone = this.clones.get(top);
+        }
+        if (activeClone !== null) {
+            activeClone.offsetWidth; // Forces broswer reflow
+            activeClone.style.opacity = activeClone['__opacity'];
+            activeClone.style.visibility = 'visible';
+        }
+        return activeClone;
+    };
+    DragImagesManager.prototype.getSourceClone = function () {
+        if (this.sourceClone === null) {
+            this.sourceClone = this.source['createDragImage'](this.selfTransform);
+            this.sourceClone.style.opacity = '0';
+            document.body.appendChild(this.sourceClone);
+        }
+        return this.sourceClone;
+    };
+    DragImagesManager.prototype.onDragPositionChanged = function (event) {
+        this.clones.forEach(function (clone) {
+            clone.style.left = dnd.position.x + "px";
+            clone.style.top = dnd.position.y + "px";
+        });
+        if (this.sourceClone) {
+            this.sourceClone.style.left = dnd.position.x + "px";
+            this.sourceClone.style.top = dnd.position.y + "px";
+        }
+    };
+    DragImagesManager = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({}) // Necessary to set proper "this" context in event listeners.
+        ,
+        __metadata("design:paramtypes", [])
+    ], DragImagesManager);
+    return DragImagesManager;
+}(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Vue"]));
+new DragImagesManager();
+
+var DragFeedback = /** @class */ (function (_super) {
+    __extends(DragFeedback, _super);
+    function DragFeedback() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DragFeedback = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({})
+    ], DragFeedback);
+    return DragFeedback;
+}(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Vue"]));
+
+/* script */
+var __vue_script__$3 = DragFeedback;
+
+/* template */
+var __vue_render__$3 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"DragFeedback"},[_vm._t("default")],2)};
+var __vue_staticRenderFns__$3 = [];
+
+  /* style */
+  var __vue_inject_styles__$3 = undefined;
+  /* scoped */
+  var __vue_scope_id__$3 = "data-v-0589f3cb";
+  /* module identifier */
+  var __vue_module_identifier__$3 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$3 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var DragFeedback$1 = normalizeComponent_1(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
+    undefined,
+    undefined
+  );
+
+var Grid = /** @class */ (function () {
+    function Grid(collection, upToIndex, row, fromIndex) {
+        var e_1, _a;
+        this.magnets = [];
+        this.reference = collection.item(0).parentNode;
+        this.referenceOriginalPosition = {
+            x: this.reference.getBoundingClientRect().left,
+            y: this.reference.getBoundingClientRect().top,
+        };
+        var index = 0;
+        try {
+            for (var collection_1 = __values(collection), collection_1_1 = collection_1.next(); !collection_1_1.done; collection_1_1 = collection_1.next()) {
+                var child = collection_1_1.value;
+                if (index > upToIndex)
+                    { break; }
+                var rect = child.getBoundingClientRect();
+                var hasNestedDrop = child.classList.contains("dnd-drop") || child.getElementsByClassName("dnd-drop").length > 0;
+                var horizontal = null;
+                if (hasNestedDrop) {
+                    if (row === 'auto') {
+                        // Auto mode not supported for now. Row or column must be defined explicitly if there are nested drop lists.
+                        throw new Error("Easy-DnD error : a drop list is missing one of these attributes : 'row' or 'column'.");
+                    }
+                    else {
+                        horizontal = row === 'row';
+                    }
+                }
+                if (fromIndex === null) {
+                    // Inserting mode.
+                    this.magnets.push(hasNestedDrop ? this.before(rect, horizontal) : this.center(rect));
+                }
+                else {
+                    // Reordering mode.
+                    this.magnets.push(hasNestedDrop ? (fromIndex < index ? this.after : this.before)(rect, horizontal) : this.center(rect));
+                }
+                // Debug : show magnets :
+                //document.body.insertAdjacentHTML("beforeend", "<div style='background-color: red; position: fixed; width: 1px; height: 1px; top:" + this.magnets[index].y + "px; left:" + this.magnets[index].x + "px;' ></div>")
+                index++;
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (collection_1_1 && !collection_1_1.done && (_a = collection_1.return)) { _a.call(collection_1); }
+            }
+            finally { if (e_1) { throw e_1.error; } }
+        }
+    }
+    /**
+     * Returns the center of the rectangle.
+     */
+    Grid.prototype.center = function (rect) {
+        return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        };
+    };
+    /**
+     * When horizontal is true / false, returns middle of the left / top side of the rectangle.
+     */
+    Grid.prototype.before = function (rect, horizontal) {
+        return horizontal ? {
+            x: rect.left,
+            y: rect.top + rect.height / 2
+        } : {
+            x: rect.left + rect.width / 2,
+            y: rect.top
+        };
+    };
+    /**
+     * When horizontal is true / false, returns middle of the right / bottom side of the rectangle.
+     */
+    Grid.prototype.after = function (rect, horizontal) {
+        return horizontal ? {
+            x: rect.left + rect.width,
+            y: rect.top + rect.height / 2
+        } : {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height
+        };
+    };
+    /**
+     * In case the user scrolls during the drag, the position of the magnets are not what they used to be when the drag
+     * started. A correction must be applied that takes into account the amount of scroll. This correction is the
+     * difference between the current position of the parent element and its position when the drag started.
+     */
+    Grid.prototype.correction = function () {
+        return {
+            x: this.reference.getBoundingClientRect().left - this.referenceOriginalPosition.x,
+            y: this.reference.getBoundingClientRect().top - this.referenceOriginalPosition.y,
+        };
+    };
+    Grid.prototype.closestIndex = function (position) {
+        var x = position.x - this.correction().x;
+        var y = position.y - this.correction().y;
+        var minDist = 999999;
+        var index = -1;
+        for (var i = 0; i < this.magnets.length; i++) {
+            var magnet = this.magnets[i];
+            var dist = Math.sqrt(Math.pow(magnet.x - x, 2) + Math.pow(magnet.y - y, 2));
+            if (dist < minDist) {
+                minDist = dist;
+                index = i;
+            }
+        }
+        return index;
+    };
+    return Grid;
+}());
+
+var DnDEvent = /** @class */ (function () {
+    function DnDEvent() {
+    }
+    return DnDEvent;
+}());
+var ReorderEvent = /** @class */ (function () {
+    function ReorderEvent(from, to) {
+        this.from = from;
+        this.to = to;
+    }
+    ReorderEvent.prototype.apply = function (array) {
+        var tmp = array[this.from];
+        array.splice(this.from, 1);
+        array.splice(this.to, 0, tmp);
+    };
+    return ReorderEvent;
+}());
+var InsertEvent = /** @class */ (function () {
+    function InsertEvent(type, data, index) {
+        this.type = type;
+        this.data = data;
+        this.index = index;
+    }
+    return InsertEvent;
+}());
+
+var DropList = /** @class */ (function (_super) {
+    __extends(DropList, _super);
+    function DropList() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.grid = null;
+        _this.forbiddenKeys = [];
+        _this.feedbackKey = null;
+        _this.fromIndex = null;
+        return _this;
+    }
+    Object.defineProperty(DropList.prototype, "rootTag", {
+        get: function () {
+            if (this.noAnimations) {
+                return this.tag ? this.tag : 'div';
+            }
+            else {
+                return "transition-group";
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "rootProps", {
+        get: function () {
+            if (this.noAnimations) {
+                return this.$attrs;
+            }
+            else {
+                return {
+                    tag: this.tag,
+                    duration: { enter: 0, leave: 0 },
+                    css: false
+                };
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "rootListeners", {
+        get: function () {
+            if (this.noAnimations) {
+                return this.$listeners;
+            }
+            else {
+                return {};
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DropList.prototype.created = function () {
+        dnd.on("dragstart", this.onDragStart);
+        dnd.on("dragend", this.onDragEnd);
+    };
+    Object.defineProperty(DropList.prototype, "direction", {
+        get: function () {
+            if (this.row)
+                { return 'row'; }
+            if (this.column)
+                { return 'column'; }
+            return 'auto';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DropList.prototype.destroyed = function () {
+        dnd.off("dragstart", this.onDragStart);
+        dnd.off("dragend", this.onDragEnd);
+    };
+    DropList.prototype.onDragStart = function (event) {
+        var _this = this;
+        if (this.candidate(dnd.type, dnd.data, dnd.source)) {
+            if (this.reordering) {
+                this.fromIndex = Array.prototype.indexOf.call(event.source.$el.parentElement.children, event.source.$el);
+                this.grid = this.computeReorderingGrid();
+            }
+            else {
+                this.$nextTick(function () {
+                    // Presence of feedback node in the DOM and of keys in the virtual DOM required => delayed until what
+                    // depends on drag data has been processed.
+                    _this.grid = _this.computeInsertingGrid();
+                    _this.feedbackKey = _this.computeFeedbackKey();
+                    _this.forbiddenKeys = _this.computeForbiddenKeys();
+                });
+            }
+        }
+    };
+    DropList.prototype.onDragEnd = function () {
+        this.fromIndex = null;
+        this.feedbackKey = null;
+        this.forbiddenKeys = null;
+        this.grid = null;
+    };
+    Object.defineProperty(DropList.prototype, "reordering", {
+        get: function () {
+            if (dnd.inProgress) {
+                return dnd.source.$el.parentElement === this.$el && this.$listeners.hasOwnProperty('reorder');
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "closestIndex", {
+        get: function () {
+            if (this.grid) {
+                return this.grid.closestIndex(dnd.position);
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "dropAllowed", {
+        get: function () {
+            if (this.dragInProgress) {
+                if (this.reordering) {
+                    return this.items.length > 1;
+                }
+                else {
+                    var superDropAllowed = DropMixin['options'].computed.dropAllowed.get.call(this);
+                    if (!superDropAllowed) {
+                        return false;
+                    }
+                    else {
+                        if (this.forbiddenKeys !== null && this.feedbackKey !== null) {
+                            return !this.forbiddenKeys.includes(this.feedbackKey);
+                        }
+                        else {
+                            return null;
+                        }
+                    }
+                }
+            }
+            else {
+                return null;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "itemsBeforeFeedback", {
+        get: function () {
+            if (this.closestIndex === 0) {
+                return [];
+            }
+            else {
+                return this.items.slice(0, this.closestIndex);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "itemsAfterFeedback", {
+        get: function () {
+            if (this.closestIndex === this.items.length) {
+                return [];
+            }
+            else {
+                return this.items.slice(this.closestIndex);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "itemsBeforeReorderingFeedback", {
+        get: function () {
+            if (this.closestIndex <= this.fromIndex) {
+                return this.items.slice(0, this.closestIndex);
+            }
+            else {
+                return this.items.slice(0, this.closestIndex + 1);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "itemsAfterReorderingFeedback", {
+        get: function () {
+            if (this.closestIndex <= this.fromIndex) {
+                return this.items.slice(this.closestIndex);
+            }
+            else {
+                return this.items.slice(this.closestIndex + 1);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "reorderedItems", {
+        get: function () {
+            var toIndex = this.closestIndex;
+            var reordered = __spread(this.items);
+            var temp = reordered[this.fromIndex];
+            reordered.splice(this.fromIndex, 1);
+            reordered.splice(toIndex, 0, temp);
+            return reordered;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "clazz", {
+        get: function () {
+            return __assign({ 'drop-list': true, 'reordering': this.reordering === true, 'inserting': this.reordering === false }, (this.reordering === false ? this.cssClasses : { 'dnd-drop': true }));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "style", {
+        get: function () {
+            return __assign({}, (this.reordering === false ? this.cssStyle : {}));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "showDragFeedback", {
+        get: function () {
+            return this.dragInProgress && this.typeAllowed && !this.reordering;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "showInsertingDragImage", {
+        get: function () {
+            return this.dragInProgress && this.typeAllowed && !this.reordering && this.$scopedSlots.hasOwnProperty("drag-image");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DropList.prototype, "showReorderingDragImage", {
+        get: function () {
+            return this.dragInProgress && this.reordering && this.$scopedSlots.hasOwnProperty("reordering-drag-image");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DropList.prototype.doDrop = function (event) {
+        if (this.reordering) {
+            if (this.fromIndex !== this.closestIndex) {
+                this.$emit('reorder', new ReorderEvent(this.fromIndex, this.closestIndex));
+            }
+        }
+        else {
+            DropMixin['options'].methods.doDrop.call(this, event);
+            this.$emit('insert', new InsertEvent(event.type, event.data, this.closestIndex));
+        }
+    };
+    DropList.prototype.candidate = function (type, data, source) {
+        var _a;
+        var superCandidate = (_a = DropMixin['options'].methods.candidate).call.apply(_a, __spread([this], arguments));
+        return (superCandidate && (this.$listeners.hasOwnProperty("insert") || this.$listeners.hasOwnProperty("drop"))) || this.reordering;
+    };
+    DropList.prototype.computeForbiddenKeys = function () {
+        var vnodes = this.noAnimations ? [] : this.$children[0].$vnode.context.$children[0].$slots.default;
+        return vnodes
+            .map(function (vn) { return vn.key; })
+            .filter(function (k) { return k !== undefined && k !== 'drag-image' && k !== 'drag-feedback'; });
+    };
+    DropList.prototype.computeFeedbackKey = function () {
+        return this.$refs['feedback']['$slots']['default'][0]['key'];
+    };
+    Object.defineProperty(DropList.prototype, "hasReorderingFeedback", {
+        get: function () {
+            return this.$scopedSlots.hasOwnProperty("reordering-feedback");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DropList.prototype.computeInsertingGrid = function () {
+        var feedbackParent = this.$refs['feedback']['$el'];
+        var feedback = feedbackParent.children[0];
+        var clone = feedback.cloneNode(true);
+        var tg = this.$el;
+        if (tg.children.length > this.items.length) {
+            tg.insertBefore(clone, tg.children[this.items.length]);
+        }
+        else {
+            tg.appendChild(clone);
+        }
+        var grid = new Grid(tg.children, this.items.length, this.direction, null);
+        tg.removeChild(clone);
+        return grid;
+    };
+    DropList.prototype.computeReorderingGrid = function () {
+        var tg = this.$el;
+        return new Grid(tg.children, this.items.length - 1, this.direction, this.fromIndex);
+    };
+    DropList.prototype.createDragImage = function () {
+        var image;
+        if (this.$refs['drag-image']) {
+            var el = this.$refs['drag-image'];
+            var model = void 0;
+            if (el.childElementCount !== 1) {
+                model = el;
+            }
+            else {
+                model = el.children.item(0);
+            }
+            var clone = model.cloneNode(true);
+            var tg = this.$el;
+            tg.appendChild(clone);
+            image = createDragImage(clone);
+            tg.removeChild(clone);
+            image['__opacity'] = this.dragImageOpacity;
+        }
+        else {
+            image = 'source';
+        }
+        return image;
+    };
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: 'div', type: [String, Object, Function] }),
+        __metadata("design:type", Object)
+    ], DropList.prototype, "tag", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])(),
+        __metadata("design:type", Array)
+    ], DropList.prototype, "items", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: null }),
+        __metadata("design:type", Boolean)
+    ], DropList.prototype, "row", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: null, type: Boolean }),
+        __metadata("design:type", Boolean)
+    ], DropList.prototype, "column", void 0);
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Prop"])({ default: false, type: Boolean }),
+        __metadata("design:type", Boolean)
+    ], DropList.prototype, "noAnimations", void 0);
+    DropList = __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            components: { DragFeedback: DragFeedback$1 },
+            inheritAttrs: false
+        })
+    ], DropList);
+    return DropList;
+}(DropMixin));
+
+/* script */
+var __vue_script__$4 = DropList;
+
+/* template */
+var __vue_render__$4 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.rootTag,_vm._g(_vm._b({tag:"component",class:_vm.clazz,style:(_vm.style)},'component',_vm.rootProps,false),_vm.rootListeners),[(_vm.dropIn && _vm.dropAllowed)?[(_vm.reordering)?[(_vm.hasReorderingFeedback)?[_vm._l((_vm.itemsBeforeReorderingFeedback),function(item){return _vm._t("item",null,{"item":item})}),_vm._v(" "),_vm._t("reordering-feedback",null,{"item":_vm.items[_vm.fromIndex]}),_vm._v(" "),_vm._l((_vm.itemsAfterReorderingFeedback),function(item){return _vm._t("item",null,{"item":item})})]:[_vm._l((_vm.reorderedItems),function(item,index){return _vm._t("item",null,{"item":item,"reorder":index === _vm.closestIndex})})]]:[_vm._l((_vm.itemsBeforeFeedback),function(item){return _vm._t("item",null,{"item":item,"reorder":false})}),_vm._v(" "),_vm._t("feedback",null,{"data":_vm.dragData,"type":_vm.dragType}),_vm._v(" "),_vm._l((_vm.itemsAfterFeedback),function(item){return _vm._t("item",null,{"item":item,"reorder":false})})]]:[_vm._l((_vm.items),function(item){return _vm._t("item",null,{"item":item,"reorder":false})})],_vm._v(" "),(_vm.showDragFeedback)?_c('drag-feedback',{key:"drag-feedback",ref:"feedback",staticClass:"__feedback"},[_vm._t("feedback",null,{"data":_vm.dragData,"type":_vm.dragType})],2):_vm._e(),_vm._v(" "),(_vm.showInsertingDragImage)?_c('div',{key:"inserting-drag-image",ref:"drag-image",staticClass:"__drag-image"},[_vm._t("drag-image",null,{"type":_vm.dragType,"data":_vm.dragData})],2):_vm._e(),_vm._v(" "),(_vm.showReorderingDragImage)?_c('div',{key:"reordering-drag-image",ref:"drag-image",staticClass:"__drag-image"},[_vm._t("reordering-drag-image",null,{"item":_vm.items[_vm.fromIndex]})],2):_vm._e(),_vm._v(" "),_c('div',{key:"drop-list-content"},[_vm._t("default")],2)],2)};
+var __vue_staticRenderFns__$4 = [];
+
+  /* style */
+  var __vue_inject_styles__$4 = function (inject) {
+    if (!inject) { return }
+    inject("data-v-bd3250f8_0", { source: ".drop-list[data-v-bd3250f8]>*{transition:transform .2s}.__feedback[data-v-bd3250f8]{display:none}.__drag-image[data-v-bd3250f8]{position:fixed;top:-10000px;left:-10000px;will-change:left,top}", map: undefined, media: undefined })
+,inject("data-v-bd3250f8_1", { source: ".drop-allowed.drop-in *{cursor:inherit!important}.drop-forbidden.drop-in,.drop-forbidden.drop-in *{cursor:no-drop!important}", map: undefined, media: undefined });
+
+  };
+  /* scoped */
+  var __vue_scope_id__$4 = "data-v-bd3250f8";
+  /* module identifier */
+  var __vue_module_identifier__$4 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$4 = false;
+  /* style inject SSR */
+  
+
+  
+  var DropList$1 = normalizeComponent_1(
+    { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+    __vue_inject_styles__$4,
+    __vue_script__$4,
+    __vue_scope_id__$4,
+    __vue_is_functional_template__$4,
+    __vue_module_identifier__$4,
+    browser,
+    undefined
+  );
+
+
+
 
 /***/ }),
 
@@ -37109,10 +40498,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4& ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37124,51 +40513,294 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row relative" }, [
-    _c("div", { staticClass: "col-md-4" }, [
-      _c(
-        "div",
-        { staticClass: "model-avis" },
-        _vm._l(_vm.filteredList, function(avi) {
-          return _c("button", { staticClass: "options-item" }, [
-            _c("label", { staticClass: "d-block type_name" }, [
-              _c("small", [_vm._v(_vm._s(avi.type_name))])
+  return _c("div", { staticClass: "wrapper relative" }, [
+    _c("div", { staticClass: "filter-wrap", attrs: { id: "filter-wrap" } }, [
+      _c("div", { staticClass: "card card-full" }, [
+        _c("div", { staticClass: "card-body card-body-modele" }, [
+          _c("p", { staticClass: "mb-1" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Recherche" },
+              domProps: { value: _vm.search },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.search = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c("label", { staticClass: "checkbox-inline" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.type,
+                    expression: "type"
+                  }
+                ],
+                attrs: {
+                  type: "radio",
+                  name: "type",
+                  id: "chapitre",
+                  value: "chapitre"
+                },
+                domProps: { checked: _vm._q(_vm.type, "chapitre") },
+                on: {
+                  change: function($event) {
+                    _vm.type = "chapitre"
+                  }
+                }
+              }),
+              _vm._v(" Chapitre")
             ]),
             _vm._v(" "),
-            _c("div", { domProps: { innerHTML: _vm._s(avi.question) } })
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-md-8" }, [
-      _c("div", { staticClass: "card card-full" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Recherche" },
-            domProps: { value: _vm.search },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+            _c("label", { staticClass: "checkbox-inline" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.type,
+                    expression: "type"
+                  }
+                ],
+                attrs: {
+                  type: "radio",
+                  name: "type",
+                  id: "text",
+                  value: "text"
+                },
+                domProps: { checked: _vm._q(_vm.type, "text") },
+                on: {
+                  change: function($event) {
+                    _vm.type = "text"
+                  }
                 }
-                _vm.search = $event.target.value
-              }
-            }
-          })
+              }),
+              _vm._v(" Texte")
+            ]),
+            _vm._v(" "),
+            _c("label", { staticClass: "checkbox-inline" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.type,
+                    expression: "type"
+                  }
+                ],
+                attrs: {
+                  type: "radio",
+                  name: "type",
+                  id: "checkbox",
+                  value: "checkbox"
+                },
+                domProps: { checked: _vm._q(_vm.type, "checkbox") },
+                on: {
+                  change: function($event) {
+                    _vm.type = "checkbox"
+                  }
+                }
+              }),
+              _vm._v(" Case à cocher")
+            ]),
+            _vm._v(" "),
+            _c("label", { staticClass: "checkbox-inline" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.type,
+                    expression: "type"
+                  }
+                ],
+                attrs: {
+                  type: "radio",
+                  name: "type",
+                  id: "radio",
+                  value: "radio"
+                },
+                domProps: { checked: _vm._q(_vm.type, "radio") },
+                on: {
+                  change: function($event) {
+                    _vm.type = "radio"
+                  }
+                }
+              }),
+              _vm._v(" Option à choix")
+            ]),
+            _vm._v(" "),
+            _c("label", { staticClass: "checkbox-inline" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.type,
+                    expression: "type"
+                  }
+                ],
+                attrs: { type: "radio", id: "clear", name: "type", value: "" },
+                domProps: { checked: _vm._q(_vm.type, "") },
+                on: {
+                  change: function($event) {
+                    _vm.type = ""
+                  }
+                }
+              }),
+              _vm._v(" Tout")
+            ])
+          ])
         ])
       ]),
-      _vm._v("\n\n    " + _vm._s(_vm.questions) + "\n\n  ")
+      _vm._v(" "),
+      _c("div", { staticClass: "model-avis" }, [
+        _c(
+          "div",
+          { staticClass: "list" },
+          _vm._l(_vm.filteredList, function(avi) {
+            return _c(
+              "drag",
+              { key: avi.id, staticClass: "item", attrs: { data: avi } },
+              [
+                _c("span", [_vm._v(_vm._s(avi.type_name))]),
+                _vm._v(" "),
+                _c("div", {
+                  class: "question-text question-type-" + avi.type,
+                  domProps: { innerHTML: _vm._s(avi.question_simple) }
+                })
+              ]
+            )
+          }),
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "sondage_dragdrop" } }, [
+      _c("div", { staticClass: "card card-full" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("h3", [
+            _c("i", { staticClass: "fa fa-edit" }),
+            _vm._v("  " + _vm._s(_vm.modele.title))
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _c("i", { staticClass: "fa fa-edit" }),
+            _vm._v("  " + _vm._s(_vm.modele.description))
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-full" }, [
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c("drop-list", {
+              staticClass: "list list_main",
+              attrs: { items: _vm.items },
+              on: {
+                insert: _vm.onInsert,
+                reorder: function($event) {
+                  return $event.apply(_vm.items)
+                }
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "item",
+                  fn: function(ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "drag",
+                        { key: item.id, staticClass: "item-choosen" },
+                        [
+                          _c("div", [
+                            _c("div", { class: "question-type-" + item.type }, [
+                              _c("p", { staticClass: "question-p" }, [
+                                _vm._v(_vm._s(item.question_simple))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            item.choices_list
+                              ? _c(
+                                  "ul",
+                                  { staticClass: "question-ul" },
+                                  _vm._l(item.choices_list, function(choice) {
+                                    return _c("li", [
+                                      _c(
+                                        "label",
+                                        { class: item.type + "-inline" },
+                                        [
+                                          _c("input", {
+                                            attrs: {
+                                              type: item.type,
+                                              disabled: ""
+                                            }
+                                          }),
+                                          _vm._v(
+                                            "  " +
+                                              _vm._s(choice) +
+                                              "\n                      "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  }),
+                                  0
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            item.type == "text"
+                              ? _c("p", { staticClass: "question-textarea" }, [
+                                  _c("textarea", {
+                                    staticClass: "form-control",
+                                    attrs: { disabled: "" }
+                                  })
+                                ])
+                              : _vm._e()
+                          ])
+                        ]
+                      )
+                    ]
+                  }
+                },
+                {
+                  key: "feedback",
+                  fn: function(ref) {
+                    var data = ref.data
+                    return [
+                      _c(
+                        "div",
+                        { key: data.id, staticClass: "item feedback" },
+                        [_vm._v(_vm._s(data.type_name))]
+                      )
+                    ]
+                  }
+                }
+              ])
+            })
+          ],
+          1
+        )
+      ])
     ])
   ])
 }
@@ -44668,6 +48300,317 @@ function normalizeComponent (
     exports: scriptExports,
     options: options
   }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-property-decorator/lib/vue-property-decorator.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/vue-property-decorator/lib/vue-property-decorator.js ***!
+  \***************************************************************************/
+/*! exports provided: Component, Vue, Mixins, Inject, InjectReactive, Provide, ProvideReactive, Model, Prop, PropSync, Watch, Emit, Ref */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Inject", function() { return Inject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InjectReactive", function() { return InjectReactive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Provide", function() { return Provide; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProvideReactive", function() { return ProvideReactive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Model", function() { return Model; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Prop", function() { return Prop; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PropSync", function() { return PropSync; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Watch", function() { return Watch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Emit", function() { return Emit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Ref", function() { return Ref; });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "Vue", function() { return vue__WEBPACK_IMPORTED_MODULE_0___default.a; });
+/* harmony import */ var vue_class_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-class-component */ "./node_modules/vue-class-component/dist/vue-class-component.esm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Component", function() { return vue_class_component__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Mixins", function() { return vue_class_component__WEBPACK_IMPORTED_MODULE_1__["mixins"]; });
+
+/** vue-property-decorator verson 8.5.1 MIT LICENSE copyright 2020 kaorun343 */
+/// <reference types='reflect-metadata'/>
+
+
+
+
+/** Used for keying reactive provide/inject properties */
+var reactiveInjectKey = '__reactiveInject__';
+/**
+ * decorator of an inject
+ * @param from key
+ * @return PropertyDecorator
+ */
+function Inject(options) {
+    return Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, key) {
+        if (typeof componentOptions.inject === 'undefined') {
+            componentOptions.inject = {};
+        }
+        if (!Array.isArray(componentOptions.inject)) {
+            componentOptions.inject[key] = options || key;
+        }
+    });
+}
+/**
+ * decorator of a reactive inject
+ * @param from key
+ * @return PropertyDecorator
+ */
+function InjectReactive(options) {
+    return Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, key) {
+        if (typeof componentOptions.inject === 'undefined') {
+            componentOptions.inject = {};
+        }
+        if (!Array.isArray(componentOptions.inject)) {
+            var fromKey_1 = !!options ? options.from || options : key;
+            var defaultVal_1 = (!!options && options.default) || undefined;
+            if (!componentOptions.computed)
+                componentOptions.computed = {};
+            componentOptions.computed[key] = function () {
+                var obj = this[reactiveInjectKey];
+                return obj ? obj[fromKey_1] : defaultVal_1;
+            };
+            componentOptions.inject[reactiveInjectKey] = reactiveInjectKey;
+        }
+    });
+}
+function produceProvide(original) {
+    var provide = function () {
+        var _this = this;
+        var rv = typeof original === 'function' ? original.call(this) : original;
+        rv = Object.create(rv || null);
+        // set reactive services (propagates previous services if necessary)
+        rv[reactiveInjectKey] = this[reactiveInjectKey] || {};
+        for (var i in provide.managed) {
+            rv[provide.managed[i]] = this[i];
+        }
+        var _loop_1 = function (i) {
+            rv[provide.managedReactive[i]] = this_1[i]; // Duplicates the behavior of `@Provide`
+            Object.defineProperty(rv[reactiveInjectKey], provide.managedReactive[i], {
+                enumerable: true,
+                get: function () { return _this[i]; },
+            });
+        };
+        var this_1 = this;
+        for (var i in provide.managedReactive) {
+            _loop_1(i);
+        }
+        return rv;
+    };
+    provide.managed = {};
+    provide.managedReactive = {};
+    return provide;
+}
+function needToProduceProvide(original) {
+    return (typeof original !== 'function' ||
+        (!original.managed && !original.managedReactive));
+}
+/**
+ * decorator of a provide
+ * @param key key
+ * @return PropertyDecorator | void
+ */
+function Provide(key) {
+    return Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, k) {
+        var provide = componentOptions.provide;
+        if (needToProduceProvide(provide)) {
+            provide = componentOptions.provide = produceProvide(provide);
+        }
+        provide.managed[k] = key || k;
+    });
+}
+/**
+ * decorator of a reactive provide
+ * @param key key
+ * @return PropertyDecorator | void
+ */
+function ProvideReactive(key) {
+    return Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, k) {
+        var provide = componentOptions.provide;
+        // inject parent reactive services (if any)
+        if (!Array.isArray(componentOptions.inject)) {
+            componentOptions.inject = componentOptions.inject || {};
+            componentOptions.inject[reactiveInjectKey] = {
+                from: reactiveInjectKey,
+                default: {},
+            };
+        }
+        if (needToProduceProvide(provide)) {
+            provide = componentOptions.provide = produceProvide(provide);
+        }
+        provide.managedReactive[k] = key || k;
+    });
+}
+/** @see {@link https://github.com/vuejs/vue-class-component/blob/master/src/reflect.ts} */
+var reflectMetadataIsSupported = typeof Reflect !== 'undefined' && typeof Reflect.getMetadata !== 'undefined';
+function applyMetadata(options, target, key) {
+    if (reflectMetadataIsSupported) {
+        if (!Array.isArray(options) &&
+            typeof options !== 'function' &&
+            typeof options.type === 'undefined') {
+            var type = Reflect.getMetadata('design:type', target, key);
+            if (type !== Object) {
+                options.type = type;
+            }
+        }
+    }
+}
+/**
+ * decorator of model
+ * @param  event event name
+ * @param options options
+ * @return PropertyDecorator
+ */
+function Model(event, options) {
+    if (options === void 0) { options = {}; }
+    return function (target, key) {
+        applyMetadata(options, target, key);
+        Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, k) {
+            ;
+            (componentOptions.props || (componentOptions.props = {}))[k] = options;
+            componentOptions.model = { prop: k, event: event || k };
+        })(target, key);
+    };
+}
+/**
+ * decorator of a prop
+ * @param  options the options for the prop
+ * @return PropertyDecorator | void
+ */
+function Prop(options) {
+    if (options === void 0) { options = {}; }
+    return function (target, key) {
+        applyMetadata(options, target, key);
+        Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, k) {
+            ;
+            (componentOptions.props || (componentOptions.props = {}))[k] = options;
+        })(target, key);
+    };
+}
+/**
+ * decorator of a synced prop
+ * @param propName the name to interface with from outside, must be different from decorated property
+ * @param options the options for the synced prop
+ * @return PropertyDecorator | void
+ */
+function PropSync(propName, options) {
+    if (options === void 0) { options = {}; }
+    // @ts-ignore
+    return function (target, key) {
+        applyMetadata(options, target, key);
+        Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, k) {
+            ;
+            (componentOptions.props || (componentOptions.props = {}))[propName] = options;
+            (componentOptions.computed || (componentOptions.computed = {}))[k] = {
+                get: function () {
+                    return this[propName];
+                },
+                set: function (value) {
+                    // @ts-ignore
+                    this.$emit("update:" + propName, value);
+                },
+            };
+        })(target, key);
+    };
+}
+/**
+ * decorator of a watch function
+ * @param  path the path or the expression to observe
+ * @param  WatchOption
+ * @return MethodDecorator
+ */
+function Watch(path, options) {
+    if (options === void 0) { options = {}; }
+    var _a = options.deep, deep = _a === void 0 ? false : _a, _b = options.immediate, immediate = _b === void 0 ? false : _b;
+    return Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (componentOptions, handler) {
+        if (typeof componentOptions.watch !== 'object') {
+            componentOptions.watch = Object.create(null);
+        }
+        var watch = componentOptions.watch;
+        if (typeof watch[path] === 'object' && !Array.isArray(watch[path])) {
+            watch[path] = [watch[path]];
+        }
+        else if (typeof watch[path] === 'undefined') {
+            watch[path] = [];
+        }
+        watch[path].push({ handler: handler, deep: deep, immediate: immediate });
+    });
+}
+// Code copied from Vue/src/shared/util.js
+var hyphenateRE = /\B([A-Z])/g;
+var hyphenate = function (str) { return str.replace(hyphenateRE, '-$1').toLowerCase(); };
+/**
+ * decorator of an event-emitter function
+ * @param  event The name of the event
+ * @return MethodDecorator
+ */
+function Emit(event) {
+    return function (_target, propertyKey, descriptor) {
+        var key = hyphenate(propertyKey);
+        var original = descriptor.value;
+        descriptor.value = function emitter() {
+            var _this = this;
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var emit = function (returnValue) {
+                var emitName = event || key;
+                if (returnValue === undefined) {
+                    if (args.length === 0) {
+                        _this.$emit(emitName);
+                    }
+                    else if (args.length === 1) {
+                        _this.$emit(emitName, args[0]);
+                    }
+                    else {
+                        _this.$emit.apply(_this, [emitName].concat(args));
+                    }
+                }
+                else {
+                    if (args.length === 0) {
+                        _this.$emit(emitName, returnValue);
+                    }
+                    else if (args.length === 1) {
+                        _this.$emit(emitName, returnValue, args[0]);
+                    }
+                    else {
+                        _this.$emit.apply(_this, [emitName, returnValue].concat(args));
+                    }
+                }
+            };
+            var returnValue = original.apply(this, args);
+            if (isPromise(returnValue)) {
+                returnValue.then(emit);
+            }
+            else {
+                emit(returnValue);
+            }
+            return returnValue;
+        };
+    };
+}
+/**
+ * decorator of a ref prop
+ * @param refKey the ref key defined in template
+ */
+function Ref(refKey) {
+    return Object(vue_class_component__WEBPACK_IMPORTED_MODULE_1__["createDecorator"])(function (options, key) {
+        options.computed = options.computed || {};
+        options.computed[key] = {
+            cache: false,
+            get: function () {
+                return this.$refs[refKey || key];
+            },
+        };
+    });
+}
+function isPromise(obj) {
+    return obj instanceof Promise || (obj && typeof obj.then === 'function');
 }
 
 
@@ -59985,9 +63928,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateModel_vue_vue_type_template_id_8550e6b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateModel.vue?vue&type=template&id=8550e6b4& */ "./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&");
+/* harmony import */ var _CreateModel_vue_vue_type_template_id_8550e6b4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true& */ "./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true&");
 /* harmony import */ var _CreateModel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateModel.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/CreateModel.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css& */ "./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -59995,13 +63940,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _CreateModel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateModel_vue_vue_type_template_id_8550e6b4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateModel_vue_vue_type_template_id_8550e6b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CreateModel_vue_vue_type_template_id_8550e6b4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateModel_vue_vue_type_template_id_8550e6b4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "8550e6b4",
   null
   
 )
@@ -60027,19 +63972,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&":
-/*!***************************************************************************************!*\
-  !*** ./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4& ***!
-  \***************************************************************************************/
+/***/ "./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=style&index=0&id=8550e6b4&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_style_index_0_id_8550e6b4_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_template_id_8550e6b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateModel.vue?vue&type=template&id=8550e6b4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_template_id_8550e6b4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_template_id_8550e6b4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CreateModel.vue?vue&type=template&id=8550e6b4&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_template_id_8550e6b4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_template_id_8550e6b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateModel_vue_vue_type_template_id_8550e6b4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
