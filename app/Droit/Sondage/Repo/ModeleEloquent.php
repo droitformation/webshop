@@ -44,6 +44,11 @@ class ModeleEloquent implements ModeleInterface
             return false;
         }
 
+        // Insert related avis
+        if(isset($data['avis']) && !empty($data['avis'])) {
+            $modele->avis()->sync($data['avis']);
+        }
+
         $modele->fill($data);
         $modele->save();
 

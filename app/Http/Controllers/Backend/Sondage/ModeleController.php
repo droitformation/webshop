@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Backend\Sondage;
 
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Droit\Sondage\Repo\ModeleInterface;
@@ -46,6 +47,7 @@ class ModeleController extends Controller
             $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
             $row->setAttribute('alpha',strtolower($sort));
             $row->setAttribute('class',null);
+            $row->setAttribute('rang',$key);
             $row->setAttribute('choices_list',$row->choices ? explode(',', $row->choices) : null);
             $row->setAttribute('type_name',$row->type_name);
             $row->setAttribute('question_simple',strip_tags($row->question));
@@ -61,9 +63,17 @@ class ModeleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $modele = $this->modele->update($request->all());
+        $avis = collect($request->input('avis'))->mapWithKeys(function($item,$key) {
+            return [$item['id'] => ['rang' => $item['rang']]];
+        })->toArray();
 
-        flash('Le modelee a été mis à jour')->success();
+        $modele = $this->modele->update($request->only(['id','title','description']) + ['avis' => $avis]);
+
+        if($request->ajax()){
+            return response()->json(['status' => true]);
+        }
+
+        flash('Le modele a été mis à jour')->success();
 
         return redirect('admin/modele/'.$id);
     }
@@ -72,7 +82,7 @@ class ModeleController extends Controller
     {
         $this->avis->delete($id);
 
-        flash('La question a été supprimé')->success();
+        flash('Le modele a été supprimé')->success();
 
         return redirect()->back();
     }

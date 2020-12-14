@@ -42,6 +42,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group" id="sondageColloque">
+                            <label for="message" class="col-sm-3 control-label">Modèle de sondage</label>
+                            <div class="col-sm-6">
+                                <select autocomplete="off" name="colloque_id" class="form-control">
+                                    <option value="">Choisir</option>
+                                    @if(!$modeles->isEmpty())
+                                        @foreach($modeles as $modele)
+                                            <option {{ (old('modele_id') == $modele->id ) ? 'selected' : '' }} value="{{ $modele->id }}">{{ $modele->title }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+
                         <div id="sondageMarketing" style="display: none;">
                             <div class="form-group">
                                 <label for="message" class="col-sm-3 control-label">Titre</label>

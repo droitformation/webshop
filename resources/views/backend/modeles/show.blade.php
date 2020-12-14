@@ -3,39 +3,15 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="options text-left" style="margin-bottom: 20px;">
-                <div class="btn-toolbar">
-                    <a href="{{ url('admin/modele') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
-                </div>
+            <div class="btn-toolbar" style="margin-bottom: 20px; float: left; margin-right: 20px;">
+                <a href="{{ url('admin/modele') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> &nbsp;Retour</a>
             </div>
+            <h3>Modèle pour sondage</h3>
         </div>
     </div>
 
-    {{--  <div class="row">
-       <div class="col-md-12">
-           <div class="card card-full">
-               <div class="card-body">
-                <form action="{{ url('admin/modele/'.$modele->id) }}" method="POST">{!! csrf_field() !!}
-                       <input type="hidden" name="_method" value="PUT">
-                       <div class="form-group">
-                           <label class="control-label">Titre</label>
-                           <input type="text" class="form-control" name="title" value="{{ $modele->title }}">
-                       </div>
-                       <div class="form-group">
-                           <label class="control-label">Description</label>
-                           <textarea name="description" cols="20" rows="3" class="form-control">{!! $modele->description !!}</textarea>
-                       </div>
-                       <input name="id" type="hidden" value="{{ $modele->id }}">
-                       <button type="submit" class="btn btn-info">Éditer</button>
-                   </form>
-
-                </div>
-            </div>
-        </div>
-    </div>--}}
-
     <div id="appComponent">
-        <create-model :avis="{{ $avis }}" :modele="{{ $modele }}"></create-model>
+        <create-model :avis="{{ $avis }}" :modele="{{ $modele }}" :current="{{ $modele->avis_vue }}"></create-model>
     </div>
 
  {{--   <div class="row relative">

@@ -9,12 +9,6 @@
 <!-- start row -->
 
 <div class="row">
-    <div class="col-md-12">
-
-    </div>
-</div>
-
-<div class="row">
     <div class="col-md-9">
 
         <form action="{{ url('admin/sondage/'.$sondage->id) }}" enctype="multipart/form-data" method="POST" class="form-horizontal">
@@ -125,6 +119,10 @@
                 </div>
             </div>
         </form>
+
+        <div id="appComponent">
+            <create-sondage :avis="{{ $avis }}" :sondage="{{ $sondage }}" :current="{{ $sondage->avis_vue }}"></create-sondage>
+        </div>
 
         <div class="panel panel-midnightblue">
             <div class="panel-body">

@@ -14,6 +14,7 @@ use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Sondage\Repo\ReponseInterface;
 use App\Droit\Newsletter\Repo\NewsletterListInterface;
 use App\Droit\Service\UploadInterface;
+use App\Droit\Sondage\Repo\ModeleInterface;
 
 class SondageController extends Controller
 {
@@ -23,8 +24,17 @@ class SondageController extends Controller
     protected $colloque;
     protected $list;
     protected $upload;
+    protected $modele;
 
-    public function __construct(SondageInterface $sondage, AvisInterface $avis, ColloqueInterface $colloque, ReponseInterface $reponse, NewsletterListInterface $list, UploadInterface $upload)
+    public function __construct(
+        SondageInterface $sondage,
+        AvisInterface $avis,
+        ColloqueInterface $colloque,
+        ReponseInterface $reponse,
+        NewsletterListInterface $list,
+        UploadInterface $upload,
+        ModeleInterface $modele
+    )
     {
         $this->sondage  = $sondage;
         $this->avis     = $avis;
@@ -32,6 +42,7 @@ class SondageController extends Controller
         $this->reponse  = $reponse;
         $this->list     = $list;
         $this->upload   = $upload;
+        $this->modele   = $modele;
     }
 
     /**
@@ -41,7 +52,7 @@ class SondageController extends Controller
      */
     public function index()
     {
-        $sondages  = $this->sondage->getAll();
+        $sondages = $this->sondage->getAll();
 
         return view('backend.sondages.index')->with(['sondages' => $sondages]);
     }
@@ -54,8 +65,9 @@ class SondageController extends Controller
     public function create()
     {
         $colloques = $this->colloque->getAllAdmin(true,false);
+        $modeles   = $this->modele->getAll();
         
-        return view('backend.sondages.create')->with(['colloques' => $colloques]);
+        return view('backend.sondages.create')->with(['colloques' => $colloques, 'modeles' => $modeles]);
     }
 
     /**
@@ -94,10 +106,31 @@ class SondageController extends Controller
     public function show($id)
     {
         $sondage   = $this->sondage->find($id);
+
         $avis      = $this->avis->getAll();
+        $avis = $avis->map(function ($row, $key) {
+            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
+            $row->setAttribute('alpha',strtolower($sort));
+            $row->setAttribute('class',null);
+            $row->setAttribute('rang',$key);
+            $row->setAttribute('choices_list',$row->choices ? explode(',', $row->choices) : null);
+            $row->setAttribute('type_name',$row->type_name);
+            $row->setAttribute('question_simple',strip_tags($row->question));
+            return $row;
+        })->sortBy('alpha')->values();
+
         $colloques = $this->colloque->getAll(false,false);
         
         return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
+    }
+
+    public function edit($id)
+    {
+        $sondage   = $this->sondage->find($id);
+        $avis      = $this->avis->getAll();
+        $colloques = $this->colloque->getAll(false,false);
+
+        return view('backend.sondages.edit')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
     }
 
     /**
