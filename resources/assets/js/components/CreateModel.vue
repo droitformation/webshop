@@ -2,10 +2,11 @@
 
   <div class="wrapper relative">
 
-    <build-avis-list :avis="avis" @update-list="updateList" :current="current">
+    <build-avis-list :updated="updated" :avis="avis" @update-list="updateList" :current="current">
       <template v-slot:update>
         <div class="card card-full">
           <div class="card-body">
+            <h4 class="modele-title">Nom du modèle</h4>
 
             <dl class="dl-horizontal dl-simple">
               <dt class="mb-1">Titre</dt>
@@ -34,6 +35,7 @@ export default {
   },
   data() {
     return {
+      updated:false,
       path:  location.protocol + "//" + location.host+"/",
       choosen: this.current,
       original: {
@@ -56,7 +58,10 @@ export default {
           description: this.original.description,
           avis: this.choosen
       }).then(function (response) {
-          console.log(response.data);
+        self.updated = true;
+        setTimeout(() => {
+          self.updated = false;
+        }, 2000);
       }).catch(function (error) { console.log(error);});
 
     },

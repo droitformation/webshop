@@ -13,14 +13,7 @@ class Sondage extends Model{
     public function getAvisVueAttribute()
     {
         return $this->avis->map(function ($row, $key) {
-            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
-            $row->setAttribute('alpha',strtolower($sort));
-            $row->setAttribute('rang',$row->pivot->rang);
-            $row->setAttribute('class',null);
-            $row->setAttribute('choices_list',$row->choices ? explode(',', $row->choices) : null);
-            $row->setAttribute('type_name',$row->type_name);
-            $row->setAttribute('question_simple',strip_tags($row->question));
-            return $row;
+            return \App\Droit\Sondage\Entities\Transform::make($row, $key);
         })->sortBy('rang')->values();
     }
 

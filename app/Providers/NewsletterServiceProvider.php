@@ -17,8 +17,7 @@ class NewsletterServiceProvider extends ServiceProvider
         {
             $email = \DB::table('newsletter_users')->where('email','=',$value)->first();
 
-            if($email)
-            {
+            if($email) {
                 return (!$email->activated_at ? false  : true);
             }
 

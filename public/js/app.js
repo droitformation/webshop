@@ -2274,39 +2274,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['avis', 'current'],
+  props: ['avis', 'current', 'minus', 'updated'],
   mounted: function mounted() {
-    console.log('Component mounted.');
-    var $wrapper = $('#sondage_dragdrop');
-    var $sidebar = $('#filter-wrap');
+    var $sidebar = $('.sidebar-build');
+    var width = $sidebar.width();
+    var $mainContent = $('#mainContent');
+    var mainContentW = $mainContent.offset().top;
     $(window).scroll(function () {
-      var top = $(window).scrollTop();
+      var top = $(window).scrollTop() + 50;
 
-      if ($wrapper.offset().top < top) {
-        $sidebar.addClass("sticky");
+      if (mainContentW < top) {
+        $('.sidebar-build-inner').addClass("sticky");
+        $('.sidebar-build-inner').css("width", width);
       } else {
-        $sidebar.removeClass("sticky");
+        $('.sidebar-build-inner').removeClass("sticky");
       }
     });
-    var bar = 230;
-    var width = $('body').innerWidth();
-    var height = $('body').innerHeight();
-    width = width - bar;
-    var max = height * 0.35;
-    var s_width = (width - 10) * 0.35;
-    var w_width = width * 0.62;
-
-    if (width < 1680) {
-      $sidebar.css('width', s_width - 20);
-      $wrapper.css('width', w_width - 15);
-      $wrapper.css('margin-left', s_width + 10);
-    } else {
-      $sidebar.css('width', s_width);
-      $wrapper.css('width', w_width);
-      $wrapper.css('margin-left', s_width + 5);
-    }
   },
   components: {
     Drag: vue_easy_dnd__WEBPACK_IMPORTED_MODULE_0__["Drag"],
@@ -2356,6 +2354,11 @@ __webpack_require__.r(__webpack_exports__);
     onInsert: function onInsert(event) {
       event.data.rang = event.index;
       this.items.splice(event.index, 0, event.data);
+      console.log('save');
+      this.$emit('update-list', this.choosen);
+    },
+    onReorder: function onReorder(event) {
+      event.apply(this.items);
       this.$emit('update-list', this.choosen);
     },
     remove: function remove(id) {
@@ -3609,6 +3612,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['avis', 'modele', 'current'],
@@ -3617,6 +3621,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      updated: false,
       path: location.protocol + "//" + location.host + "/",
       choosen: this.current,
       original: {
@@ -3638,7 +3643,10 @@ __webpack_require__.r(__webpack_exports__);
         description: this.original.description,
         avis: this.choosen
       }).then(function (response) {
-        console.log(response.data);
+        self.updated = true;
+        setTimeout(function () {
+          self.updated = false;
+        }, 2000);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3668,6 +3676,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['avis', 'sondage', 'current'],
@@ -3676,6 +3686,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      updated: false,
       path: location.protocol + "//" + location.host + "/",
       choosen: this.current
     };
@@ -3683,14 +3694,19 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateList: function updateList(choosen) {
       this.choosen = choosen;
+      console.log('save');
       this.save();
     },
     save: function save() {
       var self = this;
-      axios.put(this.path + "admin/sondage/" + this.sondage.id, {
+      axios.post(this.path + "admin/sondage/updateBuild", {
         id: this.sondage.id,
         avis: this.choosen
       }).then(function (response) {
+        self.updated = true;
+        setTimeout(function () {
+          self.updated = false;
+        }, 2000);
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
@@ -8096,7 +8112,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.sticky[data-v-8d8df878] {\n  position:fixed;\n  top:85px;\n}\n.inline[data-v-8d8df878]{\n  display: inline;\n}\n.filter-types[data-v-8d8df878]{\n  display: flex;\n  height: 55px;\n  flex-direction: row;\n  flex-wrap: wrap;\n  align-items: center;\n  align-content: center;\n  justify-content: center;\n}\n.filter-types label[data-v-8d8df878]{\n  height: 30px;\n  line-height: 20px;\n  padding: 5px;\n}\n#sondage_dragdrop[data-v-8d8df878]{\n  overflow: scroll;\n}\n.relative[data-v-8d8df878]{\n  position: relative;\n}\n.filter-wrap[data-v-8d8df878]{\n  position: fixed;\n  max-width: 495px;\n}\n.d-block[data-v-8d8df878]{\n  display: block;\n}\n.card[data-v-8d8df878]{\n  margin-bottom: 14px;\n}\n.hidden[data-v-8d8df878]{\n  display: none;\n}\n.card-body-modele[data-v-8d8df878]{\n  padding: 5px;\n}\n.radio-inline[data-v-8d8df878],\n.checkbox-inline[data-v-8d8df878] {\n  padding-left: 10px;\n  font-size: 13px;\n}\n.model-avis[data-v-8d8df878]{\n  overflow: scroll;\n  padding:0 5px 5px 5px;\n  background: #fff;\n  max-height: 50vh;\n  border: 1px solid rgba(0,0,0,.125);\n}\n.drop-in[data-v-8d8df878] {\n  box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);\n}\n.wrapper .list[data-v-8d8df878] {\n  margin-top: 0;\n}\n.wrapper .list.list_main[data-v-8d8df878] {\n  min-height: 50px;\n  width: 100%;\n  border: 1px solid #eee;\n  padding: 15px;\n  background: #fbfbfb;\n}\n.wrapper .list .item[data-v-8d8df878] {\n  padding: 15px  10px;\n  margin: 10px 0;\n  display: flex;\n  flex-direction: column;\n  align-items: start;\n  position: relative;\n  background-color: #f7f8fa;\n  border: 1px solid #e0e5ee;\n}\n.wrapper .list_main .item-choosen[data-v-8d8df878]{\n  padding:  10px;\n  margin-bottom: 5px;\n  position: relative;\n}\n.wrapper .list_main .item-choosen button[data-v-8d8df878]{\n  position: absolute;\n  top: 8px;\n  right:8px;\n  display: none;\n}\n.wrapper .list_main .item-choosen[data-v-8d8df878]:hover{\n  background: #fff;\n  box-shadow: 0 0 5px rgba(0, 0, 155, 0.3);\n}\n.wrapper .list_main .item-choosen:hover button[data-v-8d8df878]{\n  display: block;\n}\n.wrapper .list .item span[data-v-8d8df878]{\n  display: block;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 11px;\n  color: #d4a569;\n}\n.wrapper .list .item .question-text[data-v-8d8df878]{\n  padding: 5px;\n  width: 80%;\n}\n.wrapper .list .item.feedback[data-v-8d8df878] {\n  background-color: #ffdcdc;\n  border: 2px dashed black;\n}\n.question-p[data-v-8d8df878]{\n  margin-bottom: 6px;\n  font-weight: 600;\n}\n.question-ul[data-v-8d8df878]{\n  margin-top: 15px;\n  margin-left: 10px;\n  padding-left: 0;\n  display: flex;\n  flex-direction: row;\n  justify-content: start;\n}\n.question-ul li[data-v-8d8df878]{\n  list-style: none;\n  margin-bottom: 5px;\n  padding-left: 5px;\n  display: block;\n  padding-right: 51px;\n}\n.question-textarea[data-v-8d8df878]{\n  margin-top: 15px;\n}\n.mb-1[data-v-8d8df878]{margin-bottom: 10px}\n.pb-1[data-v-8d8df878]{padding-bottom: 10px}\n.question-type-chapitre[data-v-8d8df878]{\n  font-size: 16px;\n  text-transform: uppercase;\n  font-weight: bold;\n}\n.dl-simple[data-v-8d8df878]{\n  margin-bottom: 0;\n}\n.empty[data-v-8d8df878]{\n  padding: 5px;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.wrapper-build[data-v-8d8df878] {\n  display: flex;\n  justify-content: space-between;\n  position: relative;\n}\n.main-build[data-v-8d8df878]{\n  padding:0 15px;\n}\n.main-build[data-v-8d8df878] {\n  width: 65%;\n  position: relative;\n}\n.sidebar-build[data-v-8d8df878] {\n  width:35%;\n  position: relative;\n  padding-right:25px;\n}\n.sidebar-build-inner[data-v-8d8df878] {\n   width: auto;\n   position: static;\n}\n.sticky[data-v-8d8df878]{\n  position: fixed;\n  top: 80px;\n}\n.filter-types[data-v-8d8df878]{\n  display: flex;\n  height: 55px;\n  flex-direction: row;\n  flex-wrap: wrap;\n  align-items: center;\n  align-content: center;\n  justify-content: center;\n}\n.filter-types label[data-v-8d8df878]{\n  height: 30px;\n  line-height: 20px;\n  padding: 5px;\n}\n.card[data-v-8d8df878]{\n  margin-bottom: 14px;\n}\n.card-body-modele[data-v-8d8df878]{\n  padding: 5px;\n}\n.checkbox-inline[data-v-8d8df878] {\n  padding-left: 10px;\n  font-size: 13px;\n}\n.model-avis[data-v-8d8df878]{\n  overflow: scroll;\n  padding:0 5px 5px 5px;\n  background: #fff;\n  max-height: 50vh;\n  border: 1px solid rgba(0,0,0,.125);\n}\n.drop-in[data-v-8d8df878] {\n  box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);\n}\n.wrapper .list[data-v-8d8df878] {\n  margin-top: 0;\n}\n.wrapper .list.list_main[data-v-8d8df878] {\n  min-height: 50px;\n  width: 100%;\n  border: 1px solid #eee;\n  padding: 15px;\n  background: #fbfbfb;\n}\n.wrapper .list .item[data-v-8d8df878] {\n  padding: 15px  10px;\n  margin: 10px 0;\n  display: flex;\n  flex-direction: column;\n  align-items: start;\n  position: relative;\n  background-color: #f7f8fa;\n  border: 1px solid #e0e5ee;\n  width: auto;\n}\n.wrapper .list_main .item-choosen[data-v-8d8df878]{\n  padding:  10px;\n  margin-bottom: 5px;\n  position: relative;\n}\n.wrapper .list_main .item-choosen button[data-v-8d8df878]{\n  position: absolute;\n  top: 8px;\n  right:8px;\n  display: none;\n}\n.wrapper .list_main .item-choosen[data-v-8d8df878]:hover{\n  background: #fff;\n  box-shadow: 0 0 5px rgba(0, 0, 155, 0.3);\n}\n.wrapper .list_main .item-choosen:hover button[data-v-8d8df878]{\n  display: block;\n}\n.wrapper .list .item span[data-v-8d8df878]{\n  display: block;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  font-size: 11px;\n  color: #d4a569;\n}\n.wrapper .list .item .question-text[data-v-8d8df878]{\n  padding: 5px;\n  width: 80%;\n}\n.wrapper .list .item.feedback[data-v-8d8df878] {\n  background-color: #ffdcdc;\n  border: 2px dashed black;\n}\n.question-p[data-v-8d8df878]{\n  margin-bottom: 6px;\n  font-weight: 600;\n}\n.question-ul[data-v-8d8df878]{\n  margin-top: 15px;\n  margin-left: 10px;\n  padding-left: 0;\n  display: flex;\n  flex-direction: row;\n  justify-content: start;\n  flex-wrap: wrap;\n}\n.question-ul li[data-v-8d8df878]{\n  list-style: none;\n  margin-bottom: 5px;\n  padding-left: 5px;\n  display: block;\n  padding-right: 51px;\n  padding-top: 3px;\n}\n.question-textarea[data-v-8d8df878]{\n  margin-top: 15px;\n}\n.question-type-chapitre[data-v-8d8df878]{\n  font-size: 16px;\n  text-transform: uppercase;\n  font-weight: bold;\n}\n.dl-simple[data-v-8d8df878]{\n  margin-bottom: 0;\n}\n.mb-1[data-v-8d8df878]{margin-bottom: 10px}\n.empty[data-v-8d8df878]{\n  padding: 5px;\n  text-align: center;\n}\n.alert-title[data-v-8d8df878]{\n  padding: 3px 10px;\n  line-height: 20px;\n  height: 30px;\n  border-radius: 4px;\n  width: 100%;\n}\n.flex-row[data-v-8d8df878]{\n  flex-direction: row;\n}\n.justify-between[data-v-8d8df878]{\n  justify-content: space-between;\n}\n.modele-title[data-v-8d8df878]{\n  margin-top: 0;\n  margin-bottom: 15px;\n  padding-right: 40px;\n}\n\n", ""]);
 
 // exports
 
@@ -38167,6 +38183,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "adresse-update" }, [
               _c("div", { staticClass: "row" }, [
+                _vm._v("b nhb\n                    "),
                 _c("div", { staticClass: "col-md-6" }, [
                   _c(
                     "label",
@@ -38727,195 +38744,218 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrapper relative" }, [
-    _c("div", { staticClass: "filter-wrap", attrs: { id: "filter-wrap" } }, [
-      _c("h4", [_vm._v("Questions")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card card-full" }, [
-        _c("div", { staticClass: "card-body card-body-modele" }, [
-          _c("p", { staticClass: "mb-1" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.search,
-                  expression: "search"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Recherche" },
-              domProps: { value: _vm.search },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.search = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "filter-types" }, [
-            _c("label", { staticClass: "checkbox-inline" }, [
+  return _c("div", { staticClass: "wrapper-build" }, [
+    _c("div", { staticClass: "sidebar-build", attrs: { id: "sidebar" } }, [
+      _c("div", { staticClass: "sidebar-build-inner" }, [
+        _c("h4", [_vm._v("Questions")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card card-full" }, [
+          _c("div", { staticClass: "card-body card-body-modele" }, [
+            _c("p", { staticClass: "mb-1" }, [
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.type,
-                    expression: "type"
+                    value: _vm.search,
+                    expression: "search"
                   }
                 ],
-                attrs: {
-                  type: "radio",
-                  name: "type",
-                  id: "chapitre",
-                  value: "chapitre"
-                },
-                domProps: { checked: _vm._q(_vm.type, "chapitre") },
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Recherche" },
+                domProps: { value: _vm.search },
                 on: {
-                  change: function($event) {
-                    _vm.type = "chapitre"
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
                   }
                 }
-              }),
-              _vm._v(" Chapitre")
+              })
             ]),
             _vm._v(" "),
-            _c("label", { staticClass: "checkbox-inline" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.type,
-                    expression: "type"
+            _c("div", { staticClass: "filter-types" }, [
+              _c("label", { staticClass: "checkbox-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.type,
+                      expression: "type"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    name: "type",
+                    id: "chapitre",
+                    value: "chapitre"
+                  },
+                  domProps: { checked: _vm._q(_vm.type, "chapitre") },
+                  on: {
+                    change: function($event) {
+                      _vm.type = "chapitre"
+                    }
                   }
-                ],
-                attrs: {
-                  type: "radio",
-                  name: "type",
-                  id: "text",
-                  value: "text"
-                },
-                domProps: { checked: _vm._q(_vm.type, "text") },
-                on: {
-                  change: function($event) {
-                    _vm.type = "text"
+                }),
+                _vm._v(" Chapitre")
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "checkbox-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.type,
+                      expression: "type"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    name: "type",
+                    id: "text",
+                    value: "text"
+                  },
+                  domProps: { checked: _vm._q(_vm.type, "text") },
+                  on: {
+                    change: function($event) {
+                      _vm.type = "text"
+                    }
                   }
-                }
-              }),
-              _vm._v(" Texte")
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "checkbox-inline" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.type,
-                    expression: "type"
+                }),
+                _vm._v(" Texte")
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "checkbox-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.type,
+                      expression: "type"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    name: "type",
+                    id: "checkbox",
+                    value: "checkbox"
+                  },
+                  domProps: { checked: _vm._q(_vm.type, "checkbox") },
+                  on: {
+                    change: function($event) {
+                      _vm.type = "checkbox"
+                    }
                   }
-                ],
-                attrs: {
-                  type: "radio",
-                  name: "type",
-                  id: "checkbox",
-                  value: "checkbox"
-                },
-                domProps: { checked: _vm._q(_vm.type, "checkbox") },
-                on: {
-                  change: function($event) {
-                    _vm.type = "checkbox"
+                }),
+                _vm._v(" Case à cocher")
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "checkbox-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.type,
+                      expression: "type"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    name: "type",
+                    id: "radio",
+                    value: "radio"
+                  },
+                  domProps: { checked: _vm._q(_vm.type, "radio") },
+                  on: {
+                    change: function($event) {
+                      _vm.type = "radio"
+                    }
                   }
-                }
-              }),
-              _vm._v(" Case à cocher")
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "checkbox-inline" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.type,
-                    expression: "type"
+                }),
+                _vm._v(" Option à choix")
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "checkbox-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.type,
+                      expression: "type"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    id: "clear",
+                    name: "type",
+                    value: ""
+                  },
+                  domProps: { checked: _vm._q(_vm.type, "") },
+                  on: {
+                    change: function($event) {
+                      _vm.type = ""
+                    }
                   }
-                ],
-                attrs: {
-                  type: "radio",
-                  name: "type",
-                  id: "radio",
-                  value: "radio"
-                },
-                domProps: { checked: _vm._q(_vm.type, "radio") },
-                on: {
-                  change: function($event) {
-                    _vm.type = "radio"
-                  }
-                }
-              }),
-              _vm._v(" Option à choix")
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "checkbox-inline" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.type,
-                    expression: "type"
-                  }
-                ],
-                attrs: { type: "radio", id: "clear", name: "type", value: "" },
-                domProps: { checked: _vm._q(_vm.type, "") },
-                on: {
-                  change: function($event) {
-                    _vm.type = ""
-                  }
-                }
-              }),
-              _vm._v(" Tout")
+                }),
+                _vm._v(" Tout")
+              ])
             ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "model-avis" }, [
+          _c(
+            "div",
+            { staticClass: "list" },
+            _vm._l(_vm.filteredList, function(avi) {
+              return _c(
+                "drag",
+                { key: avi.id, staticClass: "item", attrs: { data: avi } },
+                [
+                  _c("span", [_vm._v(_vm._s(avi.type_name))]),
+                  _vm._v(" "),
+                  _c("div", {
+                    class: "question-text question-type-" + avi.type,
+                    domProps: { innerHTML: _vm._s(avi.question_simple) }
+                  })
+                ]
+              )
+            }),
+            1
+          )
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "model-avis" }, [
-        _c(
-          "div",
-          { staticClass: "list" },
-          _vm._l(_vm.filteredList, function(avi) {
-            return _c(
-              "drag",
-              { key: avi.id, staticClass: "item", attrs: { data: avi } },
-              [
-                _c("span", [_vm._v(_vm._s(avi.type_name))]),
-                _vm._v(" "),
-                _c("div", {
-                  class: "question-text question-type-" + avi.type,
-                  domProps: {
-                    innerHTML: _vm._s(avi.question_simple + " | " + avi.id)
-                  }
-                })
-              ]
-            )
-          }),
-          1
-        )
       ])
     ]),
     _vm._v(" "),
     _c(
       "div",
-      { attrs: { id: "sondage_dragdrop" } },
+      { staticClass: "main-build", attrs: { id: "mainContent" } },
       [
-        _c("h4", [_vm._v("Contenu")]),
+        _c("div", { staticClass: "flex flex-row justify-between" }, [
+          _c("h4", { staticClass: "modele-title block" }, [_vm._v("Contenu")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.updated,
+                  expression: "updated"
+                }
+              ],
+              staticClass: "alert alert-success alert-title"
+            },
+            [_vm._v("Mise à jour ok")]
+          )
+        ]),
         _vm._v(" "),
         _vm._t("update"),
         _vm._v(" "),
@@ -38933,12 +38973,7 @@ var render = function() {
               _c("drop-list", {
                 staticClass: "list list_main",
                 attrs: { items: _vm.items },
-                on: {
-                  insert: _vm.onInsert,
-                  reorder: function($event) {
-                    return $event.apply(_vm.items)
-                  }
-                },
+                on: { insert: _vm.onInsert, reorder: _vm.onReorder },
                 scopedSlots: _vm._u([
                   {
                     key: "item",
@@ -38948,7 +38983,7 @@ var render = function() {
                         _c(
                           "drag",
                           {
-                            key: item.id + "_" + item.rang,
+                            key: item.id + "_" + Math.random(),
                             staticClass: "item-choosen"
                           },
                           [
@@ -38958,11 +38993,7 @@ var render = function() {
                                 { class: "question-type-" + item.type },
                                 [
                                   _c("p", { staticClass: "question-p" }, [
-                                    _vm._v(
-                                      _vm._s(item.question_simple) +
-                                        " | " +
-                                        _vm._s(item.id)
-                                    )
+                                    _vm._v(_vm._s(item.question_simple))
                                   ])
                                 ]
                               ),
@@ -38986,7 +39017,7 @@ var render = function() {
                                             _vm._v(
                                               "  " +
                                                 _vm._s(choice) +
-                                                "\n                    "
+                                                "\n                      "
                                             )
                                           ]
                                         )
@@ -39035,7 +39066,7 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            key: data.id + "_" + data.rang,
+                            key: data.id + "_" + Math.random(),
                             staticClass: "item feedback"
                           },
                           [_vm._v(_vm._s(data.type_name))]
@@ -41028,7 +41059,7 @@ var render = function() {
     { staticClass: "wrapper relative" },
     [
       _c("build-avis-list", {
-        attrs: { avis: _vm.avis, current: _vm.current },
+        attrs: { updated: _vm.updated, avis: _vm.avis, current: _vm.current },
         on: { "update-list": _vm.updateList },
         scopedSlots: _vm._u([
           {
@@ -41037,6 +41068,10 @@ var render = function() {
               return [
                 _c("div", { staticClass: "card card-full" }, [
                   _c("div", { staticClass: "card-body" }, [
+                    _c("h4", { staticClass: "modele-title" }, [
+                      _vm._v("Nom du modèle")
+                    ]),
+                    _vm._v(" "),
                     _c("dl", { staticClass: "dl-horizontal dl-simple" }, [
                       _c("dt", { staticClass: "mb-1" }, [_vm._v("Titre")]),
                       _vm._v(" "),
@@ -41138,12 +41173,19 @@ var render = function() {
     "div",
     { staticClass: "wrapper relative" },
     [
+      _vm._t("update"),
+      _vm._v(" "),
       _c("build-avis-list", {
-        attrs: { avis: _vm.avis, current: _vm.current },
+        attrs: {
+          updated: _vm.updated,
+          minus: "170",
+          avis: _vm.avis,
+          current: _vm.current
+        },
         on: { "update-list": _vm.updateList }
       })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

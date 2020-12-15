@@ -42,16 +42,9 @@ class ModeleController extends Controller
     {
         $modele = $this->modele->find($id);
 
-        $avis = $this->avis->getAll();
+        $avis = $this->avis->getAll(true);
         $avis = $avis->map(function ($row, $key) {
-            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
-            $row->setAttribute('alpha',strtolower($sort));
-            $row->setAttribute('class',null);
-            $row->setAttribute('rang',$key);
-            $row->setAttribute('choices_list',$row->choices ? explode(',', $row->choices) : null);
-            $row->setAttribute('type_name',$row->type_name);
-            $row->setAttribute('question_simple',strip_tags($row->question));
-            return $row;
+            return \App\Droit\Sondage\Entities\Transform::make($row, $key);
         })->sortBy('alpha')->values();
 
         list($hidden, $activ) = $avis->partition(function ($item) {

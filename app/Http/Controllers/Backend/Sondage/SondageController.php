@@ -106,19 +106,7 @@ class SondageController extends Controller
     public function show($id)
     {
         $sondage   = $this->sondage->find($id);
-
         $avis      = $this->avis->getAll();
-        $avis = $avis->map(function ($row, $key) {
-            $sort = preg_replace('/[^a-z]/i', '', trim(strip_tags($row->question)));
-            $row->setAttribute('alpha',strtolower($sort));
-            $row->setAttribute('class',null);
-            $row->setAttribute('rang',$key);
-            $row->setAttribute('choices_list',$row->choices ? explode(',', $row->choices) : null);
-            $row->setAttribute('type_name',$row->type_name);
-            $row->setAttribute('question_simple',strip_tags($row->question));
-            return $row;
-        })->sortBy('alpha')->values();
-
         $colloques = $this->colloque->getAll(false,false);
         
         return view('backend.sondages.show')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
@@ -127,10 +115,16 @@ class SondageController extends Controller
     public function edit($id)
     {
         $sondage   = $this->sondage->find($id);
-        $avis      = $this->avis->getAll();
+        $modeles   = $this->modele->getAll();
+        $avis      = $this->avis->getAll(true);
+
+        $avis = $avis->map(function ($row, $key) {
+            return \App\Droit\Sondage\Entities\Transform::make($row, $key);
+        })->sortBy('alpha')->values();
+
         $colloques = $this->colloque->getAll(false,false);
 
-        return view('backend.sondages.edit')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques]);
+        return view('backend.sondages.edit')->with(['sondage' => $sondage, 'avis' => $avis, 'colloques' => $colloques, 'modeles' => $modeles]);
     }
 
     /**
@@ -159,6 +153,36 @@ class SondageController extends Controller
         flash('Le sondage a été mis à jour')->success();
 
         return redirect('admin/sondage/'.$sondage->id);
+    }
+
+    public function updateBuild(Request $request)
+    {
+        $avis = collect($request->input('avis'))->mapWithKeys(function($item,$key) {
+            return [$item['id'] => ['rang' => $item['rang']]];
+        })->toArray();
+
+        $sondage = $this->sondage->find($request->input('id'));
+
+        // Insert related avis
+        $sondage->avis()->sync($avis);
+
+        return response()->json(['status' => true]);
+    }
+
+    public function updateModele(Request $request)
+    {
+        $sondage = $this->sondage->find($request->input('sondage_id'));
+        $modele  = $this->modele->find($request->input('id'));
+
+        $avis = $modele->avis->mapWithKeys(function($avis,$key) {
+            return [$avis->id => ['rang' => $avis->pivot->rang]];
+        })->toArray();
+
+        $sondage->avis()->sync($avis);
+
+        flash('Le modèle a été appliqué')->success();
+
+        return redirect()->back();
     }
 
     public function updateList(Request $request)

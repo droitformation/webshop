@@ -2,7 +2,9 @@
 
   <div class="wrapper relative">
 
-    <build-avis-list :avis="avis" @update-list="updateList" :current="current"></build-avis-list>
+    <slot name="update"></slot>
+
+    <build-avis-list :updated="updated" minus="170" :avis="avis" @update-list="updateList" :current="current"></build-avis-list>
 
   </div>
 
@@ -19,22 +21,28 @@ export default {
   },
   data() {
     return {
-      path:  location.protocol + "//" + location.host+"/",
-      choosen: this.current,
+       updated:false,
+       path:  location.protocol + "//" + location.host+"/",
+       choosen: this.current,
     }
   },
   methods: {
     updateList(choosen) {
       this.choosen = choosen;
+      console.log('save');
       this.save();
     },
     save: function() {
       let self = this;
 
-      axios.put(this.path + "admin/sondage/" + this.sondage.id,{
+      axios.post(this.path + "admin/sondage/updateBuild",{
         id: this.sondage.id,
         avis: this.choosen
       }).then(function (response) {
+        self.updated = true;
+        setTimeout(() => {
+          self.updated = false;
+        }, 2000);
         console.log(response.data);
       }).catch(function (error) { console.log(error);});
 

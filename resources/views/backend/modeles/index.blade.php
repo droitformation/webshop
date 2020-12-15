@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-10">
-            <h3>Modèles pour sondage</h3>
+            <h3>Modèles de sondage</h3>
         </div>
         <div class="col-md-2 text-right">
             <a href="{{ url('admin/modele/create') }}" class="btn btn-success"><i class="fa fa-plus"></i> &nbsp;Ajouter</a>

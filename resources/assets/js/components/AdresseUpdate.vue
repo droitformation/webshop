@@ -16,7 +16,7 @@
             <div class="adresse-update-wrapper">
                 <h4><div v-html="title"></div> <cite class="text-danger pull-right" style="color: red;"><small>* Champs requis</small></cite></h4>
                 <div class="adresse-update">
-                    <div class="row">
+                    <div class="row">b nhb
                         <div class="col-md-6">
                             <label class="control-label" for="">Titre</label>
                             <select name="civilite_id" required v-model="adresse_update.civilite_id" class="form-control" style="margin-bottom: 10px;">
