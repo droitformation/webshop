@@ -83,7 +83,7 @@ class Register
                 $free  = $this->repo_price->getFreeByColloque($key);
                 $price = $this->prices($this->data,$key,$free);
 
-                $rabais_id = $key == $this->data['colloque_id'] ? $this->data['rabais_id'] : null;
+                $rabais_id = $key == $this->data['colloque_id'] && isset($this->data['rabais_id']) ? $this->data['rabais_id'] : null;
 
                 //if($counter > 0){unset($this->data['rabais_id']);}
 
