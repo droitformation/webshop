@@ -62,9 +62,7 @@ class ImportWorker implements ImportWorkerInterface
         $path = \Storage::disk('imports')->put('', $this->file);
 
         if(!$path) {
-            //throw new \App\Exceptions\FileUploadException('Upload failed');
-            flash('Problème avec le téléchargement du fichier')->warning();
-            return redirect()->back();
+            throw new \App\Exceptions\FileUploadException('Upload failed');
         }
 
         // Read uploded xls
@@ -121,9 +119,7 @@ class ImportWorker implements ImportWorkerInterface
         $results = \Excel::toArray(new \App\Imports\EmailImport, $file);
 
         if(!isset($results) || empty(\Arr::flatten($results))) {
-            //throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
-            flash('Le fichier est vide ou mal formaté')->warning();
-            return redirect()->back();
+            throw new \App\Exceptions\BadFormatException('Le fichier est vide ou mal formaté');
         }
 
         return $results;

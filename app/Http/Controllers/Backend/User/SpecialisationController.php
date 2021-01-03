@@ -118,8 +118,8 @@ class SpecialisationController extends Controller {
 	{
         $id = $request->input('id');
 
-        if($request->ajax())
-        {
+        if($request->ajax()) {
+
             $specialisation = $request->input('specialisation');
             $model          = $request->input('model');
             $find           = $this->specialisation->search($specialisation);

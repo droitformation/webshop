@@ -58,8 +58,10 @@ class MailjetService implements MailjetServiceInterface{
     public function getSubscribers($Offset = 0)
     {
         $this->hasList();
+
         $filters = ['Limit' => '1000', 'Offset' => $Offset, "ContactsList" => $this->list];
         $response = $this->mailjet->get(Resources::$Contact, ['filters' => $filters]);
+
         if($response->success())
             return $response->getData();
         else
@@ -391,9 +393,7 @@ class MailjetService implements MailjetServiceInterface{
     public function hasList()
     {
         if(!$this->list){
-            //throw new \App\Exceptions\ListNotSetException('Attention aucune liste indiqueé');
-            flash('Attention aucune liste indiqué')->warning();
-            return redirect()->back();
+            throw new \App\Exceptions\ListNotSetException('Attention aucune liste indiqueé');
         }
     }
 }

@@ -302,6 +302,8 @@ return array(
     'App\\Droit\\Sondage\\Entities\\Sondage_reponse' => $baseDir . '/app/Droit/Sondage/Entities/Sondage_reponse.php',
     'App\\Droit\\Sondage\\Repo\\AvisEloquent' => $baseDir . '/app/Droit/Sondage/Repo/AvisEloquent.php',
     'App\\Droit\\Sondage\\Repo\\AvisInterface' => $baseDir . '/app/Droit/Sondage/Repo/AvisInterface.php',
+    'App\\Droit\\Sondage\\Repo\\ModeleEloquent' => $baseDir . '/app/Droit/Sondage/Repo/ModeleEloquent.php',
+    'App\\Droit\\Sondage\\Repo\\ModeleInterface' => $baseDir . '/app/Droit/Sondage/Repo/ModeleInterface.php',
     'App\\Droit\\Sondage\\Repo\\ReponseEloquent' => $baseDir . '/app/Droit/Sondage/Repo/ReponseEloquent.php',
     'App\\Droit\\Sondage\\Repo\\ReponseInterface' => $baseDir . '/app/Droit/Sondage/Repo/ReponseInterface.php',
     'App\\Droit\\Sondage\\Repo\\SondageEloquent' => $baseDir . '/app/Droit/Sondage/Repo/SondageEloquent.php',

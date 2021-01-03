@@ -247,7 +247,7 @@ class Colloque extends Model implements HasMedia
     {
         $choix = ['checkbox' => 'Case à cocher', 'choix' => 'Choix multiple', 'text' => 'Texte'];
         
-        return $this->options->mapWithKeys_v2(function ($option) use ($choix) {
+        return $this->options->mapWithKeys_v2(function ($option, $key) use ($choix) {
             return [$option->id => [
                 'id'          => $option->id,
                 'colloque_id' => $option->colloque_id,

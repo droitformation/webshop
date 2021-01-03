@@ -77,18 +77,19 @@ class Register
 
         if(isset($this->data['colloques']) && !empty($this->data['colloques'])){
             return collect($this->data['colloques'])->map(function ($options,$key) use (&$counter){
+
                 // if original colloque is the current
                 // It's supports the invoice price else it's free
                 $free  = $this->repo_price->getFreeByColloque($key);
                 $price = $this->prices($this->data,$key,$free);
 
-                if($counter > 0){
-                    unset($this->data['rabais_id']);
-                }
+                $rabais_id = $key == $this->data['colloque_id'] ? $this->data['rabais_id'] : null;
+
+                //if($counter > 0){unset($this->data['rabais_id']);}
 
                 $counter++;
 
-                return ['colloque_id' => $key] + $price + array_except(array_filter($this->data),['colloques','_token','price_id']) + $options;
+                return array_filter(['colloque_id' => $key] + ['rabais_id' => $rabais_id]) + $price + array_except(array_filter($this->data),['colloques','_token','price_id','rabais_id']) + $options;
             });
         }
 

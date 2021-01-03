@@ -266,12 +266,12 @@
             <div class="panel-body">
                 <h3><i class="fa fa-tags"></i>&nbsp;Spécialisations</h3>
                 @if(isset($user->adresse_facturation))
-                    <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_facturation->id }}">
+                    <ul id="specialisations" data-model="adresse" data-id="{{ $user->adresse_contact->id }}">
                         {!! $user->adresse_specialisations !!}
                     </ul>
                     <hr/>
                     <h3><i class="fa fa-bookmark"></i> &nbsp;Membre</h3>
-                    <ul id="members" data-id="{{ $user->adresse_facturation->id }}">
+                    <ul id="members" data-id="{{ $user->adresse_contact->id }}">
                         {!! $user->adresse_membres !!}
                     </ul>
                 @endif

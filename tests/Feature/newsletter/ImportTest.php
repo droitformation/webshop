@@ -86,10 +86,12 @@ class ImportTest extends TestCase
             \File::mimeType(dirname(__DIR__).'/excel/empty.xlsx'),null,true
         );
 
+        $this->expectException(\App\Exceptions\BadFormatException::class);
+
         $results = $this->import->read($file);
 
-        $errors = $this->app['session.store']->all();
-        $this->assertEquals('Le fichier est vide ou mal formaté',$errors['flash_notification'][0]->message);
+        //$errors = $this->app['session.store']->all();
+       // $this->assertEquals('Le fichier est vide ou mal formaté',$errors['flash_notification'][0]->message);
     }
 
     public function testSubscribeExist()

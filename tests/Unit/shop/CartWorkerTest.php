@@ -355,11 +355,12 @@ class CartWorkerTest extends TestCase
 
         $this->coupon->shouldReceive('findByTitle')->once()->andReturn(false);
 
+        $this->expectException(\App\Exceptions\CouponException::class);
+
         $worker->setCoupon($coupon->title);
 
-        $errors = $this->app['session.store']->all();
-
-        $this->assertEquals('Ce rabais n\'est pas valide', $errors['wrongCoupon']);
+        //$errors = $this->app['session.store']->all();
+        //$this->assertEquals('Ce rabais n\'est pas valide', $errors['wrongCoupon']);
     }
 
     /**

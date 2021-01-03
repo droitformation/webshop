@@ -51,9 +51,7 @@ use App\Droit\Shop\Coupon\Repo\CouponInterface;
              session()->forget('coupon');
 
              if(!$global){
-                 //throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide');
-                 session()->flash('wrongCoupon', 'Ce rabais n\'est pas valide');
-                 return redirect()->back();
+                 throw new \App\Exceptions\CouponException('Ce rabais n\'est pas valide');
              }
 
              return $this;

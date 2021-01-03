@@ -1,15 +1,19 @@
 <template>
-    <div>
+    <div id="forms">
 
         <p class="option-title">{{ colloque.titre }}</p>
         <div v-if="empty(options)">Pas d'options</div>
 
+        <input type="hidden" :name="normal" />&nbsp;
+
         <div v-for="(option,index) in options">
+
             <div v-if="option.type == 'checkbox'">
                 <div class="form-group type-choix" >
-                    <input type="checkbox" class="option-input" :name="checkbox(index)" :value="option.id" />&nbsp;{{ option.title }}
+                    <input type="checkbox" class="option-input" :checked="option.state ? 'checked' : ''" checked v-model="option.state" :name="checkbox(index)" :value="option.id">&nbsp;{{ option.title }}
                 </div>
             </div>
+
             <div v-if="option.type == 'choix'">
                 <div class="form-group group-choix type-choix">
                     <label class="control-label"><strong>{{ option.title }}</strong></label>
@@ -18,6 +22,7 @@
                     </div>
                 </div>
             </div>
+
             <div v-if="option.type == 'text'">
                 <div class="form-group type-choix">
                     <label><strong>{{ option.title }}</strong></label>
@@ -26,8 +31,6 @@
             </div>
         </div>
 
-      <input type="hidden" :name="normal" />&nbsp;
-
     </div>
 </template>
 <script>
@@ -35,7 +38,7 @@
         props: ['options', 'colloque', 'type', 'form', 'participant_id'],
         data() {
             return {
-                isValide:false,
+                isValide:false
             }
         },
         mounted: function () {},

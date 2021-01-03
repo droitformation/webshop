@@ -5921,6 +5921,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['options', 'colloque', 'type', 'form', 'participant_id'],
   data: function data() {
@@ -41346,6 +41349,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { attrs: { id: "forms" } },
     [
       _c("p", { staticClass: "option-title" }, [
         _vm._v(_vm._s(_vm.colloque.titre))
@@ -41353,15 +41357,59 @@ var render = function() {
       _vm._v(" "),
       _vm.empty(_vm.options) ? _c("div", [_vm._v("Pas d'options")]) : _vm._e(),
       _vm._v(" "),
+      _c("input", { attrs: { type: "hidden", name: _vm.normal } }),
+      _vm._v(" \n\n    "),
       _vm._l(_vm.options, function(option, index) {
         return _c("div", [
           option.type == "checkbox"
             ? _c("div", [
                 _c("div", { staticClass: "form-group type-choix" }, [
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: option.state,
+                        expression: "option.state"
+                      }
+                    ],
                     staticClass: "option-input",
-                    attrs: { type: "checkbox", name: _vm.checkbox(index) },
-                    domProps: { value: option.id }
+                    attrs: {
+                      type: "checkbox",
+                      checked: "",
+                      name: _vm.checkbox(index)
+                    },
+                    domProps: {
+                      checked: option.state ? "checked" : "",
+                      value: option.id,
+                      checked: Array.isArray(option.state)
+                        ? _vm._i(option.state, option.id) > -1
+                        : option.state
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = option.state,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = option.id,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(option, "state", $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                option,
+                                "state",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(option, "state", $$c)
+                        }
+                      }
+                    }
                   }),
                   _vm._v(" " + _vm._s(option.title) + "\n            ")
                 ])
@@ -41415,10 +41463,7 @@ var render = function() {
               ])
             : _vm._e()
         ])
-      }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: _vm.normal } }),
-      _vm._v(" \n\n")
+      })
     ],
     2
   )

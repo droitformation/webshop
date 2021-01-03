@@ -1135,6 +1135,8 @@ class ComposerStaticInit4e9f05bf6c0c08726b822494c448369c
         'App\\Droit\\Sondage\\Entities\\Sondage_reponse' => __DIR__ . '/../..' . '/app/Droit/Sondage/Entities/Sondage_reponse.php',
         'App\\Droit\\Sondage\\Repo\\AvisEloquent' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/AvisEloquent.php',
         'App\\Droit\\Sondage\\Repo\\AvisInterface' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/AvisInterface.php',
+        'App\\Droit\\Sondage\\Repo\\ModeleEloquent' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/ModeleEloquent.php',
+        'App\\Droit\\Sondage\\Repo\\ModeleInterface' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/ModeleInterface.php',
         'App\\Droit\\Sondage\\Repo\\ReponseEloquent' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/ReponseEloquent.php',
         'App\\Droit\\Sondage\\Repo\\ReponseInterface' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/ReponseInterface.php',
         'App\\Droit\\Sondage\\Repo\\SondageEloquent' => __DIR__ . '/../..' . '/app/Droit/Sondage/Repo/SondageEloquent.php',
