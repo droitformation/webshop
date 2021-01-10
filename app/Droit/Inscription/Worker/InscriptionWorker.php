@@ -92,6 +92,11 @@ class InscriptionWorker implements InscriptionWorkerInterface{
             unset($attachements['bon']);
         }
 
+        if($model->is_free){
+            unset($attachements['facture']);
+            unset($attachements['bv']);
+        }
+
         // Send prepared data and documents, update inscription with send date for admin
         $this->send($this->prepareData($model,$attachements), $model->user, $attachements, $email);
         $this->updateInscription($model);
@@ -117,10 +122,10 @@ class InscriptionWorker implements InscriptionWorkerInterface{
     public function prepareData($model, $attachements = [])
     {
         $data = [
-            'title'       => 'Votre inscription sur publications-droit.ch',
-            'logo'        => 'facdroit.png',
-            'concerne'    => 'Inscription',
-            'date'        => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
+            'title'        => 'Votre inscription sur publications-droit.ch',
+            'logo'         => 'facdroit.png',
+            'concerne'     => 'Inscription',
+            'date'         => \Carbon\Carbon::now()->formatLocalized('%d %B %Y'),
             'annexes'      => $model->colloque->send_annexe,
             'colloque'     => $model->colloque,
             'user'         => $model->user,
