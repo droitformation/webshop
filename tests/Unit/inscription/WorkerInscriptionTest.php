@@ -88,7 +88,7 @@ class WorkerInscriptionTest extends TestCase
             'user_id'     => $person->id,
         ]);
 
-        $model = \App\Droit\Inscription\Entities\Inscription::latest('created_at')->first();
+        $model = \App\Droit\Inscription\Entities\Inscription::first();
 
         $this->assertEquals('Cindy, Leschaud', $model->participant->name);
         $this->assertEquals(1, $model->occurrences->count());
