@@ -25,7 +25,7 @@
                         <input type="hidden" name="worker" value="facture">
                         <input type="hidden" name="all" value="1">
                         <div class="input-group">
-                            <input type="text" class="form-control datePicker" name="date" placeholder="Date">
+                            <input type="text" class="form-control datePicker" style="width:250px;" name="date" placeholder="Date">
                             <span class="input-group-btn">
                                  <button type="submit" class="btn btn-warning"><i class="fa fa-file-o"></i> &nbsp;Générer toutes les factures</button>
                             </span>

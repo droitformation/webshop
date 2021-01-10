@@ -49,7 +49,10 @@ class AboWorker implements AboWorkerInterface{
 
         // create command if we have files
         if(!empty($files)) {
-            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outputName ";
+
+            $gs = (\App::environment() == 'local' ? '/usr/local/bin/gs' : 'gs');
+
+            $cmd = $gs." -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outputName ";
 
             //Every pdf file should come at the end of the command
             foreach($files as $file) {
@@ -57,7 +60,13 @@ class AboWorker implements AboWorkerInterface{
                 $cmd .= $file." ";
             }
 
+            $cmd .= " 2>&1";
+
+            \Log::info($cmd);
+
             $result = shell_exec($cmd);
+
+            \Log::info(serialize($result));
         }
     }
 

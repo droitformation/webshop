@@ -16,7 +16,7 @@
     </td>
     <td>{{ $adresse->email }}</td>
     <td>
-        {{ $adresse->adresse }}<br>
+        {!! $adresse->adresse !!}<br>
         {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
         {!! !empty($adresse->cp) ? $adresse->cp_trim.'<br>' : '' !!}
         {{ $adresse->npa }} {{ $adresse->ville }}<br>

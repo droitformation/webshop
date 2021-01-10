@@ -63,7 +63,6 @@
                             <div class="clearfix"></div>
                         </div>
 
-
                         @if($adresse_user->trashed() && $adresse_user->type < 4) <!-- don't display trashed facturation adresse -->
                     @endif
                 @endforeach

@@ -4,7 +4,7 @@
 {!! !empty($adresse->first_name) || !empty($adresse->last_name) ? '<br>' : '' !!}
 
 {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
-{{ $adresse->adresse }}<br>
+{!! $adresse->adresse !!}<br>
 {!! !empty($adresse->complement) ? $adresse->complement.'<br>' : '' !!}
 {!! !empty($adresse->cp) ? 'Case postale '.$adresse->cp.'<br>' : '' !!}
 {{ $adresse->npa }} {{ $adresse->ville }}<br>

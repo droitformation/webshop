@@ -29,7 +29,7 @@
                                                 {{ $line }}<br/>
                                             @endforeach
                                         @endif
-                                        {{ $adresse->adresse }}<br/>
+                                        {!! $adresse->adresse !!}<br/>
                                         {!! !empty($adresse->complement) ? $adresse->complement.'<br/>' : '' !!}
                                         {!! !empty($adresse->cp) ? $adresse->cp.'<br/>' : '' !!}
                                         {{ $adresse->npa }} {{ $adresse->ville }}

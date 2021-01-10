@@ -113,7 +113,7 @@
                                             <a target="_blank" href="{{ url('admin/adresse/'.$adresse->id) }}">{{ $adresse->civilite_title }} {{ $adresse->name }}</a>
                                         </strong><br>
                                         {!! !empty($adresse->company) ? $adresse->company.'<br>' : '' !!}
-                                        {{ $adresse->adresse }}<br>
+                                        {!! $adresse->adresse !!}<br>
                                         {!! !empty($adresse->cp) ? $adresse->cp_trim.'<br>' : '' !!}
                                         {{ $adresse->npa }} {{ $adresse->ville }}<br>
                                     </div>

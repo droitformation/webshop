@@ -64,7 +64,7 @@
                         <li class="form-group">
                             <div class="col-md-12">
                                 <label class="control-label" for="">Adresse <sup>*</sup></label>
-                                <input class="form-control" name="adresse" id="adresse" value="{{ $adresse ? $adresse->adresse : '' }}" type="text">
+                                <input class="form-control" name="adresse" id="adresse" value="{!! $adresse ? $adresse->adresse : '' !!}" type="text">
                             </div>
                         </li>
                         <li class="form-group">

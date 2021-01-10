@@ -70,7 +70,7 @@
                                             <tr class="secondRowSearch">
                                                 <td class="text-right"><h3><i class="fa fa-map-marker" aria-hidden="true"></i></h3></td>
                                                 <td><strong>{{ $adresse->name }}</strong><br/>{{ $adresse->company }}</td>
-                                                <td>{{ $adresse->adresse }}</td>
+                                                <td>{!! $adresse->adresse !!}</td>
                                                 <td>{{ $adresse->npa }} {{ $adresse->ville }}</td>
                                             </tr>
                                         @endforeach

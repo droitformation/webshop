@@ -110,7 +110,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Adresse</label>
         <div class="col-sm-7">
-            <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="{{ $adresse->adresse }}">
+            <input type="text" name="adresse" data-parsley-required class="form-control form-required" value="{!! $adresse->adresse !!}">
         </div>
     </div>
 

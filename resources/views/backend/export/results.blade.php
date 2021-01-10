@@ -59,7 +59,7 @@
                                                 <td><strong>{{ $adresse->name }}</strong></td>
                                                 <td>{{ $adresse->email }}</td>
                                                 <td>{{ $adresse->company }}</td>
-                                                <td>{{ $adresse->adresse }}</td>
+                                                <td>{!! $adresse->adresse !!}</td>
                                                 <td>{{ $adresse->npa }} {{ $adresse->ville }}</td>
                                             </tr>
                                         @endforeach

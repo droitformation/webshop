@@ -56,8 +56,8 @@
                                         <td>{!! $adresse->user_id > 0 ? '<span class="label label-info">Compte</span>' : '<span class="label label-success">Adresse simple</span>' !!}</td>
                                         <td><strong>{{ $adresse->first_name }}</strong></td>
                                         <td><strong>{{ $adresse->last_name }}</strong></td>
-                                        <td>{{ $adresse->email }}</td>
-                                        <td>{{ $adresse->company }}</td>
+                                        <td>{!! $adresse->email !!}</td>
+                                        <td>{!! $adresse->company !!}</td>
                                         <td>{{ $adresse->ville }}</td>
                                         <td class="text-right">
                                             <form action="{{ url('admin/adresse/'.$adresse->id) }}" method="POST" class="form-horizontal">

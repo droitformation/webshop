@@ -22,7 +22,7 @@
                         @if(isset($adresse))
                             {{ $adresse->company }}<br/>
                             {{ $adresse->name }}<br>
-                            {{ $adresse->adresse }}<br/>
+                            {!! $adresse->adresse !!}<br/>
                             {{ $adresse->npa }} {{ $adresse->ville }}
                         @endif
                     </address>
