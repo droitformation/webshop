@@ -4113,6 +4113,7 @@ a.list-group-item.active > .badge,
 }
 .input-group {
   display: table;
+  width: 100%;
   border-collapse: separate;
 }
 .input-group[class*="col-"] {

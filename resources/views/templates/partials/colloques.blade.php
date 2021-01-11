@@ -1,4 +1,4 @@
-<tr><td><h4 style="font-size: 16px;margin-bottom: 10px;">Vos particpations</h4></td></tr>
+<tr><td><h4 style="font-size: 16px;margin-bottom: 10px;">Vos participations</h4></td></tr>
 <tr valign="top">
     <td valign="top">
         <table class="content-table" valign="top">
