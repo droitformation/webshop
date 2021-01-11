@@ -10,7 +10,7 @@
     <meta name="_token" content="<?php echo csrf_token(); ?>">
 
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?='.rand(432,123456).'');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('common/css/validation.css');?>">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

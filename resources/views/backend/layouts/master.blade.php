@@ -12,7 +12,7 @@
     <script src="//use.fontawesome.com/fd16a07224.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
-    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?=6543');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/styles.css?='.rand(432,123456).'');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/responsive.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/css/files.css?=1321');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo secure_asset('backend/js/dragdrop/dragula.min.css');?>">
