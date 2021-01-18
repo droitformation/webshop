@@ -132,12 +132,12 @@ class InscriptionRegisterConverterTest extends TestCase
             'reference_no'   => '',
             'transaction_no' => '',
             'participant' => [
-                'Marc,Leschaud',
-                'Cindy,Leschaud'
+                'John,McDuck',
+                'Droit,Formation'
             ],
             'email' => [
-                'Marc.Leschaud@romandie.ch',
-                'cindy.leschaud@gmail.com'
+                'John.McDuck@romandie.ch',
+                'droitformation.web@gmail.com'
             ],
             'price_id'     => [
                 "price_link_id:1",
@@ -175,12 +175,12 @@ class InscriptionRegisterConverterTest extends TestCase
 
         $expected = [
             'participant' => [
-                'Marc,Leschaud',
-                'Cindy,Leschaud'
+                'John,McDuck',
+                'Droit,Formation'
             ],
             'email' => [
-                'Marc.Leschaud@romandie.ch',
-                'cindy.leschaud@gmail.com'
+                'John.McDuck@romandie.ch',
+                'droitformation.web@gmail.com'
             ],
             'user_id'        => 710,
             'colloque_id'    => 165,
@@ -228,12 +228,12 @@ class InscriptionRegisterConverterTest extends TestCase
             'reference_no'   => '',
             'transaction_no' => '',
             'participant' => [
-                'Marc,Leschaud',
-                'Cindy,Leschaud'
+                'John,McDuck',
+                'Droit,Formation'
             ],
             'email' => [
-                'Marc.Leschaud@romandie.ch',
-                'cindy.leschaud@gmail.com'
+                'John.McDuck@romandie.ch',
+                'droitformation.web@gmail.com'
             ],
             'price_id'     => [
                 "price_link_id:1",
@@ -271,12 +271,12 @@ class InscriptionRegisterConverterTest extends TestCase
 
         $expected = [
             'participant' => [
-                'Marc,Leschaud',
-                'Cindy,Leschaud'
+                'John,McDuck',
+                'Droit,Formation'
             ],
             'email' => [
-                'Marc.Leschaud@romandie.ch',
-                'cindy.leschaud@gmail.com'
+                'John.McDuck@romandie.ch',
+                'droitformation.web@gmail.com'
             ],
             'user_id'        => 710,
             'colloque_id'    => 165,
@@ -344,12 +344,12 @@ class InscriptionRegisterConverterTest extends TestCase
             'reference_no'   => '',
             'transaction_no' => '',
             'participant' => [
-                'Marc,Leschaud',
-                'Cindy,Leschaud'
+                'John,McDuck',
+                'Droit,Formation'
             ],
             'email' => [
-                'Marc.Leschaud@romandie.ch',
-                'cindy.leschaud@gmail.com'
+                'John.McDuck@romandie.ch',
+                'droitformation.web@gmail.com'
             ],
             'price_id'     => [
                 "price_link_id:1",
@@ -365,12 +365,12 @@ class InscriptionRegisterConverterTest extends TestCase
             'colloque_id'    => 165,
             'type'           => 'multiple',
             'participant' => [
-                'Marc,Leschaud',
-                'Cindy,Leschaud'
+                'John,McDuck',
+                'Droit,Formation'
             ],
             'email' => [
-                'Marc.Leschaud@romandie.ch',
-                'cindy.leschaud@gmail.com'
+                'John.McDuck@romandie.ch',
+                'droitformation.web@gmail.com'
             ],
             'price_id' => [
                 "price_link_id:1",
@@ -740,12 +740,12 @@ class InscriptionRegisterConverterTest extends TestCase
             'reference_no'   => '21345',
             'transaction_no' => '6543',
             'participant' => [
-                0 => 'Marc,Leschaud',
-                1 => 'Cindy,Leschaud'
+                0 => 'John,McDuck',
+                1 => 'Droit,Formation'
             ],
             'email' => [
-                0 => 'Marc.Leschaud@romandie.ch',
-                1 => 'cindy.leschaud@gmail.com'
+               0 => 'John.McDuck@romandie.ch',
+               1 => 'droitformation.web@gmail.com'
             ],
             'addons' =>[
                 $colloque1->id => [
@@ -795,16 +795,16 @@ class InscriptionRegisterConverterTest extends TestCase
                 'transaction_no' => '6543',
                 'participants'   => [
                     [
-                        'participant' => 'Marc,Leschaud',
-                        'email'   => 'Marc.Leschaud@romandie.ch',
+                        'participant' => 'John,McDuck',
+                        'email'   => 'John.McDuck@romandie.ch',
                         'options' => [0   => 259],
                         'groupes' => [268 => 150],
                         "price_link_id"   => $price_link->id,
                         'price_linked_id' => $price_link->id
                     ],
                     [
-                        'participant' => 'Cindy,Leschaud',
-                        'email'    => 'cindy.leschaud@gmail.com',
+                        'participant' => 'Droit,Formation',
+                        'email'    => 'droitformation.web@gmail.com',
                         'options'  => [0 => 258],
                         'groupes'  => [268 => 151],
                         "price_link_id"   => $price_link->id,
@@ -820,16 +820,16 @@ class InscriptionRegisterConverterTest extends TestCase
                 'transaction_no' => '6543',
                 'participants'   => [
                     [
-                        'participant' => 'Marc,Leschaud',
-                        'email'       => 'Marc.Leschaud@romandie.ch',
+                        'participant' => 'John,McDuck',
+                        'email'       => 'John.McDuck@romandie.ch',
                         'options'     => [0   => 261],
                         'groupes'     => [268 => 150],
                         "price_id"    => $price2->id,
                         'price_linked_id' => $price_link->id
                     ],
                     [
-                        'participant' => 'Cindy,Leschaud',
-                        'email'       => 'cindy.leschaud@gmail.com',
+                        'participant' => 'Droit,Formation',
+                        'email'       => 'droitformation.web@gmail.com',
                         'options'     => [0   => 261],
                         'groupes'     => [268 => 150],
                         "price_id"    => $price2->id,
@@ -867,12 +867,12 @@ class InscriptionRegisterConverterTest extends TestCase
             'reference_no'   => '21345',
             'transaction_no' => '6543',
             'participant' => [
-                0 => 'Marc,Leschaud',
-                1 => 'Cindy,Leschaud'
+                0 => 'John,McDuck',
+                1 => 'Droit,Formation'
             ],
             'email' => [
-                0 => 'Marc.Leschaud@romandie.ch',
-                1 => 'cindy.leschaud@gmail.com'
+                0 => 'John.McDuck@romandie.ch',
+                1 => 'droitformation.web@gmail.com'
             ],
             'addons' =>[
                 $colloque1->id => [
@@ -919,16 +919,16 @@ class InscriptionRegisterConverterTest extends TestCase
                 'transaction_no' => '6543',
                 'participants'   => [
                     [
-                        'participant' => 'Marc,Leschaud',
-                        'email'   => 'Marc.Leschaud@romandie.ch',
+                        'participant' => 'John,McDuck',
+                        'email'       => 'John.McDuck@romandie.ch',
                         'options' => [0   => 259],
                         'groupes' => [268 => 150],
                         "price_link_id"   => $price_link->id,
                         'price_linked_id' => $price_link->id
                     ],
                     [
-                        'participant' => 'Cindy,Leschaud',
-                        'email'    => 'cindy.leschaud@gmail.com',
+                        'participant' => 'Droit,Formation',
+                        'email'       => 'droitformation.web@gmail.com',
                         'options'  => [0 => 258],
                         'groupes'  => [268 => 151],
                         "price_id" => $price1->id
@@ -943,8 +943,8 @@ class InscriptionRegisterConverterTest extends TestCase
                 'transaction_no' => '6543',
                 'participants'   => [
                     [
-                        'participant' => 'Marc,Leschaud',
-                        'email'       => 'Marc.Leschaud@romandie.ch',
+                        'participant' => 'John,McDuck',
+                        'email'       => 'John.McDuck@romandie.ch',
                         'options'     => [0   => 261],
                         'groupes'     => [268 => 150],
                         "price_id"    => $price2->id,

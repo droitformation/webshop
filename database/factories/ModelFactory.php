@@ -565,25 +565,6 @@ $factory->define(App\Droit\Sondage\Entities\Avis::class, function (Faker\Generat
     ];
 });
 
-
-/*$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
-    return [
-        'first_name' => 'Cindy',
-        'last_name'  => 'Leschaud',
-        'email'      => 'cindy.leschaud@unine.ch',
-        'password'   => bcrypt('cindy2')
-    ];
-});
-
-$factory->defineAs(App\Droit\User\Entities\User::class, 'user' ,function ($factory){
-    return [
-        'first_name' => 'Jane',
-        'last_name'  => 'Doe',
-        'email'      => 'jane.doe@gmail.com',
-        'password'   => bcrypt('jane2')
-    ];
-});*/
-
 $factory->define(App\Droit\Reminder\Entities\Reminder::class, function (Faker\Generator $faker) {
 
     return [
@@ -655,8 +636,8 @@ $factory->define(App\Droit\Newsletter\Entities\Newsletter::class, function (Fake
         'titre'        => 'Titre',
         'list_id'      => '1',
         'from_name'    => 'Nom',
-        'from_email'   => 'cindy.leschaud@gmail.com',
-        'return_email' => 'cindy.leschaud@gmail.com',
+        'from_email'   => 'droitformation.web@gmail.com',
+        'return_email' => 'droitformation.web@gmail.com',
         'unsuscribe'   => 'unsubscribe',
         'preview'      => 'droit.local',
         'logos'        => 'logos.jpg',
@@ -668,7 +649,7 @@ $factory->define(App\Droit\Newsletter\Entities\Newsletter::class, function (Fake
 $factory->define(App\Droit\Newsletter\Entities\Newsletter_campagnes::class, function (Faker\Generator $faker) {
     return [
         'sujet'           => 'Sujet',
-        'auteurs'         => 'Cindy Leschaud',
+        'auteurs'         => 'Droit Formation',
         'status'          => 'Brouillon',
         'newsletter_id'   => 1,
         'api_campagne_id' => 1,
@@ -677,14 +658,6 @@ $factory->define(App\Droit\Newsletter\Entities\Newsletter_campagnes::class, func
         'updated_at'      => \Carbon\Carbon::createFromDate(2016, 12, 21)->toDateTimeString(),
     ];
 });
-
-/*$factory->defineAs(App\Droit\User\Entities\User::class, 'admin' ,function ($factory){
-    return [
-        'name'       => 'Cindy Leschaud',
-        'email'      => 'cindy.leschaud@unine.ch',
-        'password'   => bcrypt('cindy2')
-    ];
-});*/
 
 $factory->define(App\Droit\Newsletter\Entities\Newsletter_lists::class, function (Faker\Generator $faker) {
     return [

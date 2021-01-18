@@ -1,22 +1,25 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
 use Http\Client\HttpClient;
 
 /**
- * Emulates a synchronous HTTP client with the help of an asynchronous client.
+ * Emulates an HTTP client.
+ *
+ * This should be replaced by an anonymous class in PHP 7.
  *
  * @author Márk Sági-Kazár <mark.sagikazar@gmail.com>
  */
-final class EmulatedHttpClient implements HttpClient, HttpAsyncClient
+class EmulatedHttpClient implements HttpClient, HttpAsyncClient
 {
     use HttpAsyncClientDecorator;
     use HttpClientEmulator;
 
+    /**
+     * @param HttpAsyncClient $httpAsyncClient
+     */
     public function __construct(HttpAsyncClient $httpAsyncClient)
     {
         $this->httpAsyncClient = $httpAsyncClient;

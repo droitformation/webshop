@@ -10,8 +10,8 @@ Route::group(['prefix' => 'preview', 'middleware' => ['auth','administration']],
         $data = [
             'site'     => $sites->first(),
             'remarque' => 'Dapibus ante accumasa laoreet mauris nostra torquenté vehicula non interdùm, vehiculâ suscipit alèquam. Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?',
-            'name'     => 'Cindy Leschaud',
-            'email'    => 'cindy.leschaud@gmail.com'
+            'name'     => 'Droit Formation',
+            'email'    => 'droitformation.web@gmail.com'
         ];
 
         return view('emails.contact')->with($data);

@@ -1,11 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
-use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,19 +22,19 @@ final class ContentTypePlugin implements Plugin
      * true     skip the content type detection
      * false    detect the content type (default value)
      */
-    private $skipDetection;
+    protected $skipDetection;
 
     /**
      * Determine the size stream limit for which the detection as to be skipped (default to 16Mb).
      *
      * @var int
      */
-    private $sizeLimit;
+    protected $sizeLimit;
 
     /**
      * @param array $config {
      *
-     *     @var bool $skip_detection true skip detection if stream size is bigger than $size_limit
+     *     @var bool $skip_detection True skip detection if stream size is bigger than $size_limit.
      *     @var int $size_limit size stream limit for which the detection as to be skipped.
      * }
      */
@@ -60,7 +57,7 @@ final class ContentTypePlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
+    public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         if (!$request->hasHeader('Content-Type')) {
             $stream = $request->getBody();
@@ -94,11 +91,13 @@ final class ContentTypePlugin implements Plugin
         return $next($request);
     }
 
-    private function isJson(StreamInterface $stream): bool
+    /**
+     * @param $stream StreamInterface
+     *
+     * @return bool
+     */
+    private function isJson($stream)
     {
-        if (!function_exists('json_decode')) {
-            return false;
-        }
         $stream->rewind();
 
         json_decode($stream->getContents());
@@ -106,17 +105,19 @@ final class ContentTypePlugin implements Plugin
         return JSON_ERROR_NONE === json_last_error();
     }
 
-    private function isXml(StreamInterface $stream): bool
+    /**
+     * @param $stream StreamInterface
+     *
+     * @return \SimpleXMLElement|false
+     */
+    private function isXml($stream)
     {
-        if (!function_exists('simplexml_load_string')) {
-            return false;
-        }
         $stream->rewind();
 
         $previousValue = libxml_use_internal_errors(true);
         $isXml = simplexml_load_string($stream->getContents());
         libxml_use_internal_errors($previousValue);
 
-        return false !== $isXml;
+        return $isXml;
     }
 }

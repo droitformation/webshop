@@ -56,16 +56,16 @@ class WorkerInscriptionTest extends TestCase
             'transaction_no' => '6543',
             'participants'   => [
                 [
-                    'participant' => 'Cindy, Leschaud',
-                    'email'      => 'cindy.leschaud@gmail.com',
+                    'participant' => 'Droit, Formation',
+                    'email'      => 'droitformation.web@gmail.com',
                     'options'    => [$options[0]],
                     'groupes'    => [$option->id => $groupe1->id],
                     'occurrences' => [$occurrences->first()->id],
                     "price_id"   => $prices[0]
                 ],
                 [
-                    'participant' => 'Coralie, Ahmetaj',
-                    'email'       => 'coralie.ahmetaj@hotmail.com',
+                    'participant' => 'John, McDuck',
+                    'email'       => 'john.mcduck@hotmail.com',
                     'options'     => [$options[0]],
                     'groupes'     => [$option->id => $groupe2->id],
                     'occurrences' => $occurrences->pluck('id')->all(),
@@ -90,7 +90,7 @@ class WorkerInscriptionTest extends TestCase
 
         $model = \App\Droit\Inscription\Entities\Inscription::first();
 
-        $this->assertEquals('Cindy, Leschaud', $model->participant->name);
+        $this->assertEquals('Droit, Formation', $model->participant->name);
         $this->assertEquals(1, $model->occurrences->count());
         $this->assertEquals(2, $model->user_options->count());
 

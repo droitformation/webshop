@@ -82,12 +82,12 @@ class FeatureInscriptionTest extends TestCase
             'user_id'     => $person->id,
             'type'        => 'multiple',
             'participant' => [
-                'Cindy Leschaud',
-                'Coralie Ahmetaj'
+                'Test Droitformation',
+                'John McDuck'
             ],
             'email' => [
-                'cindy.leschaud@gmail.com',
-                'coralie.ahmetaj@hotmail.com'
+                'droitformation.web@gmail.com',
+                'john.mcduck@hotmail.com'
             ],
             'price_id'     => [
                 "price_link_id:".$prices[0],

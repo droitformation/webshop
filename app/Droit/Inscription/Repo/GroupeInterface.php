@@ -10,4 +10,6 @@ interface GroupeInterface {
     public function restore($id);
     public function delete($id);
 
+    public function linkedGroup($group_id,$colloque_id);
+
 }

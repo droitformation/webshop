@@ -69,8 +69,8 @@ class ImportTest extends TestCase
     {
         $file = $this->prepareFileUpload(dirname(__DIR__).'/excel/test.xlsx');
 
-        $email1  = ['cindy.leschaud@gmail.com'];
-        $email2  = ['prunturt@yahoo.fr'];
+        $email1  = ['droitformation.web@gmail.com'];
+        $email2  = ['hello@yahoo.fr'];
 
         $results = $this->import->read($file);
         $data = [[$email1,$email2]];

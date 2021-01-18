@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common\Exception;
 
 use Http\Client\Exception\RequestException;
@@ -11,6 +9,6 @@ use Http\Client\Exception\RequestException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-final class LoopException extends RequestException
+class LoopException extends RequestException
 {
 }

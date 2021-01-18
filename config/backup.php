@@ -91,7 +91,7 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'cindy.leschaud@gmail.com',
+            'to' => 'droitformation.web@gmail.com',
         ],
 
         'slack' => [

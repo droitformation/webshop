@@ -60,7 +60,7 @@ class SubstituteEmailTest extends TestCase
     public function testExportRemoveSubstitude()
     {
         $adresse1 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create(['type' => 1, 'email' => '34rsw0anowewTwe@publications-droit.ch']);
-        $adresse2 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create(['type' => 1, 'email' => 'cindy.leschaud@gmail.com']);
+        $adresse2 = factory(\App\Droit\Adresse\Entities\Adresse::class)->create(['type' => 1, 'email' => 'droitformation.web@gmail.com']);
 
         $export = new \App\Exports\AdresseExport(collect([$adresse1,$adresse2]));
 
@@ -68,7 +68,7 @@ class SubstituteEmailTest extends TestCase
 
         $this->assertEquals(2,count($prepared));
         $this->assertTrue(!in_array('34rsw0anowewTwe@publications-droit.ch',\Arr::flatten($prepared)));
-        $this->assertTrue(in_array('cindy.leschaud@gmail.com',\Arr::flatten($prepared)));
+        $this->assertTrue(in_array('droitformation.web@gmail.com',\Arr::flatten($prepared)));
     }
 
     public function testCantSendInscriptionToSubstitudeEmail()

@@ -46,6 +46,13 @@ class Groupe extends Model
         return $this->inscriptions->pluck('participant.name','inscription_no')->all();
     }
 
+    public function getParticipantsAttribute()
+    {
+        $this->load('inscriptions.participant');
+
+        return $this->inscriptions->count();
+    }
+
     public function getOccurrenceListAttribute()
     {
         $occurrences = new \Illuminate\Database\Eloquent\Collection();

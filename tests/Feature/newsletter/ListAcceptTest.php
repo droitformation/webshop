@@ -50,11 +50,11 @@ class ListAcceptTest extends TestCase
         $specialisations = $make->items('Specialisation', $nbr = 2);
         $specialisations = $specialisations->pluck('id')->all();
 
-        $result = $list->create(['title' => 'One title', 'emails' => ['cindy.leschaud@gmail.com','pruntrut@yahoo.fr'], 'specialisations' => $specialisations]);
+        $result = $list->create(['title' => 'One title', 'emails' => ['droitformation.web@gmail.com','hello@yahoo.fr'], 'specialisations' => $specialisations]);
 
         $this->assertDatabaseHas('newsletter_lists', ['title' => 'One title']);
-        $this->assertDatabaseHas('newsletter_emails', ['email' => 'cindy.leschaud@gmail.com']);
-        $this->assertDatabaseHas('newsletter_emails', ['email' => 'pruntrut@yahoo.fr']);
+        $this->assertDatabaseHas('newsletter_emails', ['email' => 'droitformation.web@gmail.com']);
+        $this->assertDatabaseHas('newsletter_emails', ['email' => 'hello@yahoo.fr']);
 
         $this->assertEquals(2, $result->emails->count());
 
@@ -104,8 +104,8 @@ class ListAcceptTest extends TestCase
 
     public function testValidEmails()
     {
-        $results = collect([['email' => 'cindy.leschaud@gmail.com'],['email' => 'cindy.leschaud@gmail.com'],['email' => 'prundaf.ch']]);
-        $emails = $results->pluck('email')
+        $results = collect([['email' => 'droitformation.web@gmail.com'],['email' => 'droitformation.web@gmail.com'],['email' => 'prundaf.ch']]);
+        $emails  = $results->pluck('email')
             ->unique()->reject(function ($value, $key) {
                 return !filter_var($value, FILTER_VALIDATE_EMAIL) || empty($value);
             });
@@ -122,15 +122,15 @@ class ListAcceptTest extends TestCase
     {
         $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
 
-        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'droitformation.web@gmail.com']);
 
         $this->assertDatabaseHas('newsletter_emails', [
             'list_id'  => $liste->id,
-            'email'    => 'cindy.leschaud@gmail.com'
+            'email'    => 'droitformation.web@gmail.com'
         ]);
 
         // Add same email
-        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'droitformation.web@gmail.com']);
 
         $liste->load('emails');
 

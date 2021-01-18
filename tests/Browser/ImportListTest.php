@@ -49,8 +49,7 @@ class ImportListTest extends DuskTestCase
 
             $browser->visit('build/subscriber')
                 ->pause(3000)
-                ->assertSee('cindy.leschaud@gmail.com')
-                ->assertSee('prunturt@yahoo.fr');
+                ->assertSee('droitformation.web@gmail.com');
 
         });
     }*/
@@ -84,8 +83,7 @@ class ImportListTest extends DuskTestCase
             ]);
 
             $this->assertDatabaseHas('newsletter_emails', [
-                'email' => 'cindy.leschaud@gmail.com',
-                'email' => 'prunturt@yahoo.fr',
+                'email' => 'droitformation.web@gmail.com'
             ]);
 
         });

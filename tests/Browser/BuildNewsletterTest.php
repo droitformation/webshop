@@ -40,7 +40,7 @@ class BuildNewsletterTest extends DuskTestCase
                 'titre'        => 'New Newsletter',
                 'list_id'      => '1',
                 'from_name'    => 'Cindy Leschaud',
-                'from_email'   => 'cindy.leschaud@gmail.com',
+                'from_email'   => 'droitformation.web@gmail.com',
             ]);
 
             $campagne = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->create([

@@ -140,7 +140,7 @@ class CampagneTest extends TestCase
         $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
         $this->mailjet->shouldReceive('sendBulk')->once()->andReturn(['Sent' => []]);
 
-        $response = $this->call('POST', 'build/send/test', ['id' => '1', 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'build/send/test', ['id' => '1', 'email' => 'droitformation.web@gmail.com']);
 
         $response->assertRedirect('build/campagne/'.$campagne->id);
 
@@ -156,7 +156,7 @@ class CampagneTest extends TestCase
         $this->worker->shouldReceive('html')->once()->andReturn('<html><header></header><body></body></html>');
         $this->mailjet->shouldReceive('sendBulk')->once()->andReturn($result);
 
-        $response = $this->call('POST', 'build/send/test', ['id' => '1', 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'build/send/test', ['id' => '1', 'email' => 'droitformation.web@gmail.com']);
         $response->assertStatus(500);
 
         //$this->expectException('\App\Exceptions\TestSendException');
@@ -174,7 +174,7 @@ class CampagneTest extends TestCase
         $this->mailjet->shouldReceive('setList')->once();
         $this->mailjet->shouldReceive('createCampagne')->once()->andReturn(1);
 
-        $response = $this->call('POST', 'build/campagne', ['sujet' => 'Sujet', 'auteurs' => 'Cindy Leschaud', 'newsletter_id' => '3']);
+        $response = $this->call('POST', 'build/campagne', ['sujet' => 'Sujet', 'auteurs' => 'Test Droitformation', 'newsletter_id' => '3']);
 
         $response->assertRedirect('build/campagne/compose/'.$campagne->id);
     }

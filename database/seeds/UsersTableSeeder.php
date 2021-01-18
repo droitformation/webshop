@@ -12,9 +12,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = factory(App\Droit\User\Entities\User::class)->create([
-            'first_name' => 'Cindy',
-            'last_name'  => 'Leschaud',
-            'email'      => 'cindy.leschaud@gmail.com',
+            'first_name' => 'Droit',
+            'last_name'  => 'Formation',
+            'email'      => 'droitformation.web@gmail.com',
             'password'   => bcrypt('cindy2')
         ]);
 
@@ -22,10 +22,10 @@ class UsersTableSeeder extends Seeder
 
         $adresse = factory(App\Droit\Adresse\Entities\Adresse::class)->create([
             'civilite_id'   => 2,
-            'first_name'    => 'Cindy',
-            'last_name'     => 'Leschaud',
-            'email'         => 'cindy.leschaud@gmail.com',
-            'company'       => 'DesignPond',
+            'first_name'    => 'Droit',
+            'last_name'     => 'Formation',
+            'email'         => 'droitformation.web@gmail.com',
+            'company'       => 'UniNE',
             'profession_id' => 1,
             'telephone'     => '032 690 00 23',
             'mobile'        => '032 690 00 23',

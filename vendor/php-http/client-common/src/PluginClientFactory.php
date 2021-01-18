@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common;
 
 use Http\Client\HttpAsyncClient;
+use Http\Client\HttpClient;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -16,7 +15,7 @@ use Psr\Http\Client\ClientInterface;
 final class PluginClientFactory
 {
     /**
-     * @var (callable(ClientInterface|HttpAsyncClient, Plugin[], array): PluginClient)|null
+     * @var callable
      */
     private static $factory;
 
@@ -29,32 +28,28 @@ final class PluginClientFactory
      *
      * @internal
      *
-     * @param callable(ClientInterface|HttpAsyncClient, Plugin[], array): PluginClient $factory
+     * @param callable $factory
      */
-    public static function setFactory(callable $factory): void
+    public static function setFactory(callable $factory)
     {
         static::$factory = $factory;
     }
 
     /**
-     * @param ClientInterface|HttpAsyncClient $client
-     * @param Plugin[]                        $plugins
-     * @param array                           $options {
+     * @param HttpClient|HttpAsyncClient|ClientInterface $client
+     * @param Plugin[]                                   $plugins
+     * @param array                                      $options {
      *
      *     @var string $client_name to give client a name which may be used when displaying client information  like in
      *         the HTTPlugBundle profiler.
      * }
      *
      * @see PluginClient constructor for PluginClient specific $options.
+     *
+     * @return PluginClient
      */
-    public function createClient($client, array $plugins = [], array $options = []): PluginClient
+    public function createClient($client, array $plugins = [], array $options = [])
     {
-        if (!$client instanceof ClientInterface && !$client instanceof HttpAsyncClient) {
-            throw new \TypeError(
-                sprintf('%s::createClient(): Argument #1 ($client) must be of type %s|%s, %s given', self::class, ClientInterface::class, HttpAsyncClient::class, get_debug_type($client))
-            );
-        }
-
         if (static::$factory) {
             $factory = static::$factory;
 

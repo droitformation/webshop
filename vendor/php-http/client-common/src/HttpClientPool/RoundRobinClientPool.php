@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common\HttpClientPool;
 
 use Http\Client\Common\Exception\HttpClientNotFoundException;
+use Http\Client\Common\HttpClientPool;
 
 /**
  * RoundRobinClientPool will choose the next client in the pool.
@@ -16,7 +15,7 @@ final class RoundRobinClientPool extends HttpClientPool
     /**
      * {@inheritdoc}
      */
-    protected function chooseHttpClient(): HttpClientPoolItem
+    protected function chooseHttpClient()
     {
         $last = current($this->clientPool);
 

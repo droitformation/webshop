@@ -3,12 +3,13 @@
 This page will document the API classes and ways to properly use the API. These resources will eventually move to
 the official documentation at [https://documentation.mailgun.com](https://documentation.mailgun.com/api_reference.html).
 
-Other relevant documentation pages might be:
-
+Other relevant documentation pages might be: 
+ 
 * [Attachments](attachments.md)
 * [Pagination](pagination.md)
-* [Message Builder](/src/Message/README.md)
-* [Batch Message](/src/Message/README.md)
+* [Message Builder](src/Mailgun/Messages/README.md) (Legacy code)
+* [Batch Message](src/Mailgun/Messages/README.md) (Legacy code)
+* [Opt-In Handler](src/Mailgun/Lists/README.md)  (Legacy code)
 
 ## Domain API
 
@@ -90,9 +91,9 @@ $mailgun->events()->get('example.com');
 #### Send a message
 ```php
 $parameters = [
-    'from'    => 'bob@example.com',
-    'to'      => 'sally@example.com',
-    'subject' => 'The PHP SDK is awesome!',
+    'from'    => 'bob@example.com', 
+    'to'      => 'sally@example.com', 
+    'subject' => 'The PHP SDK is awesome!', 
     'text'    => 'It is so simple to send a message.'
 ];
 $mailgun->messages()->send('example.com', $parameters);
@@ -102,10 +103,10 @@ $mailgun->messages()->send('example.com', $parameters);
 Below in an example how to create a Mime message with SwiftMailer.
 
 ```php
-$message = new Swift_Message('Mail Subject');
+$message = \Swift_Message::newInstance('Mail Subject');
 $message->setFrom(['from@exemple.com' => 'Example Inc']);
 $message->setTo(['user0gmail.com' => 'User 0', 'user1@hotmail.com' => 'User 1']);
-// $message->setBcc('admin@example.com'); Do not do this, BCC will be visible for all receipients if you do.
+// $message->setBcc('admin@example.com'); Do not do this, BCC will be visible for all receipients if you do. 
 $message->setCc('invoice@example.com');
 
 $messageBody = 'Look at the <b>fancy</b> HTML body.';
@@ -115,7 +116,7 @@ $message->setBody($messageBody, 'text/html');
 $to = ['admin@example.com', 'user0gmail.com', 'user1@hotmail.com', 'invoice@example.com']
 
 // Send the message
-$mailgun->messages()->sendMime('example.com', $to, $message->toString(), []);
+$mailgun->messages()->sendMime('example.com', $to, $message->toString());
 ```
 
 #### Show a stored message
@@ -302,7 +303,7 @@ $valid = $mailgun->webhooks()->verifyWebhookSignature($timestamp, $token, $signa
 
 if (!$valid) {
     // Create a 403 response
-
+    
     exit();
 }
 
@@ -321,12 +322,12 @@ $mailgun->webhooks()->show('example.com', 'accept');
 
 #### Create a webhooks
 ```php
-$mailgun->webhooks()->create('example.com', 'opened', [ 'https://www.exmple.com/webhook' ]);
+$mailgun->webhooks()->create('example.com', 'accept', 'https://www.exmple.com/webhook');
 ```
 
 #### Update a webhooks
 ```php
-$mailgun->webhooks()->update('example.com', 4711, [ 'https://www.exmple.com/webhook' ]);
+$mailgun->webhooks()->update('example.com', 4711, 'https://www.exmple.com/webhook');
 ```
 
 #### Delete a webhooks

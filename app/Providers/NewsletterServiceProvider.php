@@ -55,7 +55,6 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerTrackingService();
     }
 
-
     protected function registerMailgunNewService(){
 
         $this->app->bind('App\Droit\Newsletter\Worker\MailgunInterface', function()

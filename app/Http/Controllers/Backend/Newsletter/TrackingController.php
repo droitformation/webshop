@@ -76,7 +76,7 @@ class TrackingController extends Controller
            // \Mail::to('droit.formation@unine.ch')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), []));
         }
 
-        \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), $request->all()));
+        \Mail::to('droitformation.web@gmail.com')->send(new \App\Mail\NotifyBounce($request->input('recipient'), $request->input('event'), $request->all()));
 
         //\Log::info(json_encode($request->all()));
     }
@@ -88,7 +88,7 @@ class TrackingController extends Controller
         \Log::info($request->all());
 
         if($bounce->failed()){
-            \Mail::to('cindy.leschaud@gmail.com')->send(new \App\Mail\NotifyBounce($bounce->failed(), $bounce->headers(), $bounce->body()));
+            \Mail::to('droitformation.web@gmail.com')->send(new \App\Mail\NotifyBounce($bounce->failed(), $bounce->headers(), $bounce->body()));
             \Mail::to('droit.formation@unine.ch')->send(new \App\Mail\NotifyBounce($bounce->failed(), $bounce->headers(), $bounce->body()));
         }
 

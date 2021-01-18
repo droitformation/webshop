@@ -325,12 +325,12 @@ class FeatureInscriptionAdminTest extends TestCase
             'user_id'     => $person->id,
             'type'        => 'multiple',
             'participant' => [
-                'Cindy Leschaud',
-                'Coralie Ahmetaj'
+                'Droit Formation',
+                'Test McDuck'
             ],
             'email' => [
-                'cindy.leschaud@gmail.com',
-                'coralie.ahmetaj@hotmail.com'
+                'droitformation.web@gmail.com',
+                'test.mcduck@hotmail.com'
             ],
             'price_id'     => [
                 "price_id:".$prices[0],
@@ -428,12 +428,12 @@ class FeatureInscriptionAdminTest extends TestCase
             'user_id'     => $person->id,
             'type'        => 'multiple',
             'participant' => [
-                'Cindy Leschaud',
-                'Coralie Ahmetaj'
+                'Droit Formation',
+                'Test McDuck'
             ],
             'email' => [
-                'cindy.leschaud@gmail.com',
-                'coralie.ahmetaj@hotmail.com'
+                'droitformation.web@gmail.com',
+                'test.mcduck@hotmail.com'
             ],
             'price_id'     => [
                 "price_link_id:".$price_link->id,
@@ -702,7 +702,7 @@ class FeatureInscriptionAdminTest extends TestCase
 
         $inscription = $colloque->inscriptions->first();
 
-        $response = $this->call('POST', 'admin/inscription/send', ['id' => $inscription->id, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'admin/inscription/send', ['id' => $inscription->id, 'model' => 'inscription', 'email' => 'droitformation.web@gmail.com']);
 
         $response->assertSessionHas('flash_notification.0.message', 'Email envoyé');
     }
@@ -724,7 +724,7 @@ class FeatureInscriptionAdminTest extends TestCase
             return $inscription->group_id;
         })->first();
 
-        $response = $this->call('POST', 'admin/inscription/send', ['id' => $group->group_id, 'model' => 'group', 'email' => 'info@leschaud.ch']);
+        $response = $this->call('POST', 'admin/inscription/send', ['id' => $group->group_id, 'model' => 'group', 'email' => 'info@domain.ch']);
 
         $this->assertCount(1, $this->flashMessagesForMessage('Email envoyé'));
     }
@@ -734,7 +734,7 @@ class FeatureInscriptionAdminTest extends TestCase
         $make     = new \tests\factories\ObjectFactory();
         $colloque = $make->makeInscriptions(1);
 
-        $response = $this->call('POST', 'admin/inscription/send', ['id' => 0, 'model' => 'inscription', 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'admin/inscription/send', ['id' => 0, 'model' => 'inscription', 'email' => 'droitformation.web@gmail.com']);
 
         $this->assertCount(1, $this->flashMessagesForMessage('Aucune inscription ou groupe trouvé!'));
     }
@@ -992,12 +992,12 @@ class FeatureInscriptionAdminTest extends TestCase
             'reference_no'   => 'Ref_2019_depond',
             'transaction_no' => '29_10_1924',
             'participant' => [
-                'Cindy Leschaud',
-                'Coralie Ahmetaj'
+                'Test Droitformation',
+                'John McDuck'
             ],
             'email' => [
-                'cindy.leschaud@gmail.com',
-                'coralie.ahmetaj@hotmail.com'
+                'droitformation.web@gmail.com',
+                'john.mcduck@hotmail.com'
             ],
             'price_id'     => [
                 "price_id:".$prices[0],
@@ -1080,5 +1080,53 @@ class FeatureInscriptionAdminTest extends TestCase
             'reference_no'   => 'Rf_2019_depond',
             'transaction_no' => '29_10_124',
         ]);
+    }
+
+    public function testGroupAddParticipant()
+    {
+        $make       = new \tests\factories\ObjectFactory();
+        $person     = $make->makeUser();
+
+        $colloque1  = $make->colloque();
+        $colloque2  = $make->colloque();
+
+        $price1     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque1->id, 'price' => 0, 'description' => 'Price free']);
+        $price2     = factory(\App\Droit\Price\Entities\Price::class)->create(['colloque_id' => $colloque2->id, 'price' => 0, 'description' => 'Price free']);
+
+        $price_link = factory( \App\Droit\PriceLink\Entities\PriceLink::class)->create();
+        $price_link->colloques()->attach([$colloque1->id,$colloque2->id]);
+
+        $group1 = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id' => $person->id, 'colloque_id' => $colloque1->id]);
+        $group2 = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id' => $person->id, 'colloque_id' => $colloque2->id]);
+
+        $inscription1 = factory(\App\Droit\Inscription\Entities\Inscription::class)->create([
+            'user_id'         => null,
+            'group_id'        => $group1->id,
+            'price_link_id'   => $price_link->id,
+            'price_linked_id' => $price_link->id,
+            'colloque_id'     => $colloque1->id
+        ]);
+
+        $participant = \App\Droit\Inscription\Entities\Participant::create(['name' => 'John, Doe', 'email' => null, 'inscription_id' => $inscription1->id]);
+
+        $this->assertEquals(1,$group1->participants);
+
+        $data = [
+            'colloque_id' => $colloque1->id,
+            'participant' => 'Jane, Guest',
+            'price_id'    => ['price_link_id:'.$price_link->id],
+            'colloques'   => [[$colloque1->id,$colloque2->id]],
+            'addons'      => [$colloque1->id => ['options' => []],$colloque2->id => ['options' => []]],
+            'type'        => 'multiple',
+            'group_id'    => $group1->id,
+            'user_id'     => $group1->user_id
+        ];
+
+        $this->call('POST', 'admin/group', $data);
+
+        $this->assertEquals(2,$group1->participants);
+        $this->assertEquals(2,$group1->inscriptions->count());
+        $this->assertEquals(1,$group2->inscriptions->count());
+
     }
 }

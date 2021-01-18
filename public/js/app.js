@@ -5921,9 +5921,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['options', 'colloque', 'type', 'form', 'participant_id'],
   data: function data() {
@@ -8113,7 +8110,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.option-title[data-v-b173b2ac]{\n    margin:15px 0;\n    font-size: 18px;\n    color:#1e4b78;\n    font-weight:bold;\n}\n", ""]);
+exports.push([module.i, "\n.option-title[data-v-b173b2ac]{\n    margin:15px 0 10px 0;\n    font-size: 18px;\n    color:#1e4b78;\n    font-weight:bold;\n}\n", ""]);
 
 // exports
 
@@ -41181,78 +41178,87 @@ var render = function() {
       [
         _c("h4", [_vm._v("Choix du prix applicable")]),
         _vm._v(" "),
-        _c("div", { staticClass: "list_prices" }, [
-          _c("div", { staticClass: "price-select" }, [
-            _vm.prices.length != 0
-              ? _c("div", { staticClass: "form-group" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.prix,
-                          expression: "prix"
-                        }
-                      ],
-                      staticClass: "form-control select-price",
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.prix = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                          function($event) {
-                            return _vm.select($event)
+        _c(
+          "div",
+          {
+            staticClass: "list_prices",
+            staticStyle: { "margin-bottom": "20px" }
+          },
+          [
+            _c("div", { staticClass: "price-select" }, [
+              _vm.prices.length != 0
+                ? _c("div", { staticClass: "form-group" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.prix,
+                            expression: "prix"
                           }
-                        ]
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [_vm._v("Choix")]),
-                      _vm._v(" "),
-                      _vm._l(_vm.prices, function(price) {
-                        return _c("option", { domProps: { value: price } }, [
-                          _vm._v(
-                            _vm._s(price.description) +
-                              " | " +
-                              _vm._s(price.price) +
-                              " CHF"
-                          )
-                        ])
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.pricelinks, function(pricelink) {
-                        return _vm.pricelinks.length != 0
-                          ? _c("option", { domProps: { value: pricelink } }, [
-                              _vm._v(
-                                _vm._s(pricelink.description) +
-                                  " | " +
-                                  _vm._s(pricelink.price) +
-                                  " CHF"
-                              )
-                            ])
-                          : _vm._e()
-                      })
-                    ],
-                    2
-                  )
-                ])
-              : _vm._e()
-          ])
-        ]),
+                        ],
+                        staticClass: "form-control select-price",
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.prix = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              return _vm.select($event)
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Choix")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.prices, function(price) {
+                          return _c("option", { domProps: { value: price } }, [
+                            _vm._v(
+                              _vm._s(price.description) +
+                                " | " +
+                                _vm._s(price.price) +
+                                " CHF"
+                            )
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _vm._l(_vm.pricelinks, function(pricelink) {
+                          return _vm.pricelinks.length != 0
+                            ? _c("option", { domProps: { value: pricelink } }, [
+                                _vm._v(
+                                  _vm._s(pricelink.description) +
+                                    " | " +
+                                    _vm._s(pricelink.price) +
+                                    " CHF"
+                                )
+                              ])
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]
+        ),
         _vm._v(" "),
         _vm._l(_vm.priceoptions, function(priceoption) {
           return _c(
@@ -41357,8 +41363,6 @@ var render = function() {
       _vm._v(" "),
       _vm.empty(_vm.options) ? _c("div", [_vm._v("Pas d'options")]) : _vm._e(),
       _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: _vm.normal } }),
-      _vm._v(" \n\n    "),
       _vm._l(_vm.options, function(option, index) {
         return _c("div", [
           option.type == "checkbox"
@@ -41463,7 +41467,13 @@ var render = function() {
               ])
             : _vm._e()
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c("input", {
+        staticStyle: { height: "1px", "line-height": "1px" },
+        attrs: { type: "hidden", name: _vm.normal }
+      }),
+      _vm._v(" \n")
     ],
     2
   )

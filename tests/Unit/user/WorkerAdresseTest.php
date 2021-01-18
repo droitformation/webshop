@@ -278,13 +278,13 @@ class WorkerAdresseTest extends TestCase
         $worker = \App::make('App\Droit\Adresse\Worker\AdresseWorkerInterface');
 
         $terms = [
-            'terms'   => ['Unine', 'cindy.leschaud@gmail.com'],
+            'terms'   => ['Unine', 'droitformation.web@gmail.com'],
             'columns' => ['company','email'],
         ];
 
         $expect = [
             ['column' => 'company', 'value'  => 'Unine'],
-            ['column' => 'email', 'value' => 'cindy.leschaud@gmail.com']
+            ['column' => 'email', 'value' => 'droitformation.web@gmail.com']
         ];
 
         $result = $worker->prepareTerms($terms, 'adresse');

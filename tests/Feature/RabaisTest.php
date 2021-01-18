@@ -91,15 +91,15 @@ class RabaisTest extends TestCase
             'transaction_no' => '6543',
             'participants'   => [
                 [
-                    'participant' => 'Marc,Leschaud',
-                    'email'   => 'Marc.Leschaud@romandie.ch',
+                    'participant' => 'Test,McDuck',
+                    'email'   => 'Test.McDuck@romandie.ch',
                     'options' => [0   => 259],
                     'groupes' => [268 => 150],
                     "price_id" => $price1->id
                 ],
                 [
-                    'participant' => 'Cindy,Leschaud',
-                    'email'    => 'cindy.leschaud@gmail.com',
+                    'participant' => 'Droit,Formation',
+                    'email'    => 'droitformation.web@gmail.com',
                     'options'  => [0 => 258],
                     'groupes'  => [268 => 151],
                     "price_id" => $price1->id

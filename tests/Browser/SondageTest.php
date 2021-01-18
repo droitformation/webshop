@@ -45,11 +45,11 @@ class SondageTest extends DuskTestCase
         // Make the token with the infos
         $token = base64_encode(json_encode([
             'sondage_id' => $sondage->id,
-            'email'      => 'cindy.leschaud@gmail.com',
+            'email'      => 'droitformation.web@gmail.com',
             'isTest'     => 1,
         ]));
 
-        $this->withSession(['sondage' => $sondage, 'email' => 'cindy.leschaud@gmail.com', 'isTest' => 1]);
+        $this->withSession(['sondage' => $sondage, 'email' => 'droitformation.web@gmail.com', 'isTest' => 1]);
 
         $this->browse(function (Browser $browser) use ($token,$sondage,$question) {
             $browser->visit('reponse/create/'.$token)->assertSee('Ceci est un sondage test');
@@ -60,7 +60,7 @@ class SondageTest extends DuskTestCase
             // See if the reponse is in the database
             $this->assertDatabaseHas('sondage_reponses', [
                 'sondage_id' => $sondage->id,
-                'email'      => 'cindy.leschaud@gmail.com',
+                'email'      => 'droitformation.web@gmail.com',
                 'isTest'     => 1
             ]);
 
@@ -93,11 +93,11 @@ class SondageTest extends DuskTestCase
         // Make the token with the infos
         $token = base64_encode(json_encode([
             'sondage_id' => $sondage->id,
-            'email'      => 'cindy.leschaud@gmail.com',
+            'email'      => 'droitformation.web@gmail.com',
             'isTest'     => null,
         ]));
 
-        $this->withSession(['sondage' => $sondage, 'email' => 'cindy.leschaud@gmail.com', 'isTest' => 1]);
+        $this->withSession(['sondage' => $sondage, 'email' => 'droitformation.web@gmail.com', 'isTest' => 1]);
 
         $this->browse(function (Browser $browser) use ($token,$sondage,$question) {
             $browser->visit('reponse/create/'.$token);
@@ -108,7 +108,7 @@ class SondageTest extends DuskTestCase
             // See if the reponse is in the database
             $this->assertDatabaseHas('sondage_reponses', [
                 'sondage_id' => $sondage->id,
-                'email'      => 'cindy.leschaud@gmail.com',
+                'email'      => 'droitformation.web@gmail.com',
                 'isTest'     => null
             ]);
 

@@ -174,12 +174,30 @@ class RegisterInscriptionTest extends TestCase
 
         $response = $this->call('POST', 'admin/inscription', $data);
 
-
         $this->assertDatabaseHas('colloque_inscriptions', [
             'colloque_id' => $colloque1->id,
             'user_id'     => $person->id,
             'price_link_id'  => $price_link->id,
         ]);
 
+    }
+
+    public function testGetGroupLinked()
+    {
+        $make = new \tests\factories\ObjectFactory();
+
+        $colloque1 = $make->colloque();
+        $colloque2 = $make->colloque();
+
+        $user   = factory(\App\Droit\User\Entities\User::class)->create();
+
+        $group1 = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id' => $user->id, 'colloque_id' => $colloque1->id]);
+        $group2 = factory(\App\Droit\Inscription\Entities\Groupe::class)->create(['user_id' => $user->id, 'colloque_id' => $colloque2->id]);
+
+        $repo  = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
+
+        $found = $repo->linkedGroup($group1->id,$colloque2->id);
+
+        $this->assertEquals($group2->id,$found);
     }
 }

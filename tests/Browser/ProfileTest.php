@@ -56,8 +56,8 @@ class ProfileTest extends DuskTestCase
     public function testProfilUser()
     {
         $user = factory(\App\Droit\User\Entities\User::class)->create([
-            'email'    => 'cindy.leschaud@unine.ch',
-            'password' => bcrypt('cindy2')
+            'email'    => 'droitformation.web@gmail.com',
+            'password' => bcrypt('droitformation')
         ]);
 
         $make     = new \tests\factories\ObjectFactory();
@@ -66,8 +66,8 @@ class ProfileTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($adresse,$user) {
 
             $browser->logout()->visit('login')
-                ->type('email', 'cindy.leschaud@unine.ch')
-                ->type('password', 'cindy2')
+                ->type('email', 'droitformation.web@gmail.com')
+                ->type('password', 'droitformation')
                 ->pause(1100)
                 ->press('Envoyer');
 
@@ -86,8 +86,8 @@ class ProfileTest extends DuskTestCase
     public function testUpdateAccountProfilUser()
     {
         $user = factory(\App\Droit\User\Entities\User::class)->create([
-            'email'    => 'cindy.leschaud@unine.ch',
-            'password' => bcrypt('cindy2')
+            'email'    => 'droitformation.web@gmail.com',
+            'password' => bcrypt('droitformation')
         ]);
 
         $this->browse(function (Browser $browser) use ($user) {

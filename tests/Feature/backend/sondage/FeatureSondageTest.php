@@ -205,16 +205,16 @@ class FeatureSondageTest extends TestCase
         // Make the token with the infos
         $token = base64_encode(json_encode([
             'sondage_id' => $sondage->id,
-            'email'      => 'cindy.leschaud@gmail.com',
+            'email'      => 'droitformation.web@gmail.com',
             'isTest'     => null,
         ]));
 
-        $response = $this->post('reponse', ['sondage_id' => $sondage->id, 'email' => 'cindy.leschaud@gmail.com', 'isTest'=> null, 'reponses' => [$question->id]]);
+        $response = $this->post('reponse', ['sondage_id' => $sondage->id, 'email' => 'droitformation.web@gmail.com', 'isTest'=> null, 'reponses' => [$question->id]]);
 
         // See if the reponse is in the database
         $this->assertDatabaseHas('sondage_reponses', [
             'sondage_id' => $sondage->id,
-            'email'      => 'cindy.leschaud@gmail.com',
+            'email'      => 'droitformation.web@gmail.com',
             'isTest'     => null
         ]);
 

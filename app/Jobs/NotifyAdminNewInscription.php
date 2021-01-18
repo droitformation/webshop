@@ -59,6 +59,6 @@ class NotifyAdminNewInscription extends Job implements ShouldQueue
             return $colloque->email ? $colloque->email : 'droit.formation@unine.ch';
         }
 
-        return env('MAIL_TEST') ? env('MAIL_TEST') : 'cindy.leschaud@gmail.com';
+        return env('MAIL_TEST') ? env('MAIL_TEST') : 'droitformation.web@gmail.com';
     }
 }

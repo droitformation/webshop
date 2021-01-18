@@ -1,11 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common;
 
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * A client that helps you migrate from php-http/httplug 1.x to 2.x. This
@@ -17,7 +14,7 @@ trait VersionBridgeClient
 {
     abstract protected function doSendRequest(RequestInterface $request);
 
-    public function sendRequest(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request)
     {
         return $this->doSendRequest($request);
     }

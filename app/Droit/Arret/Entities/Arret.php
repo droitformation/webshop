@@ -107,4 +107,17 @@ class Arret extends Model {
     {
         return $this->belongsTo('\App\Droit\Site\Entities\Site');
     }
+
+    public function campagnes()
+    {
+        return $this->hasManyThrough(
+            '\App\Droit\Newsletter\Entities\Newsletter_campagnes',
+            '\App\Droit\Newsletter\Entities\Newsletter_contents',
+            'arret_id',
+            'id',
+            'id',
+            'newsletter_campagne_id'
+        );
+    }
+
 }

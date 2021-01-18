@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common;
 
+use Http\Client\HttpClient;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Decorates an HTTP Client.
@@ -16,16 +14,16 @@ use Psr\Http\Message\ResponseInterface;
 trait HttpClientDecorator
 {
     /**
-     * @var ClientInterface
+     * @var HttpClient|ClientInterface
      */
     protected $httpClient;
 
     /**
      * {@inheritdoc}
      *
-     * @see ClientInterface::sendRequest
+     * @see HttpClient::sendRequest
      */
-    public function sendRequest(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request)
     {
         return $this->httpClient->sendRequest($request);
     }

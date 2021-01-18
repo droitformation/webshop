@@ -70,7 +70,7 @@ class SubscriptionAcceptTest extends TestCase
     public function testRemoveAndDeleteSubscription()
     {
         /******************************/
-        $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make(['id' => 1, 'email' => 'cindy.leschaud@gmail.com']);
+        $user = factory(\App\Droit\Newsletter\Entities\Newsletter_users::class)->make(['id' => 1, 'email' => 'droitformation.web@gmail.com']);
 
         $newsletter1 = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['id' => 1, 'list_id' => 1]);
         $newsletter2 = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->make(['id' => 2,'list_id' => 2]);

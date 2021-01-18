@@ -39,11 +39,11 @@ class NewsletterTest extends DuskTestCase
             $browser->loginAs($user)->visit('pubdroit');
             // Honeypot
            // $browser->driver->executeScript('$(\'#honey_pot\').val(\'something\');');
-            $browser->type('email','cindy.leschaud@gmail.com')->press('Inscription');
+            $browser->type('email','droitformation.web@gmail.com')->press('Inscription');
 
             $browser->assertSee('Veuillez patienter quelques instants avant de soumettre le formulaire à nouveau');
 
-            $browser->visit('pubdroit')->type('email','cindy.leschaud@gmail.com')->pause(3000)->press('Inscription');
+            $browser->visit('pubdroit')->type('email','droitformation.web@gmail.com')->pause(3000)->press('Inscription');
             // Ok
             $browser->assertSee('Veuillez confirmer votre adresse email en cliquant le lien qui vous a été envoyé par email');
 

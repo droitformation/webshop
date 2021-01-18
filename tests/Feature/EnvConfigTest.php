@@ -33,7 +33,7 @@ class EnvConfigTest extends TestCase
         $mailgun  = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
 
         $mailgun->setSender('Info@domain.com');
-        $mailgun->setRecipients(['cindy.leschaud@gmail.com','info@leschaud.ch']);
+        $mailgun->setRecipients(['droitformation.web@gmail.com']);
         $mailgun->setHtml('<html><head><title>Test</title></head><body><h3>Hello!</h3></body></html>');
 
         $response = new \stdClass();
@@ -45,7 +45,7 @@ class EnvConfigTest extends TestCase
         $data = [
             'from'                => 'Info@domain.com',
             "subject"             => 'Test',
-            'to'                  => ['cindy.leschaud@gmail.com','info@leschaud.ch'],
+            'to'                  => ['droitformation.web@gmail.com'],
             "html"                => '<html><head><title>Test</title></head><body><h3>Hello!</h3></body></html>',
             "text"                => 'test',
             "recipient-variables" => json_encode([['infogdomain.com' => ['id' => 1]]]), // Required for batch sending, matches to recipient details

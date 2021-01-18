@@ -31,8 +31,8 @@ class MailjetServiceTest extends TestCase
         $this->campagne->sujet = 'Sujet';
         $newsletter = new \App\Droit\Newsletter\Entities\Newsletter();
 
-        $newsletter->from_email = 'cindy.leschaud@gmail.com';
-        $newsletter->from_name  = 'Cindy Leschaud';
+        $newsletter->from_email = 'droitformation.web@gmail.com';
+        $newsletter->from_name  = 'Droit Formation';
 
         $this->campagne->newsletter = $newsletter;
 
@@ -109,7 +109,7 @@ class MailjetServiceTest extends TestCase
 
         $this->responseOk($return);
 
-        $worker->getContactByEmail('cindy.leschaud@gmail.com');
+        $worker->getContactByEmail('droitformation.web@gmail.com');
         $this->assertTrue(true);
     }
 
@@ -149,7 +149,7 @@ class MailjetServiceTest extends TestCase
         $response->shouldReceive('success')->times(3)->andReturn(true); // called in getContactByEmail,getListRecipient,removeContact
         $response->shouldReceive('getData')->times(2)->andReturn($return);// called in getContactByEmail,getListRecipient
 
-        $worker->removeContact('cindy.leschaud@gmail.com');
+        $worker->removeContact('droitformation.web@gmail.com');
         $this->assertTrue(true);
     }
 
@@ -222,7 +222,7 @@ class MailjetServiceTest extends TestCase
 
         $this->responseOk([], 'post');
 
-        $worker->sendTest(1,'cindy.leschaud@gmail.com','title');
+        $worker->sendTest(1,'droitformation.web@gmail.com','title');
         $this->assertTrue(true);
     }
 

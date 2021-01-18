@@ -46,7 +46,7 @@ class MailgunWorkerTest extends TestCase
 
         $this->html =  '<html><head><title>Test</title></head><body><h3>Hello!</h3><p><a href="https://google.ch">Link</a></p></body></html>';
 
-        $this->recipients = ['cindy.leschaud@gmail.com','info@leschaud.ch'];
+        $this->recipients = ['droitformation.web@gmail.com','info@hotmail.ch'];
 
         $response = new \stdClass();
         $http_response_body = new \stdClass();
@@ -72,9 +72,9 @@ class MailgunWorkerTest extends TestCase
     {
         $worker = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
 
-        $worker->setSender('cindy.leschaud@gmail.com','Cindy Leschaud');
+        $worker->setSender('droitformation.web@gmail.com','Droit Formation');
 
-        $this->assertEquals('Cindy Leschaud <cindy.leschaud@gmail.com>', $worker->getSender());
+        $this->assertEquals('Droit Formation <droitformation.web@gmail.com>', $worker->getSender());
     }
 
     /**
@@ -90,8 +90,8 @@ class MailgunWorkerTest extends TestCase
         $this->assertEquals($this->recipients, $worker->getRecipients());
 
         $prepared = [
-            'cindy.leschaud@gmail.com' => ['id' => 1],
-            'info@leschaud.ch' => ['id' => 2],
+            'droitformation.web@gmail.com' => ['id' => 1],
+            'info@hotmail.ch' => ['id' => 2],
         ];
 
         $this->assertEquals($prepared, $worker->prepareRecipients());
@@ -102,14 +102,14 @@ class MailgunWorkerTest extends TestCase
         $worker = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
 
         $prepared = [
-            'cindy.leschaud@gmail.com' => ['id' => 1],
-            'info@leschaud.ch' => ['id' => 2],
+            'droitformation.web@gmail.com' => ['id' => 1],
+            'info@hotmail.ch' => ['id' => 2],
         ];
 
         $sujet = 'The subject';
 
         $expected = [
-            'from'                => 'Cindy Leschaud <cindy.leschaud@gmail.com>',
+            'from'                => 'Droit Formation <droitformation.web@gmail.com>',
             "subject"             => $sujet,
             'to'                  => $this->recipients,
             "html"                => $this->html,
@@ -119,7 +119,7 @@ class MailgunWorkerTest extends TestCase
         ];
 
         // Assert
-        $worker->setSender('cindy.leschaud@gmail.com','Cindy Leschaud')
+        $worker->setSender('droitformation.web@gmail.com','Droit Formation')
             ->setRecipients($this->recipients)
             ->setHtml($this->html);
 
@@ -135,8 +135,8 @@ class MailgunWorkerTest extends TestCase
         $toSend = \Carbon\Carbon::now()->addMinutes(2)->toRfc2822String();
 
         $prepared = [
-            'cindy.leschaud@gmail.com' => ['id' => 1],
-            'info@leschaud.ch' => ['id' => 2],
+            'droitformation.web@gmail.com' => ['id' => 1],
+            'info@hotmail.ch' => ['id' => 2],
         ];
 
         $sujet = $this->campagne->sujet;

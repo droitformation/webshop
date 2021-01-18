@@ -62,8 +62,8 @@ class MiscTest extends TestCase
     public function testSendMessagContactForm()
     {
         $data = [
-            'email'    => 'cindy.leschaud@gmail.com',
-            'name'     => 'Cindy Leschaud',
+            'email'    => 'droitformation.web@gmail.com',
+            'name'     => 'Test Droitformation',
             'remarque' => 'Test',
             'site'     => 1
         ];
@@ -72,7 +72,7 @@ class MiscTest extends TestCase
 
         // The email has been loggued
         $this->assertDatabaseHas('email_log', [
-            'from' => 'Cindy Leschaud <cindy.leschaud@gmail.com>',
+            'from' => 'Test Droitformation <droitformation.web@gmail.com>',
             'to'   => 'droit.formation@unine.ch',
             "subject" => "Message depuis le site Publications-droit.ch"
         ]);

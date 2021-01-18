@@ -41,6 +41,7 @@ class UpdateContentDate
             }
             catch (\GuzzleHttp\Exception\ConnectException $e) {
                 \Log::info('Cache update failed');
+                \Mail::to('droitformation.web@gmail.com')->send(new \App\Mail\WebmasterNotification('Le cache sur '.$base_url_url.' n\'as pas été mis à jour après des modifications'));
             }
         }
 

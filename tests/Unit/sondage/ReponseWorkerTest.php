@@ -48,7 +48,7 @@ class ReponseWorkerTest extends TestCase
 
         $data = [
             'sondage_id' => $sondage->id,
-            'email'      => 'cindy.leschaud@gmail.com',
+            'email'      => 'droitformation.web@gmail.com',
             'isTest'     => null,
         ];
 

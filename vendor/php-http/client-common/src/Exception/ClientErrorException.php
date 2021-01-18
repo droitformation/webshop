@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common\Exception;
 
 use Http\Client\Exception\HttpException;
@@ -11,6 +9,6 @@ use Http\Client\Exception\HttpException;
  *
  * @author Joel Wurtz <joel.wurtz@gmail.com>
  */
-final class ClientErrorException extends HttpException
+class ClientErrorException extends HttpException
 {
 }

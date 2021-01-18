@@ -90,7 +90,7 @@ class AppServiceProvider extends ServiceProvider {
         );
 
         Queue::failing(function (JobFailed $event) {
-            \Mail::to('cindy.leschaud@gmail.com')
+            \Mail::to('droitformation.web@gmail.com')
                 ->send(new WebmasterNotification('Job failed exception: '.$event->exception->getMessage().' '.$event->job->getRawBody()));
         });
     }

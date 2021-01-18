@@ -1,12 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
 use Http\Message\Encoding\ChunkStream;
-use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -19,7 +16,7 @@ final class ContentLengthPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
+    public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         if (!$request->hasHeader('Content-Length')) {
             $stream = $request->getBody();

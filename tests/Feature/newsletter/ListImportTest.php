@@ -54,15 +54,15 @@ class ListImportTest extends TestCase
     {
         $liste = factory(\App\Droit\Newsletter\Entities\Newsletter_lists::class)->create(['title' => 'One Title']);
 
-        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'droitformation.web@gmail.com']);
 
         $this->assertDatabaseHas('newsletter_emails', [
             'list_id'  => $liste->id,
-            'email'    => 'cindy.leschaud@gmail.com'
+            'email'    => 'droitformation.web@gmail.com'
         ]);
 
         // Add same email
-        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'cindy.leschaud@gmail.com']);
+        $response = $this->call('POST', 'build/emails', ['list_id' => $liste->id, 'email' => 'droitformation.web@gmail.com']);
 
         $liste->load('emails');
 

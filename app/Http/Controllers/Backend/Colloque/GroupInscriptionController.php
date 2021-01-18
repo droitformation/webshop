@@ -39,8 +39,12 @@ class GroupInscriptionController extends Controller
 
     public function store(Request $request)
     {
-        // Register a new inscription for group
-        $this->register->register($request->all(), $request->input('colloque_id'));
+        $register = new \App\Droit\Inscription\Entities\Register($request->all());
+        $inscriptions = $register->addParticipant();
+
+        $inscriptions = $inscriptions->map(function ($data){
+            return $this->register->register($data, true);
+        });
 
         // Get the group
         $group = $this->groupe->find($request->input('group_id'));

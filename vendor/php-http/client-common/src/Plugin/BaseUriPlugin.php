@@ -1,11 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Http\Client\Common\Plugin;
 
 use Http\Client\Common\Plugin;
-use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -27,7 +24,7 @@ final class BaseUriPlugin implements Plugin
     private $addPathPlugin = null;
 
     /**
-     * @param UriInterface $uri        Has to contain a host name and can have a path
+     * @param UriInterface $uri        Has to contain a host name and cans have a path.
      * @param array        $hostConfig Config for AddHostPlugin. @see AddHostPlugin::configureOptions
      */
     public function __construct(UriInterface $uri, array $hostConfig = [])
@@ -42,7 +39,7 @@ final class BaseUriPlugin implements Plugin
     /**
      * {@inheritdoc}
      */
-    public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
+    public function handleRequest(RequestInterface $request, callable $next, callable $first)
     {
         $addHostNext = function (RequestInterface $request) use ($next, $first) {
             return $this->addHostPlugin->handleRequest($request, $next, $first);

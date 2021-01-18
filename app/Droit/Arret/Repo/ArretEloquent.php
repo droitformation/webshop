@@ -70,7 +70,10 @@ class ArretEloquent implements ArretInterface{
 
     public function getAllForSiteActive($exclude = [], $site = null, $options = [])
     {
-        $arrets = $this->arret->with(['categories','analyses'])->site($site);
+        $arrets = $this->arret->with(['categories','analyses'])
+            ->whereHas('campagnes', function ($query) {
+                $query->whereNotNull('send_at');
+            })->site($site);
 
         if(!empty($exclude)) {
             $arrets->whereNotIn('id', $exclude);

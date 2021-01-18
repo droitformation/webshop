@@ -219,6 +219,17 @@ Route::get('testing', function() {
     $worker       = \App::make('App\Droit\Inscription\Worker\RappelWorkerInterface');
     $rabais   = App::make('App\Droit\Inscription\Repo\RabaisInterface');
 
+    $newcontent = App::make('App\Droit\Newsletter\Repo\NewsletterContentInterface');
+    $arrets = App::make('App\Droit\Arret\Repo\ArretInterface');
+
+    $arret = $arrets->find(5006);
+    $arret = $arret->load('campagnes');
+
+    echo '<pre>';
+    print_r($arret);
+    echo '</pre>';
+    exit;
+
     //$orders  = \App::make('App\Droit\Shop\Order\Repo\OrderInterface');
     //$order = $orders->find(4830);
 /*    $colloque = $colloques->find(165);
@@ -1128,7 +1139,7 @@ Route::get('notifyadmin', function()
 
     \Mail::send('emails.notification', $infos, function ($m) {
         $m->from('info@publications-droit.ch', 'Admin');
-        $m->to('cindy.leschaud@gmail.com', 'Administration')->subject('Notification');
+        $m->to('droitformation.web@gmail.com', 'Administration')->subject('Notification');
     });
 
     return View::make('emails.notification',$inscritpt);
@@ -1375,7 +1386,7 @@ Route::get('/test_mailgun', function () {
         ->setHtml($html)
         ->setSendDate($toSend)
         ->setTags(['testing_123'])
-        ->setRecipients(['cindy.leschaud@gmail.com','cindy.leschaud@unine.ch']);
+        ->setRecipients(['droitformation.web@gmail.com']);
 
     $date     = '2017-11-21';
     $tag      = 'campagne_1669';

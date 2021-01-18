@@ -5,6 +5,7 @@ class Register
     protected $data;
     protected $repo_colloque;
     protected $repo_price;
+    protected $repo_group;
     protected $counter = 0;
 
     public function __construct($data = [])
@@ -13,6 +14,7 @@ class Register
         $this->data['type']  = isset($this->data['type']) ? $this->data['type'] : 'simple';
         $this->repo_colloque = \App::make('App\Droit\Colloque\Repo\ColloqueInterface');
         $this->repo_price    = \App::make('App\Droit\Price\Repo\PriceInterface');
+        $this->repo_group    = \App::make('App\Droit\Inscription\Repo\GroupeInterface');
     }
 
     public function prepare()
@@ -22,6 +24,33 @@ class Register
         }
 
         return $this->multiple();
+    }
+
+    public function addParticipant()
+    {
+        $colloques = array_unique(array_flatten($this->data['colloques']));
+
+        return collect($colloques)->mapWithKeys(function ($colloque, $key){
+
+            $free  = $this->repo_price->getFreeByColloque($colloque);
+
+            $price = $colloque != $this->data['colloque_id'] ? array_filter([
+                'price_id'        => $free->id,
+                'price_linked_id' => isPriceLink($this->data['price_id'][0])? getPriceId($this->data['price_id'][0]) : null,
+            ]) : $this->convertPrices($this->data['price_id'][0]);
+
+            $data = array_filter([
+                'participant' => $this->data['participant'],
+                'email'       => $this->data['email'] ?? null,
+                'group_id'    => $this->data['colloque_id'] == $colloque ? $this->data['group_id'] : $this->repo_group->linkedGroup($this->data['group_id'],$colloque),
+                'colloque_id' => $colloque,
+                'options'     => $this->data['addons'][$colloque]['options'][0] ?? null,
+                'groupes'     => $this->data['addons'][$colloque]['groupes'][0] ?? null,
+            ]) + $price;
+
+            return [$colloque => $data];
+
+        });
     }
 
     public function multiple()

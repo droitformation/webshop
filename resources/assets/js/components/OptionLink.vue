@@ -4,7 +4,7 @@
         <div :class=" form == 'multiple' ? 'col-md-12' : 'col-md-6 col-xs-12'">
           <h4>Choix du prix applicable</h4>
 
-          <div class="list_prices">
+          <div class="list_prices" style="margin-bottom: 20px;">
             <div class="price-select">
               <div class="form-group" v-if="prices.length != 0">
                 <label><strong>Prix</strong></label>

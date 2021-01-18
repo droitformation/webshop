@@ -1,10 +1,7 @@
 <template>
     <div id="forms">
-
         <p class="option-title">{{ colloque.titre }}</p>
         <div v-if="empty(options)">Pas d'options</div>
-
-        <input type="hidden" :name="normal" />&nbsp;
 
         <div v-for="(option,index) in options">
 
@@ -30,7 +27,7 @@
                 </div>
             </div>
         </div>
-
+      <input type="hidden" style="height: 1px;line-height: 1px;" :name="normal" />&nbsp;
     </div>
 </template>
 <script>
@@ -85,7 +82,7 @@
 </script>
 <style scoped>
     .option-title{
-        margin:15px 0;
+        margin:15px 0 10px 0;
         font-size: 18px;
         color:#1e4b78;
         font-weight:bold;

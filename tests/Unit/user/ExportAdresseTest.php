@@ -214,9 +214,9 @@ class ExportAdresseTest extends TestCase
     {
         $adresse = factory(\App\Droit\Adresse\Entities\Adresse::class)->make([
             'civilite_id'   => 2,
-            'first_name'    => 'Cindy',
-            'last_name'     => 'Leschaud',
-            'email'         => 'cindy.leschaud@gmail.com',
+            'first_name'    => 'Droit',
+            'last_name'     => 'Formation',
+            'email'         => 'droitformation.web@gmail.com',
             'company'       => 'DesignPond',
             'profession_id' => 1,
             'telephone'     => '032 690 00 23',
@@ -235,7 +235,7 @@ class ExportAdresseTest extends TestCase
         $converted = $exporter->prepareAdresse();
 
         $expect = [
-            'Madame', 'Cindy','Leschaud', 'cindy.leschaud@gmail.com', 'Avocat', 'DesignPond', '032 690 00 23', '032 690 00 23',
+            'Madame', 'Droit','Formation', 'droitformation.web@gmail.com', 'Avocat', 'DesignPond', '032 690 00 23', '032 690 00 23',
             'Ruelle de l\'hôtel de ville 3', '', '', '2520', 'La Neuveville', 'Berne (BE)', 'Suisse',
         ];
 

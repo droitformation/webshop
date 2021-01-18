@@ -12,8 +12,10 @@ return array(
     'Msurguy\\Honeypot\\' => array($vendorDir . '/msurguy/honeypot/src'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
     'Mailjet' => array($vendorDir . '/mailjet/mailjet-apiv3-php/src'),
+    'Mailgun' => array($vendorDir . '/mailgun/mailgun-php/src'),
     'Laracasts\\Flash' => array($vendorDir . '/laracasts/flash/src'),
     'InlineStyle' => array($vendorDir . '/inlinestyle/inlinestyle'),
+    'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
     'Droitformation\\DatabaseLog\\' => array($vendorDir . '/droitformation/databaselog/src'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

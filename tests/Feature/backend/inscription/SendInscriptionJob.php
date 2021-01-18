@@ -46,7 +46,7 @@ class SendInscriptionJob extends TestCase
 
         $inscription->documents = $attachments;
 
-        $worker->sendEmail($inscription, 'cindy.leschaud@gmail.com');
+        $worker->sendEmail($inscription, 'droitformation.web@gmail.com');
 
         \Mail::assertSent(\App\Mail\SendRegisterConfirmation::class);
    /*     \Mail::assertSent(\App\Mail\SendRegisterConfirmation::class, function($mail) {

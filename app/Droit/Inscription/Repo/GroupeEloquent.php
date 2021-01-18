@@ -29,15 +29,30 @@ class GroupeEloquent implements GroupeInterface{
         return $this->groupe->with(['user','inscriptions'])->find($id);
     }
 
+    public function linkedGroup($group_id,$colloque_id){
+
+       $groupe = $this->groupe->find($group_id);
+
+       $linked = $this->groupe->where('user_id','=',$groupe->user_id)->where('colloque_id','=',$colloque_id)->first();
+
+       if(!$linked){
+           $linked = $this->groupe->create(array(
+               'colloque_id' => $colloque_id,
+               'user_id'     => $groupe->user_id,
+           ));
+       }
+
+       return $linked->id;
+    }
+
     public function create(array $data){
 
         $groupe = $this->groupe->create(array(
-            'colloque_id'     => $data['colloque_id'],
-            'user_id'         => $data['user_id'],
+            'colloque_id' => $data['colloque_id'],
+            'user_id'     => $data['user_id'],
         ));
 
-        if( ! $groupe )
-        {
+        if( ! $groupe ) {
             return false;
         }
 
