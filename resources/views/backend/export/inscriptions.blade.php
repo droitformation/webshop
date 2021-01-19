@@ -2,12 +2,12 @@
 
 <table align="left">
     <tr>
-        <td style="font-size: 20px;">
+        <td colspan="10" style="font-size: 20px;">
             <h1>{{ $colloque->titre }}</h1>
             <h2>{{ $colloque->soustitre }}</h2>
         </td>
     </tr>
-    <tr><td style="font-size: 15px;"><h3>{{ $colloque->organisateur }} | {{ $colloque->event_date }}</h3></td></tr>
+    <tr><td colspan="10" style="font-size: 15px;"><h3>{{ $colloque->organisateur }} | {{ $colloque->event_date }}</h3></td></tr>
 </table>
 
 @foreach($inscriptions as $occurence => $grouped)

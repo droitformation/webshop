@@ -132,7 +132,7 @@
                           @endif
                       </div>
 
-                      <div class="panel panel-midnightblue">
+                      <div class="panel panel-midnightblue" id="appComponent">
                           <div class="panel-body">
                               <h3>
                                   <i class="fa fa-table"></i> &nbsp;Inscriptions
