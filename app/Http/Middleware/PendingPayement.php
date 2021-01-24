@@ -33,10 +33,8 @@ class PendingPayement
         $message           = \Registry::get('inscription.messages.pending');
         $restrict_shop     = \Registry::get('shop.restrict');
 
-        if ($request->is('checkout/*'))
-        {
-            if( $restrict_shop && !$this->order->hasPayed(\Auth::user()->id) )
-            {
+        if($request->is('checkout/*')) {
+            if( $restrict_shop && !$this->order->hasPayed(\Auth::user()->id) ) {
                 return redirect('/')->with(array('status' => 'warning', 'message' => $message ));
             }
         }

@@ -57,7 +57,7 @@
                     <h3 style="margin-bottom: 30px;" class="pull-left">Factures pour l'&eacute;dition {{ $product->reference.' '.$product->edition }}</h3>
                     <div class="pull-right">
                         @if(!empty($files))
-                            <h4 style="margin-bottom: 10px; margin-top: 0;">Rappels liés</h4>
+                            <h4 style="margin-bottom: 10px; margin-top: 0;">Documents liés</h4>
                             <div class="btn-group">
                                 @foreach($files as $file)
                                     <?php $name = explode('/',$file); ?>

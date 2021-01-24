@@ -57,4 +57,22 @@ class PurgeController extends Controller
 
         return redirect()->back();
     }
+
+    public function invalid(Request $request)
+    {
+        $purger = \App::make('\App\Droit\Newsletter\Service\Purger');
+
+        $emails = $this->import->setFile($request->file('file'))->uploadAndRead();
+
+        $results = $emails->flatten()->map(function ($email) use ($purger) {
+
+            $results  = $purger->verify($email);
+            $response = $purger->status($results);
+
+            return ['email' => $email, 'status' => $response];
+        });
+
+        return \Excel::download(new \App\Exports\StatusEmailExport($results), 'status_email' . date('dmy').'.xlsx');
+
+    }
 }

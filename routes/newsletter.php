@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('purge', 'Backend\Newsletter\PurgeController@index');
         Route::post('purge', 'Backend\Newsletter\PurgeController@store');
+        Route::post('invalid', 'Backend\Newsletter\PurgeController@invalid');
 
         Route::resource('liste', 'Backend\Newsletter\ListController');
 

@@ -46,8 +46,7 @@
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="col-md-6">
+
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <p><strong>Format du fichier excel:</strong></p>
@@ -60,6 +59,32 @@
                     </table>
                 </div>
             </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <form action="{{ url('build/invalid') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">{!! csrf_field() !!}
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <h4>Vérifier les emails</h4><br>
+                        <div class="form-group">
+                            <label for="message" class="col-sm-3 control-label"><strong>Fichier excel</strong></label>
+                            <div class="col-sm-8">
+                                <input type="file" required name="file">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-8 text-right">
+                                <button class="btn btn-primary" id="importList" type="submit">Envoyer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </form>
+
         </div>
     </div>
 

@@ -62,11 +62,7 @@ class AboWorker implements AboWorkerInterface{
 
             $cmd .= " 2>&1";
 
-            \Log::info($cmd);
-
             $result = shell_exec($cmd);
-
-            \Log::info(serialize($result));
         }
     }
 

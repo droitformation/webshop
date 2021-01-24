@@ -13,7 +13,7 @@
 </div>
 <br>
 <!-- start row -->
-<div class="row" id="appVue">
+<div class="row">
     @if (!empty($user))
            <div class="col-md-12"><!-- col -->
 

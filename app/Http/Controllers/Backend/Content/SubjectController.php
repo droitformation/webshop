@@ -64,7 +64,7 @@ class SubjectController extends Controller
         
         $seminaire->subjects()->save($subject);
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Sujet crée')->success();
 
@@ -102,7 +102,7 @@ class SubjectController extends Controller
 
         $subject = $this->subject->update( $data );
 
-        event(new \App\Events\ContentUpdated());
+        event(new \App\Events\ContentUpdated('hub'));
 
         flash('Sujet mis à jour')->success();
 
