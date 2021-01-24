@@ -2,7 +2,7 @@
 @extends('backend.layouts.master')
 @section('content')
 
-    <div class="row" id="appComponent">
+    <div class="row">
         <div class="col-md-12">
 
             <p>

@@ -27,8 +27,7 @@ class UploadWorker implements UploadInterface {
         $path = $new->getRealPath();
 
         //resize
-        if($type)
-        {
+        if($type) {
             $sizes = \Config::get('size.'.$type);
             $this->resize( $path, null, $sizes['width'], $sizes['height']);
         }
@@ -36,7 +35,6 @@ class UploadWorker implements UploadInterface {
         $newfile = array( 'name' => $newname ,'ext' => $ext ,'size' => $size ,'mime' => $mime ,'path' => $path  );
 
         return $newfile;
-
 	}
 	
 	/*

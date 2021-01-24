@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Droit\Colloque\Repo\ColloqueInterface;
 use App\Droit\Adresse\Repo\AdresseInterface;
 use App\Droit\User\Repo\UserInterface;
 use App\Http\Requests\UpdateAdresse;
@@ -16,10 +17,12 @@ class ProfileController extends Controller
     protected $adresse;
     protected $user;
     protected $newsworker;
+    protected $colloque;
 
-    public function __construct(AdresseInterface $adresse, UserInterface $user)
+    public function __construct(AdresseInterface $adresse, ColloqueInterface $colloque, UserInterface $user)
     {
         $this->adresse    = $adresse;
+        $this->colloque   = $colloque;
         $this->user       = $user;
         $this->newsworker = \App::make('newsworker');
 
@@ -92,6 +95,15 @@ class ProfileController extends Controller
     public function abos()
     {
         return view('frontend.pubdroit.profil.abos')->with(['user' => \Auth::user()]);
+    }
+
+    public function book($colloque_id,$media_id)
+    {
+        $colloque   = $this->colloque->find($colloque_id);
+        $mediaItems = $colloque->getMedia('preview');
+        $media      = $mediaItems->find($media_id);
+
+        return view('frontend.pubdroit.profil.book')->with(['media' => $media]);
     }
 
     public function subscriptions()

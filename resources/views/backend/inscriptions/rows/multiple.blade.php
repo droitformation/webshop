@@ -17,8 +17,8 @@
             @endforeach
         @endif
 
-        <p><a class="btn btn-success btn-xs btn-isGroupe" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a></p>
-        @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $colloque, 'inscription' => null])
+   {{--     <p><a class="btn btn-success btn-xs btn-isGroupe" data-toggle="modal" data-target="#addToGroup_{{ $inscription->groupe->id }}">Ajouter un participant</a></p>
+        @include('backend.inscriptions.modals.add', ['group' => $inscription->groupe, 'colloque' => $colloque, 'inscription' => null])--}}
         <!-- Modal add to group -->
 
     </td>

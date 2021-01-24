@@ -205,7 +205,7 @@ class User extends Authenticatable {
             return [$item->colloque_id => $item->rappels->pluck('id')];
         })->filter(function ($value, $key) {
             return !$value->isEmpty();
-        });
+        })->flatten();
 
         // If we restrict and we have rappels we cant register
         return $restrict_colloque && ($inscription_pending->count() > 1) ? true : false;

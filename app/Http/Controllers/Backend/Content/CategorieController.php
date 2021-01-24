@@ -93,8 +93,7 @@ class CategorieController extends Controller {
         $data  = $request->except('file');
         $_file = $request->file('file',null);
 
-        if($_file)
-        {
+        if($_file) {
             $file = $this->upload->upload( $_file , 'files/pictos' , 'categorie');
             $data['image'] = $file['name'];
         }
