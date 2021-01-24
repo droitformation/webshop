@@ -43,7 +43,7 @@ class ProductController extends Controller {
 	{
         // Get session search terms or sort if any when we return from a page else get request inputs with defaults
         $data = ['sort' => [], 'term' => null];
-        $data = $back ? session()->get('product_search') : array_merge($data,$request->except('_token'));
+        $data = $back && session()->get('product_search') ? session()->get('product_search') : array_merge($data,$request->all());
         array_walk_recursive($data, 'trim');
 
         // Put search terms and sort in session
