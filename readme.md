@@ -1,9 +1,10 @@
 ## Web shop
 
- * Framework: Laravel 5.5
- * Autor : @designpond
+ * Framework: Laravel 
+ 
+ * Author : Droit Formation
 
-New web 3 site implementation for publications-droit.ch/bail.ch/droitmatrimonial.ch
+New web 5 site implementation
 
 ### License
 
