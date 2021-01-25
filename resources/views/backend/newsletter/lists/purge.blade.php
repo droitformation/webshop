@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-12">
             <h3>Purger les email invalides des listes</h3>
         </div>
     </div>
@@ -67,10 +67,14 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <h4>Vérifier les emails</h4><br>
-                        <div class="form-group">
+                        <p class="text-danger">Ne fonctionne que s'il existe assez de crédits sur debounce.io.</p>
+                        <p class="text-danger">Les adresse email @unine.ch seront marqués comme spam si on en envoie plus de 100 par fichier!</p><br>
+                        <div class="form-group mt-10">
                             <label for="message" class="col-sm-3 control-label"><strong>Fichier excel</strong></label>
                             <div class="col-sm-8">
-                                <input type="file" required name="file">
+                                <div class="well">
+                                    <input type="file" required name="file">
+                                </div>
                             </div>
                         </div>
                     </div>
