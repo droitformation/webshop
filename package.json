@@ -10,15 +10,15 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap-sass": "^3.3.7",
-    "cross-env": "^7.0.2",
+    "cross-env": "^7.0.3",
     "jquery": "^3.5.1",
-    "laravel-mix": "^5.0.0",
+    "laravel-mix": "^5.0.9",
     "lodash": "^4.17.20",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
@@ -26,7 +26,7 @@
     "babel-polyfill": "^6.26.0",
     "es6-promise": "^4.2.4",
     "jquery-html5-validity": "^1.1.2",
-    "jquery-validation": "^1.19.2",
+    "jquery-validation": "^1.19.3",
     "sweet-modal-vue": "^2.0.0",
     "vue-drag-and-drop-list": "^1.0.0",
     "vue-form-wizard": "^0.8.4",
