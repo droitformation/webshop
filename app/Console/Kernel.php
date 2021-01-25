@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel {
             $deadline       = 75;                           // process life, in minutes.
             $deadline       *= 60;                          // convert to use with time()
             $path           = base_path();
-            $php_executable = '/usr/bin/php73';               // absolute path to php excutable
+            $php_executable = '/usr/bin/php74';               // absolute path to php excutable
             $running        = false;                        // are queues running ?
             $restart        = false;                        // have to restart queues ?
             $since          = 0;                            // since when queues are running
