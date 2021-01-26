@@ -30,7 +30,7 @@
                                         <li><a href="{{ url('build/campagne/compose/'.$campagne->id) }}">Composer</a></li>
 
                                         @if(!$campagne->tracking->isEmpty())
-                                            <a class="btn btn-admin btn-sm" href="{{ url('build/tracking/stats/'.$campagne->id) }}">Tracking</a>
+                                            <li><a href="{{ url('build/statistics/'.$campagne->id) }}">Tracking</a></li>
                                         @else
                                             <li><a target="_blank" href="https://app.mailjet.com">Statistiques</a></li>
                                         @endif
