@@ -55,7 +55,7 @@ class NewsletterTest extends TestCase
         $newsletter   = factory(\App\Droit\Newsletter\Entities\Newsletter::class)->create(['list_id' => 1, 'site_id' => $site->id]);
         $campagne     = factory(\App\Droit\Newsletter\Entities\Newsletter_campagnes::class)->create([
             'sujet'           => 'Sujet',
-            'auteurs'         => 'Cindy Leschaud',
+            'auteurs'         => 'Jane Doe',
             'status'          => 'brouillon',
             'newsletter_id'   => $newsletter->id,
             'api_campagne_id' => 1,

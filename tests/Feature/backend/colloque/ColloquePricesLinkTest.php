@@ -39,13 +39,13 @@ class ColloquePricesLinkTest extends TestCase
             'price'       => '10.00', // with quotes else json is not formatted correctly
             'remarque'    => 'testing',
             'type'        => 'public',
-            'description' => 'cindy',
+            'description' => 'test',
         ];
 
         $results = [
             'colloques'      => [['id' => $colloque1->id, 'text' => $colloque1->title], ['id' => $colloque2->id, 'text' => $colloque2->title]], // all coloques
             'linked'         => [['id' => $colloque1->id, 'text' => $colloque1->title], ['id' => $colloque2->id, 'text' => $colloque2->title]], // only other colloque
-            'description'    => 'cindy',
+            'description'    => 'test',
             'price'          => '10.00',
             'type'           => 'public',
             'remarque'       => 'testing',
@@ -62,7 +62,7 @@ class ColloquePricesLinkTest extends TestCase
             'price'       => 1000,
             'remarque'    => 'testing',
             'type'        => 'public',
-            'description' => 'cindy'
+            'description' => 'test'
         ]);
 
         $this->assertDatabaseHas('price_link_colloques', ['colloque_id' => $colloque1->id,]);
@@ -80,7 +80,7 @@ class ColloquePricesLinkTest extends TestCase
             'price'       => '12.00', // with quotes else json is not formatted correctly
             'remarque'    => 'testing',
             'type'        => 'public',
-            'description' => 'cindy',
+            'description' => 'test',
             'rang'        => 1,
         ]);
 
@@ -134,7 +134,7 @@ class ColloquePricesLinkTest extends TestCase
             'price'       => '12.00', // with quotes else json is not formatted correctly
             'remarque'    => 'testing',
             'type'        => 'public',
-            'description' => 'cindy',
+            'description' => 'test',
             'rang'        => 1
         ]);
 
@@ -142,7 +142,7 @@ class ColloquePricesLinkTest extends TestCase
 
         $this->json('DELETE', '/vue/price_link/'.$price->id.'/'.$colloque1->id)->assertJsonFragment([]);
 
-        $this->assertDatabaseMissing('price_link', ['id' => $price->id, 'description' => 'cindy','deleted_at'  => null]);
+        $this->assertDatabaseMissing('price_link', ['id' => $price->id, 'description' => 'test','deleted_at'  => null]);
         $this->assertDatabaseMissing('price_link_colloques', ['colloque_id' => $colloque1->id]);
         $this->assertDatabaseMissing('price_link_colloques', ['colloque_id' => $colloque2->id]);
     }

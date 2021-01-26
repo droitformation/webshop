@@ -58,4 +58,45 @@ class Charts{
 
     }
 
+    public function stats($stats)
+    {
+        $results = [];
+        $data    = [];
+
+        if(!empty($stats)) {
+            $results = collect($stats)->map(function ($stat) {
+                return ['event' => $stat['event']];
+            })->groupBy('event')->map(function ($stat,$status) {
+                return count($stat);
+            });
+        }
+
+        if(!empty($stats)) {
+            // Datas
+            $total   = count($stats);
+            $open    = $results['open'] ?? 0;
+            $bounce  = $results['bounce'] ?? 0;
+            $click   = $results['click'] ?? 0;
+            $blocked = $results['blocked'] ?? 0;
+
+            $onlyopen = 0;
+            $nonopen  = 0;
+
+            if($open > 0){
+                // Calculations
+                $nonopen  = ($total - ($open + $bounce))/$total;
+                $onlyopen = $open/$total;
+                $bounce   = $bounce/$total;
+            }
+
+            $data['total']     = $total;
+            $data['opened']    = round($onlyopen * 100, 2);
+            $data['bounced']   = round($bounce * 100, 2);
+            $data['nonopened'] = round($nonopen * 100, 2);
+            $data['blocked']   = $blocked;
+        }
+
+        return $data;
+    }
+
 }

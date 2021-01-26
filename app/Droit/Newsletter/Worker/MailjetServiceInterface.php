@@ -40,6 +40,7 @@ interface MailjetServiceInterface {
      * Statistiques
      */
     public function statsCampagne($id);
+    public function statsTransactional($toSend);
     public function clickStatistics($id, $offset = 0);
 
     /**

@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Listes</label>
+                            <label class="col-md-3 control-label">Listes desquelles les emails doivent être désinscrit</label>
                             <div class="col-sm-8">
                                 @if(!$newsletters->isEmpty())
                                     <select name="newsletter_id[]" class="form-control" multiple>

@@ -164,11 +164,12 @@ class ImportWorker implements ImportWorkerInterface
         $campagne = $this->campagne->find($campagne_id);
         $html     = $this->worker->html($campagne_id);
         
-        if(!$list->emails->isEmpty() && $campagne && $html)
-        {
+        if(!$list->emails->isEmpty() && $campagne && $html) {
             $recipients = $list->emails->unique()->reject(function ($email, $key) {
                 return !filter_var($email->email, FILTER_VALIDATE_EMAIL) || empty($email->email);
-            })->pluck('email');
+            })->pluck('email')->map(function ($user) {
+                return  ['Email' => $user, 'Name'  => ''];
+            });
 
             // Send only 200 at the time to avoid timeout
             // dispatch to jobs

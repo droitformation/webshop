@@ -14,13 +14,13 @@ class ExportBadgeSpec extends ObjectBehavior
 
     public function it_chuncks_data_for_rows()
     {
-        $data = ['Cindy Leschaud','Coralie Jones','Ethan Mallory','Marc Belany'];
+        $data = ['Jane Doe','Coralie Jones','Ethan Mallory','Marc Belany'];
         $cols = 2;
         $nbr  = 4;
 
         $this->chunkData($data,$cols,$nbr)->shouldReturn([
             [
-                ['Cindy Leschaud','Coralie Jones'],
+                ['Jane Doe','Coralie Jones'],
                 ['Ethan Mallory','Marc Belany']
             ]
         ]);

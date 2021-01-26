@@ -40,10 +40,6 @@
 
                             <a href="javascript:;" class="btn btn-sm btn-default sendEmailNewsletter" data-campagne="{{ $campagne->id }}">Envoyer par email</a>
 
-                            @if(!$campagne->tracking->isEmpty())
-                                <a class="btn btn-admin btn-sm" href="{{ url('build/tracking/stats/'.$campagne->id) }}">Tracking</a>
-                            @endif
-
                             @include('backend.newsletter.template.partials.send', ['campagne' => $campagne])
                         </div>
                     </td>

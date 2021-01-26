@@ -38,10 +38,10 @@ class HelperMiscTest extends TestCase
 
     public function testRemoveNonAlphaNumeric()
     {
-        $string = 'Cindy#12';
+        $string = 'Jane#12';
         $result = $this->helper->_removeNonAlphanumericLetters($string);
 
-        $this->assertEquals('cindy_12',$result);
+        $this->assertEquals('jane_12',$result);
     }
 
     public function testIsSubstitudeEmail()
@@ -54,22 +54,22 @@ class HelperMiscTest extends TestCase
 
     public function testInsertBeforeArray()
     {
-        $key    = 'Cindy';
+        $key    = 'Jane';
         $value  = 2;
         $data   = [0 => 'first',4 => 'second'];
 
         $result = $this->helper->insertFirstInArray( $key , $value , $data );
 
-        $this->assertEquals(['Cindy' => 2, 0 => 'first',4 => 'second'],$result);
+        $this->assertEquals(['Jane' => 2, 0 => 'first',4 => 'second'],$result);
     }
 
     public function testFormatNameOther()
     {
         $names = [
             'Coralie von allmen'       => 'Coralie von Allmen',
-            'Sandra de mon-moulin'      => 'Sandra de Mon-Moulin',
+            'Sandra de mon-moulin'     => 'Sandra de Mon-Moulin',
             'sandra dela les chemin'   => 'Sandra dela les Chemin',
-            'cindy leschaud'           => 'Cindy Leschaud',
+            'jane doe'                 => 'Jane Doe',
             'Coralie amhetaj-leschaud' => 'Coralie Amhetaj-Leschaud',
             'françois de voma'         => 'François de Voma'
         ];

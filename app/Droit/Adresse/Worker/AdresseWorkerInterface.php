@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cindyleschaud
- * Date: 03.04.17
- * Time: 09:01
- */
 
 namespace App\Droit\Adresse\Worker;
 

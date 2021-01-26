@@ -80,7 +80,7 @@ class ExportInscriptionsTest extends TestCase
 
         $inscription->user_options = new \Illuminate\Database\Eloquent\Collection([$user_option1,$user_option2]);
 
-        $data = ['Name' => 'Cindy Leschaud'];
+        $data = ['Name' => 'Jane Doe'];
 
         $exporter = new \App\Exports\InscriptionExport(collect($inscription),$inscription->colloque, ['sort']);
 

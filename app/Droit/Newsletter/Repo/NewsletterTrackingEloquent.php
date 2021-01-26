@@ -74,13 +74,12 @@ class NewsletterTrackingEloquent implements NewsletterTrackingInterface{
     public function logSent($data)
     {
         $sent = $this->sent->create(array(
-            'campagne_id'    => $data['campagne_id'],
-            'send_at'        => \Carbon\Carbon::now()->toDateTimeString(),
-            'list_id'        => $data['list_id'],
+            'campagne_id' => $data['campagne_id'],
+            'send_at'     => \Carbon\Carbon::now()->toDateTimeString(),
+            'list_id'     => $data['list_id'],
         ));
 
-        if( ! $sent )
-        {
+        if( ! $sent ) {
             return false;
         }
 

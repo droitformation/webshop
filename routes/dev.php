@@ -1432,6 +1432,19 @@ use Carbon\Carbon;
 
 Route::get('factory', function()
 {
+
+    $mailjet = \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
+
+    //$mailjet->setList(1588258);
+
+   // $stats = $mailjet->statsTransactional();
+    $stats = $mailjet->getByCutomId(1947);
+
+    echo '<pre>';
+    print_r($stats);
+    echo '</pre>';
+    exit;
+
 // Create a date object
     $date = Carbon::now();
 
@@ -1480,10 +1493,7 @@ Route::get('factory', function()
     $subscribe = \App::make('App\Droit\Newsletter\Repo\NewsletterUserInterface');
     $newsletter = \App::make('App\Droit\Newsletter\Repo\NewsletterInterface');
 
-    $mailjet =  \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
 
-    $mailjet->setList(1588258);
-    $pubdroit = $newsletter->find(1);
 
     $allusersDB = $pubdroit->subscriptions->unique('email');
 

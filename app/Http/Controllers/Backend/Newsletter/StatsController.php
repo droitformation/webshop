@@ -17,7 +17,7 @@ class StatsController extends Controller
     protected $statsworker;
     protected $charts;
 
-    public function __construct( MailjetServiceInterface $worker, NewsletterCampagneInterface $campagne, StatsWorker $statsworker)
+    public function __construct(MailjetServiceInterface $worker, NewsletterCampagneInterface $campagne, StatsWorker $statsworker)
     {
         $this->worker       = $worker;
         $this->campagne     = $campagne;
@@ -38,31 +38,16 @@ class StatsController extends Controller
      */
     public function show($id)
     {
-        $statistiques = [];
-        $clickStats   = [];
-
-        // Stats open, bounce etc.
         $campagne      = $this->campagne->find($id);
-        $campagneStats = $this->worker->statsCampagne($campagne->api_campagne_id);
+        $tracking      = \App\Droit\Newsletter\Entities\Newsletter_tracking::where('customcampaign','=','mj.nl='.$campagne->api_campagne_id)->get();
+        $statistiques  = !$tracking->isEmpty() ? $this->charts->stats($tracking) : collect([]);
 
-        if($campagneStats)
-        {
-            $statistiques  = $this->charts->compileStats($campagneStats);
-
-            // Clicks
-            $clickStats = $this->worker->clickStatistics($campagneStats['CampaignID'], 0);
-        }
-
-        return view('backend.newsletter.stats.show')->with(
-            [
-                'isChart'      => true,
-                'campagne'     => $campagne ,
-                'statistiques' => $statistiques,
-                'clickStats'   => $clickStats
-            ]
-        );
+        return view('backend.newsletter.stats.show')->with(['campagne' => $campagne, 'statistiques' => $statistiques]);
     }
 
+    /*
+     * Deprecated 2021
+     * */
     public function sumStatsClicksLinks($CampaignID, $offset = 0){
 
         $result = [];
@@ -70,15 +55,13 @@ class StatsController extends Controller
         $data  = $this->worker->clickStatistics($CampaignID, $offset);
         $count = $this->statsworker->getTotalCount($data);
 
-        if($count == 500)
-        {
+        if($count == 500) {
             $result[] = $data->Data;
             $offset   = $offset + 500;
 
             $result   = array_merge($result,$this->sumStatsClicksLinks($CampaignID, $offset));
         }
-        else
-        {
+        else {
             $result[] = $data->Data;
         }
 

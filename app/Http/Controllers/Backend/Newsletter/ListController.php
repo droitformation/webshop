@@ -130,21 +130,17 @@ class ListController extends Controller
         $results = $this->import->send($request->input('campagne_id'),$list);
 
         // add mailgun tracking
-        $this->tracking->logSent([
-            'campagne_id'    => $request->input('campagne_id'),
-            'send_at'        => \Carbon\Carbon::now()->toDateTimeString(),
-            'list_id'        => $request->input('list_id'),
-        ]);
+        $this->tracking->logSent(['campagne_id' => $request->input('campagne_id'),'send_at' => \Carbon\Carbon::now()->toDateTimeString(),'list_id' => $request->input('list_id')]);
 
         // Update campagne status
         $this->campagne->update([
-            'id'         => $request->input('campagne_id'),
-            'status'     => 'envoyé',
+            'id' => $request->input('campagne_id'),
+            'status' => 'envoyé',
             'updated_at' => date('Y-m-d G:i:s'),
-            'send_at'    => \Carbon\Carbon::now()->toDateTimeString()
+            'send_at' => \Carbon\Carbon::now()->toDateTimeString()
         ]);
 
-        flash('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.')->success();
+        flash('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes)')->success();
 
         return redirect('build/newsletter');
     }

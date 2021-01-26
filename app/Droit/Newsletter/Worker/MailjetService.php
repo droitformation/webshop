@@ -307,12 +307,48 @@ class MailjetService implements MailjetServiceInterface{
         return false;
     }
 
+    public function statsTransactional($toSend){
+
+        $toSend = $toSend->timestamp;
+        $upTo   = \Carbon\Carbon::now()->timestamp;
+
+        $response = $this->mailjet->get(Resources::$Statcounters, [
+            'filters' => [
+                'CounterSource'     => 'ApiKey',
+                'CounterResolution' => 'Day',
+                'CounterTiming'     => 'Message',
+                'FromTS'            => $toSend,
+                'ToTS'              => $upTo
+            ]
+        ]);
+
+        if($response->success()){
+            return $response->getData();
+        }
+        else{
+            return  $response->getReasonPhrase();
+        }
+
+        return false;
+    }
+
     public function clickStatistics($id, $offset = 0)
     {
         $response = $this->mailjet->get(Resources::$Toplinkclicked, ['filters' => ['CampaignID' => $id, 'Limit' => 500, 'Offset' => $offset]]);
 
         if($response->success())
         {
+            return $response->getData();
+        }
+
+        return [];
+    }
+
+    public function getByCutomId($id)
+    {
+        $response = $this->mailjet->get(Resources::$Message, ['filters' => ['CustomID' => $id]]);
+
+        if($response->success()) {
             return $response->getData();
         }
 
@@ -397,7 +433,7 @@ class MailjetService implements MailjetServiceInterface{
             return $response->getData();
         }
         else{
-            echo '<h3><br/>Merci de faire une copie d\'écran de ce message d\'erreur et de la transmettre à cindy.leschaud@gmail.com</h3>';
+            echo '<h3><br/>Merci de faire une copie d\'écran de ce message d\'erreur et de la transmettre à droitformation.web@gmail.com</h3>';
             var_dump($response->getStatus());
             var_dump($response->getReasonPhrase());
             var_dump($response->getData());

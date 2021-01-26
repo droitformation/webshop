@@ -23,16 +23,55 @@
                         </div>
 
                         <h3>Tracking:</h3>
-                        @if(!$stats->isEmpty())
+                      {{--  @if(!$stats->isEmpty())
                             <ul>
                                 @foreach($stats as $date => $tracking)
                                     <li>{{ $tracking->count() }} emails envoyés le <strong>{{ $tracking->first()->time->formatLocalized('%d %B %Y à %I:%M:%S') }}</strong></li>
                                 @endforeach
                             </ul>
-                        @endif
-
+                        @endif--}}
                         @if(!empty($mailgun_stats))
-                            <ul>
+                            <div class="row margeUpDown"><!-- start row -->
+                                <div class="col-md-2">
+                                    <a href="#" class="info-tiles tiles-midnightblue">
+                                        <div class="tiles-heading"><div class="pull-left">Envoyés</div></div>
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-location-arrow"></i></div>
+                                            <div class="pull-right"><span>{{ $statistiques['total'] ?? 0 }}</span></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#" class="info-tiles tiles-success">
+                                        <div class="tiles-heading"><div class="pull-left">Ouverts</div></div>
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-check"></i></div>
+                                            <div class="pull-right"><span>{{ $statistiques['opened'] ?? 0 }}%</span></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#" class="info-tiles tiles-info">
+                                        <div class="tiles-heading"><div class="pull-left">Cliqués</div></div>
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-link"></i></div>
+                                            <div class="pull-right"><span>{{ $statistiques['clicked'] ?? 0 }}%</span></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#" class="info-tiles tiles-orange">
+                                        <div class="tiles-heading"><div class="pull-left">Refusés</div></div>
+                                        <div class="tiles-body">
+                                            <div class="pull-left"><i class="fa fa-minus-circle"></i></div>
+                                            <div class="pull-right"><span>{{ $statistiques['bounced'] ?? 0 }}%</span></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div><!-- end row -->
+
+
+                           {{-- <ul>
                                 @foreach($mailgun_stats as $date => $mailgun_stat)
                                     <li>{{ $mailgun_stat['stats']['delivered'] }} emails envoyés
                                         @foreach($mailgun_stat['time'] as $time)
@@ -42,7 +81,7 @@
                                         @endforeach
                                     </li>
                                 @endforeach
-                            </ul>
+                            </ul>--}}
                         @endif
 
                     </form>

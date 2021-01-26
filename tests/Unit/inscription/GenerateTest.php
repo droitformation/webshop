@@ -61,7 +61,7 @@ class GenerateTest extends TestCase
         $inscriptions = $inscriptions->map(function ($item, $key) {
             $item->inscription_no = '10-2016/1'.$key;
             $item->participant = factory(\App\Droit\Inscription\Entities\Participant::class)->make([
-                'name'           => 'Cindy Leschaud',
+                'name'           => 'Jane Doe',
                 'inscription_id' => '10-2016/1'.$key
             ]);
             return $item;
@@ -73,9 +73,9 @@ class GenerateTest extends TestCase
         $response = $generate->getNo();
 
         $participants = [
-            '10-2016/10' => 'Cindy Leschaud',
-            '10-2016/11' => 'Cindy Leschaud',
-            '10-2016/12' => 'Cindy Leschaud'
+            '10-2016/10' => 'Jane Doe',
+            '10-2016/11' => 'Jane Doe',
+            '10-2016/12' => 'Jane Doe'
         ];
 
         $this->assertEquals($participants, $response);

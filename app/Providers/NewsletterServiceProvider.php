@@ -38,7 +38,6 @@ class NewsletterServiceProvider extends ServiceProvider
             return $app->make('App\Droit\Newsletter\Worker\CampagneInterface');
         });
 
-        $this->registerMailgunNewService();
         $this->registerMailjetService();
         $this->registerNewsletterService();
         $this->registerContentService();
@@ -53,21 +52,6 @@ class NewsletterServiceProvider extends ServiceProvider
         $this->registerEmailService();
         $this->registerClipboardService();
         $this->registerTrackingService();
-    }
-
-    protected function registerMailgunNewService(){
-
-        $this->app->bind('App\Droit\Newsletter\Worker\MailgunInterface', function()
-        {
-            if (\App::environment('testing')) {
-                $mailgun = \Mockery::mock('\Mailgun\Mailgun');
-            }
-            else{
-                $mailgun = new \Mailgun\Mailgun(config('mailgun.api_key'));
-            }
-
-            return new \App\Droit\Newsletter\Worker\MailgunService($mailgun);
-        });
     }
 
     /**

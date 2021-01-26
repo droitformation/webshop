@@ -24,7 +24,7 @@
                                 <div class="tiles-heading"><div class="pull-left">Envoyés</div></div>
                                 <div class="tiles-body">
                                     <div class="pull-left"><i class="fa fa-location-arrow"></i></div>
-                                    <div class="pull-right"><span>{{ $statistiques['total'] }}</span></div>
+                                    <div class="pull-right"><span>{{ $statistiques['total'] ?? 0 }}</span></div>
                                 </div>
                             </a>
                         </div>
@@ -33,7 +33,7 @@
                                 <div class="tiles-heading"><div class="pull-left">Ouverts</div></div>
                                 <div class="tiles-body">
                                     <div class="pull-left"><i class="fa fa-check"></i></div>
-                                    <div class="pull-right"><span>{{ $statistiques['opened'] }}%</span></div>
+                                    <div class="pull-right"><span>{{ $statistiques['opened'] ?? 0 }}%</span></div>
                                 </div>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
                                 <div class="tiles-heading"><div class="pull-left">Cliqués</div></div>
                                 <div class="tiles-body">
                                     <div class="pull-left"><i class="fa fa-link"></i></div>
-                                    <div class="pull-right"><span>{{ $statistiques['clicked'] }}%</span></div>
+                                    <div class="pull-right"><span>{{ $statistiques['clicked'] ?? 0 }}%</span></div>
                                 </div>
                             </a>
                         </div>
@@ -51,27 +51,27 @@
                                 <div class="tiles-heading"><div class="pull-left">Refusés</div></div>
                                 <div class="tiles-body">
                                     <div class="pull-left"><i class="fa fa-minus-circle"></i></div>
-                                    <div class="pull-right"><span>{{ $statistiques['bounced'] }}%</span></div>
+                                    <div class="pull-right"><span>{{ $statistiques['bounced'] ?? 0 }}%</span></div>
                                 </div>
                             </a>
                         </div>
                     </div><!-- end row -->
 
-                    <h3>Statistiques des liens cliqués</h3>
+                    @if(isset($clickStats) && !empty($clickStats))
+                        <h3>Statistiques des liens cliqués</h3>
 
-                    <div class="row"><!-- start row -->
-                        <div class="col-md-8">
-                            <ul class="list-group">
-                                @if(!empty($clickStats))
+                        <div class="row"><!-- start row -->
+                            <div class="col-md-8">
+                                <ul class="list-group">
                                     @foreach($clickStats as $click)
                                         <li class="list-group-item">
-                                            <span class="badge badge-primary">{{ $click['ClickedCount'] }}</span>{{ $click['Url'] }}
+                                            <span class="badge badge-primary">{{ $click['ClickedCount'] ?? 0 }}</span>{{ $click['Url'] ?? 0 }}
                                         </li>
                                     @endforeach
-                                @endif
-                            </ul>
-                        </div>
-                    </div><!-- end row -->
+                                </ul>
+                            </div>
+                        </div><!-- end row -->
+                    @endif
 
                 </div>
             </div>

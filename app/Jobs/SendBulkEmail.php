@@ -35,17 +35,9 @@ class SendBulkEmail implements ShouldQueue
      */
     public function handle()
     {
-        $mailgun = \App::make('App\Droit\Newsletter\Worker\MailgunInterface');
+        /************ MAILJET ************/
+        $mailjet = \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
 
-        $toSend = \Carbon\Carbon::now()->addMinutes(1)->toRfc2822String();
-
-        $mailgun->setSender($this->campagne->newsletter->from_email,$this->campagne->newsletter->from_name)
-            ->setHtml($this->html)
-            ->setSendDate($toSend)
-            ->setTags(['campagne_'.$this->campagne->id])
-            ->setRecipients($this->emails);
-
-        $response = $mailgun->sendTransactional($this->campagne->sujet);
-
+        $mailjet->sendBulk($this->campagne,$this->html,$this->emails, null);
     }
 }

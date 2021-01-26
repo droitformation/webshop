@@ -78,7 +78,7 @@ class ListTest extends TestCase
         $response->assertRedirect('build/newsletter');
 
         $this->assertCount(1, $this->flashMessagesForLevel('success'));
-        $this->assertCount(1, $this->flashMessagesForMessage('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes) ou sur le service externe mailgun.'));
+        $this->assertCount(1, $this->flashMessagesForMessage('Campagne envoyé à la liste! Contrôler l\'envoi via le tracking (après quelques minutes)'));
 
     }
 
