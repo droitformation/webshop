@@ -28,7 +28,13 @@
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         <li><a href="{{ url('build/campagne/compose/'.$campagne->id) }}">Composer</a></li>
-                                        <li><a href="{{ url('build/statistics/'.$campagne->id) }}">Statistiques</a></li>
+
+                                        @if(!$campagne->tracking->isEmpty())
+                                            <a class="btn btn-admin btn-sm" href="{{ url('build/tracking/stats/'.$campagne->id) }}">Tracking</a>
+                                        @else
+                                            <li><a target="_blank" href="https://app.mailjet.com">Statistiques</a></li>
+                                        @endif
+
                                         <li><a href="javascript:;" class="sendEmailNewsletter" data-campagne="{{ $campagne->id }}">Envoyer par email</a></li>
                                         <li><a href="{{ url('build/send/confirmation/'.$campagne->id) }}">Envoyer à une liste</a></li>
                                     </ul>
