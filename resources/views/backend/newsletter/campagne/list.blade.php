@@ -29,7 +29,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="{{ url('build/campagne/compose/'.$campagne->id) }}">Composer</a></li>
 
-                                        @if(!$campagne->tracking->isEmpty())
+                                        @if(!$campagne->tracking->isEmpty() && !main_newsletter($campagne->newsletter->id ))
                                             <li><a href="{{ url('build/statistics/'.$campagne->id) }}">Tracking</a></li>
                                         @else
                                             <li><a target="_blank" href="https://app.mailjet.com">Statistiques</a></li>

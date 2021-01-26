@@ -1433,6 +1433,11 @@ use Carbon\Carbon;
 Route::get('factory', function()
 {
 
+    echo '<pre>';
+    print_r(main_newsletter(55));
+    echo '</pre>';
+    exit;
+
     $mailjet = \App::make('App\Droit\Newsletter\Worker\MailjetServiceInterface');
 
     //$mailjet->setList(1588258);

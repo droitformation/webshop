@@ -355,3 +355,10 @@ function getPriceId($price_string){
     $pieces = explode(':',$price_string);
     return $pieces[1];
 }
+
+
+function main_newsletter($id){
+    $list = config('newsletter.lists');
+
+    return in_array($id,$list);
+}
