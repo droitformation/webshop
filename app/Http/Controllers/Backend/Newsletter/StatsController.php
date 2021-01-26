@@ -39,7 +39,7 @@ class StatsController extends Controller
     public function show($id)
     {
         $campagne      = $this->campagne->find($id);
-        $tracking      = \App\Droit\Newsletter\Entities\Newsletter_tracking::where('customcampaign','=','mj.nl='.$campagne->api_campagne_id)->get();
+        $tracking      = \App\Droit\Newsletter\Entities\Newsletter_tracking::where('CustomID','=',$campagne->id)->get();
         $statistiques  = !$tracking->isEmpty() ? $this->charts->stats($tracking) : collect([]);
 
         return view('backend.newsletter.stats.show')->with(['campagne' => $campagne, 'statistiques' => $statistiques]);
