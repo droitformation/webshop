@@ -34,9 +34,8 @@ class SendSlide implements ShouldQueue
      */
     public function handle()
     {
-         $texte = 'Lorem ad quîs j\'libéro pharétra vivamus mollis ultricités ut, vulputaté ac pulvinar èst commodo aenanm pharétra cubilia, lacus aenean pharetra des ïd quisquées mauris varius sit. Mie dictumst nûllam çurcus molestié imperdiet vestibulum suspendisse tempor habitant sit pélléntésque sit çunc, primiés ?';
-         $url   = secure_url('pubdroit/documents/'.$this->colloque->id);
-
-         Mail::to($this->email)->bcc('archive@publications-droit.ch')->send(new SendSlides($this->colloque,$texte,$url));
+         Mail::to($this->email)
+             ->bcc('archive@publications-droit.ch')
+             ->send(new SendSlides($this->colloque,'',secure_url('pubdroit/documents/'.$this->colloque->id)));
     }
 }
