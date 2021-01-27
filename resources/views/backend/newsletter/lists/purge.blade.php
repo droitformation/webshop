@@ -67,8 +67,9 @@
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <h4>Vérifier les emails</h4><br>
-                        <p class="text-danger">Ne fonctionne que s'il existe assez de crédits sur debounce.io.</p>
-                        <p class="text-danger">Les adresse email @unine.ch seront marqués comme spam si on en envoie plus de 100 par fichier!</p><br>
+                        <p class="text-danger">Ne fonctionne que s'il existe assez de crédits sur debounce.io.<br>
+                            Les adresse email @unine.ch seront marqués comme spam si on en envoie plus de 100 par fichier!</p>
+                        <p>Le système retourne un <strong>fichier excel</strong> avec le status des email testés.</p><br>
                         <div class="form-group mt-10">
                             <label for="message" class="col-sm-3 control-label"><strong>Fichier excel</strong></label>
                             <div class="col-sm-8">

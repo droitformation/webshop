@@ -55,6 +55,8 @@ class PurgeController extends Controller
             }
         });
 
+        flash('Emails désincrits')->success();
+
         return redirect()->back();
     }
 
