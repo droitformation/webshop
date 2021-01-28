@@ -29,6 +29,9 @@ class ArretEloquent implements ArretInterface{
         return $this->arret
             ->with(['categories','analyses'])
             ->categories($options['categories'])
+            ->whereHas('campagnes', function ($query) {
+                $query->whereNotNull('send_at');
+            })
             ->years($options['years'])
             ->site($site)
             ->analyses($options['display'])
